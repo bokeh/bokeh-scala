@@ -30,6 +30,8 @@ object ProjectBuild extends Build {
                 namespace %% "scala-io-file" % version)
         }
 
+        val breeze = "org.scalanlp" %% "breeze" % "0.5.2"
+
         val jopt = "net.sf.jopt-simple" % "jopt-simple" % "4.5"
 
         val play_json = "com.typesafe.play" %% "play-json" % "2.2.1"
@@ -58,7 +60,7 @@ object ProjectBuild extends Build {
     lazy val projectSettings = Project.defaultSettings ++ pluginSettings ++ {
         Seq(libraryDependencies ++= {
                 import Dependencies._
-                scalaio ++ Seq(jopt, play_json, specs2)
+                scalaio ++ Seq(breeze, jopt, play_json, specs2)
             },
             fork in run := true,
             initialCommands in Compile := """
