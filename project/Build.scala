@@ -57,7 +57,7 @@ object ProjectBuild extends Build {
 
     lazy val pluginSettings = ideaSettings ++ assemblySettings
 
-    lazy val projectSettings = Project.defaultSettings ++ pluginSettings ++ {
+    lazy val bokehSettings = Project.defaultSettings ++ pluginSettings ++ {
         Seq(libraryDependencies ++= {
                 import Dependencies._
                 scalaio ++ Seq(breeze, jopt, play_json, specs2)
@@ -82,7 +82,15 @@ object ProjectBuild extends Build {
             })
     }
 
-    lazy val bokeh = Project(id="bokeh", base=file("."), settings=projectSettings)
+    lazy val examplesSettings = Project.defaultSettings ++ {
+        Seq(libraryDependencies ++= {
+                import Dependencies._
+                scalaio ++ Seq(breeze, jopt, play_json, specs2)
+            })
+    }
 
-    override def projects = Seq(bokeh)
+    lazy val bokeh = Project(id="bokeh", base=file("."), settings=bokehSettings)
+    lazy val examples = Project(id="examples", base=file("examples"), settings=examplesSettings) dependsOn(bokeh)
+
+    override def projects = Seq(bokeh, examples)
 }
