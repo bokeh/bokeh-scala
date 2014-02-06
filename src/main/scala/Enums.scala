@@ -69,3 +69,9 @@ object AngleUnits {
     case object Deg extends AngleUnits
     case object Rad extends AngleUnits
 }
+
+sealed trait Dimension
+object Dimension {
+    case object Width extends Dimension
+    case object Height extends Dimension
+}
