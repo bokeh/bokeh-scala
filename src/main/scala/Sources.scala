@@ -8,7 +8,6 @@ abstract class DataSource extends PlotObject {
 }
 
 class ColumnDataSource extends DataSource {
-    object data extends Field[this.type, Map[String, DenseVector[Double]]](this)
-    // object cont_ranges extends Field[Dict[]]
-    // object discrete_ranges extends Field[Dict[]]
+    type ArrayLike = DenseVector[Double]
+    object data extends Field[this.type, Map[String, ArrayLike]](this)
 }

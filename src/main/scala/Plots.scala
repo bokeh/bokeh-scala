@@ -15,8 +15,8 @@ class Plot extends PlotObject {
     object height extends Field[this.type, Int](this, 600)
     object width extends Field[this.type, Int](this, 600)
 
-    // object background_fill extends Field[Color]("white")
-    // object border_fill extends Field[Color]("white")
+    object background_fill extends Field[this.type, Color](this, Colors.White)
+    object border_fill extends Field[this.type, Color](this, Colors.White)
     object canvas_width extends Field[this.type, Int](this, 400)
     object canvas_height extends Field[this.type, Int](this, 400)
     object outer_width extends Field[this.type, Int](this, 400)
@@ -30,6 +30,6 @@ class Plot extends PlotObject {
 }
 
 class GridPlot extends Plot {
-    object children extends Field[GridPlot, List[List[Plot]]](this)
-    object border_space extends Field[GridPlot, Int](this, 0)
+    object children extends Field[this.type, List[List[Plot]]](this)
+    object border_space extends Field[this.type, Int](this, 0)
 }

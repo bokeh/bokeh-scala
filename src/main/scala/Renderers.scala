@@ -7,9 +7,10 @@ class Glyph extends Renderer {
     object xdata_range extends Field[this.type, PlotRange](this)
     object ydata_range extends Field[this.type, PlotRange](this)
 
-    // object units extends EnumField[Units]
+    object units extends Field[this.type, Units](this)
 
-    object glyph extends Field[this.type, BaseGlyph](this) // has_ref = False
-    // object nonselection_glyph extends Instance()
-    // object selection_glyph extends Instance()
+    // XXX: has_ref = False
+    object glyph extends Field[this.type, BaseGlyph](this)
+    object selection_glyph extends Field[this.type, BaseGlyph](this)
+    object nonselection_glyph extends Field[this.type, BaseGlyph](this)
 }

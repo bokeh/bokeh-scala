@@ -40,7 +40,7 @@ object Anscombe {
             .title(title)
             .width(400)
             .height(400)
-            //.border_fill(Colors.White)
+            .border_fill(Colors.White)
             //.background_fill("#e9e0db")
         val xaxis = new LinearAxis().dimension(0).location(Left(Location.Bottom))//.axis_line_color(None)
         val yaxis = new LinearAxis().dimension(1).location(Left(Location.Left))//.axis_line_color(None)
@@ -55,7 +55,7 @@ object Anscombe {
             .data_source(circles_source)
             .xdata_range(xdr)
             .ydata_range(ydr)
-            .glyph(new Circle().x(xname).y(yname).size(12)/*.fill_color("#cc6633").line_color("#cc6633").fill_alpha(0.5)*/)
+            .glyph(new Circle().x(xname).y(yname).size(12)/*.fill_color("#cc6633").line_color("#cc6633")*/.fill_alpha(50%%))
         plot.renderers := List(xaxis, yaxis, xgrid, ygrid, line_renderer, circle_renderer)
         plot
     }
