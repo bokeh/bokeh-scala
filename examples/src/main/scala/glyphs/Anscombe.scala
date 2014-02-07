@@ -66,5 +66,8 @@ object Anscombe {
     val IV  = make_plot("IV",  "xiv",  "yiv")
 
     val children = List(List(I, II), List(III, IV))
-    val grid: GridPlot = new GridPlot().children(children).width(800)
+    val grid = new GridPlot().children(children).width(800)
+
+    val session = new HTMLFileSession("anscombe.html")
+    session.save(grid)
 }
