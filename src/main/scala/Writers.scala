@@ -1,6 +1,10 @@
 package org.continuumio.bokeh
 
+import scala.reflect.ClassTag
+
 import play.api.libs.json.{Json,Reads,Writes,Format}
+import breeze.linalg.DenseVector
+
 import org.continuumio.bokeh.macros.JsonImpl
 
 object BokehJson {
@@ -9,6 +13,11 @@ object BokehJson {
 }
 
 object Formats {
+    implicit def DenseVectorWrites[T:Writes:ClassTag]: Writes[DenseVector[T]] = new Writes[DenseVector[T]] {
+        def writes(vec: DenseVector[T]) =
+            implicitly[Writes[Array[T]]].writes(vec.toArray)
+    }
+
     implicit val LineJoinJSON = BokehJson.enum[LineJoin]
     implicit val LineDashJSON = BokehJson.enum[LineDash]
     implicit val LineCapJSON = BokehJson.enum[LineCap]
