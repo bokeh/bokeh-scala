@@ -8,4 +8,6 @@ package object bokeh {
     implicit class IntPercent(value: Int) {
         def %% : Percent = Percent(value.toDouble/100)
     }
+
+    def uuid4(): String = java.util.UUID.randomUUID.toString
 }
