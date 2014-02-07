@@ -37,6 +37,8 @@ object ProjectBuild extends Build {
         val play_json = "com.typesafe.play" %% "play-json" % "2.2.1"
 
         val specs2 = "org.specs2" %% "specs2" % "2.1.1" % "test"
+
+        val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
     }
 
     val jrebelJar = settingKey[Option[File]]("Location of jrebel.jar")
@@ -67,6 +69,7 @@ object ProjectBuild extends Build {
                 import scala.reflect.runtime.{universe=>u}
                 import scalax.io.JavaConverters._
                 import scalax.file.Path
+                import org.continuumio.bokeh._
                 """,
             jrebelJar := {
                 val jar = Path.userHome / ".jrebel" / "jrebel" / "jrebel.jar"
@@ -82,15 +85,23 @@ object ProjectBuild extends Build {
             })
     }
 
-    lazy val examplesSettings = Project.defaultSettings ++ {
+    lazy val macrosSettings = Project.defaultSettings ++ {
         Seq(libraryDependencies ++= {
                 import Dependencies._
-                scalaio ++ Seq(breeze, jopt, play_json, specs2)
+                Seq(reflect.value, specs2)
             })
     }
 
-    lazy val bokeh = Project(id="bokeh", base=file("."), settings=bokehSettings)
+    lazy val examplesSettings = Project.defaultSettings ++ {
+        Seq(libraryDependencies ++= {
+                import Dependencies._
+                Seq(breeze, specs2)
+            })
+    }
+
+    lazy val bokeh = Project(id="bokeh", base=file("."), settings=bokehSettings) dependsOn(macros)
+    lazy val macros = Project(id="macros", base=file("macros"), settings=macrosSettings)
     lazy val examples = Project(id="examples", base=file("examples"), settings=examplesSettings) dependsOn(bokeh)
 
-    override def projects = Seq(bokeh, examples)
+    override def projects = Seq(bokeh, macros, examples)
 }
