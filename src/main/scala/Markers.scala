@@ -1,17 +1,21 @@
 package org.continuumio.bokeh
 
 sealed abstract class Marker extends BaseGlyph with FillProps with LineProps {
-    //x = DataSpec
-    //y = DataSpec
-    //size = DataSpec(units="screen", default=4, min_value=0)
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    object size extends DataSpec[this.type](this) {
+        // override val units = Units.Screen
+        // override val default = 4
+        // override val min_value = 0
+    }
 }
 
 class Circle extends Marker {
-    //radius = DataSpec(units="data", default=4, min_value=0)
+    // object radius extends DataSpec(units="data", default=4, min_value=0)
 }
 
 class Square extends Marker {
-    //angle = DataSpec
+    object angle extends DataSpec[this.type](this)
 }
 
 class Triangle extends Marker

@@ -2,55 +2,66 @@ package org.continuumio.bokeh
 
 abstract class PlotObject
 
-class Range1d extends PlotObject {
-    //start = Float
-    //end = Float
+abstract class PlotRange extends PlotObject
+
+class Range1d extends PlotRange {
+    object start extends Field[this.type, Double](this)
+    object end extends Field[this.type, Double](this)
 }
 
-class Glyph extends PlotObject {
-    //plot = Instance(has_ref=True)
-    //data_source = Instance(DataSource, has_ref=True)
-    //xdata_range = Instance(DataRange1d, has_ref=True)
-    //ydata_range = Instance(DataRange1d, has_ref=True)
+abstract class DataRange extends PlotRange
 
-    //units = Enum("screen", "data")
+class DataRange1d extends DataRange {
+    object start extends Field[this.type, Double](this)
+    object end extends Field[this.type, Double](this)
+    //object sources extends Field[List[ColumnsRef]]
+    object rangepadding extends Field[this.type, Double](this, 0.1)
+}
 
-    //glyph = Instance()
-    //nonselection_glyph = Instance()
-    //selection_glyph = Instance()
+abstract class Renderer
+
+class Glyph extends Renderer {
+    object data_source extends Field[this.type, DataSource](this)
+    object xdata_range extends Field[this.type, PlotRange](this)
+    object ydata_range extends Field[this.type, PlotRange](this)
+
+    // object units extends EnumField[Units]
+
+    object glyph extends Field[this.type, BaseGlyph](this) // has_ref = False
+    // object nonselection_glyph extends Instance()
+    // object selection_glyph extends Instance()
 }
 
 class Plot extends PlotObject {
-    //data_sources = List
-    //title = String("Bokeh Plot")
+    object data_sources extends Field[this.type, List[DataSource]](this)
+    object title extends Field[this.type, String](this, "Bokeh Plot")
 
-    //x_range = Instance(DataRange1d, has_ref=True)
-    //y_range = Instance(DataRange1d, has_ref=True)
-    //png = String('')
-    //title = String('')
-    //outline_props = Include(LineProps, prefix="outline")
+    object x_range extends Field[this.type, PlotRange](this)
+    object y_range extends Field[this.type, PlotRange](this)
 
-    //renderers = List(has_ref=True)
-    //tools = List(has_ref=True)
+    //// object outline_props extends Include(LineProps, prefix="outline")
 
-    //height = Int(600)
-    //width = Int(600)
+    object renderers extends Field[this.type, List[Renderer]](this)
+    object tools extends Field[this.type, List[Tool]](this)
 
-    //background_fill = Color("white")
-    //border_fill = Color("white")
-    //canvas_width = Int(400)
-    //canvas_height = Int(400)
-    //outer_width = Int(400)
-    //outer_height = Int(400)
-    //min_border_top = Int(50)
-    //min_border_bottom = Int(50)
-    //min_border_left = Int(50)
-    //min_border_right = Int(50)
-    //min_border = Int(50)
-    //script_inject_snippet = String("")
+    object height extends Field[this.type, Int](this, 600)
+    object width extends Field[this.type, Int](this, 600)
+
+    // object background_fill extends Field[Color]("white")
+    // object border_fill extends Field[Color]("white")
+    object canvas_width extends Field[this.type, Int](this, 400)
+    object canvas_height extends Field[this.type, Int](this, 400)
+    object outer_width extends Field[this.type, Int](this, 400)
+    object outer_height extends Field[this.type, Int](this, 400)
+    object min_border_top extends Field[this.type, Int](this, 50)
+    object min_border_bottom extends Field[this.type, Int](this, 50)
+    object min_border_left extends Field[this.type, Int](this, 50)
+    object min_border_right extends Field[this.type, Int](this, 50)
+    object min_border extends Field[this.type, Int](this, 50)
+    object script_inject_snippet extends Field[this.type, String](this)
 }
 
 class GridPlot extends Plot {
-    //children = List(List(has_ref=True), has_ref=True)
-    //border_space = Int(0)
+    object children extends Field[GridPlot, List[List[Plot]]](this)
+    object border_space extends Field[GridPlot, Int](this, 0)
 }

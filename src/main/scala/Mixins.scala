@@ -1,26 +1,26 @@
 package org.continuumio.bokeh
 
 trait FillProps { self: PlotObject =>
-    //val fill_color = ColorSpec("gray")
-    //val fill_alpha = Percent(1.0)
+    // object fill_color extends ColorSpec("gray")
+    // object fill_alpha extends Percent(1.0)
 }
 
 trait LineProps { self: PlotObject =>
-    //val line_color = ColorSpec("black")
-    //val line_width = Size(1)
-    //val line_alpha = Percent(1.0)
-    //val line_join = Enum[LineJoin]
-    //val line_cap = Enum[LineCap]
-    //val line_dash = Pattern
-    //val line_dash_offset = Int(0)
+    // object line_color extends ColorSpec("black")
+    object line_width extends Field[this.type, Double](this, 1) // Size
+    // object line_alpha extends Field[this.type, Percent](this, 100%)
+    object line_join extends Field[this.type, LineJoin](this)
+    object line_cap extends Field[this.type, LineCap](this)
+    // object line_dash extends Pattern
+    object line_dash_offset extends Field[this.type, Int](this, 0)
 }
 
 trait TextProps { self: PlotObject =>
-    //val text_font = String
-    //val text_font_size = String("10pt")
-    //val text_font_style = Enum[FontStyle]
-    //val text_color = Color("black")
-    //val text_alpha = Percent(1.0)
-    //val text_align = Enum[TextAlign]
-    //val text_baseline = Enum[Baseline]
+    object text_font extends Field[this.type, String](this)
+    // object text_font_size extends String("10pt")
+    object text_font_style extends Field[this.type, FontStyle](this)
+    // object text_color extends Color("black")
+    // object text_alpha extends Field[this.type, Percent](this, 100%)
+    object text_align extends Field[this.type, TextAlign](this)
+    object text_baseline extends Field[this.type, Baseline](this)
 }

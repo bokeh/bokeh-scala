@@ -1,25 +1,23 @@
 package org.continuumio.bokeh
 
-abstract class Tool extends PlotObject {
-    //plot = Instance(Plot, has_ref=True)
-}
+abstract class Tool extends PlotObject
 
 class PanTool extends Tool {
-    //dimensions = List(Enum(Dimension))
+    object dimensions extends Field[this.type, List[Dimension]](this)
 }
 
 class WheelZoomTool extends Tool {
-    //dimensions = List(Enum(Dimension))
+    object dimensions extends Field[this.type, List[Dimension]](this)
 }
 
 class PreviewSaveTool extends Tool {
-    //dimensions = List(Enum(Dimension))
-    //dataranges = List(has_ref=True)
+    object dimensions extends Field[this.type, List[Dimension]](this)
+    object dataranges extends Field[this.type, List[DataRange]](this)
 }
 
 class EmbedTool extends Tool {
-    //dimensions = List(Enum(Dimension))
-    //dataranges = List(has_ref=True)
+    object dimensions extends Field[this.type, List[Dimension]](this)
+    object dataranges extends Field[this.type, List[DataRange]](this)
 }
 
 class ResetTool extends Tool
@@ -29,11 +27,11 @@ class ResizeTool extends Tool
 class CrosshairTool extends Tool
 
 class BoxZoomTool extends Tool {
-    //renderers = List(has_ref=True)
-    //select_every_mousemove = Bool(True)
+    object renderers extends Field[this.type, List[Renderer]](this)
+    object select_every_mousemove extends Field[this.type, Boolean](this, true)
 }
 
 class BoxSelectTool extends Tool {
-    //renderers = List(has_ref=True)
-    //select_every_mousemove = Bool(True)
+    object renderers extends Field[this.type, List[Renderer]](this)
+    object select_every_mousemove extends Field[this.type, Boolean](this, true)
 }

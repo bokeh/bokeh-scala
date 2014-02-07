@@ -1,46 +1,43 @@
 package org.continuumio.bokeh
 
-abstract class GuideRenderer extends PlotObject
+abstract class GuideRenderer extends Renderer {
+    object dimension extends Field[this.type, Int](this, 0)
+}
 
 class LinearAxis extends GuideRenderer {
-    //type = String("linear_axis")
+    // object type extends String("linear_axis")
 
-    //dimension = Int(0)
-    //location = Either(String('min'), Float)
-    //bounds = String('auto')
+    object location extends Field[this.type, Either[Location, Float]](this)
+    // object bounds extends String('auto')
 
-    //axis_label = String
-    //axis_label_standoff = Int
-    //axis_label_props = Include(TextProps, prefix="axis_label")
+    // object axis_label extends String
+    // object axis_label_standoff extends Int
+    // object axis_label_props extends Include(TextProps, prefix="axis_label")
 
-    //major_label_standoff = Int
-    //major_label_orientation = Either(Enum("horizontal", "vertical"), Int)
-    //major_label_props = Include(TextProps, prefix="major_label")
+    // object major_label_standoff extends Int
+    // object major_label_orientation extends Either(Enum[Orientation], Int)
+    // object major_label_props extends Include(TextProps, prefix="major_label")
 
-    //axis_props = Include(LineProps, prefix="axis")
-    //tick_props = Include(LineProps, prefix="major_tick")
+    // object axis_props extends Include(LineProps, prefix="axis")
+    // object tick_props extends Include(LineProps, prefix="major_tick")
 
-    //major_tick_in = Int
-    //major_tick_out = Int
+    object major_tick_in extends Field[this.type, Int](this)
+    object major_tick_out extends Field[this.type, Int](this)
 }
 
 class DatetimeAxis extends LinearAxis {
-    //type = String("datetime_axis")
-    //axis_label = String("date")
-    //scale = String("time")
-    //num_labels = Int(8)
-    //char_width = Int(10)
-    //fill_ratio = Float(0.3)
-    //formats = Dict({"days": ["%m/%d/%Y"]})
+    // object type extends String("datetime_axis")
+    // object axis_label extends String("date")
+    // object scale extends String("time")
+    // object num_labels extends Int(8)
+    // object char_width extends Int(10)
+    // object fill_ratio extends Float(0.3)
+    // object formats extends Dict({"days": ["%m/%d/%Y"]})
 }
 
 class Grid extends GuideRenderer {
-    //type = String("grid")
-
-    //dimension = Int(0)
-    //bounds = String('auto')
-
-    //is_datetime = Bool(False)
-
-    //grid_props = Include(LineProps, prefix="grid")
+    // object type extends String("grid")
+    // object bounds extends String('auto')
+    // object is_datetime extends Bool(False)
+    // object grid_props extends Include(LineProps, prefix="grid")
 }

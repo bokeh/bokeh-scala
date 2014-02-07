@@ -3,141 +3,142 @@ package org.continuumio.bokeh
 abstract class BaseGlyph extends PlotObject
 
 class AnnularWedge extends BaseGlyph with FillProps with LineProps {
-    //x = DataSpec
-    //y = DataSpec
-    //inner_radius = DataSpec(min_value=0)
-    //outer_radius = DataSpec(min_value=0)
-    //start_angle = DataSpec
-    //end_angle = DataSpec
-    //direction = Enum('clock', 'anticlock')
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    object inner_radius extends DataSpec[this.type](this) // with Radius
+    object outer_radius extends DataSpec[this.type](this) // with Radius
+    object start_angle extends DataSpec[this.type](this)
+    object end_angle extends DataSpec[this.type](this)
+    object direction extends Field[this.type, Direction](this)
 }
 
 class Annulus extends BaseGlyph with FillProps with LineProps {
-    //x = DataSpec
-    //y = DataSpec
-    //inner_radius = DataSpec(min_value=0)
-    //outer_radius = DataSpec(min_value=0)
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    object inner_radius extends DataSpec[this.type](this) // with Radius
+    object outer_radius extends DataSpec[this.type](this) // with Radius
 }
 
 class Arc extends BaseGlyph with LineProps {
-    //x = DataSpec
-    //y = DataSpec
-    //radius = DataSpec(min_value=0)
-    //start_angle = DataSpec
-    //end_angle = DataSpec
-    //direction = Enum('clock', 'anticlock')
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    object radius extends DataSpec[this.type](this) // with Radius
+    object start_angle extends DataSpec[this.type](this)
+    object end_angle extends DataSpec[this.type](this)
+    object direction extends Field[this.type, Direction](this)
 }
 
 class Bezier extends BaseGlyph with LineProps {
-    //x0 = DataSpec
-    //y0 = DataSpec
-    //x1 = DataSpec
-    //y1 = DataSpec
-    //cx0 = DataSpec
-    //cy0 = DataSpec
-    //cx1 = DataSpec
-    //cy1 = DataSpec
+    object x0 extends DataSpec[this.type](this)
+    object y0 extends DataSpec[this.type](this)
+    object x1 extends DataSpec[this.type](this)
+    object y1 extends DataSpec[this.type](this)
+    object cx0 extends DataSpec[this.type](this)
+    object cy0 extends DataSpec[this.type](this)
+    object cx1 extends DataSpec[this.type](this)
+    object cy1 extends DataSpec[this.type](this)
 }
 
 class Image extends BaseGlyph {
-    //image = DataSpec
-    //x = DataSpec
-    //y = DataSpec
-    //dw = DataSpec
-    //dh = DataSpec
-    //palette = DataSpec
+    // object image extends DataSpec[this.type](this)
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    object dw extends DataSpec[this.type](this)
+    object dh extends DataSpec[this.type](this)
+    object palette extends DataSpec[this.type](this)
 }
 
 class ImageURI extends BaseGlyph {
-    //x = DataSpec
-    //y = DataSpec
-    //angle = DataSpec
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    object angle extends DataSpec[this.type](this)
+    // object url extends DataSpec[this.type, String](this)
 }
 
 class ImageRGBA extends BaseGlyph {
-    //image = DataSpec
-    //x = DataSpec
-    //y = DataSpec
-    //dw = DataSpec
-    //dh = DataSpec
+    object image extends DataSpec[this.type](this)
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    object dw extends DataSpec[this.type](this)
+    object dh extends DataSpec[this.type](this)
 }
 
 class Line extends BaseGlyph with LineProps {
-    //x = DataSpec
-    //y = DataSpec
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
 }
 
 class MultiLine extends BaseGlyph with LineProps {
-    //xs = DataSpec
-    //ys = DataSpec
+    object xs extends DataSpec[this.type](this)
+    object ys extends DataSpec[this.type](this)
 }
 
 class Oval extends BaseGlyph with FillProps with LineProps {
-    //width = DataSpec
-    //height = DataSpec
-    //angle = DataSpec
+    object width extends DataSpec[this.type](this)
+    object height extends DataSpec[this.type](this)
+    object angle extends DataSpec[this.type](this)
 }
 
 class Patch extends BaseGlyph with FillProps with LineProps {
-    //x = DataSpec
-    //y = DataSpec
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
 }
 
 class Patches extends BaseGlyph with LineProps with FillProps {
-    //xs = DataSpec
-    //ys = DataSpec
+    object xs extends DataSpec[this.type](this)
+    object ys extends DataSpec[this.type](this)
 }
 
 class Quad extends BaseGlyph with FillProps with LineProps {
-    //left = DataSpec
-    //right = DataSpec
-    //bottom = DataSpec
-    //top = DataSpec
+    object left extends DataSpec[this.type](this)
+    object right extends DataSpec[this.type](this)
+    object bottom extends DataSpec[this.type](this)
+    object top extends DataSpec[this.type](this)
 }
 
 class Quadratic extends BaseGlyph with LineProps {
-    //x0 = DataSpec
-    //y0 = DataSpec
-    //x1 = DataSpec
-    //y1 = DataSpec
-    //cx = DataSpec
-    //cy = DataSpec
+    object x0 extends DataSpec[this.type](this)
+    object y0 extends DataSpec[this.type](this)
+    object x1 extends DataSpec[this.type](this)
+    object y1 extends DataSpec[this.type](this)
+    object cx extends DataSpec[this.type](this)
+    object cy extends DataSpec[this.type](this)
 }
 
 class Ray extends BaseGlyph with LineProps {
-    //x = DataSpec
-    //y = DataSpec
-    //angle = DataSpec
-    //length = DataSpec
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    object angle extends DataSpec[this.type](this)
+    object length extends DataSpec[this.type](this)
 }
 
 class Rect extends BaseGlyph with FillProps with LineProps {
-    //x = DataSpec
-    //y = DataSpec
-    //width = DataSpec
-    //height = DataSpec
-    //angle = DataSpec
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    object width extends DataSpec[this.type](this)
+    object height extends DataSpec[this.type](this)
+    object angle extends DataSpec[this.type](this)
 }
 
 class Segment extends BaseGlyph with LineProps {
-    //x0 = DataSpec
-    //y0 = DataSpec
-    //x1 = DataSpec
-    //y1 = DataSpec
+    object x0 extends DataSpec[this.type](this)
+    object y0 extends DataSpec[this.type](this)
+    object x1 extends DataSpec[this.type](this)
+    object y1 extends DataSpec[this.type](this)
 }
 
 class Text extends BaseGlyph with TextProps {
-    //x = DataSpec
-    //y = DataSpec
-    //text = DataSpec
-    //angle = DataSpec
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    // object text extends DataSpec[this.type, String](this)
+    object angle extends DataSpec[this.type](this)
 }
 
 class Wedge extends BaseGlyph with FillProps with LineProps {
-    //x = DataSpec
-    //y = DataSpec
-    //radius = DataSpec(min_value=0)
-    //start_angle = DataSpec
-    //end_angle = DataSpec
-    //direction = Enum('clock', 'anticlock')
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    object radius extends DataSpec[this.type](this) // with Radius
+    object start_angle extends DataSpec[this.type](this)
+    object end_angle extends DataSpec[this.type](this)
+    object direction extends Field[this.type, Direction](this)
 }
