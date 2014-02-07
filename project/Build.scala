@@ -39,6 +39,12 @@ object ProjectBuild extends Build {
         val specs2 = "org.specs2" %% "specs2" % "2.1.1" % "test"
 
         val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
+
+        val compiler = Def.setting { "org.scala-lang" % "scala-compiler" % scalaVersion.value }
+
+        val paradise = Def.setting { "org.scalamacros" % "paradise" % "2.0.0-M3" cross CrossVersion.full }
+
+        val quasiquotes = Def.setting { "org.scalamacros" % "quasiquotes" % "2.0.0-M3" cross CrossVersion.full }
     }
 
     val jrebelJar = settingKey[Option[File]]("Location of jrebel.jar")
@@ -62,7 +68,7 @@ object ProjectBuild extends Build {
     lazy val bokehSettings = Project.defaultSettings ++ pluginSettings ++ {
         Seq(libraryDependencies ++= {
                 import Dependencies._
-                scalaio ++ Seq(breeze, jopt, play_json, specs2)
+                scalaio ++ Seq(compiler.value, breeze, jopt, play_json, specs2)
             },
             fork in run := true,
             initialCommands in Compile := """
@@ -86,9 +92,10 @@ object ProjectBuild extends Build {
     }
 
     lazy val macrosSettings = Project.defaultSettings ++ {
-        Seq(libraryDependencies ++= {
+        Seq(addCompilerPlugin("org.scalamacros" % "paradise" % "2.0.0-M3" cross CrossVersion.full),
+            libraryDependencies ++= {
                 import Dependencies._
-                Seq(reflect.value, specs2)
+                Seq(reflect.value, quasiquotes.value, play_json, specs2)
             })
     }
 

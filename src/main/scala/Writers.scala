@@ -1,66 +1,77 @@
 package org.continuumio.bokeh
 
-/*
-object Formats {
-    implicit val AnnularWedgeJSON = Json.format[AnnularWedge]
-    implicit val AnnulusJSON = Json.format[Annulus]
-    implicit val ArcJSON = Json.format[Arc]
-    implicit val BezierJSON = Json.format[Bezier]
-    implicit val ImageJSON = Json.format[Image]
-    implicit val ImageURIJSON = Json.format[ImageURI]
-    implicit val ImageRGBAJSON = Json.format[ImageRGBA]
-    implicit val LineJSON = Json.format[Line]
-    implicit val MultiLineJSON = Json.format[MultiLine]
-    implicit val OvalJSON = Json.format[Oval]
-    implicit val PatchJSON = Json.format[Patch]
-    implicit val PatchesJSON = Json.format[Patches]
-    implicit val QuadJSON = Json.format[Quad]
-    implicit val QuadraticJSON = Json.format[Quadratic]
-    implicit val RayJSON = Json.format[Ray]
-    implicit val RectJSON = Json.format[Rect]
-    implicit val SegmentJSON = Json.format[Segment]
-    implicit val TextJSON = Json.format[Text]
-    implicit val WedgeJSON = Json.format[Wedge]
+import play.api.libs.json.{Reads,Writes,Format}
+import org.continuumio.bokeh.macros.JsonImpl
 
-    implicit val LinearAxisJSON = Json.format[LinearAxis]
-    implicit val DatetimeAxisJSON = Json.format[DatetimeAxis]
-    implicit val GridJSON = Json.format[Grid]
-
-    implicit val CircleJSON = Json.format[Circle]
-    implicit val SquareJSON = Json.format[Square]
-    implicit val TriangleJSON = Json.format[Triangle]
-    implicit val CrossJSON = Json.format[Cross]
-    implicit val XmarkerJSON = Json.format[Xmarker]
-    implicit val DiamondJSON = Json.format[Diamond]
-    implicit val InvertedTriangleJSON = Json.format[InvertedTriangle]
-    implicit val SquareXJSON = Json.format[SquareX]
-    implicit val AsteriskJSON = Json.format[Asterisk]
-    implicit val DiamondCrossJSON = Json.format[DiamondCross]
-    implicit val CircleCrossJSON = Json.format[CircleCross]
-    implicit val HexStarJSON = Json.format[HexStar]
-    implicit val SquareCrossJSON = Json.format[SquareCross]
-    implicit val CircleXJSON = Json.format[CircleX]
-
-    implicit val PlotContextJSON = Json.format[PlotContext]
-
-    implicit val PlotJSON = Json.format[Plot]
-    implicit val GridPlotJSON = Json.format[GridPlot]
-
-    implicit val Range1dJSON = Json.format[Range1d]
-    implicit val DataRange1dJSON = Json.format[DataRange1d]
-
-    implicit val GlyphJSON = Json.format[Glyph]
-
-    implicit val ColumnDataSourceJSON = Json.format[ColumnDataSource]
-
-    implicit val PanToolJSON = Json.format[PanTool]
-    implicit val WheelZoomToolJSON = Json.format[WheelZoomTool]
-    implicit val PreviewSaveToolJSON = Json.format[PreviewSaveTool]
-    implicit val EmbedToolJSON = Json.format[EmbedTool]
-    implicit val ResetToolJSON = Json.format[ResetTool]
-    implicit val ResizeToolJSON = Json.format[ResizeTool]
-    implicit val CrosshairToolJSON = Json.format[CrosshairTool]
-    implicit val BoxZoomToolJSON = Json.format[BoxZoomTool]
-    implicit val BoxSelectToolJSON = Json.format[BoxSelectTool]
+object BokehJson {
+    def writes[T]: Writes[T] = macro JsonImpl.writesImpl[T]
 }
-*/
+
+object Formats {
+    /*
+    implicit val AnnularWedgeJSON = BokehJson.writes[AnnularWedge]
+    implicit val AnnulusJSON = BokehJson.writes[Annulus]
+    implicit val ArcJSON = BokehJson.writes[Arc]
+    implicit val BezierJSON = BokehJson.writes[Bezier]
+    implicit val ImageJSON = BokehJson.writes[Image]
+    implicit val ImageURIJSON = BokehJson.writes[ImageURI]
+    implicit val ImageRGBAJSON = BokehJson.writes[ImageRGBA]
+    implicit val LineJSON = BokehJson.writes[Line]
+    implicit val MultiLineJSON = BokehJson.writes[MultiLine]
+    implicit val OvalJSON = BokehJson.writes[Oval]
+    implicit val PatchJSON = BokehJson.writes[Patch]
+    implicit val PatchesJSON = BokehJson.writes[Patches]
+    implicit val QuadJSON = BokehJson.writes[Quad]
+    implicit val QuadraticJSON = BokehJson.writes[Quadratic]
+    implicit val RayJSON = BokehJson.writes[Ray]
+    implicit val RectJSON = BokehJson.writes[Rect]
+    implicit val SegmentJSON = BokehJson.writes[Segment]
+    implicit val TextJSON = BokehJson.writes[Text]
+    implicit val WedgeJSON = BokehJson.writes[Wedge]
+
+    implicit val LinearAxisJSON = BokehJson.writes[LinearAxis]
+    */
+    implicit val DatetimeAxisJSON = BokehJson.writes[DatetimeAxis]
+    /*
+    implicit val GridJSON = BokehJson.writes[Grid]
+
+    implicit val CircleJSON = BokehJson.writes[Circle]
+    implicit val SquareJSON = BokehJson.writes[Square]
+    implicit val TriangleJSON = BokehJson.writes[Triangle]
+    implicit val CrossJSON = BokehJson.writes[Cross]
+    implicit val XmarkerJSON = BokehJson.writes[Xmarker]
+    implicit val DiamondJSON = BokehJson.writes[Diamond]
+    implicit val InvertedTriangleJSON = BokehJson.writes[InvertedTriangle]
+    implicit val SquareXJSON = BokehJson.writes[SquareX]
+    implicit val AsteriskJSON = BokehJson.writes[Asterisk]
+    implicit val DiamondCrossJSON = BokehJson.writes[DiamondCross]
+    implicit val CircleCrossJSON = BokehJson.writes[CircleCross]
+    implicit val HexStarJSON = BokehJson.writes[HexStar]
+    implicit val SquareCrossJSON = BokehJson.writes[SquareCross]
+    implicit val CircleXJSON = BokehJson.writes[CircleX]
+    */
+
+    //implicit val PlotContextJSON = BokehJson.writes[PlotContext]
+
+    /*
+    implicit val PlotJSON = BokehJson.writes[Plot]
+    implicit val GridPlotJSON = BokehJson.writes[GridPlot]
+
+    implicit val Range1dJSON = BokehJson.writes[Range1d]
+    implicit val DataRange1dJSON = BokehJson.writes[DataRange1d]
+
+    implicit val GlyphJSON = BokehJson.writes[Glyph]
+
+    implicit val ColumnDataSourceJSON = BokehJson.writes[ColumnDataSource]
+
+    implicit val PanToolJSON = BokehJson.writes[PanTool]
+    implicit val WheelZoomToolJSON = BokehJson.writes[WheelZoomTool]
+    implicit val PreviewSaveToolJSON = BokehJson.writes[PreviewSaveTool]
+    implicit val EmbedToolJSON = BokehJson.writes[EmbedTool]
+    implicit val ResetToolJSON = BokehJson.writes[ResetTool]
+    implicit val ResizeToolJSON = BokehJson.writes[ResizeTool]
+    implicit val CrosshairToolJSON = BokehJson.writes[CrosshairTool]
+    implicit val BoxZoomToolJSON = BokehJson.writes[BoxZoomTool]
+    implicit val BoxSelectToolJSON = BokehJson.writes[BoxSelectTool]
+    */
+}
