@@ -88,7 +88,7 @@ object Location {
 }
 
 sealed trait Color extends Enum
-object Colors {
+object Color {
     case object Indigo extends Color
     case object Gold extends Color
     case object Firebrick extends Color

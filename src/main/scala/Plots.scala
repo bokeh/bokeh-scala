@@ -15,8 +15,8 @@ class Plot extends PlotObject {
     object height extends Field[this.type, Int](this, 600)
     object width extends Field[this.type, Int](this, 600)
 
-    object background_fill extends Field[this.type, Color](this, Colors.White)
-    object border_fill extends Field[this.type, Color](this, Colors.White)
+    object background_fill extends Field[this.type, Color](this, Color.White)
+    object border_fill extends Field[this.type, Color](this, Color.White)
     object canvas_width extends Field[this.type, Int](this, 400)
     object canvas_height extends Field[this.type, Int](this, 400)
     object outer_width extends Field[this.type, Int](this, 400)

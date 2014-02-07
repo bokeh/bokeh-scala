@@ -40,7 +40,7 @@ object Anscombe {
             .title(title)
             .width(400)
             .height(400)
-            .border_fill(Colors.White)
+            .border_fill(Color.White)
             //.background_fill("#e9e0db")
         val xaxis = new LinearAxis().dimension(0).location(Left(Location.Bottom))//.axis_line_color(None)
         val yaxis = new LinearAxis().dimension(1).location(Left(Location.Left))//.axis_line_color(None)
