@@ -1,13 +1,28 @@
 package org.continuumio.bokeh
 
-import play.api.libs.json.{Reads,Writes,Format}
+import play.api.libs.json.{Json,Reads,Writes,Format}
 import org.continuumio.bokeh.macros.JsonImpl
 
 object BokehJson {
     def writes[T]: Writes[T] = macro JsonImpl.writesImpl[T]
+    def enum[T <: Enum]: Writes[T] = macro JsonImpl.enumImpl[T]
 }
 
 object Formats {
+    implicit val LineJoinJSON = BokehJson.enum[LineJoin]
+    implicit val LineDashJSON = BokehJson.enum[LineDash]
+    implicit val LineCapJSON = BokehJson.enum[LineCap]
+    implicit val FontStyleJSON = BokehJson.enum[FontStyle]
+    implicit val TextAlignJSON = BokehJson.enum[TextAlign]
+    implicit val BaselineJSON = BokehJson.enum[Baseline]
+    implicit val DirectionJSON = BokehJson.enum[Direction]
+    implicit val OrientationJSON = BokehJson.enum[Orientation]
+    implicit val UnitsJSON = BokehJson.enum[Units]
+    implicit val AngleUnitsJSON = BokehJson.enum[AngleUnits]
+    implicit val DimensionJSON = BokehJson.enum[Dimension]
+    implicit val LocationJSON = BokehJson.enum[Location]
+    implicit val ColorJSON = BokehJson.enum[Color]
+
     /*
     implicit val AnnularWedgeJSON = BokehJson.writes[AnnularWedge]
     implicit val AnnulusJSON = BokehJson.writes[Annulus]

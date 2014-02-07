@@ -52,4 +52,23 @@ object JsonImpl {
             }
             """)
     }
+
+    def enumImpl[T: c.WeakTypeTag](c: Context): c.Expr[Writes[T]] = {
+        import c.universe._
+
+        val tpe = weakTypeOf[T]
+        val sym = tpe.typeSymbol
+        val cls = sym.asClass
+
+        if (!cls.knownDirectSubclasses.forall(_.isModuleClass))
+            c.abort(c.enclosingPosition, "all descendants of an Enum must be case objects")
+
+        c.Expr[Writes[T]](
+            q"""
+            new play.api.libs.json.Writes[$sym] {
+                def writes(obj: $sym) =
+                    play.api.libs.json.JsString(obj.toString.toLowerCase)
+            }
+            """)
+    }
 }
