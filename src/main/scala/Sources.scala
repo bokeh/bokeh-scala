@@ -2,7 +2,7 @@ package org.continuumio.bokeh
 
 import breeze.linalg.DenseVector
 
-abstract class DataSource extends PlotObject {
+sealed abstract class DataSource extends PlotObject {
     object column_names extends Field[this.type, List[String]](this)
     object selected extends Field[this.type, List[String]](this)
 }

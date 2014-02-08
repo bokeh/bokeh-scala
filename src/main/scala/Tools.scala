@@ -1,6 +1,6 @@
 package org.continuumio.bokeh
 
-abstract class Tool extends PlotObject
+sealed abstract class Tool extends PlotObject
 
 class PanTool extends Tool {
     object dimensions extends Field[this.type, List[Dimension]](this)
