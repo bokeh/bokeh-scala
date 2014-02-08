@@ -75,6 +75,7 @@ object ProjectBuild extends Build {
                 import scala.reflect.runtime.{universe=>u}
                 import scalax.io.JavaConverters._
                 import scalax.file.Path
+                import play.api.libs.json.Json
                 import org.continuumio.bokeh._
                 """,
             jrebelJar := {

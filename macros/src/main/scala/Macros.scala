@@ -7,12 +7,43 @@ object Macros {
     def membersImpl[A: c.WeakTypeTag](c: Context): c.Expr[List[String]] = {
         import c.universe._
         val tpe = weakTypeOf[A]
-        val members = tpe.declarations.map(_.name.decoded).toList.distinct
+        val members = tpe.members.map(_.name.decoded).toList.distinct
         val literals = members.map(member => Literal(Constant(member)))
         c.Expr[List[String]](Apply(reify(List).tree, literals))
     }
 
     def members[A] = macro membersImpl[A]
+
+    def fieldsImpl[A: c.WeakTypeTag](c: Context): c.Expr[List[String]] = {
+        import c.universe._
+
+        val tpe = weakTypeOf[A]
+        val tpeSymbol = tpe.typeSymbol
+
+        val fieldNames = tpeSymbol
+            .asClass
+            .typeSignature
+            .members
+            .toList
+            .filter(_.isModule)
+            .map(_.asModule)
+            .filter(_.moduleClass
+                     .asClass
+                     .baseClasses
+                     .map(_.fullName)
+                     .contains("org.continuumio.bokeh.Field"))
+            .map(_.name.decoded)
+
+        val fields = fieldNames.map { fieldName =>
+            Literal(Constant(fieldName))
+        }
+
+        c.Expr[List[String]](
+            Apply(reify(List).tree, fields)
+        )
+    }
+
+    def fields[A] = macro fieldsImpl[A]
 }
 
 object JsonImpl {
