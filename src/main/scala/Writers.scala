@@ -13,7 +13,7 @@ object BokehJson {
     def sealedWrites[T]: Writes[T] = macro JsonImpl.sealedWritesImpl[T]
 }
 
-object Formats {
+trait DataFormats {
     implicit def DenseVectorJSON[T:Writes:ClassTag]: Writes[DenseVector[T]] = new Writes[DenseVector[T]] {
         def writes(vec: DenseVector[T]) =
             implicitly[Writes[Array[T]]].writes(vec.toArray)
@@ -23,7 +23,9 @@ object Formats {
         def writes(percent: Percent) =
             implicitly[Writes[Double]].writes(percent.value)
     }
+}
 
+trait EnumFormats {
     implicit val LineJoinJSON = BokehJson.enum[LineJoin]
     implicit val LineDashJSON = BokehJson.enum[LineDash]
     implicit val LineCapJSON = BokehJson.enum[LineCap]
@@ -37,7 +39,9 @@ object Formats {
     implicit val DimensionJSON = BokehJson.enum[Dimension]
     implicit val LocationJSON = BokehJson.enum[Location]
     implicit val ColorJSON = BokehJson.enum[Color]
+}
 
+object Formats extends DataFormats with EnumFormats {
     implicit val RangeJSON = BokehJson.sealedWrites[Range]
 
     implicit val DataSourceJSON = BokehJson.sealedWrites[DataSource]
