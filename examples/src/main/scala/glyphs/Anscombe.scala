@@ -2,7 +2,7 @@ package org.continuumio.bokeh
 
 import breeze.linalg._
 
-object Anscombe {
+object Anscombe extends App {
     val quartets = List("xi", "yi", "xii", "yii", "xiii", "yiii", "xiv", "yiv")
 
     val raw_columns = DenseMatrix(
