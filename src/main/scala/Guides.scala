@@ -7,7 +7,7 @@ abstract class GuideRenderer extends Renderer {
 class LinearAxis extends GuideRenderer {
     // object type extends String("linear_axis")
 
-    object location extends Field[this.type, Either[Location, Float]](this)
+    //object location extends Field[this.type, Either[Location, Float]](this)
     // object bounds extends String('auto')
 
     object axis_label extends Field[this.type, String](this)

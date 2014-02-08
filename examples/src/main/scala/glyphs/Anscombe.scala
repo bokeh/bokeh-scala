@@ -42,8 +42,8 @@ object Anscombe {
             .height(400)
             .border_fill(Color.White)
             //.background_fill("#e9e0db")
-        val xaxis = new LinearAxis().dimension(0).location(Left(Location.Bottom))//.axis_line_color(None)
-        val yaxis = new LinearAxis().dimension(1).location(Left(Location.Left))//.axis_line_color(None)
+        val xaxis = new LinearAxis().dimension(0)/*.location(Left(Location.Bottom)).axis_line_color(None)*/
+        val yaxis = new LinearAxis().dimension(1)/*.location(Left(Location.Left)).axis_line_color(None)*/
         val xgrid = new Grid().dimension(0)
         val ygrid = new Grid().dimension(1)
         val line_renderer = new Glyph()
