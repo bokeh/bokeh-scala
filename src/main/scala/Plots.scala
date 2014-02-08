@@ -4,8 +4,8 @@ class Plot extends PlotObject {
     object data_sources extends Field[this.type, List[DataSource]](this)
     object title extends Field[this.type, String](this, "Bokeh Plot")
 
-    object x_range extends Field[this.type, PlotRange](this)
-    object y_range extends Field[this.type, PlotRange](this)
+    object x_range extends Field[this.type, Range](this)
+    object y_range extends Field[this.type, Range](this)
 
     //// object outline_props extends Include(LineProps, prefix="outline")
 

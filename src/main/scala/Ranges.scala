@@ -1,15 +1,15 @@
 package org.continuumio.bokeh
 
-abstract class PlotRange extends PlotObject
+sealed abstract class Range extends PlotObject
 
-class Range1d extends PlotRange {
+class Range1d extends Range {
     object start extends Field[this.type, Double](this)
     object end extends Field[this.type, Double](this)
 }
 
-abstract class DataRange extends PlotRange
+trait DataRange { self: Range => }
 
-class DataRange1d extends DataRange {
+class DataRange1d extends Range with DataRange {
     object start extends Field[this.type, Double](this)
     object end extends Field[this.type, Double](this)
     //object sources extends Field[List[ColumnsRef]]

@@ -4,8 +4,8 @@ abstract class Renderer
 
 class Glyph extends Renderer {
     object data_source extends Field[this.type, DataSource](this)
-    object xdata_range extends Field[this.type, PlotRange](this)
-    object ydata_range extends Field[this.type, PlotRange](this)
+    object xdata_range extends Field[this.type, Range](this)
+    object ydata_range extends Field[this.type, Range](this)
 
     object units extends Field[this.type, Units](this)
 
