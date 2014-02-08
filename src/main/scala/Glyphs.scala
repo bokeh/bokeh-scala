@@ -1,6 +1,6 @@
 package org.continuumio.bokeh
 
-abstract class BaseGlyph extends PlotObject
+sealed abstract class BaseGlyph extends PlotObject
 
 class AnnularWedge extends BaseGlyph with FillProps with LineProps {
     object x extends DataSpec[this.type](this)
@@ -142,3 +142,45 @@ class Wedge extends BaseGlyph with FillProps with LineProps {
     object end_angle extends DataSpec[this.type](this)
     object direction extends Field[this.type, Direction](this)
 }
+
+trait Marker extends FillProps with LineProps { self: BaseGlyph =>
+    object x extends DataSpec[this.type](this)
+    object y extends DataSpec[this.type](this)
+    object size extends DataSpec[this.type](this) {
+        // override val units = Units.Screen
+        // override val default = 4
+        // override val min_value = 0
+    }
+}
+
+class Circle extends BaseGlyph with Marker {
+    // object radius extends DataSpec(units="data", default=4, min_value=0)
+}
+
+class Square extends BaseGlyph with Marker {
+    object angle extends DataSpec[this.type](this)
+}
+
+class Triangle extends BaseGlyph with Marker
+
+class Cross extends BaseGlyph with Marker
+
+class Xmarker extends BaseGlyph with Marker
+
+class Diamond extends BaseGlyph with Marker
+
+class InvertedTriangle extends BaseGlyph with Marker
+
+class SquareX extends BaseGlyph with Marker
+
+class Asterisk extends BaseGlyph with Marker
+
+class DiamondCross extends BaseGlyph with Marker
+
+class CircleCross extends BaseGlyph with Marker
+
+class HexStar extends BaseGlyph with Marker
+
+class SquareCross extends BaseGlyph with Marker
+
+class CircleX extends BaseGlyph with Marker
