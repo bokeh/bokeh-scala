@@ -71,4 +71,78 @@ object JsonImpl {
             }
             """)
     }
+
+    def sealedWritesImpl[T: c.WeakTypeTag](c: Context): c.Expr[Writes[T]] = {
+        import c.universe._
+
+        val tpe = weakTypeOf[T]
+        val symbol = tpe.typeSymbol
+
+        if (!symbol.isClass) {
+            c.abort(c.enclosingPosition, "expected a class or trait")
+        }
+
+        val cls = symbol.asClass
+
+        if (!cls.isSealed) {
+            c.abort(c.enclosingPosition, "expected a sealed trait")
+        } else {
+            val children = cls.knownDirectSubclasses.toList
+
+            if (children.isEmpty) {
+                c.abort(c.enclosingPosition, "trait has no subclasses")
+            } else {
+                val named = children.map { child =>
+                    (child, newTermName("$writes$" + child.name.toString))
+                }
+
+                val valDefs = named.map { case (child, name) =>
+                    q"val $name = org.continuumio.bokeh.BokehJson.writes[$child]"
+                }
+
+                val caseDefs = named.map { case (child, name) =>
+                    CaseDef(
+                        Bind(newTermName("o"), Typed(Ident(nme.WILDCARD),
+                             Ident(child))),
+                        EmptyTree,
+                        q"$name.writes(o)")
+                }
+
+                val names = children.flatMap(
+                    _.typeSignature
+                     .declaration(nme.CONSTRUCTOR)
+                     .asMethod
+                     .paramss(0)
+                     .map(_.name.toString)
+                 ).toSet
+
+                val fieldNames = cls.typeSignature
+                   .declarations
+                   .toList
+                   .filter(_.isMethod)
+                   .map(_.asMethod)
+                   .filter(_.isStable)
+                   .filter(_.isPublic)
+                   .map(_.name.toString)
+                   .filterNot(names contains _)
+
+                val fieldDefs = fieldNames.map { fieldName =>
+                    val name = newTermName(fieldName)
+                    q"($fieldName, play.api.libs.json.Json.toJson(obj.$name))"
+                }
+
+                val matchDef = Match(q"obj", caseDefs)
+
+                c.Expr[Writes[T]](
+                    q"""
+                    new Writes[$symbol] {
+                        ..$valDefs
+
+                        def writes(obj: $symbol) =
+                            $matchDef ++ play.api.libs.json.JsObject(List(..$fieldDefs))
+                    }
+                    """)
+            }
+        }
+    }
 }
