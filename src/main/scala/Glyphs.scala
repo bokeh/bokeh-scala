@@ -1,6 +1,8 @@
 package org.continuumio.bokeh
 
 sealed abstract class BaseGlyph extends PlotObject {
+    override def viewModel: String = snakify(super.viewModel)
+
     object visible extends Field[this.type, Boolean](this)
     //object margin extends Field[this.type, Size](this)
     //object halign extends Field[this.type, Align](this)
@@ -176,7 +178,9 @@ class Triangle extends BaseGlyph with Marker
 
 class Cross extends BaseGlyph with Marker
 
-class Xmarker extends BaseGlyph with Marker
+class Xmarker extends BaseGlyph with Marker {
+    override val viewModel: String = "x"
+}
 
 class Diamond extends BaseGlyph with Marker
 

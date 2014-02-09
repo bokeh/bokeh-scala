@@ -32,6 +32,8 @@ trait HasFields {
             .map(_.instance.asInstanceOf[Field[_, _]].valueOpt)
         names.zip(values)
     }
+
+    def viewModel: String = getClass.getSimpleName
 }
 
 class Field[OwnerType, FieldType](rec: OwnerType) {
