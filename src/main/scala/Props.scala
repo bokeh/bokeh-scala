@@ -14,6 +14,8 @@ class Field[OwnerType, FieldType](rec: OwnerType) {
 
     def valueOpt: Option[FieldType] = data
 
+    def value: FieldType = valueOpt.get
+
     def :=(value: DataType) {
         data = Some(value)
     }
