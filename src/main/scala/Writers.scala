@@ -41,7 +41,10 @@ trait EnumFormats {
     implicit val ColorJSON = BokehJson.enum[Color]
 }
 
+object Writers extends DataFormats with EnumFormats
+
 object Formats extends DataFormats with EnumFormats {
+    // implicit val EnumJSON = BokehJson.sealedWrites[Enum]
     implicit val RangeJSON = BokehJson.sealedWrites[Range]
 
     implicit val DataSourceJSON = BokehJson.sealedWrites[DataSource]
