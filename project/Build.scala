@@ -72,7 +72,7 @@ object ProjectBuild extends Build {
             },
             fork in run := true,
             initialCommands in Compile := """
-                import scala.reflect.runtime.{universe=>u}
+                import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
                 import scalax.io.JavaConverters._
                 import scalax.file.Path
                 import play.api.libs.json.Json
