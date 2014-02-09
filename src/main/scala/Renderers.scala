@@ -1,6 +1,6 @@
 package org.continuumio.bokeh
 
-abstract class Renderer
+abstract class Renderer extends PlotObject
 
 class Glyph extends Renderer {
     object data_source extends Field[this.type, DataSource](this)
