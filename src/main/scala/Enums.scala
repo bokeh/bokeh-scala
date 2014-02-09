@@ -1,6 +1,6 @@
 package org.continuumio.bokeh
 
-trait Enum
+sealed trait Enum
 
 sealed trait LineJoin extends Enum
 object LineJoin {
