@@ -1,6 +1,20 @@
 package org.continuumio.bokeh
 
-trait HasFields
+import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
+
+trait HasFields {
+    final def fields: List[String] = {
+        cm.reflect(this)
+            .symbol
+            .typeSignature
+            .members
+            .filter(_.isModule)
+            .map(_.asModule)
+            .filter(_.typeSignature <:< u.typeOf[Field[_, _]])
+            .map(_.name.decoded)
+            .toList
+    }
+}
 
 class Field[OwnerType, FieldType](rec: OwnerType) {
     type DataType = FieldType
