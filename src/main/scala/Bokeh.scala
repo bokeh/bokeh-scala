@@ -2,7 +2,7 @@ package org.continuumio.bokeh
 
 import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
 
-abstract class PlotObject {
+abstract class PlotObject extends HasFields {
     object id extends Field[this.type, String](this, uuid4())
 
     final def fields: List[String] = {

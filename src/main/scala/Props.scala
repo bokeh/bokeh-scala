@@ -1,5 +1,7 @@
 package org.continuumio.bokeh
 
+trait HasFields
+
 class Field[OwnerType, FieldType](rec: OwnerType) {
     type DataType = FieldType
 
