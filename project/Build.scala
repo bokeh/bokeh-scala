@@ -32,6 +32,8 @@ object ProjectBuild extends Build {
 
         val breeze = "org.scalanlp" %% "breeze" % "0.5.2"
 
+        val shapeless = "com.chuusai" % "shapeless" % "2.0.0-M1" cross CrossVersion.full
+
         val jopt = "net.sf.jopt-simple" % "jopt-simple" % "4.5"
 
         val play_json = "com.typesafe.play" %% "play-json" % "2.2.1"
@@ -68,7 +70,7 @@ object ProjectBuild extends Build {
     lazy val bokehSettings = Project.defaultSettings ++ pluginSettings ++ {
         Seq(libraryDependencies ++= {
                 import Dependencies._
-                scalaio ++ Seq(compiler.value, breeze, jopt, play_json, specs2)
+                scalaio ++ Seq(compiler.value, breeze, shapeless, jopt, play_json, specs2)
             },
             fork in run := true,
             initialCommands in Compile := """
@@ -96,7 +98,7 @@ object ProjectBuild extends Build {
         Seq(addCompilerPlugin("org.scalamacros" % "paradise" % "2.0.0-M3" cross CrossVersion.full),
             libraryDependencies ++= {
                 import Dependencies._
-                Seq(reflect.value, quasiquotes.value, play_json, specs2)
+                Seq(reflect.value, quasiquotes.value, shapeless, play_json, specs2)
             })
     }
 
