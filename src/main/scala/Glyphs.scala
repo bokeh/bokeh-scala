@@ -51,7 +51,7 @@ class Bezier extends BaseGlyph with LineProps {
 }
 
 class Image extends BaseGlyph {
-    // object image extends DataSpec[this.type](this)
+    object image extends GenericDataSpec[this.type, List[List[Int]]](this)
     object x extends DataSpec[this.type](this)
     object y extends DataSpec[this.type](this)
     object dw extends DataSpec[this.type](this)
@@ -63,7 +63,7 @@ class ImageURI extends BaseGlyph {
     object x extends DataSpec[this.type](this)
     object y extends DataSpec[this.type](this)
     object angle extends DataSpec[this.type](this)
-    // object url extends DataSpec[this.type, String](this)
+    object url extends GenericDataSpec[this.type, String](this)
 }
 
 class ImageRGBA extends BaseGlyph {
@@ -141,7 +141,7 @@ class Segment extends BaseGlyph with LineProps {
 class Text extends BaseGlyph with TextProps {
     object x extends DataSpec[this.type](this)
     object y extends DataSpec[this.type](this)
-    // object text extends DataSpec[this.type, String](this)
+    object text extends GenericDataSpec[this.type, String](this)
     object angle extends DataSpec[this.type](this)
 }
 
