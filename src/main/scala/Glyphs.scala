@@ -1,6 +1,17 @@
 package org.continuumio.bokeh
 
-sealed abstract class BaseGlyph extends PlotObject
+sealed abstract class BaseGlyph extends PlotObject {
+    object visible extends Field[this.type, Boolean](this)
+    //object margin extends Field[this.type, Size](this)
+    //object halign extends Field[this.type, Align](this)
+    //object valign extends Field[this.type, Align](this)
+
+    object radius_units extends Field[this.type, Units](this)
+    object length_units extends Field[this.type, Units](this)
+    object angle_units extends Field[this.type, AngleUnits](this)
+    object start_angle_units extends Field[this.type, AngleUnits](this)
+    object end_angle_units extends Field[this.type, AngleUnits](this)
+}
 
 class AnnularWedge extends BaseGlyph with FillProps with LineProps {
     object x extends DataSpec[this.type](this)
