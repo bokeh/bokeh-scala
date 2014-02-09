@@ -14,6 +14,24 @@ trait HasFields {
             .map(_.name.decoded)
             .toList
     }
+
+    final def fieldsWithValues: List[(String, Any)] = {
+        val im = cm.reflect(this)
+        val modules = im
+            .symbol
+            .typeSignature
+            .members
+            .filter(_.isModule)
+            .map(_.asModule)
+            .filter(_.typeSignature <:< u.typeOf[Field[_, _]])
+            .toList
+        val names = modules
+            .map(_.name.decoded)
+        val values = modules
+            .map(im.reflectModule _)
+            .map(_.instance.asInstanceOf[Field[_, _]].valueOpt)
+        names.zip(values)
+    }
 }
 
 class Field[OwnerType, FieldType](rec: OwnerType) {
