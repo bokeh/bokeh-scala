@@ -1,5 +1,7 @@
 package org.continuumio.bokeh
 
+trait NoRefs { self: PlotObject => }
+
 case class Ref(id: String, `type`: String)
 
 abstract class PlotObject extends HasFields {

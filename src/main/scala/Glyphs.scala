@@ -1,6 +1,6 @@
 package org.continuumio.bokeh
 
-sealed abstract class BaseGlyph extends PlotObject {
+sealed abstract class BaseGlyph extends PlotObject with NoRefs {
     override def viewModel: String = snakify(super.viewModel)
 
     object visible extends Field[this.type, Boolean](this)
