@@ -9,11 +9,16 @@ import play.api.libs.json.{Json,JsValue,JsArray,JsObject,JsNull}
 
 abstract class Session
 
-class HTMLFileSession(file: File) {
+class HTMLFileSession(val file: File) {
 
     def this(path: String) = this(new File(path))
 
     val title = "Bokeh Plots"
+
+    def url: String = {
+        val uri = file.toURI
+        s"${uri.getScheme}://${uri.getSchemeSpecificPart}"
+    }
 
     val userHome = Path.fromString(System.getProperty("user.home"))
     val sitePath = userHome / ".local" / "lib" / "python2.7" / "site-packages"

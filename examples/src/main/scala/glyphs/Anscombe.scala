@@ -70,4 +70,5 @@ object Anscombe extends App {
 
     val session = new HTMLFileSession("anscombe.html")
     session.save(grid)
+    println(s"Wrote ${session.file}. Open ${session.url} in a web browser.")
 }
