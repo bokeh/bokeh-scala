@@ -19,8 +19,8 @@ class HTMLFileSession(file: File) {
     val sitePath = userHome / ".local" / "lib" / "python2.7" / "site-packages"
     val basePath = sitePath  / "bokeh" / "server" / "static"
 
-    val jsFiles: List[String] = List(basePath / "js" / "bokeh.min.js").map(_.path)
-    val cssFiles: List[String] = List(basePath / "css" / "bokeh.min.css")map(_.path)
+    val jsFiles: List[String] = List(basePath / "js" / "bokeh.js").map(_.path)
+    val cssFiles: List[String] = List(basePath / "css" / "bokeh.css")map(_.path)
 
     def save(plots: Plot*) {
         val context = new PlotContext().children(plots.toList)
