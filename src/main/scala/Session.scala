@@ -2,6 +2,9 @@ package org.continuumio.bokeh
 
 import java.io.File
 
+import scalax.io.JavaConverters._
+import scalax.file.Path
+
 import play.api.libs.json.{Json,JsValue,JsArray,JsObject,JsNull}
 
 abstract class Session
@@ -12,11 +15,23 @@ class HTMLFileSession(file: File) {
 
     val title = "Bokeh Plots"
 
+    val userHome = Path.fromString(System.getProperty("user.home"))
+    val sitePath = userHome / ".local" / "lib" / "python2.7" / "site-packages"
+    val basePath = sitePath  / "bokeh" / "server" / "static"
+
+    val jsFiles: List[String] = List(basePath / "js" / "bokeh.min.js").map(_.path)
+    val cssFiles: List[String] = List(basePath / "css" / "bokeh.min.css")map(_.path)
+
     def save(plots: Plot*) {
-        val objs = plots.flatMap(collectObjs)
+        val context = new PlotContext().children(plots.toList)
+        val objs = collectObjs(context)
         val models = objs.map(getModel)
-        val arr = JsArray(models.map(_.toJson))
-        val json = Json.stringify(arr)
+        val array = JsArray(models.map(_.toJson))
+        val json = Json.stringify(array)
+        val ref = context.getRef
+        val spec = PlotSpec(json, ref.id, ref.`type`, uuid4())
+        val html = stringify(renderHTML(spec :: Nil))
+        Path(file).write(html)
     }
 
     case class Model(id: String, `type`: String, attributes: Map[String, Any], doc: Option[String]) {
@@ -105,15 +120,15 @@ class HTMLFileSession(file: File) {
         case obj => obj
     }
 
-    def renderScripts(scripts: List[File]) = {
+    def renderScripts(scripts: List[String] = jsFiles) = {
         scripts.map { script =>
-            <script type="text/javascript" src={ script.getAbsolutePath }></script>
+            <script type="text/javascript" src={ script }></script>
         }
     }
 
-    def renderStyles(styles: List[File]) = {
+    def renderStyles(styles: List[String] = cssFiles) = {
         styles.map { style =>
-            <link rel="stylesheet" href={ style.getAbsolutePath } type="text/css" />
+            <link rel="stylesheet" href={ style } type="text/css" />
         }
     }
 
@@ -126,7 +141,7 @@ $script
 
     def stringify(html: xml.Node) = {
         val writer = new java.io.StringWriter()
-        val doctype = xml.dtd.DocType("html", xml.dtd.SystemID("about:legacy-compat"), Nil)
+        val doctype = xml.dtd.DocType("html", xml.dtd.SystemID(""), Nil)
         xml.XML.write(writer, html, "UTF-8", xmlDecl=false, doctype=doctype)
         writer.toString
     }
@@ -159,8 +174,8 @@ $script
             <head>
                 <meta charset="utf-8" />
                 <title>{ title }</title>
-                {renderStyles(Nil)}
-                {renderScripts(Nil)}
+                {renderStyles()}
+                {renderScripts()}
             </head>
             <body>
                 { renderPlots(specs) }
