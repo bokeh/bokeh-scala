@@ -3,6 +3,9 @@ package org.continuumio.bokeh
 import java.io.File
 import java.awt.Desktop
 
+import scala.sys.process.{Process,BasicIO}
+import java.lang.StringBuffer
+
 import scalax.io.JavaConverters._
 import scalax.file.Path
 
@@ -21,12 +24,27 @@ class HTMLFileSession(val file: File) {
         s"${uri.getScheme}://${uri.getSchemeSpecificPart}"
     }
 
-    val userHome = Path.fromString(System.getProperty("user.home"))
-    val sitePath = userHome / ".local" / "lib" / "python2.7" / "site-packages"
-    val basePath = sitePath  / "bokeh" / "server" / "static"
+    def bokehPathFromPython: Option[Path] = {
+        val cmd = "python" :: "-c" :: "import bokeh; print(bokeh.__file__)" :: Nil
+        val out = new StringBuffer
+        val proc = Process(cmd).run(BasicIO(false, out, None))
+        if (proc.exitValue == 0)
+            Path.fromString(out.toString.trim).parent
+        else
+            None
+    }
 
-    val jsFiles: List[String] = List(basePath / "js" / "bokeh.js").map(_.path)
-    val cssFiles: List[String] = List(basePath / "css" / "bokeh.css")map(_.path)
+    val staticPath = (_: Path) / "server" / "static"
+    val basePath = bokehPathFromPython.map(staticPath) getOrElse Path(".")
+
+    val _jsFiles: List[Path => Path] = List(_ / "js" / "bokeh.js")
+    val _cssFiles: List[Path => Path] = List(_ / "css" / "bokeh.css")
+
+    def genPaths(files: List[Path => Path]) =
+        files.map(_(basePath)).map(_.path)
+
+    val jsFiles: List[String] = genPaths(_jsFiles)
+    val cssFiles: List[String] = genPaths(_cssFiles)
 
     def view() {
         if (Desktop.isDesktopSupported && Desktop.getDesktop.isSupported(Desktop.Action.BROWSE))
