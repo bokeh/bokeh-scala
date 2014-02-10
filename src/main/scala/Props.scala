@@ -25,12 +25,20 @@ trait HasFields {
             .map(_.asModule)
             .filter(_.typeSignature <:< u.typeOf[Field[_, _]])
             .toList
-        val names = modules
-            .map(_.name.decoded)
-        val values = modules
-            .map(im.reflectModule _)
-            .map(_.instance.asInstanceOf[Field[_, _]].valueOpt)
-        names.zip(values)
+        val instances = modules.map(im.reflectModule _).map(_.instance)
+        val names = instances
+            .collect { case field: Field[_, _] => field.fieldName }
+            .zip(modules)
+            .collect {
+                case (Some(name), _) => name
+                case (_, module) => module.name.decoded
+            }
+        val values = instances
+            .collect {
+                case data: GenericDataSpec[_, _] => data.toMap
+                case field: Field[_, _] => field.valueOpt
+            }
+        ("type", viewModel) :: names.zip(values)
     }
 
     def viewModel: String = getClass.getSimpleName
@@ -45,6 +53,8 @@ class Field[OwnerType, FieldType](rec: OwnerType) {
         this(rec)
         this := value
     }
+
+    val fieldName: Option[String] = None
 
     private var data: Option[DataType] = None
 
