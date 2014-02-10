@@ -1,5 +1,8 @@
 package org.continuumio.bokeh
 
+import annotation.implicitNotFound
+
+@implicitNotFound(msg="Can't find DefaultValue type class for type ${T}.")
 class DefaultValue[T](val default: T)
 
 trait DefaultImplicits {
