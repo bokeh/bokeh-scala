@@ -7,7 +7,7 @@ abstract class GuideRenderer extends Renderer {
 class LinearAxis extends GuideRenderer {
     // object type extends String("linear_axis")
 
-    //object location extends Field[this.type, Either[Location, Float]](this)
+    object location extends Field[this.type, Location](this) // Either[Location, Float]
     // object bounds extends String('auto')
 
     object axis_label extends Field[this.type, String](this)
@@ -15,7 +15,7 @@ class LinearAxis extends GuideRenderer {
     //// object axis_label_props extends Include(TextProps, prefix="axis_label")
 
     object major_label_standoff extends Field[this.type, Int](this)
-    // object major_label_orientation extends Either(Enum[Orientation], Int)
+    object major_label_orientation extends Field[this.type, Orientation](this) // Either[Orientation, Int]
     //// object major_label_props extends Include(TextProps, prefix="major_label")
 
     //// object axis_props extends Include(LineProps, prefix="axis")
