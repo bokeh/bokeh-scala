@@ -1,6 +1,7 @@
 package org.continuumio.bokeh
 
 import java.io.File
+import java.awt.Desktop
 
 import scalax.io.JavaConverters._
 import scalax.file.Path
@@ -26,6 +27,11 @@ class HTMLFileSession(val file: File) {
 
     val jsFiles: List[String] = List(basePath / "js" / "bokeh.js").map(_.path)
     val cssFiles: List[String] = List(basePath / "css" / "bokeh.css")map(_.path)
+
+    def view() {
+        if (Desktop.isDesktopSupported && Desktop.getDesktop.isSupported(Desktop.Action.BROWSE))
+            Desktop.getDesktop.browse(file.toURI)
+    }
 
     def save(plots: Plot*) {
         val context = new PlotContext().children(plots.toList)
