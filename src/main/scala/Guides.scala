@@ -1,6 +1,7 @@
 package org.continuumio.bokeh
 
 abstract class GuideRenderer extends Renderer {
+    object plot extends Field[this.type, Plot](this)
     object dimension extends Field[this.type, Int](this, 0)
 }
 
