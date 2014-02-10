@@ -11,5 +11,5 @@ abstract class PlotObject extends HasFields {
 }
 
 class PlotContext extends PlotObject {
-    object children extends Field[this.type, List[List[Plot]]](this)
+    object children extends Field[this.type, List[Plot]](this)
 }
