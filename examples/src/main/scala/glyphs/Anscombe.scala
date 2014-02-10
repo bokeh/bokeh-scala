@@ -43,8 +43,8 @@ object Anscombe extends App {
             .height(400)
             .border_fill(Color.White)
             //.background_fill("#e9e0db")
-        val xaxis = new LinearAxis().plot(plot).dimension(0)/*.location(Left(Location.Bottom)).axis_line_color(None)*/
-        val yaxis = new LinearAxis().plot(plot).dimension(1)/*.location(Left(Location.Left)).axis_line_color(None)*/
+        val xaxis = new LinearAxis().plot(plot).dimension(0).location(Location.Bottom)/*.axis_line_color(None)*/
+        val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Left)/*.axis_line_color(None)*/
         val xgrid = new Grid().plot(plot).dimension(0)
         val ygrid = new Grid().plot(plot).dimension(1)
         val line_renderer = new Glyph()
