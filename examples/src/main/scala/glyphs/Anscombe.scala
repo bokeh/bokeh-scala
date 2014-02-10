@@ -1,5 +1,6 @@
-package org.continuumio.bokeh
+package org.continuumio.bokeh.examples
 
+import org.continuumio.bokeh._
 import breeze.linalg._
 
 object Anscombe extends App {
