@@ -41,38 +41,4 @@ trait EnumFormats {
     implicit val ColorJSON = BokehJson.enum[Color]
 }
 
-object Writers extends DataFormats with EnumFormats
-
-object Formats extends DataFormats with EnumFormats {
-    // implicit val EnumJSON = BokehJson.sealedWrites[Enum]
-    implicit val RangeJSON = BokehJson.sealedWrites[Range]
-
-    implicit val DataSourceJSON = BokehJson.sealedWrites[DataSource]
-    implicit val BaseGlyphJSON = BokehJson.sealedWrites[BaseGlyph]
-
-    implicit val GlyphJSON = BokehJson.writes[Glyph]
-
-    implicit val GridJSON = BokehJson.writes[Grid]
-    implicit val LinearAxisJSON = BokehJson.writes[LinearAxis]
-    implicit val DatetimeAxisJSON = BokehJson.writes[DatetimeAxis]
-
-    implicit val RendererJSON = new Writes[Renderer] {
-        def writes(obj: Renderer) = obj match {
-            case datetime_axis: DatetimeAxis =>
-                DatetimeAxisJSON.writes(datetime_axis)
-            case linear_axis: LinearAxis =>
-                LinearAxisJSON.writes(linear_axis)
-            case grid: Grid =>
-                GridJSON.writes(grid)
-            case glyph: Glyph =>
-                GlyphJSON.writes(glyph)
-        }
-    }
-
-    implicit val ToolJSON = BokehJson.sealedWrites[Tool]
-
-    implicit val PlotJSON = BokehJson.writes[Plot]
-    implicit val GridPlotJSON = BokehJson.writes[GridPlot]
-
-    implicit val PlotContextJSON = BokehJson.writes[PlotContext]
-}
+object Formats extends DataFormats with EnumFormats
