@@ -73,19 +73,32 @@ class Field[OwnerType, FieldType](rec: OwnerType) {
 }
 
 class GenericDataSpec[OwnerType, FieldType](rec: OwnerType) extends Field[OwnerType, FieldType](rec) {
-    //val name: String
-    //val units: Units
-    //val default: FieldType
+    var name: Option[String] = None
+    var units: Option[Units] = None
+    var default: Option[FieldType] = None
 
     def apply(name: String): OwnerType = {
+        this.name = Some(name)
         owner
     }
 
     def apply(name: String, units: Units): OwnerType = {
+        this.name = Some(name)
+        this.units = Some(units)
         owner
     }
 
-    // name: String, units: Units, default: FieldType
+    def apply(name: String, units: Units, default: FieldType): OwnerType = {
+        this.name = Some(name)
+        this.units = Some(units)
+        this.default = Some(default)
+        owner
+    }
+
+    def toMap: Map[String, Any] = {
+        val fields = ("value" -> valueOpt) :: ("field" -> name) :: ("units" -> units) :: ("default" -> default) :: Nil
+        fields.collect { case (name, Some(value)) => (name, value) } toMap
+    }
 }
 
 class DataSpec[OwnerType](rec: OwnerType) extends GenericDataSpec[OwnerType, Double](rec)
