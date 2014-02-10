@@ -2,7 +2,7 @@ package org.continuumio.bokeh
 
 import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
 
-trait HasFields {
+trait HasFields extends DefaultImplicits {
     final def fields: List[String] = {
         cm.reflect(this)
             .symbol
@@ -44,7 +44,9 @@ trait HasFields {
     def viewModel: String = getClass.getSimpleName
 }
 
-class Field[OwnerType, FieldType](rec: OwnerType) {
+import DefaultImplicits._
+
+class Field[OwnerType, FieldType:DefaultValue](rec: OwnerType) {
     type DataType = FieldType
 
     def owner: OwnerType = rec
@@ -58,7 +60,12 @@ class Field[OwnerType, FieldType](rec: OwnerType) {
 
     private var data: Option[DataType] = None
 
-    def valueOpt: Option[FieldType] = data
+    def defaultValue: Option[FieldType] = {
+        val default = implicitly[DefaultValue[FieldType]].default
+        if (default == null) None else Some(default)
+    }
+
+    def valueOpt: Option[FieldType] = data orElse defaultValue
 
     def value: FieldType = valueOpt.get
 
@@ -72,7 +79,7 @@ class Field[OwnerType, FieldType](rec: OwnerType) {
     }
 }
 
-class GenericDataSpec[OwnerType, FieldType](rec: OwnerType) extends Field[OwnerType, FieldType](rec) {
+class GenericDataSpec[OwnerType, FieldType:DefaultValue](rec: OwnerType) extends Field[OwnerType, FieldType](rec) {
     var name: Option[String] = None
     var units: Option[Units] = None
     var default: Option[FieldType] = None
