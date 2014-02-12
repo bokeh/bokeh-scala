@@ -5,9 +5,7 @@ abstract class GuideRenderer extends Renderer {
     object dimension extends Field[this.type, Int](this, 0)
 }
 
-class LinearAxis extends GuideRenderer {
-    // object type extends String("linear_axis")
-
+abstract class Axis extends GuideRenderer {
     object location extends Field[this.type, Location](this) // Either[Location, Float]
     // object bounds extends String('auto')
 
@@ -26,8 +24,11 @@ class LinearAxis extends GuideRenderer {
     object major_tick_out extends Field[this.type, Int](this)
 }
 
+class LinearAxis extends Axis
+
+class CategoricalAxis extends Axis
+
 class DatetimeAxis extends LinearAxis {
-    // object type extends String("datetime_axis")
     // object axis_label extends Field[this.type, String](this, "date")
     // object scale extends Field[this.type, String](this, "time")
     object num_labels extends Field[this.type, Int](this, 8)
@@ -37,7 +38,6 @@ class DatetimeAxis extends LinearAxis {
 }
 
 class Grid extends GuideRenderer {
-    // object type extends String("grid")
     // object bounds extends String('auto')
     object is_datetime extends Field[this.type, Boolean](this, false)
     //// object grid_props extends Include(LineProps, prefix="grid")
