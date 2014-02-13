@@ -80,6 +80,11 @@ class Field[OwnerType, FieldType:DefaultValue](rec: OwnerType) {
 }
 
 class GenericDataSpec[OwnerType, FieldType:DefaultValue](rec: OwnerType) extends Field[OwnerType, FieldType](rec) {
+    def this(rec: OwnerType, value: FieldType) = {
+        this(rec)
+        this := value
+    }
+
     var name: Option[String] = None
     var units: Option[Units] = None
     var default: Option[FieldType] = None
