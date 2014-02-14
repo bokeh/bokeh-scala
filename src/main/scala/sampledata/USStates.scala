@@ -71,55 +71,55 @@ object USState {
         case "WY" => WY
     }
 
-    object AK extends USState
-    object AL extends USState
-    object AR extends USState
-    object AZ extends USState
-    object CA extends USState
-    object CO extends USState
-    object CT extends USState
-    object DC extends USState
-    object DE extends USState
-    object FL extends USState
-    object GA extends USState
-    object HI extends USState
-    object IA extends USState
-    object ID extends USState
-    object IL extends USState
-    object IN extends USState
-    object KS extends USState
-    object KY extends USState
-    object LA extends USState
-    object MA extends USState
-    object MD extends USState
-    object ME extends USState
-    object MI extends USState
-    object MN extends USState
-    object MO extends USState
-    object MS extends USState
-    object MT extends USState
-    object NC extends USState
-    object ND extends USState
-    object NE extends USState
-    object NH extends USState
-    object NJ extends USState
-    object NM extends USState
-    object NV extends USState
-    object NY extends USState
-    object OH extends USState
-    object OK extends USState
-    object OR extends USState
-    object PA extends USState
-    object RI extends USState
-    object SC extends USState
-    object SD extends USState
-    object TN extends USState
-    object TX extends USState
-    object UT extends USState
-    object VA extends USState
-    object VT extends USState
-    object WA extends USState
-    object WI extends USState
-    object WV extends USState
-    object WY extends USState
+    case object AK extends USState
+    case object AL extends USState
+    case object AR extends USState
+    case object AZ extends USState
+    case object CA extends USState
+    case object CO extends USState
+    case object CT extends USState
+    case object DC extends USState
+    case object DE extends USState
+    case object FL extends USState
+    case object GA extends USState
+    case object HI extends USState
+    case object IA extends USState
+    case object ID extends USState
+    case object IL extends USState
+    case object IN extends USState
+    case object KS extends USState
+    case object KY extends USState
+    case object LA extends USState
+    case object MA extends USState
+    case object MD extends USState
+    case object ME extends USState
+    case object MI extends USState
+    case object MN extends USState
+    case object MO extends USState
+    case object MS extends USState
+    case object MT extends USState
+    case object NC extends USState
+    case object ND extends USState
+    case object NE extends USState
+    case object NH extends USState
+    case object NJ extends USState
+    case object NM extends USState
+    case object NV extends USState
+    case object NY extends USState
+    case object OH extends USState
+    case object OK extends USState
+    case object OR extends USState
+    case object PA extends USState
+    case object RI extends USState
+    case object SC extends USState
+    case object SD extends USState
+    case object TN extends USState
+    case object TX extends USState
+    case object UT extends USState
+    case object VA extends USState
+    case object VT extends USState
+    case object WA extends USState
+    case object WI extends USState
+    case object WV extends USState
+    case object WY extends USState
 }
