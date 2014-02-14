@@ -6,8 +6,9 @@ import sampledata.USState._
 object Choropleth extends App {
     val us_states = sampledata.us_states -- List(HI, AK)
 
+    val excluded_states: Set[sampledata.USState] = Set(AK, HI/*, PR, GU, VI, MP, AS*/)
     val us_counties = sampledata.us_counties.filterNot { case (_, county) =>
-        Set(AK, HI/*, PR, GU, VI, MP, AS*/) contains county.state
+        excluded_states contains county.state
     }
 
     val unemployment = sampledata.unemployment
