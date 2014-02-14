@@ -25,7 +25,7 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
             }
         val values = instances
             .collect {
-                case data: GenericDataSpec[_] => data.toMap
+                case data: DataSpec[_] => data.toMap
                 case field: Field[_] => field.valueOpt
             }
         names.zip(values)
@@ -64,7 +64,7 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
         }
     }
 
-    class GenericDataSpec[FieldType:DefaultValue] extends Field[FieldType] {
+    class DataSpec[FieldType:DefaultValue] extends Field[FieldType] {
         def this(value: FieldType) = {
             this()
             this := value
@@ -97,6 +97,4 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
             fields.collect { case (name, Some(value)) => (name, value) } toMap
         }
     }
-
-    class DataSpec extends GenericDataSpec[Double]
 }

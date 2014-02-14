@@ -1,12 +1,12 @@
 package org.continuumio.bokeh
 
 trait FillProps { self: PlotObject =>
-    object fill_color extends GenericDataSpec[Color](Color.Gray)
+    object fill_color extends DataSpec[Color](Color.Gray)
     object fill_alpha extends Field[Percent](100%%)
 }
 
 trait LineProps { self: PlotObject =>
-    object line_color extends GenericDataSpec[Color](Color.Black)
+    object line_color extends DataSpec[Color](Color.Black)
     object line_width extends Field[Double](1) // Size
     object line_alpha extends Field[Percent](100%%)
     object line_join extends Field[LineJoin]

@@ -16,150 +16,150 @@ sealed abstract class BaseGlyph extends PlotObject with NoRefs {
 }
 
 class AnnularWedge extends BaseGlyph with FillProps with LineProps {
-    object x extends DataSpec
-    object y extends DataSpec
-    object inner_radius extends DataSpec // with Radius
-    object outer_radius extends DataSpec // with Radius
-    object start_angle extends DataSpec
-    object end_angle extends DataSpec
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object inner_radius extends DataSpec[Double] // with Radius
+    object outer_radius extends DataSpec[Double] // with Radius
+    object start_angle extends DataSpec[Double]
+    object end_angle extends DataSpec[Double]
     object direction extends Field[Direction]
 }
 
 class Annulus extends BaseGlyph with FillProps with LineProps {
-    object x extends DataSpec
-    object y extends DataSpec
-    object inner_radius extends DataSpec // with Radius
-    object outer_radius extends DataSpec // with Radius
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object inner_radius extends DataSpec[Double] // with Radius
+    object outer_radius extends DataSpec[Double] // with Radius
 }
 
 class Arc extends BaseGlyph with LineProps {
-    object x extends DataSpec
-    object y extends DataSpec
-    object radius extends DataSpec // with Radius
-    object start_angle extends DataSpec
-    object end_angle extends DataSpec
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object radius extends DataSpec[Double] // with Radius
+    object start_angle extends DataSpec[Double]
+    object end_angle extends DataSpec[Double]
     object direction extends Field[Direction]
 }
 
 class Bezier extends BaseGlyph with LineProps {
-    object x0 extends DataSpec
-    object y0 extends DataSpec
-    object x1 extends DataSpec
-    object y1 extends DataSpec
-    object cx0 extends DataSpec
-    object cy0 extends DataSpec
-    object cx1 extends DataSpec
-    object cy1 extends DataSpec
+    object x0 extends DataSpec[Double]
+    object y0 extends DataSpec[Double]
+    object x1 extends DataSpec[Double]
+    object y1 extends DataSpec[Double]
+    object cx0 extends DataSpec[Double]
+    object cy0 extends DataSpec[Double]
+    object cx1 extends DataSpec[Double]
+    object cy1 extends DataSpec[Double]
 }
 
 class Image extends BaseGlyph {
-    object image extends GenericDataSpec[List[List[Int]]]
-    object x extends DataSpec
-    object y extends DataSpec
-    object dw extends DataSpec
-    object dh extends DataSpec
-    object palette extends DataSpec
+    object image extends DataSpec[List[List[Int]]]
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object dw extends DataSpec[Double]
+    object dh extends DataSpec[Double]
+    object palette extends DataSpec[Double]
 }
 
 class ImageURI extends BaseGlyph {
-    object x extends DataSpec
-    object y extends DataSpec
-    object angle extends DataSpec
-    object url extends GenericDataSpec[String]
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object angle extends DataSpec[Double]
+    object url extends DataSpec[String]
 }
 
 class ImageRGBA extends BaseGlyph {
-    object image extends DataSpec
-    object x extends DataSpec
-    object y extends DataSpec
-    object dw extends DataSpec
-    object dh extends DataSpec
+    object image extends DataSpec[List[List[Double]]]
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object dw extends DataSpec[Double]
+    object dh extends DataSpec[Double]
 }
 
 class Line extends BaseGlyph with LineProps {
-    object x extends DataSpec
-    object y extends DataSpec
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
 }
 
 class MultiLine extends BaseGlyph with LineProps {
-    object xs extends DataSpec
-    object ys extends DataSpec
+    object xs extends DataSpec[List[Double]]
+    object ys extends DataSpec[List[Double]]
 }
 
 class Oval extends BaseGlyph with FillProps with LineProps {
-    object width extends DataSpec
-    object height extends DataSpec
-    object angle extends DataSpec
+    object width extends DataSpec[Double]
+    object height extends DataSpec[Double]
+    object angle extends DataSpec[Double]
 }
 
 class Patch extends BaseGlyph with FillProps with LineProps {
-    object x extends DataSpec
-    object y extends DataSpec
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
 }
 
 class Patches extends BaseGlyph with LineProps with FillProps {
-    object xs extends DataSpec
-    object ys extends DataSpec
+    object xs extends DataSpec[List[Double]]
+    object ys extends DataSpec[List[Double]]
 }
 
 class Quad extends BaseGlyph with FillProps with LineProps {
-    object left extends DataSpec
-    object right extends DataSpec
-    object bottom extends DataSpec
-    object top extends DataSpec
+    object left extends DataSpec[Double]
+    object right extends DataSpec[Double]
+    object bottom extends DataSpec[Double]
+    object top extends DataSpec[Double]
 }
 
 class Quadratic extends BaseGlyph with LineProps {
-    object x0 extends DataSpec
-    object y0 extends DataSpec
-    object x1 extends DataSpec
-    object y1 extends DataSpec
-    object cx extends DataSpec
-    object cy extends DataSpec
+    object x0 extends DataSpec[Double]
+    object y0 extends DataSpec[Double]
+    object x1 extends DataSpec[Double]
+    object y1 extends DataSpec[Double]
+    object cx extends DataSpec[Double]
+    object cy extends DataSpec[Double]
 }
 
 class Ray extends BaseGlyph with LineProps {
-    object x extends DataSpec
-    object y extends DataSpec
-    object angle extends DataSpec
-    object length extends DataSpec
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object angle extends DataSpec[Double]
+    object length extends DataSpec[Double]
 }
 
 class Rect extends BaseGlyph with FillProps with LineProps {
-    object x extends DataSpec
-    object y extends DataSpec
-    object width extends DataSpec
-    object height extends DataSpec
-    object angle extends DataSpec
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object width extends DataSpec[Double]
+    object height extends DataSpec[Double]
+    object angle extends DataSpec[Double]
 }
 
 class Segment extends BaseGlyph with LineProps {
-    object x0 extends DataSpec
-    object y0 extends DataSpec
-    object x1 extends DataSpec
-    object y1 extends DataSpec
+    object x0 extends DataSpec[Double]
+    object y0 extends DataSpec[Double]
+    object x1 extends DataSpec[Double]
+    object y1 extends DataSpec[Double]
 }
 
 class Text extends BaseGlyph with TextProps {
-    object x extends DataSpec
-    object y extends DataSpec
-    object text extends GenericDataSpec[String]
-    object angle extends DataSpec
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object text extends DataSpec[String]
+    object angle extends DataSpec[Double]
 }
 
 class Wedge extends BaseGlyph with FillProps with LineProps {
-    object x extends DataSpec
-    object y extends DataSpec
-    object radius extends DataSpec // with Radius
-    object start_angle extends DataSpec
-    object end_angle extends DataSpec
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object radius extends DataSpec[Double] // with Radius
+    object start_angle extends DataSpec[Double]
+    object end_angle extends DataSpec[Double]
     object direction extends Field[Direction]
 }
 
 trait Marker extends FillProps with LineProps { self: BaseGlyph =>
-    object x extends DataSpec
-    object y extends DataSpec
-    object size extends DataSpec {
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object size extends DataSpec[Double] {
         // override val units = Units.Screen
         // override val default = 4
         // override val min_value = 0
@@ -167,11 +167,11 @@ trait Marker extends FillProps with LineProps { self: BaseGlyph =>
 }
 
 class Circle extends BaseGlyph with Marker {
-    // object radius extends DataSpec(units="data", default=4, min_value=0)
+    // object radius extends DataSpec[Double](units="data", default=4, min_value=0)
 }
 
 class Square extends BaseGlyph with Marker {
-    object angle extends DataSpec
+    object angle extends DataSpec[Double]
 }
 
 class Triangle extends BaseGlyph with Marker
