@@ -43,7 +43,7 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
 
         val fieldName: Option[String] = None
 
-        private var data: Option[DataType] = None
+        private var data: Option[FieldType] = None
 
         def defaultValue: Option[FieldType] = {
             val default = implicitly[DefaultValue[FieldType]].default
@@ -54,11 +54,11 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
 
         def value: FieldType = valueOpt.get
 
-        def :=(value: DataType) {
+        def :=(value: FieldType) {
             data = Some(value)
         }
 
-        def apply(value: DataType): SelfType = {
+        def apply(value: FieldType): SelfType = {
             this := value
             owner
         }
