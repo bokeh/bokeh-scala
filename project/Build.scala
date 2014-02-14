@@ -75,6 +75,7 @@ object ProjectBuild extends Build {
                 scalaio ++ Seq(compiler.value, breeze, shapeless, jopt, play_json, opencsv, specs2)
             },
             fork in run := true,
+            parallelExecution in Test := false,
             initialCommands in Compile := """
                 import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
                 import scalax.io.JavaConverters._

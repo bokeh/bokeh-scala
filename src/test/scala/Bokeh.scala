@@ -3,6 +3,8 @@ package org.continuumio.bokeh
 import org.specs2.mutable._
 
 class BokehSpec extends Specification {
+    sequential
+
     "Bokeh" should {
         "support AnnularWedge glyph" in {
             val obj = new AnnularWedge().id("xyz")
