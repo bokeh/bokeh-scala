@@ -2,7 +2,9 @@ package org.continuumio.bokeh
 
 import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
 
-trait HasFields extends macros.HListable with DefaultImplicits {
+trait HasFields extends macros.HListable with DefaultImplicits { self =>
+    type SelfType = self.type
+
     final def fieldsWithValues: List[(String, Any)] = {
         val im = cm.reflect(this)
         val modules = im
@@ -34,7 +36,7 @@ trait HasFields extends macros.HListable with DefaultImplicits {
     class Field[OwnerType <: HasFields, FieldType:DefaultValue](rec: OwnerType) extends HField {
         type DataType = FieldType
 
-        def owner: OwnerType = rec
+        def owner: SelfType = self
 
         def this(rec: OwnerType, value: FieldType) = {
             this(rec)
@@ -58,7 +60,7 @@ trait HasFields extends macros.HListable with DefaultImplicits {
             data = Some(value)
         }
 
-        def apply(value: DataType): OwnerType = {
+        def apply(value: DataType): SelfType = {
             this := value
             owner
         }
@@ -74,18 +76,18 @@ trait HasFields extends macros.HListable with DefaultImplicits {
         var units: Option[Units] = None
         var default: Option[FieldType] = None
 
-        def apply(name: String): OwnerType = {
+        def apply(name: String): SelfType = {
             this.name = Some(name)
             owner
         }
 
-        def apply(name: String, units: Units): OwnerType = {
+        def apply(name: String, units: Units): SelfType = {
             this.name = Some(name)
             this.units = Some(units)
             owner
         }
 
-        def apply(name: String, units: Units, default: FieldType): OwnerType = {
+        def apply(name: String, units: Units, default: FieldType): SelfType = {
             this.name = Some(name)
             this.units = Some(units)
             this.default = Some(default)
