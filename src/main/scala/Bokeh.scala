@@ -7,9 +7,9 @@ case class Ref(id: String, `type`: String)
 abstract class PlotObject extends HasFields {
     def getRef = Ref(id.value, viewModel)
 
-    object id extends Field[this.type, String](this, uuid4())
+    object id extends Field[String](uuid4())
 }
 
 class PlotContext extends PlotObject {
-    object children extends Field[this.type, List[Plot]](this)
+    object children extends Field[List[Plot]]
 }

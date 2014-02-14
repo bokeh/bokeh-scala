@@ -1,26 +1,26 @@
 package org.continuumio.bokeh
 
 trait FillProps { self: PlotObject =>
-    object fill_color extends GenericDataSpec[this.type, Color](this, Color.Gray)
-    object fill_alpha extends Field[this.type, Percent](this, 100%%)
+    object fill_color extends GenericDataSpec[Color](Color.Gray)
+    object fill_alpha extends Field[Percent](100%%)
 }
 
 trait LineProps { self: PlotObject =>
-    object line_color extends GenericDataSpec[this.type, Color](this, Color.Black)
-    object line_width extends Field[this.type, Double](this, 1) // Size
-    object line_alpha extends Field[this.type, Percent](this, 100%%)
-    object line_join extends Field[this.type, LineJoin](this)
-    object line_cap extends Field[this.type, LineCap](this)
-    object line_dash extends Field[this.type, LineDash](this)
-    object line_dash_offset extends Field[this.type, Int](this, 0)
+    object line_color extends GenericDataSpec[Color](Color.Black)
+    object line_width extends Field[Double](1) // Size
+    object line_alpha extends Field[Percent](100%%)
+    object line_join extends Field[LineJoin]
+    object line_cap extends Field[LineCap]
+    object line_dash extends Field[LineDash]
+    object line_dash_offset extends Field[Int](0)
 }
 
 trait TextProps { self: PlotObject =>
-    object text_font extends Field[this.type, String](this)
-    object text_font_size extends Field[this.type, String](this, "10pt")
-    object text_font_style extends Field[this.type, FontStyle](this)
-    object text_color extends Field[this.type, Color](this, Color.Black)
-    object text_alpha extends Field[this.type, Percent](this, 100%%)
-    object text_align extends Field[this.type, TextAlign](this)
-    object text_baseline extends Field[this.type, Baseline](this)
+    object text_font extends Field[String]
+    object text_font_size extends Field[String]("10pt")
+    object text_font_style extends Field[FontStyle]
+    object text_color extends Field[Color](Color.Black)
+    object text_alpha extends Field[Percent](100%%)
+    object text_align extends Field[TextAlign]
+    object text_baseline extends Field[Baseline]
 }

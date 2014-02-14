@@ -13,11 +13,11 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
             .members
             .filter(_.isModule)
             .map(_.asModule)
-            .filter(_.typeSignature <:< u.typeOf[Field[_, _]])
+            .filter(_.typeSignature <:< u.typeOf[Field[_]])
             .toList
         val instances = modules.map(im.reflectModule _).map(_.instance)
         val names = instances
-            .collect { case field: Field[_, _] => field.fieldName }
+            .collect { case field: Field[_] => field.fieldName }
             .zip(modules)
             .collect {
                 case (Some(name), _) => name
@@ -25,21 +25,21 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
             }
         val values = instances
             .collect {
-                case data: GenericDataSpec[_, _] => data.toMap
-                case field: Field[_, _] => field.valueOpt
+                case data: GenericDataSpec[_] => data.toMap
+                case field: Field[_] => field.valueOpt
             }
         ("type", viewModel) :: names.zip(values)
     }
 
     def viewModel: String = getClass.getSimpleName
 
-    class Field[OwnerType <: HasFields, FieldType:DefaultValue](rec: OwnerType) extends HField {
+    class Field[FieldType:DefaultValue] extends HField {
         type DataType = FieldType
 
         def owner: SelfType = self
 
-        def this(rec: OwnerType, value: FieldType) = {
-            this(rec)
+        def this(value: FieldType) = {
+            this()
             this := value
         }
 
@@ -66,9 +66,9 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
         }
     }
 
-    class GenericDataSpec[OwnerType <: HasFields, FieldType:DefaultValue](rec: OwnerType) extends Field[OwnerType, FieldType](rec) {
-        def this(rec: OwnerType, value: FieldType) = {
-            this(rec)
+    class GenericDataSpec[FieldType:DefaultValue] extends Field[FieldType] {
+        def this(value: FieldType) = {
+            this()
             this := value
         }
 
@@ -100,5 +100,5 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
         }
     }
 
-    class DataSpec[OwnerType <: HasFields](rec: OwnerType) extends GenericDataSpec[OwnerType, Double](rec)
+    class DataSpec extends GenericDataSpec[Double]
 }
