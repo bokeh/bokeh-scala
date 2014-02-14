@@ -13,7 +13,7 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
             .members
             .filter(_.isModule)
             .map(_.asModule)
-            .filter(_.typeSignature <:< u.typeOf[Field[_]])
+            .filter(_.typeSignature <:< u.typeOf[HasFields#Field[_]])
             .toList
         val instances = modules.map(im.reflectModule _).map(_.instance)
         val names = instances
