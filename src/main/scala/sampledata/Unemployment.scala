@@ -1,4 +1,5 @@
-package org.continuumio.bokeh.sampledata
+package org.continuumio.bokeh
+package sampledata
 
 object Unemployment extends SampleData {
     type Value = Map[(Int, Int), Double]

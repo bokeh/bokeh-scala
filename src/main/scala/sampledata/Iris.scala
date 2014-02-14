@@ -1,4 +1,5 @@
-package org.continuumio.bokeh.sampledata
+package org.continuumio.bokeh
+package sampledata
 package iris
 
 object Flowers extends SampleData {

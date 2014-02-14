@@ -1,4 +1,5 @@
-package org.continuumio.bokeh.sampledata
+package org.continuumio.bokeh
+package sampledata
 
 import scalax.io.JavaConverters._
 import scalax.file.Path
