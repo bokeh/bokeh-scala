@@ -28,10 +28,8 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
                 case data: GenericDataSpec[_] => data.toMap
                 case field: Field[_] => field.valueOpt
             }
-        ("type", viewModel) :: names.zip(values)
+        names.zip(values)
     }
-
-    def viewModel: String = getClass.getSimpleName
 
     class Field[FieldType:DefaultValue] extends HField {
         type DataType = FieldType

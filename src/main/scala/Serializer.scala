@@ -45,6 +45,9 @@ trait Serializer {
         }
     }
 
+    def allFieldsWithValues(obj: PlotObject): List[(String, Any)] =
+        ("type", obj.viewModel) :: obj.fieldsWithValues
+
     def serializeObjs(objs: List[PlotObject]): String = {
         val models = objs.map(getModel).map(_.toJson)
         Json.stringify(JsArray(models))
@@ -58,7 +61,7 @@ trait Serializer {
             obj match {
                 case obj: PlotObject if !ids.contains(obj.id.value) =>
                     ids += obj.id.value
-                    obj.fieldsWithValues.foreach {
+                    allFieldsWithValues(obj).foreach {
                         case (_, Some(obj)) => descend(obj)
                         case _ =>
                     }
@@ -77,7 +80,7 @@ trait Serializer {
 
     def getModel(obj: PlotObject): Model = {
         val Ref(id, tp) = obj.getRef
-        Model(id, tp, replaceWithRefs(obj.fieldsWithValues), None)
+        Model(id, tp, replaceWithRefs(allFieldsWithValues(obj)), None)
     }
 
     def replaceWithRefs(fields: List[(String, Any)]): Map[String, Any] = {
@@ -88,7 +91,7 @@ trait Serializer {
     }
 
     def _replaceWithRefs(obj: Any): Any = obj match {
-        case obj: PlotObject with NoRefs => replaceWithRefs(obj.fieldsWithValues)
+        case obj: PlotObject with NoRefs => replaceWithRefs(allFieldsWithValues(obj))
         case obj: PlotObject => obj.getRef
         case obj: List[_] => obj.map(_replaceWithRefs)
         case obj => obj
