@@ -38,8 +38,9 @@ object ProjectBuild extends Build {
 
         val play_json = "com.typesafe.play" %% "play-json" % "2.2.1"
 
-        val specs2 = "org.specs2" %% "specs2" % "2.1.1" % "test"
         val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
+
+        val specs2 = "org.specs2" %% "specs2" % "2.3.8" % "test"
 
         val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
