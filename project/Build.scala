@@ -39,6 +39,7 @@ object ProjectBuild extends Build {
         val play_json = "com.typesafe.play" %% "play-json" % "2.2.1"
 
         val specs2 = "org.specs2" %% "specs2" % "2.1.1" % "test"
+        val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
 
         val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
@@ -70,7 +71,7 @@ object ProjectBuild extends Build {
     lazy val bokehSettings = Project.defaultSettings ++ pluginSettings ++ {
         Seq(libraryDependencies ++= {
                 import Dependencies._
-                scalaio ++ Seq(compiler.value, breeze, shapeless, jopt, play_json, specs2)
+                scalaio ++ Seq(compiler.value, breeze, shapeless, jopt, play_json, opencsv, specs2)
             },
             fork in run := true,
             initialCommands in Compile := """
