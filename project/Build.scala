@@ -3,12 +3,15 @@ import Keys._
 
 import sbtassembly.{Plugin=>SbtAssembly}
 import org.sbtidea.SbtIdeaPlugin
+import com.typesafe.sbt.SbtPgp
 
 object ProjectBuild extends Build {
     override lazy val settings = super.settings ++ Seq(
         organization := "org.continuum",
         version := "0.1-SNAPSHOT",
         description := "Scala bindings for Bokeh plotting library",
+        homepage := Some(url("http://bokeh.pydata.org")),
+        licenses := Seq("MIT-style" -> url("http://www.opensource.org/licenses/mit-license.php")),
         scalaVersion := "2.10.3",
         scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-language:_"),
         shellPrompt := { state =>
@@ -54,6 +57,31 @@ object ProjectBuild extends Build {
     val bokehDir = settingKey[File]("Location of Bokeh library.")
     val runAll = taskKey[Unit]("Run all discovered main classes.")
 
+    lazy val publishSettings = Seq(
+        publishTo := {
+            val nexus = "https://oss.sonatype.org/"
+            if (isSnapshot.value)
+                Some("snapshots" at nexus + "content/repositories/snapshots")
+            else
+                Some("releases" at nexus + "service/local/staging/deploy/maven2")
+        },
+        publishMavenStyle := true,
+        publishArtifact in Test := false,
+        pomIncludeRepository := { _ => false },
+        pomExtra := (
+            <scm>
+                <url>git@github.com:your-account/your-project.git</url>
+                <connection>scm:git:https://github.com:mattpap/bokeh-scala.git</connection>
+            </scm>
+            <developers>
+                <developer>
+                    <id>mattpap</id>
+                    <name>Mateusz Paprocki</name>
+                </developer>
+            </developers>
+        )
+    )
+
     lazy val commonSettings = Seq(
         bokehDir := file("..") / "bokeh",
         runAll := {
@@ -62,6 +90,8 @@ object ProjectBuild extends Build {
             }
         }
     )
+
+    lazy val pgpSettings = SbtPgp.settings
 
     lazy val ideaSettings = SbtIdeaPlugin.settings
 
@@ -72,7 +102,7 @@ object ProjectBuild extends Build {
             target in assembly := target.value / "lib")
     }
 
-    lazy val pluginSettings = ideaSettings ++ assemblySettings
+    lazy val pluginSettings = pgpSettings ++ ideaSettings ++ assemblySettings
 
     lazy val bokehSettings = Project.defaultSettings ++ commonSettings ++ pluginSettings ++ {
         Seq(libraryDependencies ++= {
