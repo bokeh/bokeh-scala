@@ -29,7 +29,7 @@ object ColorSpec extends App {
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)
 
-    plot.renderers := List(glyph_renderer)
+    plot.renderers := List(xaxis, yaxis, glyph_renderer)
     plot.tools := List(pantool, wheelzoomtool)
 
     val session = new HTMLFileSession("colorspec.html")

@@ -36,7 +36,7 @@ object Grid extends App {
             .ydata_range(ydr)
             .glyph(new Line().x(xname).y(yname).line_color(line_color))
 
-        plot.renderers := List(renderer)
+        plot.renderers := List(xaxis, yaxis, renderer)
         plot.tools := List(pantool, wheelzoomtool)
 
         plot

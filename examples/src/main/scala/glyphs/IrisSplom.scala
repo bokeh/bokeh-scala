@@ -36,10 +36,10 @@ object IrisSplom extends App {
             .title("")
             .min_border(2)
 
-        //if (xax)
-        //    val xaxis = new LinearAxis().plot(plot).dimension(0).location(Location.Bottom)
-        //if (yax)
-        //    val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Left)
+        val xaxis = if (xax) Some(new LinearAxis().plot(plot).dimension(0).location(Location.Bottom)) else None
+        val yaxis = if (yax) Some(new LinearAxis().plot(plot).dimension(1).location(Location.Left)) else None
+
+        val axes = xaxis.toList ++ yaxis.toList
 
         val xgrid = new Grid().plot(plot).dimension(0)
         val ygrid = new Grid().plot(plot).dimension(1)
@@ -61,7 +61,7 @@ object IrisSplom extends App {
         val pantool = new PanTool().plot(plot)
         val wheelzoomtool = new WheelZoomTool().plot(plot)
 
-        plot.renderers := List(circle_renderer)
+        plot.renderers := axes ++ List(xgrid, ygrid, circle_renderer)
         plot.tools := List(pantool, wheelzoomtool)
 
         text.foreach { text =>

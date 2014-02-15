@@ -33,7 +33,7 @@ object Line extends App {
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)
 
-    plot.renderers := List(renderer)
+    plot.renderers := List(xaxis, yaxis, renderer)
     plot.tools := List(pantool, wheelzoomtool)
 
     val session = new HTMLFileSession("line.html")
