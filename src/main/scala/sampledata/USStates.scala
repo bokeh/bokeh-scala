@@ -7,7 +7,7 @@ object USStates extends SampleData {
         load("US_States.csv").collect {
             case Array(region, name, USState(state), geom, _) =>
                 val coords = xml.XML.loadString(geom) \\ "outerBoundaryIs" \ "LinearRing" \ "coordinates"
-                val Array(lats, lons, _) = coords.head.text.split(" ").map(_.split(",").map(_.toDouble)).transpose
+                val Array(lons, lats, _) = coords.head.text.split(" ").map(_.split(",").map(_.toDouble)).transpose
                 state -> USStateData(name, region, lats.toList, lons.toList)
         } toMap
     }
