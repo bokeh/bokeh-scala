@@ -6,10 +6,10 @@ object USCounties extends SampleData {
 
     def load(): Value = {
         load("US_Counties.csv").collect {
-            case Array(name, _, _, code, geom, _, _, _, _, stateId, countyId, _, _) =>
-                val coords = xml.XML.loadString(geom) \\ "outerBoundaryIs" \ "LinearRing" \ "coordinates"
-                val Array(lats, lons, _) = coords.head.text.split(" ").map(_.split(",").map(_.toDouble)).transpose
-                (stateId.toInt, countyId.toInt) -> USCountyData(name, USState.fromString(code), lats.toList, lons.toList)
+            case Array(name, _, _, USState(state), geom, _, _, _, _, stateId, countyId, _, _) =>
+                val coords = xml.XML.loadString(geom) \\ "outerBoundaryIs" \ "LinearRing" \ "coordinates" head
+                val Array(lats, lons) = coords.text.split(" ").map(_.split(",").map(_.toDouble)).transpose
+                (stateId.toInt, countyId.toInt) -> USCountyData(name, state, lats.toList, lons.toList)
         } toMap
     }
 }

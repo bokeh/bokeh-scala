@@ -5,10 +5,10 @@ object USStates extends SampleData {
 
     def load(): Value = {
         load("US_States.csv").collect {
-            case Array(region, name, code, geom, _) =>
+            case Array(region, name, USState(state), geom, _) =>
                 val coords = xml.XML.loadString(geom) \\ "outerBoundaryIs" \ "LinearRing" \ "coordinates"
                 val Array(lats, lons, _) = coords.head.text.split(" ").map(_.split(",").map(_.toDouble)).transpose
-                USState.fromString(code) -> USStateData(name, region, lats.toList, lons.toList)
+                state -> USStateData(name, region, lats.toList, lons.toList)
         } toMap
     }
 }
@@ -17,6 +17,8 @@ case class USStateData(name: String, region: String, lats: List[Double], lons: L
 
 sealed trait USState
 object USState {
+    def unapply(code: String): Option[USState] = fromString.lift(code)
+
     def fromString: PartialFunction[String, USState] = {
         case "AK" => AK
         case "AL" => AL
