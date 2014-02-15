@@ -109,7 +109,7 @@ case class RGBA(red: Int, green: Int, blue: Int, alpha: Double) extends CSSColor
 
     require(0.0 <= alpha && alpha <= 1.0, s"invalid alpha component: $alpha")
 
-    def toCSS = s"rgb($red, $green, $blue, $alpha)"
+    def toCSS = s"rgba($red, $green, $blue, $alpha)"
 }
 
 case class HSL(hue: Int, saturation: Percent, lightness: Percent) extends CSSColor {
