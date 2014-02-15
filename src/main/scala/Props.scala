@@ -36,6 +36,13 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
         }
     }
 
+    final def dirtyFieldsWithValues: List[(String, Any)] = {
+        fieldsList.filter(_._2.isDirty).map {
+            case (name, data: DataSpec[_]) => (name, data.toMap)
+            case (name, field: Field[_]) => (name, field.valueOpt)
+        }
+    }
+
     class Field[FieldType:DefaultValue] extends HField {
         type DataType = FieldType
 
@@ -48,19 +55,23 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
 
         val fieldName: Option[String] = None
 
-        private var data: Option[FieldType] = None
-
         def defaultValue: Option[FieldType] = {
             val default = implicitly[DefaultValue[FieldType]].default
             if (default == null) None else Some(default)
         }
 
-        def valueOpt: Option[FieldType] = data orElse defaultValue
+        protected var data: Option[FieldType] = None
+        protected var dirty: Boolean = false
 
-        def value: FieldType = valueOpt.get
+        final def isDirty: Boolean = dirty
 
-        def :=(value: FieldType) {
+        final def valueOpt: Option[FieldType] = data orElse defaultValue
+
+        final def value: FieldType = valueOpt.get
+
+        final def :=(value: FieldType) {
             data = Some(value)
+            dirty = true
         }
 
         def apply(value: FieldType): SelfType = {
@@ -75,25 +86,29 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
             this := value
         }
 
-        var name: Option[String] = None
-        var units: Option[Units] = None
-        var default: Option[FieldType] = None
+        protected var name: Option[String] = None
+        protected var units: Option[Units] = None
+        protected var default: Option[FieldType] = None
+
+        protected def set(name: Option[String] = None, units: Option[Units] = None, default: Option[FieldType] = None) {
+            name.foreach(name => this.name = Some(name))
+            units.foreach(units => this.units = Some(units))
+            default.foreach(default => this.default = Some(default))
+            dirty = true
+        }
 
         def apply(name: String): SelfType = {
-            this.name = Some(name)
+            set(name=Some(name))
             owner
         }
 
         def apply(name: String, units: Units): SelfType = {
-            this.name = Some(name)
-            this.units = Some(units)
+            set(name=Some(name), units=Some(units))
             owner
         }
 
         def apply(name: String, units: Units, default: FieldType): SelfType = {
-            this.name = Some(name)
-            this.units = Some(units)
-            this.default = Some(default)
+            set(name=Some(name), units=Some(units), default=Some(default))
             owner
         }
 

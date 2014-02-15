@@ -48,7 +48,7 @@ trait Serializer {
     }
 
     def allFieldsWithValues(obj: PlotObject): List[(String, Any)] =
-        ("type", obj.viewModel) :: obj.fieldsWithValues
+        ("type", obj.viewModel) :: obj.dirtyFieldsWithValues
 
     def serializeObjs(objs: List[PlotObject]): String = {
         val models = objs.map(getModel).map(_.toJson)
