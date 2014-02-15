@@ -51,6 +51,8 @@ object ProjectBuild extends Build {
         val quasiquotes = Def.setting { "org.scalamacros" % "quasiquotes" % "2.0.0-M3" cross CrossVersion.full }
     }
 
+    val runAll = taskKey[Unit]("Run all discovered main classes.")
+
     val jrebelJar = settingKey[Option[File]]("Location of jrebel.jar")
     val jrebelOptions = settingKey[Seq[String]]("http://manuals.zeroturnaround.com/jrebel/misc/index.html#agent-settings")
     val jrebelCommand = taskKey[Seq[String]]("JVM command line options enabling JRebel")
@@ -109,7 +111,13 @@ object ProjectBuild extends Build {
         Seq(libraryDependencies ++= {
                 import Dependencies._
                 Seq(breeze, specs2)
-            })
+            },
+            runAll := {
+                (discoveredMainClasses in Compile).value.sorted.foreach { mainClass =>
+                    (runner in run).value.run(mainClass, Attributed.data((fullClasspath in Compile).value), Nil, streams.value.log)
+                }
+            }
+        )
     }
 
     lazy val bokeh = Project(id="bokeh", base=file("."), settings=bokehSettings) dependsOn(macros)
