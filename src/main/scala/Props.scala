@@ -86,34 +86,34 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
             this := value
         }
 
-        protected var name: Option[String] = None
+        protected var field: Option[Symbol] = None
         protected var units: Option[Units] = None
         protected var default: Option[FieldType] = None
 
-        protected def set(name: Option[String] = None, units: Option[Units] = None, default: Option[FieldType] = None) {
-            name.foreach(name => this.name = Some(name))
+        protected def set(field: Option[Symbol] = None, units: Option[Units] = None, default: Option[FieldType] = None) {
+            field.foreach(field => this.field = Some(field))
             units.foreach(units => this.units = Some(units))
             default.foreach(default => this.default = Some(default))
             dirty = true
         }
 
-        def apply(name: String): SelfType = {
-            set(name=Some(name))
+        def apply(field: Symbol): SelfType = {
+            set(field=Some(field))
             owner
         }
 
-        def apply(name: String, units: Units): SelfType = {
-            set(name=Some(name), units=Some(units))
+        def apply(field: Symbol, units: Units): SelfType = {
+            set(field=Some(field), units=Some(units))
             owner
         }
 
-        def apply(name: String, units: Units, default: FieldType): SelfType = {
-            set(name=Some(name), units=Some(units), default=Some(default))
+        def apply(field: Symbol, units: Units, default: FieldType): SelfType = {
+            set(field=Some(field), units=Some(units), default=Some(default))
             owner
         }
 
         def toMap: Map[String, Any] = {
-            val fields = ("value" -> valueOpt) :: ("field" -> name) :: ("units" -> units) :: ("default" -> default) :: Nil
+            val fields = ("value" -> valueOpt) :: ("field" -> field) :: ("units" -> units) :: ("default" -> default) :: Nil
             fields.collect { case (name, Some(value)) => (name, value) } toMap
         }
     }

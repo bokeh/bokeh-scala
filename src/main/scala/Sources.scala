@@ -7,7 +7,7 @@ sealed abstract class DataSource extends PlotObject {
     object column_names extends Field[List[String]]
     object selected extends Field[List[String]]
 
-    def columns(columns: String*): ColumnsRef =
+    def columns(columns: Symbol*): ColumnsRef =
         new ColumnsRef().ref(this).columns(columns.toList)
 }
 
@@ -22,9 +22,9 @@ object ArrayLike {
 }
 
 class ColumnDataSource extends DataSource {
-    object data extends Field[Map[String, Any]] // TODO: HList/HRecord
+    object data extends Field[Map[Symbol, Any]] // TODO: HList/HRecord
 
-    def addColumn[A:ArrayLike](name: String, array: A): SelfType = {
+    def addColumn[A:ArrayLike](name: Symbol, array: A): SelfType = {
         data := data.value + (name -> array)
         this
     }

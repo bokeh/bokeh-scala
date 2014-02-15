@@ -40,7 +40,12 @@ trait Serializer {
             case obj: breeze.linalg.DenseVector[Double] => toJson(obj)
             case obj: Seq[_] => JsArray(obj.map(anyToJson))
             case obj: Array[_] => JsArray(obj.map(anyToJson))
-            case obj: Map[String, _] => JsObject(obj.mapValues(anyToJson).toList)
+            case obj: Map[_, _] =>
+                JsObject(obj.toList.map {
+                    case (key: String, value) => (key,      anyToJson(value))
+                    case (key: Symbol, value) => (key.name, anyToJson(value))
+                    case _ => throw new IllegalArgumentException(obj.toString)
+                })
             case Ref(id, tp) => toJson(Map("id" -> id, "type" -> tp))
             case Some(obj) => anyToJson(obj)
             case None => JsNull

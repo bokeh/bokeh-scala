@@ -9,7 +9,7 @@ class Range1d extends Range {
 
 class ColumnsRef extends PlotObject with NoRefs {
     object ref extends Field[DataSource]
-    object columns extends Field[List[String]]
+    object columns extends Field[List[Symbol]]
 }
 
 trait DataRange { self: Range => }
