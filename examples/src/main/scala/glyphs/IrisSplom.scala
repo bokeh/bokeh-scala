@@ -9,22 +9,22 @@ object IrisSplom extends App {
     val colormap = Map("setosa" -> Color.Red, "versicolor" -> Color.Green, "virginica" -> Color.Blue)
 
     val source = new ColumnDataSource()
-        .addColumn("petal_length", flowers.petal_length)
-        .addColumn("petal_width", flowers.petal_width)
-        .addColumn("sepal_length", flowers.sepal_length)
-        .addColumn("sepal_width", flowers.sepal_width)
-        .addColumn("color", flowers.species.map(colormap))
+        .addColumn('petal_length, flowers.petal_length)
+        .addColumn('petal_width, flowers.petal_width)
+        .addColumn('sepal_length, flowers.sepal_length)
+        .addColumn('sepal_width, flowers.sepal_width)
+        .addColumn('color, flowers.species.map(colormap))
 
     val text_source = new ColumnDataSource()
-        .addColumn("xcenter", Array(125))
-        .addColumn("ycenter", Array(145))
+        .addColumn('xcenter, Array(125))
+        .addColumn('ycenter, Array(145))
 
-    val columns = List("petal_length", "petal_width", "sepal_width", "sepal_length")
+    val columns = List('petal_length, 'petal_width, 'sepal_width, 'sepal_length)
 
     val xdr = new DataRange1d().sources(source.columns(columns: _*) :: Nil)
     val ydr = new DataRange1d().sources(source.columns(columns: _*) :: Nil)
 
-    def make_plot(xname: String, yname: String, xax: Boolean=false, yax: Boolean=false, text: Option[String]=None) = {
+    def make_plot(xname: Symbol, yname: Symbol, xax: Boolean=false, yax: Boolean=false, text: Option[String]=None) = {
         val plot = new Plot()
             .x_range(xdr)
             .y_range(ydr)
@@ -47,10 +47,10 @@ object IrisSplom extends App {
         val circle = new Circle()
             .x(xname)
             .y(yname)
-            .fill_color("color")
+            .fill_color('color)
             .fill_alpha(0.2)
             .size(4)
-            .line_color("color")
+            .line_color('color)
 
         val circle_renderer = new Glyph()
             .data_source(source)
@@ -66,8 +66,8 @@ object IrisSplom extends App {
 
         text.foreach { text =>
             val text_glyph = new Text()
-                .x("xcenter", Units.Screen)
-                .y("ycenter", Units.Screen)
+                .x('xcenter, Units.Screen)
+                .y('ycenter, Units.Screen)
                 .text(text.replaceAll("_", " "))
                 .angle(pi/4)
                 .text_font_style(FontStyle.Bold)
@@ -96,7 +96,7 @@ object IrisSplom extends App {
         xattrs.map { x =>
             val xax = y == yattrs.last
             val yax = x == xattrs(0)
-            val text = if (x == y) Some(x) else None
+            val text = if (x == y) Some(x.name) else None
             make_plot(x, y, xax, yax, text)
         }
     }

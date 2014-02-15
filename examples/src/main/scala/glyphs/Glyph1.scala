@@ -10,13 +10,13 @@ object Glyph1 extends App {
     val y = sin(x)
 
     val source = new ColumnDataSource()
-        .addColumn("x", x)
-        .addColumn("y", y)
+        .addColumn('x, x)
+        .addColumn('y, y)
 
-    val xdr = new DataRange1d().sources(source.columns("x") :: Nil)
-    val ydr = new DataRange1d().sources(source.columns("y") :: Nil)
+    val xdr = new DataRange1d().sources(source.columns('x) :: Nil)
+    val ydr = new DataRange1d().sources(source.columns('y) :: Nil)
 
-    val circle = new Circle().x("x").y("y").fill_color(Color.Red).size(5).line_color(Color.Black)
+    val circle = new Circle().x('x).y('y).fill_color(Color.Red).size(5).line_color(Color.Black)
 
     val glyph_renderer = new Glyph()
         .data_source(source)

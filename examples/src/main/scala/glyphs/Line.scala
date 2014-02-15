@@ -11,13 +11,13 @@ object Line extends App {
     val y = sin(x)
 
     val source = new ColumnDataSource()
-        .addColumn("x", x)
-        .addColumn("y", y)
+        .addColumn('x, x)
+        .addColumn('y, y)
 
-    val xdr = new DataRange1d().sources(source.columns("x") :: Nil)
-    val ydr = new DataRange1d().sources(source.columns("y") :: Nil)
+    val xdr = new DataRange1d().sources(source.columns('x) :: Nil)
+    val ydr = new DataRange1d().sources(source.columns('y) :: Nil)
 
-    val line_glyph = new Line().x("x").y("y").line_color(Color.Blue)
+    val line_glyph = new Line().x('x).y('y).line_color(Color.Blue)
 
     val renderer = new Glyph()
         .data_source(source)

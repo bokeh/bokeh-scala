@@ -4,7 +4,7 @@ import org.continuumio.bokeh._
 import breeze.linalg._
 
 object Anscombe extends App {
-    val quartets = List("xi", "yi", "xii", "yii", "xiii", "yiii", "xiv", "yiv")
+    val quartets = List('xi, 'yi, 'xii, 'yii, 'xiii, 'yiii, 'xiv, 'yiv)
 
     val raw_columns = DenseMatrix(
         (10.0,   8.04,   10.0,   9.14,   10.0,   7.46,   8.0,    6.58),
@@ -33,13 +33,13 @@ object Anscombe extends App {
     val y = x*0.5 + 3.0
 
     val lines_source = new ColumnDataSource()
-        .addColumn("x", x)
-        .addColumn("y", y)
+        .addColumn('x, x)
+        .addColumn('y, y)
 
     val xdr = new Range1d().start(-0.5).end(20.5)
     val ydr = new Range1d().start(-0.5).end(20.5)
 
-    def make_plot(title: String, xname: String, yname: String) = {
+    def make_plot(title: String, xname: Symbol, yname: Symbol) = {
         val plot = new Plot()
             .x_range(xdr)
             .y_range(ydr)
@@ -57,7 +57,7 @@ object Anscombe extends App {
             .data_source(lines_source)
             .xdata_range(xdr)
             .ydata_range(ydr)
-            .glyph(new Line().x("x").y("y").line_color("#666699").line_width(2))
+            .glyph(new Line().x('x).y('y).line_color("#666699").line_width(2))
         val circle_renderer = new Glyph()
             .data_source(circles_source)
             .xdata_range(xdr)
@@ -67,10 +67,10 @@ object Anscombe extends App {
         plot
     }
 
-    val I   = make_plot("I",   "xi",   "yi")
-    val II  = make_plot("II",  "xii",  "yii")
-    val III = make_plot("III", "xiii", "yiii")
-    val IV  = make_plot("IV",  "xiv",  "yiv")
+    val I   = make_plot("I",   'xi,   'yi)
+    val II  = make_plot("II",  'xii,  'yii)
+    val III = make_plot("III", 'xiii, 'yiii)
+    val IV  = make_plot("IV",  'xiv,  'yiv)
 
     val children = List(List(I, II), List(III, IV))
     val grid = new GridPlot().children(children).width(800)

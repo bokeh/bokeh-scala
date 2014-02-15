@@ -10,13 +10,13 @@ object Grid extends App {
     val x = linspace(-2*pi, 2*pi, 1000)
 
     val source = new ColumnDataSource()
-        .addColumn("x",  x)
-        .addColumn("y1", sin(x))
-        .addColumn("y2", cos(x))
-        .addColumn("y3", tan(x))
-        .addColumn("y4", sin(x) :* cos(x))
+        .addColumn('x,  x)
+        .addColumn('y1, sin(x))
+        .addColumn('y2, cos(x))
+        .addColumn('y3, tan(x))
+        .addColumn('y4, sin(x) :* cos(x))
 
-    def make_plot(xname: String, yname: String, line_color: Color,
+    def make_plot(xname: Symbol, yname: Symbol, line_color: Color,
             _xdr: Option[Range]=None, _ydr: Option[Range]=None) = {
 
         val xdr = _xdr getOrElse new DataRange1d().sources(source.columns(xname) :: Nil)
@@ -42,10 +42,10 @@ object Grid extends App {
         plot
     }
 
-    val plot1 = make_plot("x", "y1", Color.Blue)
-    val plot2 = make_plot("x", "y2", Color.Red, _xdr=plot1.x_range.valueOpt)
-    val plot3 = make_plot("x", "y3", Color.Green)
-    val plot4 = make_plot("x", "y4", Color.Black)
+    val plot1 = make_plot('x, 'y1, Color.Blue)
+    val plot2 = make_plot('x, 'y2, Color.Red, _xdr=plot1.x_range.valueOpt)
+    val plot3 = make_plot('x, 'y3, Color.Green)
+    val plot4 = make_plot('x, 'y4, Color.Black)
 
     val children = List(List(plot1, plot2), List(plot3, plot4))
     val grid = new GridPlot().children(children)
