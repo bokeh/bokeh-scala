@@ -5,7 +5,7 @@ import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
 trait HasFields extends macros.HListable with DefaultImplicits { self =>
     type SelfType = self.type
 
-    final def fieldsWithValues: List[(String, Any)] = {
+    final def fieldsList: List[(String, HasFields#Field[_])] = {
         val im = cm.reflect(this)
         val modules = im
             .symbol
@@ -15,20 +15,25 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
             .map(_.asModule)
             .filter(_.typeSignature <:< u.typeOf[HasFields#Field[_]])
             .toList
-        val instances = modules.map(im.reflectModule _).map(_.instance)
+        val instances = modules
+            .map(im.reflectModule _)
+            .map(_.instance)
+            .collect { case field: Field[_] => field }
         val names = instances
-            .collect { case field: Field[_] => field.fieldName }
+            .map(_.fieldName)
             .zip(modules)
             .collect {
                 case (Some(name), _) => name
                 case (_, module) => module.name.decoded
             }
-        val values = instances
-            .collect {
-                case data: DataSpec[_] => data.toMap
-                case field: Field[_] => field.valueOpt
-            }
-        names.zip(values)
+        names.zip(instances)
+    }
+
+    final def fieldsWithValues: List[(String, Any)] = {
+        fieldsList.map {
+            case (name, data: DataSpec[_]) => (name, data.toMap)
+            case (name, field: Field[_]) => (name, field.valueOpt)
+        }
     }
 
     class Field[FieldType:DefaultValue] extends HField {
