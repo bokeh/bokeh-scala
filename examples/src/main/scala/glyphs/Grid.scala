@@ -9,12 +9,12 @@ import org.continuumio.bokeh._
 object Grid extends App {
     val x = linspace(-2*pi, 2*pi, 1000)
 
-    val source = new ColumnDataSource().data(Map(
-        "x" -> x,
-        "y1" -> sin(x),
-        "y2" -> cos(x),
-        "y3" -> tan(x),
-        "y4" -> (sin(x) :* cos(x))))
+    val source = new ColumnDataSource()
+        .addColumn("x",  x)
+        .addColumn("y1", sin(x))
+        .addColumn("y2", cos(x))
+        .addColumn("y3", tan(x))
+        .addColumn("y4", sin(x) :* cos(x))
 
     def make_plot(xname: String, yname: String, line_color: Color,
             _xdr: Option[Range]=None, _ydr: Option[Range]=None) = {

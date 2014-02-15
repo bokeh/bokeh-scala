@@ -13,7 +13,7 @@ object DateAxis extends App {
     val now = System.currentTimeMillis.toDouble/1000
     val times = DenseVector(0.0 until x.length by 1.0 toArray)*3600000.0 + now
 
-    val source = new ColumnDataSource().data(Map()) // "times" -> times, "y" -> y))
+    val source = new ColumnDataSource().addColumn("times", times).addColumn("y", y)
 
     val xdr = new DataRange1d().sources(source.columns("times") :: Nil)
     val ydr = new DataRange1d().sources(source.columns("y") :: Nil)

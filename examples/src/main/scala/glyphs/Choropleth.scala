@@ -20,15 +20,16 @@ object Choropleth extends App {
         .map(unemployment)
         .map(rate => math.min(rate/2 toInt, 5))
         .map(colors)
+        .toArray
 
-    val state_source = new ColumnDataSource().data(Map())
-        //"state_xs" -> us_states.values.map(_.lons),
-        //"state_ys" -> us_states.values.map(_.lats)))
+    val state_source = new ColumnDataSource()
+        .addColumn("state_xs", us_states.values.map(_.lons).toArray)
+        .addColumn("state_ys", us_states.values.map(_.lats).toArray)
 
-    val county_source = new ColumnDataSource().data(Map())
-        //"county_xs" -> us_counties.map(_.lons),
-        //"county_ys" -> us_counties.map(_.lats),
-        //"county_colors" -> county_colors))
+    val county_source = new ColumnDataSource()
+        .addColumn("county_xs", us_counties.values.map(_.lons).toArray)
+        .addColumn("county_ys", us_counties.values.map(_.lats).toArray)
+        .addColumn("county_colors", county_colors)
 
     val xdr = new DataRange1d().sources(state_source.columns("state_xs") :: Nil)
     val ydr = new DataRange1d().sources(state_source.columns("state_ys") :: Nil)

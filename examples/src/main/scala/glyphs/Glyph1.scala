@@ -9,7 +9,9 @@ object Glyph1 extends App {
     val x = -2*pi to 2*pi by 0.1 toArray
     val y = sin(x)
 
-    val source = new ColumnDataSource().data(Map()) // "x" -> x, "y" -> y))
+    val source = new ColumnDataSource()
+        .addColumn("x", x)
+        .addColumn("y", y)
 
     val xdr = new DataRange1d().sources(source.columns("x") :: Nil)
     val ydr = new DataRange1d().sources(source.columns("y") :: Nil)

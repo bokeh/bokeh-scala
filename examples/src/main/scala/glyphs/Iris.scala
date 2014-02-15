@@ -6,12 +6,12 @@ import sampledata.iris.flowers
 object Iris extends App {
     val colormap = Map("setosa" -> Color.Red, "versicolor" -> Color.Green, "virginica" -> Color.Blue)
 
-    val source = new ColumnDataSource().data(Map())
-        //"petal_length" -> flowers.petal_length,
-        //"petal_width" -> flowers.petal_width,
-        //"sepal_length" -> flowers.sepal_length,
-        //"sepal_width" -> flowers.sepal_width,
-        //"color" -> flowers.species.map(colormap _)))
+    val source = new ColumnDataSource()
+        .addColumn("petal_length", flowers.petal_length)
+        .addColumn("petal_width", flowers.petal_width)
+        .addColumn("sepal_length", flowers.sepal_length)
+        .addColumn("sepal_width", flowers.sepal_width)
+        .addColumn("color", flowers.species.map(colormap))
 
     val xdr = new DataRange1d().sources(source.columns("petal_length") :: Nil)
     val ydr = new DataRange1d().sources(source.columns("petal_width") :: Nil)

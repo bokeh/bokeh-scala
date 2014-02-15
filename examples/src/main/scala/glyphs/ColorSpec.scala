@@ -3,10 +3,10 @@ package org.continuumio.bokeh.examples
 import org.continuumio.bokeh._
 
 object ColorSpec extends App {
-    val source = new ColumnDataSource().data(Map())
-        // "x" -> List(1, 2, 3, 4, 5),
-        // "y" -> List(5, 4, 3, 2, 1),
-        // "color" -> List(RGB(0, 100, 120), Color.Green, Color.Blue, "#2c7fb8", RGBA(120, 230, 150, 0.5))))
+    val source = new ColumnDataSource()
+        .addColumn("x", Array(1, 2, 3, 4, 5))
+        .addColumn("y", Array(5, 4, 3, 2, 1))
+        .addColumn("color", List(/*RGB(0, 100, 120),*/ Color.Green, Color.Blue/*, "#2c7fb8", RGBA(120, 230, 150, 0.5)*/))
 
     val xdr = new DataRange1d().sources(source.columns("x") :: Nil)
     val ydr = new DataRange1d().sources(source.columns("y") :: Nil)

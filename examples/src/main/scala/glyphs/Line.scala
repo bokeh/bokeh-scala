@@ -10,7 +10,9 @@ object Line extends App {
     val x = linspace(-2*pi, 2*pi, 1000)
     val y = sin(x)
 
-    val source = new ColumnDataSource().data(Map("x" -> x, "y" -> y))
+    val source = new ColumnDataSource()
+        .addColumn("x", x)
+        .addColumn("y", y)
 
     val xdr = new DataRange1d().sources(source.columns("x") :: Nil)
     val ydr = new DataRange1d().sources(source.columns("y") :: Nil)

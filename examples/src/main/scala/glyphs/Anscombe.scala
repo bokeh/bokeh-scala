@@ -21,14 +21,20 @@ object Anscombe extends App {
 
     val data = quartets.zip(0 until raw_columns.cols).map {
         case (quartet, i) => quartet -> raw_columns(::, i)
-    } toMap
+    }
 
-    val circles_source = new ColumnDataSource().data(data)
+    val circles_source = new ColumnDataSource()
+
+    data.foreach { case (name, array) =>
+        circles_source.addColumn(name, array)
+    }
 
     val x = linspace(-0.5, 20.5, 10)
     val y = x*0.5 + 3.0
 
-    val lines_source = new ColumnDataSource().data(Map("x" -> x, "y" -> y))
+    val lines_source = new ColumnDataSource()
+        .addColumn("x", x)
+        .addColumn("y", y)
 
     val xdr = new Range1d().start(-0.5).end(20.5)
     val ydr = new Range1d().start(-0.5).end(20.5)
