@@ -14,7 +14,7 @@ object Choropleth extends App {
 
     val unemployment = sampledata.unemployment
 
-    val colors = List("#F1EEF6", "#D4B9DA", "#C994C7", "#DF65B0", "#DD1C77", "#980043")
+    val colors: List[Color] = List("#F1EEF6", "#D4B9DA", "#C994C7", "#DF65B0", "#DD1C77", "#980043")
 
     val county_colors = us_counties
         .keys
