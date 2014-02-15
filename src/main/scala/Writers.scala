@@ -27,6 +27,10 @@ trait DataFormats {
     implicit val CSSColorJSON = new Writes[CSSColor] {
         def writes(color: CSSColor) = JsString(color.toCSS)
     }
+
+    implicit val SymbolJSON = new Writes[Symbol] {
+        def writes(symbol: Symbol) = JsString(symbol.name)
+    }
 }
 
 trait EnumFormats {

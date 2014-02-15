@@ -19,6 +19,7 @@ trait Serializer {
             case obj: Int => toJson(obj)
             case obj: Double => toJson(obj)
             case obj: String => toJson(obj)
+            case obj: Symbol => toJson(obj)
             case obj: Enum => obj match {
                 case obj: LineJoin => toJson(obj)
                 case obj: LineDash => toJson(obj)
