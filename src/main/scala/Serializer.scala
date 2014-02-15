@@ -32,8 +32,9 @@ trait Serializer {
                 case obj: AngleUnits => toJson(obj)
                 case obj: Dimension => toJson(obj)
                 case obj: Location => toJson(obj)
-                case obj: Color => toJson(obj)
+                case obj: NamedColor => toJson(obj)
             }
+            case obj: CSSColor => toJson(obj)
             case obj: Percent => toJson(obj)
             case obj: breeze.linalg.DenseVector[Double] => toJson(obj)
             case obj: Seq[_] => JsArray(obj.map(anyToJson))

@@ -2,7 +2,7 @@ package org.continuumio.bokeh
 
 import scala.reflect.ClassTag
 
-import play.api.libs.json.{Json,Reads,Writes,Format}
+import play.api.libs.json.{Json,Reads,Writes,Format,JsString}
 import breeze.linalg.DenseVector
 
 import org.continuumio.bokeh.macros.JsonImpl
@@ -23,6 +23,10 @@ trait DataFormats {
         def writes(percent: Percent) =
             implicitly[Writes[Double]].writes(percent.value)
     }
+
+    implicit val CSSColorJSON = new Writes[CSSColor] {
+        def writes(color: CSSColor) = JsString(color.toCSS)
+    }
 }
 
 trait EnumFormats {
@@ -38,7 +42,7 @@ trait EnumFormats {
     implicit val AngleUnitsJSON = BokehJson.enum[AngleUnits]
     implicit val DimensionJSON = BokehJson.enum[Dimension]
     implicit val LocationJSON = BokehJson.enum[Location]
-    implicit val ColorJSON = BokehJson.enum[Color]
+    implicit val NamedColorJSON = BokehJson.enum[NamedColor]
 }
 
 object Formats extends DataFormats with EnumFormats
