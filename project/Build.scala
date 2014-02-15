@@ -63,13 +63,6 @@ object ProjectBuild extends Build {
         }
     )
 
-    val jrebelJar = settingKey[Option[File]]("Location of jrebel.jar")
-    val jrebelOptions = settingKey[Seq[String]]("http://manuals.zeroturnaround.com/jrebel/misc/index.html#agent-settings")
-    val jrebelCommand = taskKey[Seq[String]]("JVM command line options enabling JRebel")
-
-    val debugPort = settingKey[Int]("Port for remote debugging")
-    val debugCommand = taskKey[Seq[String]]("JVM command line options enabling remote debugging")
-
     lazy val ideaSettings = SbtIdeaPlugin.settings
 
     lazy val assemblySettings = SbtAssembly.assemblySettings ++ {
@@ -94,19 +87,7 @@ object ProjectBuild extends Build {
                 import scalax.file.Path
                 import play.api.libs.json.Json
                 import org.continuumio.bokeh._
-                """,
-            jrebelJar := {
-                val jar = Path.userHome / ".jrebel" / "jrebel" / "jrebel.jar"
-                if (jar.exists) Some(jar) else None
-            },
-            jrebelOptions := Seq("-Drebel.load_embedded_plugins=false", "-Drebel.stats=false", "-Drebel.usage_reporting=false"),
-            jrebelCommand <<= (jrebelJar, jrebelOptions) map { (jar, options) =>
-                jar.map(jar => Seq("-XX:+CMSClassUnloadingEnabled", "-noverify", s"-javaagent:$jar") ++ options) getOrElse Nil
-            },
-            debugPort := 5005,
-            debugCommand <<= (debugPort) map { (port) =>
-                Seq("-Xdebug", s"-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=127.0.0.1:$port")
-            })
+                """)
     }
 
     lazy val macrosSettings = Project.defaultSettings ++ commonSettings ++ {
