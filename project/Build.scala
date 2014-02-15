@@ -51,7 +51,17 @@ object ProjectBuild extends Build {
         val quasiquotes = Def.setting { "org.scalamacros" % "quasiquotes" % "2.0.0-M3" cross CrossVersion.full }
     }
 
+    val bokehDir = settingKey[File]("Location of Bokeh library.")
     val runAll = taskKey[Unit]("Run all discovered main classes.")
+
+    lazy val commonSettings = Seq(
+        bokehDir := file("..") / "bokeh",
+        runAll := {
+            (discoveredMainClasses in Compile).value.sorted.foreach { mainClass =>
+                (runner in run).value.run(mainClass, Attributed.data((fullClasspath in Compile).value), Nil, streams.value.log)
+            }
+        }
+    )
 
     val jrebelJar = settingKey[Option[File]]("Location of jrebel.jar")
     val jrebelOptions = settingKey[Seq[String]]("http://manuals.zeroturnaround.com/jrebel/misc/index.html#agent-settings")
@@ -71,7 +81,7 @@ object ProjectBuild extends Build {
 
     lazy val pluginSettings = ideaSettings ++ assemblySettings
 
-    lazy val bokehSettings = Project.defaultSettings ++ pluginSettings ++ {
+    lazy val bokehSettings = Project.defaultSettings ++ commonSettings ++ pluginSettings ++ {
         Seq(libraryDependencies ++= {
                 import Dependencies._
                 scalaio ++ Seq(compiler.value, breeze, shapeless, jopt, play_json, opencsv, specs2)
@@ -99,7 +109,7 @@ object ProjectBuild extends Build {
             })
     }
 
-    lazy val macrosSettings = Project.defaultSettings ++ {
+    lazy val macrosSettings = Project.defaultSettings ++ commonSettings ++ {
         Seq(addCompilerPlugin("org.scalamacros" % "paradise" % "2.0.0-M3" cross CrossVersion.full),
             libraryDependencies ++= {
                 import Dependencies._
@@ -107,17 +117,11 @@ object ProjectBuild extends Build {
             })
     }
 
-    lazy val examplesSettings = Project.defaultSettings ++ {
+    lazy val examplesSettings = Project.defaultSettings ++ commonSettings ++ {
         Seq(libraryDependencies ++= {
                 import Dependencies._
                 Seq(breeze, specs2)
-            },
-            runAll := {
-                (discoveredMainClasses in Compile).value.sorted.foreach { mainClass =>
-                    (runner in run).value.run(mainClass, Attributed.data((fullClasspath in Compile).value), Nil, streams.value.log)
-                }
-            }
-        )
+            })
     }
 
     lazy val bokeh = Project(id="bokeh", base=file("."), settings=bokehSettings) dependsOn(macros)
