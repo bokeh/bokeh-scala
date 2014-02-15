@@ -4,9 +4,10 @@ import org.continuumio.bokeh._
 import sampledata.USState._
 
 object Choropleth extends App {
-    val us_states = sampledata.us_states -- List(HI, AK)
+    val excluded_states: Set[sampledata.USState] = Set(AK, HI)
 
-    val excluded_states: Set[sampledata.USState] = Set(AK, HI/*, PR, GU, VI, MP, AS*/)
+    val us_states = sampledata.us_states -- excluded_states
+
     val us_counties = sampledata.us_counties.filterNot { case (_, county) =>
         excluded_states contains county.state
     }
@@ -17,10 +18,12 @@ object Choropleth extends App {
 
     val county_colors = us_counties
         .keys
-        .map(unemployment)
-        .map(rate => math.min(rate/2 toInt, 5))
-        .map(colors)
-        .toArray
+        .toList
+        .map(unemployment.get)
+        .map {
+            case Some(rate) => colors(math.min(rate/2 toInt, 5))
+            case None => Color.Black
+        }
 
     val state_source = new ColumnDataSource()
         .addColumn("state_xs", us_states.values.map(_.lons).toArray)
