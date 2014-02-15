@@ -53,7 +53,7 @@ class Bezier extends BaseGlyph with LineProps {
 }
 
 class Image extends BaseGlyph {
-    object image extends DataSpec[List[List[Int]]]
+    object image extends DataSpec[Seq[Seq[Int]]]
     object x extends DataSpec[Double]
     object y extends DataSpec[Double]
     object dw extends DataSpec[Double]
@@ -69,7 +69,7 @@ class ImageURI extends BaseGlyph {
 }
 
 class ImageRGBA extends BaseGlyph {
-    object image extends DataSpec[List[List[Double]]]
+    object image extends DataSpec[Seq[Seq[Double]]]
     object x extends DataSpec[Double]
     object y extends DataSpec[Double]
     object dw extends DataSpec[Double]
@@ -82,8 +82,8 @@ class Line extends BaseGlyph with LineProps {
 }
 
 class MultiLine extends BaseGlyph with LineProps {
-    object xs extends DataSpec[List[Double]]
-    object ys extends DataSpec[List[Double]]
+    object xs extends DataSpec[Seq[Double]]
+    object ys extends DataSpec[Seq[Double]]
 }
 
 class Oval extends BaseGlyph with FillProps with LineProps {
@@ -98,8 +98,8 @@ class Patch extends BaseGlyph with FillProps with LineProps {
 }
 
 class Patches extends BaseGlyph with LineProps with FillProps {
-    object xs extends DataSpec[List[Double]]
-    object ys extends DataSpec[List[Double]]
+    object xs extends DataSpec[Seq[Double]]
+    object ys extends DataSpec[Seq[Double]]
 }
 
 class Quad extends BaseGlyph with FillProps with LineProps {

@@ -36,7 +36,8 @@ trait Serializer {
             }
             case obj: Percent => toJson(obj)
             case obj: breeze.linalg.DenseVector[Double] => toJson(obj)
-            case obj: List[_] => JsArray(obj.map(anyToJson))
+            case obj: Seq[_] => JsArray(obj.map(anyToJson))
+            case obj: Array[_] => JsArray(obj.map(anyToJson))
             case obj: Map[String, _] => JsObject(obj.mapValues(anyToJson).toList)
             case Ref(id, tp) => toJson(Map("id" -> id, "type" -> tp))
             case Some(obj) => anyToJson(obj)

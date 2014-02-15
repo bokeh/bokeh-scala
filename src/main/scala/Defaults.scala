@@ -24,6 +24,7 @@ trait DefaultImplicits {
     implicit object DimensionDefault extends DefaultValue[Dimension](Dimension.Width)
     implicit object LocationDefault extends DefaultValue[Location](Location.Top)
     implicit object ColorDefault extends DefaultValue[Color](Color.White)
+    implicit def SeqDefault[T]: DefaultValue[Seq[T]] = new DefaultValue[Seq[T]](Seq())
     implicit def ListDefault[T]: DefaultValue[List[T]] = new DefaultValue[List[T]](Nil)
     implicit def MapDefault[U, V]: DefaultValue[Map[U, V]] = new DefaultValue[Map[U, V]](Map.empty)
     implicit def HasFieldsDefault[T <: HasFields]: DefaultValue[T] = new DefaultValue[T](null.asInstanceOf[T])
