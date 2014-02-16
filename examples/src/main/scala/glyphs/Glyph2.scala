@@ -28,10 +28,10 @@ object Glyph2 extends App {
         .ydata_range(ydr)
         .glyph(circle)
 
+    val plot = new Plot().x_range(xdr).y_range(ydr).data_sources(source :: Nil).title("glyph2")
+
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)
-
-    val plot = new Plot().x_range(xdr).y_range(ydr).data_sources(source :: Nil).title("glyph2")
 
     val xaxis = new LinearAxis().plot(plot).dimension(0).location(Location.Min)
     val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Min)
