@@ -9,7 +9,6 @@ class Glyph extends Renderer {
 
     object units extends Field[Units]
 
-    // XXX: has_ref = False
     object glyph extends Field[BaseGlyph] {
         override val fieldName = Some("glyphspec")
     }
@@ -19,4 +18,8 @@ class Glyph extends Renderer {
     object nonselection_glyph extends Field[BaseGlyph] {
         override val fieldName = Some("nonselection_glyphspec")
     }
+}
+
+class BoxSelectionOverlay extends Renderer {
+    object tool extends Field[BoxSelectTool]
 }

@@ -33,3 +33,9 @@ class GridPlot extends Plot {
     object children extends Field[List[List[Plot]]]
     object border_space extends Field[Int](0)
 }
+
+class GMapPlot extends Plot {
+    object center_lat extends Field[Double]
+    object center_lng extends Field[Double]
+    object zoom_level extends Field[Int](12)
+}
