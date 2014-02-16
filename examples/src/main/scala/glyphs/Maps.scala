@@ -28,6 +28,8 @@ object Maps extends App {
     val xgrid = new Grid().plot(plot).dimension(0)
     val ygrid = new Grid().plot(plot).dimension(1)
 
+    plot.renderers <<= (xgrid :: ygrid :: _)
+
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)
 
