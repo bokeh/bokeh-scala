@@ -9,12 +9,11 @@ import org.continuumio.bokeh.macros.JsonImpl
 
 object BokehJson {
     def writes[T]: Writes[T] = macro JsonImpl.writesImpl[T]
-    def enum[T <: Enum]: Writes[T] = macro JsonImpl.enumImpl[T]
     def sealedWrites[T]: Writes[T] = macro JsonImpl.sealedWritesImpl[T]
 }
 
-trait DataFormats {
-    implicit def DenseVectorJSON[T:Writes:ClassTag]: Writes[DenseVector[T]] = new Writes[DenseVector[T]] {
+trait Formats {
+    implicit def DenseVectorJSON[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
         def writes(vec: DenseVector[T]) =
             implicitly[Writes[Array[T]]].writes(vec.toArray)
     }
@@ -31,22 +30,10 @@ trait DataFormats {
     implicit val SymbolJSON = new Writes[Symbol] {
         def writes(symbol: Symbol) = JsString(symbol.name)
     }
+
+    implicit def EnumJSON[T <: macros.EnumType] = new Writes[T] {
+        def writes(value: T) = value.toJson
+    }
 }
 
-trait EnumFormats {
-    implicit val LineJoinJSON = BokehJson.enum[LineJoin]
-    implicit val LineDashJSON = BokehJson.enum[LineDash]
-    implicit val LineCapJSON = BokehJson.enum[LineCap]
-    implicit val FontStyleJSON = BokehJson.enum[FontStyle]
-    implicit val TextAlignJSON = BokehJson.enum[TextAlign]
-    implicit val BaselineJSON = BokehJson.enum[Baseline]
-    implicit val DirectionJSON = BokehJson.enum[Direction]
-    implicit val OrientationJSON = BokehJson.enum[Orientation]
-    implicit val UnitsJSON = BokehJson.enum[Units]
-    implicit val AngleUnitsJSON = BokehJson.enum[AngleUnits]
-    implicit val DimensionJSON = BokehJson.enum[Dimension]
-    implicit val LocationJSON = BokehJson.enum[Location]
-    implicit val NamedColorJSON = BokehJson.enum[NamedColor]
-}
-
-object Formats extends DataFormats with EnumFormats
+object Formats extends Formats

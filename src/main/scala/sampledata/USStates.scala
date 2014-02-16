@@ -1,4 +1,5 @@
-package org.continuumio.bokeh.sampledata
+package org.continuumio.bokeh
+package sampledata
 
 object USStates extends SampleData {
     type Value = Map[USState, USStateData]
@@ -15,11 +16,11 @@ object USStates extends SampleData {
 
 case class USStateData(name: String, region: String, lats: List[Double], lons: List[Double])
 
-sealed trait USState
-object USState {
-    def unapply(code: String): Option[USState] = fromString.lift(code)
+sealed trait USState extends macros.EnumType
+object USState extends macros.Enum[USState] {
+    def unapply(code: String): Option[USState] = _fromString.lift(code)
 
-    def fromString: PartialFunction[String, USState] = {
+    def _fromString: PartialFunction[String, USState] = {
         case "AK" => AK
         case "AL" => AL
         case "AR" => AR

@@ -1,16 +1,16 @@
 package org.continuumio.bokeh
 
-sealed trait Enum
+import macros.{EnumType,Enum}
 
-sealed trait LineJoin extends Enum
-object LineJoin {
+sealed trait LineJoin extends EnumType
+object LineJoin extends Enum[LineJoin] {
     case object Miter extends LineJoin
     case object Round extends LineJoin
     case object Bevel extends LineJoin
 }
 
-sealed trait LineDash extends Enum
-object LineDash {
+sealed trait LineDash extends EnumType
+object LineDash extends Enum[LineDash] {
     case object Solid extends LineDash
     case object Dashed extends LineDash
     case object Dotted extends LineDash
@@ -18,29 +18,29 @@ object LineDash {
     case object Dashdot extends LineDash
 }
 
-sealed trait LineCap extends Enum
-object LineCap {
+sealed trait LineCap extends EnumType
+object LineCap extends Enum[LineCap] {
     case object Butt extends LineCap
     case object Round extends LineCap
     case object Square extends LineCap
 }
 
-sealed trait FontStyle extends Enum
-object FontStyle {
+sealed trait FontStyle extends EnumType
+object FontStyle extends Enum[FontStyle] {
     case object Normal extends FontStyle
     case object Italic extends FontStyle
     case object Bold extends FontStyle
 }
 
-sealed trait TextAlign extends Enum
-object TextAlign {
+sealed trait TextAlign extends EnumType
+object TextAlign extends Enum[TextAlign] {
     case object Left extends TextAlign
     case object Right extends TextAlign
     case object Center extends TextAlign
 }
 
-sealed trait Baseline extends Enum
-object Baseline {
+sealed trait Baseline extends EnumType
+object Baseline extends Enum[Baseline] {
     case object Top extends Baseline
     case object Middle extends Baseline
     case object Bottom extends Baseline
@@ -48,38 +48,38 @@ object Baseline {
     case object Hanging extends Baseline
 }
 
-sealed trait Direction extends Enum
-object Direction {
+sealed trait Direction extends EnumType
+object Direction extends Enum[Direction] {
     case object Clock extends Direction
     case object AntiClock extends Direction
 }
 
-sealed trait Orientation extends Enum
-object Orientation {
+sealed trait Orientation extends EnumType
+object Orientation extends Enum[Orientation] {
     case object Horizontal extends Orientation
     case object Vertical extends Orientation
 }
 
-sealed trait Units extends Enum
-object Units {
+sealed trait Units extends EnumType
+object Units extends Enum[Units] {
     case object Screen extends Units
     case object Data extends Units
 }
 
-sealed trait AngleUnits extends Enum
-object AngleUnits {
+sealed trait AngleUnits extends EnumType
+object AngleUnits extends Enum[AngleUnits] {
     case object Deg extends AngleUnits
     case object Rad extends AngleUnits
 }
 
-sealed trait Dimension extends Enum
-object Dimension {
+sealed trait Dimension extends EnumType
+object Dimension extends Enum[Dimension] {
     case object Width extends Dimension
     case object Height extends Dimension
 }
 
-sealed trait Location extends Enum
-object Location {
+sealed trait Location extends EnumType
+object Location extends Enum[Location] {
     case object Top extends Location
     case object Bottom extends Location
     case object Left extends Location
@@ -120,8 +120,8 @@ case class HSLA(hue: Int, saturation: Percent, lightness: Percent, alpha: Double
     def toCSS = s"hsla($hue, $saturation, $lightness, $alpha)"
 }
 
-sealed trait NamedColor extends Color with Enum
-object Color {
+sealed trait NamedColor extends Color with EnumType
+object Color extends Enum[NamedColor] {
     implicit def StringToCSSColor(color: String): CSSColor = {
         lazy val HexColor = """^#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})$""".r
         lazy val RGBColor = """^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$""".r

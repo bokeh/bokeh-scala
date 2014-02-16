@@ -1,7 +1,7 @@
 package org.continuumio.bokeh.macros
 
 import scala.reflect.macros.Context
-import play.api.libs.json.{Reads,Writes,Format}
+import play.api.libs.json.Writes
 
 object Macros {
     def membersImpl[A: c.WeakTypeTag](c: Context): c.Expr[List[String]] = {
@@ -80,25 +80,6 @@ object JsonImpl {
             new play.api.libs.json.Writes[$tpeSymbol] {
                 def writes(obj: $tpeSymbol) =
                     play.api.libs.json.JsObject(List(..$fieldDefs))
-            }
-            """)
-    }
-
-    def enumImpl[T: c.WeakTypeTag](c: Context): c.Expr[Writes[T]] = {
-        import c.universe._
-
-        val tpe = weakTypeOf[T]
-        val sym = tpe.typeSymbol
-        val cls = sym.asClass
-
-        if (!cls.knownDirectSubclasses.forall(_.isModuleClass))
-            c.abort(c.enclosingPosition, "all descendants of an Enum must be case objects")
-
-        c.Expr[Writes[T]](
-            q"""
-            new play.api.libs.json.Writes[$sym] {
-                def writes(obj: $sym) =
-                    play.api.libs.json.JsString(obj.toString.toLowerCase)
             }
             """)
     }
