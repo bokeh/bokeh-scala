@@ -3,15 +3,17 @@ package org.continuumio.bokeh
 sealed abstract class Marker extends BaseGlyph with FillProps with LineProps {
     object x extends DataSpec[Double]
     object y extends DataSpec[Double]
-    object size extends DataSpec[Double] {
-        // override val units = Units.Screen
-        // override val default = 4
-        // override val min_value = 0
+    object size extends DataSpec[Double] { // with Radius
+        units = Some(Units.Screen)
+        default = Some(4.0)
     }
 }
 
 class Circle extends Marker {
-    // object radius extends DataSpec[Double](units="data", default=4, min_value=0)
+    object radius extends DataSpec[Double] { // with Radius
+        units = Some(Units.Data)
+        default = Some(4.0)
+    }
 }
 
 class Square extends Marker {
