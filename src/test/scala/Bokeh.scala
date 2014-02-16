@@ -63,7 +63,7 @@ class BokehSpec extends Specification {
         "support Oval glyph" in {
             val obj = new Oval().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+            obj.fieldsWithValues.length shouldEqual 21
         }
 
         "support Patch glyph" in {
@@ -123,7 +123,7 @@ class BokehSpec extends Specification {
         "support Circle marker" in {
             val obj = new Circle().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+            obj.fieldsWithValues.length shouldEqual 20
         }
 
         "support Square marker" in {
