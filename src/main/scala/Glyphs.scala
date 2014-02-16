@@ -87,6 +87,8 @@ class MultiLine extends BaseGlyph with LineProps {
 }
 
 class Oval extends BaseGlyph with FillProps with LineProps {
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
     object width extends DataSpec[Double]
     object height extends DataSpec[Double]
     object angle extends DataSpec[Double]
