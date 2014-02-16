@@ -74,6 +74,11 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
             dirty = true
         }
 
+        final def <<=(fn: FieldType => FieldType) {
+            data = valueOpt.map(fn)
+            dirty = true
+        }
+
         def apply(value: FieldType): SelfType = {
             this := value
             owner
