@@ -1,10 +1,10 @@
-package org.continuumio.bokeh.examples
+package org.continuumio.bokeh
+package examples
+package glyphs
 
-import math.{Pi=>pi}
 import breeze.linalg.linspace
 import breeze.numerics.{sin,cos,tan}
-
-import org.continuumio.bokeh._
+import math.{Pi=>pi}
 
 object Grid extends App {
     val x = linspace(-2*pi, 2*pi, 1000)

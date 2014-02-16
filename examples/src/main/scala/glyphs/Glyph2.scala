@@ -1,6 +1,7 @@
-package org.continuumio.bokeh.examples
+package org.continuumio.bokeh
+package examples
+package glyphs
 
-import org.continuumio.bokeh._
 import breeze.linalg.DenseVector
 import breeze.numerics.{sin,cos}
 import math.{Pi=>pi}

@@ -1,7 +1,8 @@
-package org.continuumio.bokeh.examples
+package org.continuumio.bokeh
+package examples
+package glyphs
 
-import org.continuumio.bokeh._
-import breeze.linalg._
+import breeze.linalg.{DenseMatrix,linspace}
 
 object Anscombe extends App {
     val quartets = List('xi, 'yi, 'xii, 'yii, 'xiii, 'yiii, 'xiv, 'yiv)

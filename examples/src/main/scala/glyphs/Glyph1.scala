@@ -1,9 +1,9 @@
-package org.continuumio.bokeh.examples
+package org.continuumio.bokeh
+package examples
+package glyphs
 
 import breeze.numerics.sin
 import math.{Pi=>pi}
-
-import org.continuumio.bokeh._
 
 object Glyph1 extends App {
     val x = -2*pi to 2*pi by 0.1 toArray

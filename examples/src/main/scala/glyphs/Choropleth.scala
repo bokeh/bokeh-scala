@@ -1,7 +1,8 @@
-package org.continuumio.bokeh.examples
+package org.continuumio.bokeh
+package examples
+package glyphs
 
-import org.continuumio.bokeh._
-import sampledata.USState._
+import sampledata.USState.{AK,HI}
 
 object Choropleth extends App {
     val excluded_states: Set[sampledata.USState] = Set(AK, HI)

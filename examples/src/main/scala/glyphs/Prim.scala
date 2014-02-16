@@ -1,6 +1,6 @@
-package org.continuumio.bokeh.examples
-
-import org.continuumio.bokeh._
+package org.continuumio.bokeh
+package examples
+package glyphs
 
 object Prim extends App {
     val x = 1.0 to 6.0 by 1.0

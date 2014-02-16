@@ -1,6 +1,7 @@
-package org.continuumio.bokeh.examples
+package org.continuumio.bokeh
+package examples
+package glyphs
 
-import org.continuumio.bokeh._
 import sampledata.iris.flowers
 
 object Iris extends App {

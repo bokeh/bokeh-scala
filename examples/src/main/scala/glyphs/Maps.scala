@@ -1,6 +1,6 @@
-package org.continuumio.bokeh.examples
-
-import org.continuumio.bokeh._
+package org.continuumio.bokeh
+package examples
+package glyphs
 
 object Maps extends App {
     val x_range = new Range1d()

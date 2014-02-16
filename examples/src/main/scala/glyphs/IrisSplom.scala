@@ -1,9 +1,10 @@
-package org.continuumio.bokeh.examples
+package org.continuumio.bokeh
+package examples
+package glyphs
+
+import sampledata.iris.flowers
 
 import math.{Pi=>pi}
-
-import org.continuumio.bokeh._
-import sampledata.iris.flowers
 
 object IrisSplom extends App {
     val colormap = Map("setosa" -> Color.Red, "versicolor" -> Color.Green, "virginica" -> Color.Blue)

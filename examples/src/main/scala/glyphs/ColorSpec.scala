@@ -1,6 +1,6 @@
-package org.continuumio.bokeh.examples
-
-import org.continuumio.bokeh._
+package org.continuumio.bokeh
+package examples
+package glyphs
 
 object ColorSpec extends App {
     val color: List[Color] = List(RGB(0, 100, 120), Color.Green, Color.Blue, "#2c7fb8", RGBA(120, 230, 150, 0.5))
