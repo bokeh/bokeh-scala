@@ -13,7 +13,7 @@ object ProjectBuild extends Build {
         homepage := Some(url("http://bokeh.pydata.org")),
         licenses := Seq("MIT-style" -> url("http://www.opensource.org/licenses/mit-license.php")),
         scalaVersion := "2.10.3",
-        scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-language:_"),
+        scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature", "-language:_"),
         shellPrompt := { state =>
             "continuum (%s)> ".format(Project.extract(state).currentProject.id)
         },
