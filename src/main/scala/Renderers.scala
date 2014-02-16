@@ -21,5 +21,7 @@ class Glyph extends Renderer {
 }
 
 class BoxSelectionOverlay extends Renderer {
+    override val viewModel = "BoxSelection"
+
     object tool extends Field[BoxSelectTool]
 }
