@@ -34,7 +34,7 @@ fi
 JVM_DEFAULTS="-Dfile.encoding=UTF-8 -Xss8M -Xmx2G -XX:MaxPermSize=1024M -XX:ReservedCodeCacheSize=64M -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled"
 JVM_OPTS="$JVM_DEFAULTS $JVM_OPTS"
 
-SBT_VERSION="0.13.1"
+SBT_VERSION=$(cat project/build.properties | grep sbt.version | cut -d'=' -f2)
 SBT_LAUNCHER="$(dirname $0)/project/sbt-launch-$SBT_VERSION.jar"
 
 if [ ! -e "$SBT_LAUNCHER" ];
