@@ -9,6 +9,18 @@ import java.lang.StringBuffer
 import scalax.io.JavaConverters._
 import scalax.file.Path
 
+object Session {
+    lazy val bokehPath: Option[Path] = {
+        val cmd = "python" :: "-c" :: "import bokeh; print(bokeh.__file__)" :: Nil
+        val out = new StringBuffer
+        val proc = Process(cmd).run(BasicIO(false, out, None))
+        if (proc.exitValue == 0)
+            Path.fromString(out.toString.trim).parent
+        else
+            None
+    }
+}
+
 abstract class Session extends Serializer
 
 class HTMLFileSession(val file: File) extends Session {
@@ -22,18 +34,8 @@ class HTMLFileSession(val file: File) extends Session {
         s"${uri.getScheme}://${uri.getSchemeSpecificPart}"
     }
 
-    def bokehPathFromPython: Option[Path] = {
-        val cmd = "python" :: "-c" :: "import bokeh; print(bokeh.__file__)" :: Nil
-        val out = new StringBuffer
-        val proc = Process(cmd).run(BasicIO(false, out, None))
-        if (proc.exitValue == 0)
-            Path.fromString(out.toString.trim).parent
-        else
-            None
-    }
-
     val staticPath = (_: Path) / "server" / "static"
-    val basePath = bokehPathFromPython.map(staticPath) getOrElse Path(".")
+    val basePath = Session.bokehPath.map(staticPath) getOrElse Path(".")
 
     val _jsFiles: List[Path => Path] = List(_ / "js" / "bokeh.js")
     val _cssFiles: List[Path => Path] = List(_ / "css" / "bokeh.css")
