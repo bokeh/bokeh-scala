@@ -12,7 +12,7 @@ Scala bindings for [Bokeh](http://bokeh.pydata.org) plotting library.
 $ git clone https://github.com/mattpap/bokeh-scala
 $ cd bokeh-scala
 $ ./sbt
-> examples/runMain org.continuum.bokeh.examples.glyphs.Anscombe
+> examples/runMain org.continuumio.bokeh.examples.glyphs.Anscombe
 ```
 or
 ```bash

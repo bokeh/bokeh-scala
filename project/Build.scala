@@ -7,7 +7,7 @@ import com.typesafe.sbt.SbtPgp
 
 object ProjectBuild extends Build {
     override lazy val settings = super.settings ++ Seq(
-        organization := "org.continuum",
+        organization := "org.continuumio",
         version := "0.1-SNAPSHOT",
         description := "Scala bindings for Bokeh plotting library",
         homepage := Some(url("http://bokeh.pydata.org")),
