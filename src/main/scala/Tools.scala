@@ -14,12 +14,12 @@ class WheelZoomTool extends Tool {
 
 class PreviewSaveTool extends Tool {
     object dimensions extends Field[List[Dimension]]
-    object dataranges extends Field[List[Range with DataRange]]
+    object dataranges extends Field[List[DataRange]]
 }
 
 class EmbedTool extends Tool {
     object dimensions extends Field[List[Dimension]]
-    object dataranges extends Field[List[Range with DataRange]]
+    object dataranges extends Field[List[DataRange]]
 }
 
 class ResetTool extends Tool
