@@ -85,8 +85,21 @@ object ProjectBuild extends Build {
     lazy val commonSettings = Seq(
         bokehDir := file("..") / "bokeh",
         runAll := {
-            (discoveredMainClasses in Compile).value.sorted.foreach { mainClass =>
-                (runner in run).value.run(mainClass, Attributed.data((fullClasspath in Compile).value), Nil, streams.value.log)
+            val results = (discoveredMainClasses in Compile).value.sorted.map { mainClass =>
+                val classpath = Attributed.data((fullClasspath in Compile).value)
+                val logger = streams.value.log
+
+                val result = (runner in run).value.run(mainClass, classpath, Nil, logger)
+
+                result match {
+                    case Some(msg) => logger.error(s"$mainClass: $msg"); Some(mainClass)
+                    case None      => logger.success(mainClass);         None
+                }
+            } flatten
+
+            if (results.nonEmpty) {
+                val failures = results.mkString(", ")
+                sys.error(s"failed to run: $failures")
             }
         }
     )
