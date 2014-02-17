@@ -10,7 +10,7 @@ class Plot extends PlotObject {
     //// object outline_props extends Include(LineProps, prefix="outline")
 
     object renderers extends Field[List[Renderer]]
-    object tools extends Field[List[Tool]]
+    object tools extends Field[List[Tool]] with ToolsField
 
     object height extends Field[Int](600)
     object width extends Field[Int](600)
