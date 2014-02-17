@@ -1,5 +1,7 @@
 package org.continuumio.bokeh
 
+import scala.util.Try
+
 import java.io.File
 import java.net.URL
 import java.awt.Desktop
@@ -15,11 +17,13 @@ object FileLocator {
         val cmd = "python" :: "-c" :: "import bokeh; print(bokeh.__file__)" :: Nil
         val out = new StringBuilder
         val err = new StringBuilder
-        val proc = Process(cmd).run(ProcessLogger(out append _, err append _))
-        if (proc.exitValue == 0)
-            Path.fromString(out.toString.trim).parent
-        else
-            None
+        val log = ProcessLogger(out append _, err append _)
+        Try { Process(cmd).run(log) }.toOption.flatMap { proc =>
+            if (proc.exitValue == 0)
+                Path.fromString(out.toString.trim).parent
+            else
+                None
+        }
     }
 }
 
