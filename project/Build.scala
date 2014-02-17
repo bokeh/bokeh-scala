@@ -33,7 +33,7 @@ object ProjectBuild extends Build {
                 namespace %% "scala-io-file" % version)
         }
 
-        val breeze = "org.scalanlp" %% "breeze" % "0.5.2"
+        val breeze = "org.scalanlp" %% "breeze" % "0.6"
 
         val shapeless = "com.chuusai" % "shapeless" % "2.0.0-M1" cross CrossVersion.full
 
