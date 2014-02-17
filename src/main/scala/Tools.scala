@@ -37,3 +37,8 @@ class BoxSelectTool extends Tool {
     object renderers extends Field[List[Renderer]]
     object select_every_mousemove extends Field[Boolean](true)
 }
+
+class HoverTool extends Tool {
+    object renderers extends Field[List[Renderer]]
+    object tooltips extends Field[Map[String, String]]
+}
