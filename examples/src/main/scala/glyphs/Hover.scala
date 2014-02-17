@@ -52,7 +52,10 @@ object Hover extends App with LinAlgHelpers {
         .x_range(xdr)
         .y_range(ydr)
         .data_sources(source :: Nil)
-        //.tools(Pan|WheelZoom|BoxZoom|Reset|PreviewSave|Hover)
+        .tools {
+            import DefaultTools._
+            Pan|WheelZoom|BoxZoom|Reset|PreviewSave
+        }
 
     val circle = new Circle()
         .x('x)
@@ -85,7 +88,6 @@ object Hover extends App with LinAlgHelpers {
         .glyph(text)
 
     val hover = new HoverTool()
-        .plot(plot)
         .tooltips(Map(
             "index"         -> "$index",
             "fill_color"    -> "$color[hex,swatch]:fill_color",
@@ -98,7 +100,7 @@ object Hover extends App with LinAlgHelpers {
     val yaxis = new LinearAxis().plot(plot).dimension(1)
 
     plot.renderers := List(xaxis, yaxis, circle_renderer, text_renderer)
-    plot.tools := List(hover)
+    plot.tools <<= (_ :+ hover)
 
     val session = new HTMLFileSession("hover.html")
     session.save(plot)
