@@ -69,18 +69,26 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
 
         final def value: FieldType = valueOpt.get
 
-        final def :=(value: FieldType) {
-            data = Some(value)
+        final def set(value: Option[FieldType]) {
+            data = value
             dirty = true
+        }
+
+        final def :=(value: FieldType) {
+            set(Some(value))
         }
 
         final def <<=(fn: FieldType => FieldType) {
-            data = valueOpt.map(fn)
-            dirty = true
+            set(valueOpt.map(fn))
         }
 
         def apply(value: FieldType): SelfType = {
-            this := value
+            set(Some(value))
+            owner
+        }
+
+        def apply(): SelfType = {
+            set(None)
             owner
         }
     }
