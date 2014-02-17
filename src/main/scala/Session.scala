@@ -104,9 +104,9 @@ $script
 
     def stringify(html: xml.Node) = {
         val writer = new java.io.StringWriter()
-        val doctype = xml.dtd.DocType("html", xml.dtd.SystemID(""), Nil)
-        xml.XML.write(writer, html, "UTF-8", xmlDecl=false, doctype=doctype)
-        writer.toString
+        val doctype = "<!DOCTYPE html>"
+        xml.XML.write(writer, html, "UTF-8", xmlDecl=false, doctype=null)
+        s"$doctype\n${writer.toString}"
     }
 
     case class PlotSpec(models: String, modelRef: Ref, elementId: String) {
@@ -116,17 +116,17 @@ $script
 
     def renderPlot(spec: PlotSpec) = {
         s"""
-        (function() {
-            var models = ${spec.models};
-            var modelid = "${spec.modelId}";
-            var modeltype = "${spec.modelType}";
-            var elementid = "#${spec.elementId}";
-            console.log(modelid, modeltype, elementid);
-            Bokeh.load_models(models);
-            var model = Bokeh.Collections(modeltype).get(modelid);
-            var view = new model.default_view({model: model, el: elementid});
-        })();
-        """
+        |(function() {
+        |    var models = ${spec.models};
+        |    var modelid = "${spec.modelId}";
+        |    var modeltype = "${spec.modelType}";
+        |    var elementid = "#${spec.elementId}";
+        |    console.log(modelid, modeltype, elementid);
+        |    Bokeh.load_models(models);
+        |    var model = Bokeh.Collections(modeltype).get(modelid);
+        |    var view = new model.default_view({model: model, el: elementid});
+        |})();
+        """.stripMargin.trim
     }
 
     def renderPlots(specs: List[PlotSpec]) = {
