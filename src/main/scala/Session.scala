@@ -4,8 +4,8 @@ import java.io.File
 import java.net.URL
 import java.awt.Desktop
 
-import scala.sys.process.{Process,BasicIO}
-import java.lang.StringBuffer
+import scala.sys.process.{Process,ProcessLogger}
+import java.lang.StringBuilder
 
 import scalax.io.JavaConverters._
 import scalax.file.Path
@@ -13,8 +13,9 @@ import scalax.file.Path
 object FileLocator {
     lazy val bokehPath: Option[Path] = {
         val cmd = "python" :: "-c" :: "import bokeh; print(bokeh.__file__)" :: Nil
-        val out = new StringBuffer
-        val proc = Process(cmd).run(BasicIO(false, out, None))
+        val out = new StringBuilder
+        val err = new StringBuilder
+        val proc = Process(cmd).run(ProcessLogger(out append _, err append _))
         if (proc.exitValue == 0)
             Path.fromString(out.toString.trim).parent
         else
