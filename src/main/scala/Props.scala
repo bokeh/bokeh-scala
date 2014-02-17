@@ -2,6 +2,12 @@ package org.continuumio.bokeh
 
 import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
 
+trait AbstractField {
+    type DataType
+
+    def set(value: Option[DataType])
+}
+
 trait HasFields extends macros.HListable with DefaultImplicits { self =>
     type SelfType = self.type
 
@@ -43,7 +49,7 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
         }
     }
 
-    class Field[FieldType:DefaultValue] extends HField {
+    class Field[FieldType:DefaultValue] extends AbstractField with HField {
         type DataType = FieldType
 
         def owner: SelfType = self
@@ -65,11 +71,11 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
 
         final def isDirty: Boolean = dirty
 
-        final def valueOpt: Option[FieldType] = data orElse defaultValue
+        def valueOpt: Option[FieldType] = data orElse defaultValue
 
-        final def value: FieldType = valueOpt.get
+        def value: FieldType = valueOpt.get
 
-        final def set(value: Option[FieldType]) {
+        def set(value: Option[FieldType]) {
             data = value
             dirty = true
         }
@@ -82,12 +88,12 @@ trait HasFields extends macros.HListable with DefaultImplicits { self =>
             set(valueOpt.map(fn))
         }
 
-        def apply(value: FieldType): SelfType = {
+        final def apply(value: FieldType): SelfType = {
             set(Some(value))
             owner
         }
 
-        def apply(): SelfType = {
+        final def apply(): SelfType = {
             set(None)
             owner
         }
