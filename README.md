@@ -1,6 +1,6 @@
 # bokeh-scala
 
-Scala bindings for Bokeh plotting library.
+Scala bindings for [Bokeh](http://bokeh.pydata.org) plotting library.
 
 ## Requirements
 
@@ -12,7 +12,11 @@ Scala bindings for Bokeh plotting library.
 $ git clone https://github.com/mattpap/bokeh-scala
 $ cd bokeh-scala
 $ ./sbt
-> examples/runMain org.continuum.bokeh.examples.Anscombe
+> examples/runMain org.continuum.bokeh.examples.glyphs.Anscombe
+```
+or
+```bash
+> examples/runAll
 ```
 
 ## License
