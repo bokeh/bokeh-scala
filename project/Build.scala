@@ -133,7 +133,7 @@ object ProjectBuild extends Build {
                 """)
     }
 
-    lazy val macrosSettings = Project.defaultSettings ++ commonSettings ++ {
+    lazy val coreSettings = Project.defaultSettings ++ commonSettings ++ {
         Seq(addCompilerPlugin("org.scalamacros" % "paradise" % "2.0.0-M3" cross CrossVersion.full),
             libraryDependencies ++= {
                 import Dependencies._
@@ -148,9 +148,9 @@ object ProjectBuild extends Build {
             })
     }
 
-    lazy val bokeh = Project(id="bokeh", base=file("."), settings=bokehSettings) dependsOn(macros)
-    lazy val macros = Project(id="macros", base=file("macros"), settings=macrosSettings)
+    lazy val bokeh = Project(id="bokeh", base=file("."), settings=bokehSettings) dependsOn(core) aggregate(core)
+    lazy val core = Project(id="core", base=file("core"), settings=coreSettings)
     lazy val examples = Project(id="examples", base=file("examples"), settings=examplesSettings) dependsOn(bokeh)
 
-    override def projects = Seq(bokeh, macros, examples)
+    override def projects = Seq(bokeh, core, examples)
 }
