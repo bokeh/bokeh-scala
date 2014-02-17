@@ -1,6 +1,7 @@
 package org.continuumio.bokeh
 
 import java.io.File
+import java.net.URL
 import java.awt.Desktop
 
 import scala.sys.process.{Process,BasicIO}
@@ -9,7 +10,7 @@ import java.lang.StringBuffer
 import scalax.io.JavaConverters._
 import scalax.file.Path
 
-object Session {
+object FileLocator {
     lazy val bokehPath: Option[Path] = {
         val cmd = "python" :: "-c" :: "import bokeh; print(bokeh.__file__)" :: Nil
         val out = new StringBuffer
@@ -21,35 +22,46 @@ object Session {
     }
 }
 
-abstract class Session extends Serializer
+class FileLocator(minified: Boolean) {
+    val cdnUrl = new URL("http://cdn.pydata.org")
+
+    val cdnVersion = Some("0.4")
+    val localVersion = None
+
+    def template(name: String, version: Option[String], minified: Boolean, extension: String) = {
+        val ver = version.map("-" + _) getOrElse ""
+        val min = if (minified) ".min" else ""
+        s"$name$ver$min.$extension"
+    }
+
+    def file(extension: String, minified: Boolean) = {
+        val (context, version) = FileLocator.bokehPath
+            .map(_ / "server" / "static" / extension)
+            .map(_.toURL)
+            .map(_ -> localVersion)
+            .getOrElse(cdnUrl -> cdnVersion)
+        new URL(context, template("bokeh", version, minified, extension))
+    }
+
+    val scripts: List[URL] = file("js",  minified) :: Nil
+    val styles: List[URL]  = file("css", minified) :: Nil
+}
+
+abstract class Session extends Serializer {
+    def save(plots: Plot*)
+    def view()
+}
 
 class HTMLFileSession(val file: File) extends Session {
 
     def this(path: String) = this(new File(path))
-
-    val title = "Bokeh Plots"
 
     def url: String = {
         val uri = file.toURI
         s"${uri.getScheme}://${uri.getSchemeSpecificPart}"
     }
 
-    val staticPath = (_: Path) / "server" / "static"
-    val basePath = Session.bokehPath.map(staticPath) getOrElse Path(".")
-
-    val _jsFiles: List[Path => Path] = List(_ / "js" / "bokeh.js")
-    val _cssFiles: List[Path => Path] = List(_ / "css" / "bokeh.css")
-
-    def genPaths(files: List[Path => Path]) =
-        files.map(_(basePath)).map(_.path)
-
-    val jsFiles: List[String] = genPaths(_jsFiles)
-    val cssFiles: List[String] = genPaths(_cssFiles)
-
-    def view() {
-        if (Desktop.isDesktopSupported && Desktop.getDesktop.isSupported(Desktop.Action.BROWSE))
-            Desktop.getDesktop.browse(file.toURI)
-    }
+    val title = "Bokeh Plots"
 
     def save(plots: Plot*) {
         val context = new PlotContext().children(plots.toList)
@@ -59,15 +71,22 @@ class HTMLFileSession(val file: File) extends Session {
         Path(file).write(html)
     }
 
-    def renderScripts(scripts: List[String] = jsFiles) = {
+    def view() {
+        if (Desktop.isDesktopSupported && Desktop.getDesktop.isSupported(Desktop.Action.BROWSE))
+            Desktop.getDesktop.browse(file.toURI)
+    }
+
+    protected lazy val files = new FileLocator(minified=true)
+
+    protected def renderScripts(scripts: List[URL] = files.scripts) = {
         scripts.map { script =>
-            <script type="text/javascript" src={ script }></script>
+            <script type="text/javascript" src={ script.toString }></script>
         }
     }
 
-    def renderStyles(styles: List[String] = cssFiles) = {
+    protected def renderStyles(styles: List[URL] = files.styles) = {
         styles.map { style =>
-            <link rel="stylesheet" href={ style } type="text/css" />
+            <link rel="stylesheet" type="text/css" href={ style.toString }/>
         }
     }
 
@@ -107,7 +126,10 @@ $script
 
     def renderPlots(specs: List[PlotSpec]) = {
         specs.flatMap { spec =>
-            <div class="plotdiv" id={ spec.elementId }>Plots</div> ++ asScript(renderPlot(spec))
+            <div>
+                <div class="plotdiv" id={ spec.elementId }>Plots</div>
+                { asScript(renderPlot(spec)) }
+            </div>
         }
     }
 
@@ -116,8 +138,8 @@ $script
             <head>
                 <meta charset="utf-8" />
                 <title>{ title }</title>
-                {renderStyles()}
-                {renderScripts()}
+                { renderStyles() }
+                { renderScripts() }
             </head>
             <body>
                 { renderPlots(specs) }
