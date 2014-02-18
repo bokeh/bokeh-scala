@@ -1,6 +1,6 @@
 package org.continuumio.bokeh
 
-import macros.{EnumType,Enum}
+import core.{EnumType,Enum}
 
 sealed trait LineJoin extends EnumType
 object LineJoin extends Enum[LineJoin] {

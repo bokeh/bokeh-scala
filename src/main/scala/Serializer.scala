@@ -20,7 +20,7 @@ trait Serializer {
             case obj: Double => toJson(obj)
             case obj: String => toJson(obj)
             case obj: Symbol => toJson(obj)
-            case obj: macros.EnumType => toJson(obj)
+            case obj: core.EnumType => toJson(obj)
             case obj: CSSColor => toJson(obj)
             case obj: Percent => toJson(obj)
             case obj: breeze.linalg.DenseVector[Double] => toJson(obj)

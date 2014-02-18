@@ -8,7 +8,7 @@ trait AbstractField {
     def set(value: Option[DataType])
 }
 
-trait HasFields extends macros.HListable with DefaultImplicits { self =>
+trait HasFields extends core.HListable with DefaultImplicits { self =>
     type SelfType = self.type
 
     final def fieldsList: List[(String, HasFields#Field[_])] = {

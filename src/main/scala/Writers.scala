@@ -5,7 +5,7 @@ import scala.reflect.ClassTag
 import play.api.libs.json.{Json,Reads,Writes,Format,JsString}
 import breeze.linalg.DenseVector
 
-import org.continuumio.bokeh.macros.JsonImpl
+import org.continuumio.bokeh.core.JsonImpl
 
 object BokehJson {
     def writes[T]: Writes[T] = macro JsonImpl.writesImpl[T]
@@ -31,7 +31,7 @@ trait Formats {
         def writes(symbol: Symbol) = JsString(symbol.name)
     }
 
-    implicit def EnumJSON[T <: macros.EnumType] = new Writes[T] {
+    implicit def EnumJSON[T <: core.EnumType] = new Writes[T] {
         def writes(value: T) = value.toJson
     }
 }
