@@ -27,11 +27,13 @@ object FileLocator {
     }
 }
 
-class FileLocator(minified: Boolean) {
+class FileLocator() {
     val cdnUrl = new URL("http://cdn.pydata.org")
 
     val cdnVersion = Some("0.4")
     val localVersion = None
+
+    val minified = true
 
     def template(name: String, version: Option[String], minified: Boolean, extension: String) = {
         val ver = version.map("-" + _) getOrElse ""
