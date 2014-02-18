@@ -9,7 +9,7 @@ abstract class PlotObject extends HasFields {
 
     def viewModel: String = getClass.getSimpleName
 
-    object id extends Field[String](uuid4())
+    object id extends Field[String](Utils.uuid4())
 }
 
 class PlotContext extends PlotObject {

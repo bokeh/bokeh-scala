@@ -71,7 +71,7 @@ class HTMLFileSession(val file: File) extends Session {
     def save(plots: Plot*) {
         val context = new PlotContext().children(plots.toList)
         val models = serializeObjs(collectObjs(context))
-        val spec = PlotSpec(models, context.getRef, uuid4())
+        val spec = PlotSpec(models, context.getRef, Utils.uuid4())
         val html = stringify(renderHTML(spec :: Nil))
         Path(file).write(html)
     }
