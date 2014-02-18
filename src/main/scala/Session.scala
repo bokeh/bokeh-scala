@@ -72,7 +72,8 @@ class HTMLFileSession(val file: File) extends Session {
         val context = new PlotContext().children(plots.toList)
         val models = serializeObjs(collectObjs(context))
         val spec = PlotSpec(models, context.getRef, Utils.uuid4())
-        val html = stringify(renderHTML(spec :: Nil))
+        val (scripts, styles) = collectScriptsAndStyles(context)
+        val html = stringify(renderHTML(spec :: Nil, scripts, styles))
         Path(file).write(html)
     }
 
@@ -81,18 +82,27 @@ class HTMLFileSession(val file: File) extends Session {
             Desktop.getDesktop.browse(file.toURI)
     }
 
-    protected lazy val files = new FileLocator(minified=true)
+    protected lazy val files = new FileLocator()
 
-    protected def renderScripts(scripts: List[URL] = files.scripts) = {
-        scripts.map { script =>
+    protected def renderScripts(scripts: List[xml.Node]) = {
+        files.scripts.map { script =>
             <script type="text/javascript" src={ script.toString }></script>
-        }
+        } ++ scripts
     }
 
-    protected def renderStyles(styles: List[URL] = files.styles) = {
-        styles.map { style =>
+    protected def renderStyles(styles: List[xml.Node]) = {
+        files.styles.map { style =>
             <link rel="stylesheet" type="text/css" href={ style.toString }/>
-        }
+        } ++ styles
+    }
+
+    def collectScriptsAndStyles(obj: PlotObject): (List[xml.Node], List[xml.Node]) = {
+        val scripts = collection.mutable.ListBuffer[xml.Node]()
+        val styles = collection.mutable.ListBuffer[xml.Node]()
+
+        traverse(obj, { obj => scripts ++= obj.scripts; styles ++= obj.styles })
+
+        (scripts.toList.distinct, styles.toList.distinct)
     }
 
     def asScript(script: String): xml.Node =
@@ -138,13 +148,13 @@ $script
         }
     }
 
-    def renderHTML(specs: List[PlotSpec]): xml.Node = {
+    def renderHTML(specs: List[PlotSpec], scripts: List[xml.Node], styles: List[xml.Node]): xml.Node = {
         <html lang="en">
             <head>
                 <meta charset="utf-8" />
                 <title>{ title }</title>
-                { renderStyles() }
-                { renderScripts() }
+                { renderStyles(styles) }
+                { renderScripts(scripts) }
             </head>
             <body>
                 { renderPlots(specs) }
