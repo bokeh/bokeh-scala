@@ -7,4 +7,4 @@ jdk:
     - openjdk6
     - oraclejdk7
 
-script: ./sbt ++$TRAVIS_SCALA_VERSION examples/compile bokeh/test examples/runAll
+script: ./sbt ++$TRAVIS_SCALA_VERSION bokeh-examples/compile bokeh/test bokeh-examples/runAll
