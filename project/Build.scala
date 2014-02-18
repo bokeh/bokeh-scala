@@ -148,9 +148,9 @@ object ProjectBuild extends Build {
             })
     }
 
-    lazy val bokeh = Project(id="bokeh", base=file("."), settings=bokehSettings) dependsOn(core) aggregate(core)
-    lazy val core = Project(id="core", base=file("core"), settings=coreSettings)
-    lazy val examples = Project(id="examples", base=file("examples"), settings=examplesSettings) dependsOn(bokeh)
+    lazy val bokeh = Project(id="bokeh", base=file("."), settings=bokehSettings) dependsOn(bokehCore) aggregate(bokehCore)
+    lazy val bokehCore = Project(id="bokeh-core", base=file("core"), settings=coreSettings)
+    lazy val bokehExamples = Project(id="bokeh-examples", base=file("examples"), settings=examplesSettings) dependsOn(bokeh)
 
-    override def projects = Seq(bokeh, core, examples)
+    override def projects = Seq(bokeh, bokehCore, bokehExamples)
 }
