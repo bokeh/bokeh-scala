@@ -56,7 +56,7 @@ trait HasFields extends core.HListable with DefaultImplicits { self =>
 
         def this(value: FieldType) = {
             this()
-            this := value
+            internalSet(Some(value))
         }
 
         val fieldName: Option[String] = None
@@ -75,9 +75,13 @@ trait HasFields extends core.HListable with DefaultImplicits { self =>
 
         def value: FieldType = valueOpt.get
 
-        def set(value: Option[FieldType]) {
+        final def internalSet(value: Option[FieldType]) {
             data = value
             dirty = true
+        }
+
+        def set(value: Option[FieldType]) {
+            internalSet(value)
         }
 
         final def :=(value: FieldType) {
@@ -102,7 +106,7 @@ trait HasFields extends core.HListable with DefaultImplicits { self =>
     class DataSpec[FieldType:DefaultValue] extends Field[FieldType] {
         def this(value: FieldType) = {
             this()
-            this := value
+            internalSet(Some(value))
         }
 
         protected var field: Option[Symbol] = None
