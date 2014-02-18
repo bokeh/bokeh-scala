@@ -38,10 +38,14 @@ class GridPlot extends Plot {
     object border_space extends Field[Int](0)
 }
 
+class MapOptions extends PlotObject with NoRefs {
+    object lat extends Field[Double]
+    object lng extends Field[Double]
+    object zoom extends Field[Int](12)
+}
+
 class GMapPlot extends Plot {
-    object center_lat extends Field[Double]
-    object center_lng extends Field[Double]
-    object zoom_level extends Field[Int](12)
+    object map_options extends Field[MapOptions]
 
     override def scripts: List[xml.Node] =
         <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> :: super.scripts

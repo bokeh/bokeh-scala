@@ -6,12 +6,15 @@ object Maps extends App {
     val x_range = new Range1d()
     val y_range = new Range1d()
 
+    val map_options = new MapOptions()
+        .lat(30.2861)
+        .lng(-97.7394)
+        .zoom(15)
+
     val plot = new GMapPlot()
         .x_range(x_range)
         .y_range(y_range)
-        .center_lat(30.2861)
-        .center_lng(-97.7394)
-        .zoom_level(15)
+        .map_options(map_options)
         .data_sources(Nil)
         .canvas_width(600)
         .canvas_height(600)
