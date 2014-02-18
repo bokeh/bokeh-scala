@@ -48,8 +48,18 @@ trait Serializer {
     }
 
     def collectObjs(obj: PlotObject): List[PlotObject] = {
-        val ids = collection.mutable.HashSet[String]()
         val objs = collection.mutable.ListBuffer[PlotObject]()
+
+        traverse(obj, obj => obj match {
+            case _: NoRefs =>
+            case _ => objs += obj
+        })
+
+        objs.toList
+    }
+
+    def traverse(obj: PlotObject, fn: PlotObject => Unit) {
+        val ids = collection.mutable.HashSet[String]()
 
         def descend(obj: Any) {
             obj match {
@@ -59,17 +69,13 @@ trait Serializer {
                         case (_, Some(obj)) => descend(obj)
                         case _ =>
                     }
-                    obj match {
-                        case _: NoRefs =>
-                        case _ => objs += obj
-                    }
+                    fn(obj)
                 case obj: List[_] => obj.map(descend)
                 case _ =>
             }
         }
 
         descend(obj)
-        objs.toList
     }
 
     def getModel(obj: PlotObject): Model = {
