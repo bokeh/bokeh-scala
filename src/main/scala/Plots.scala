@@ -38,4 +38,7 @@ class GMapPlot extends Plot {
     object center_lat extends Field[Double]
     object center_lng extends Field[Double]
     object zoom_level extends Field[Int](12)
+
+    override def scripts: List[xml.Node] =
+        <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> :: super.scripts
 }
