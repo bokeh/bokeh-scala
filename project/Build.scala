@@ -70,8 +70,8 @@ object ProjectBuild extends Build {
         pomIncludeRepository := { _ => false },
         pomExtra := (
             <scm>
-                <url>git@github.com:your-account/your-project.git</url>
-                <connection>scm:git:https://github.com:mattpap/bokeh-scala.git</connection>
+                <url>https://github.com/mattpap/bokeh-scala</url>
+                <connection>scm:git:https://github.com/mattpap/bokeh-scala.git</connection>
             </scm>
             <developers>
                 <developer>
