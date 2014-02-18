@@ -58,13 +58,6 @@ object ProjectBuild extends Build {
     val runAll = taskKey[Unit]("Run all discovered main classes.")
 
     lazy val publishSettings = Seq(
-        publishTo := {
-            val nexus = "https://oss.sonatype.org/"
-            if (isSnapshot.value)
-                Some("snapshots" at nexus + "content/repositories/snapshots")
-            else
-                Some("releases" at nexus + "service/local/staging/deploy/maven2")
-        },
         publishMavenStyle := true,
         publishArtifact in Test := false,
         pomIncludeRepository := { _ => false },
@@ -82,7 +75,27 @@ object ProjectBuild extends Build {
         )
     )
 
-    lazy val commonSettings = Seq(
+    lazy val sonatypePublishSettings = publishSettings ++ Seq(
+        publishTo := {
+            val nexus = "https://oss.sonatype.org/"
+            if (isSnapshot.value)
+                Some("snapshots" at nexus + "content/repositories/snapshots")
+            else
+                Some("releases" at nexus + "service/local/staging/deploy/maven2")
+        }
+    )
+
+    val publishDir = settingKey[File]("Directory where to publish artifacts.")
+
+    lazy val githubPublishSettings = publishSettings ++ Seq(
+        publishDir := file("maven"),
+        publishTo := {
+            def repo(name: String) = Resolver.file(s"bokeh-$name", publishDir.value / name)
+            Some(if (isSnapshot.value) repo("snapshots") else repo("releases"))
+        }
+    )
+
+    lazy val commonSettings = githubPublishSettings ++ Seq(
         bokehDir := file("..") / "bokeh",
         runAll := {
             val results = (discoveredMainClasses in Compile).value.sorted.map { mainClass =>
