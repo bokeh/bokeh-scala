@@ -88,9 +88,9 @@ object ProjectBuild extends Build {
     val publishDir = settingKey[File]("Directory where to publish artifacts.")
 
     lazy val githubPublishSettings = publishSettings ++ Seq(
-        publishDir := file("maven"),
+        publishDir in ThisBuild := file("maven"),
         publishTo := {
-            def repo(name: String) = Resolver.file(s"bokeh-$name", publishDir.value / name)
+            def repo(name: String) = Resolver.file(s"bokeh-$name", (publishDir in ThisBuild).value / name)
             Some(if (isSnapshot.value) repo("snapshots") else repo("releases"))
         }
     )
