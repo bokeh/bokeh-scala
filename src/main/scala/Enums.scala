@@ -87,6 +87,19 @@ object Location extends Enum[Location] {
     case object Min extends Location
 }
 
+sealed trait Anchor extends EnumType
+object Anchor extends Enum[Anchor] {
+    case object TopLeft extends Anchor
+    case object TopCenter extends Anchor
+    case object TopRight extends Anchor
+    case object RightCenter extends Anchor
+    case object BottomRight extends Anchor
+    case object BottomCenter extends Anchor
+    case object BottomLeft extends Anchor
+    case object LeftCenter extends Anchor
+    case object Center extends Anchor
+}
+
 sealed trait Color
 
 sealed trait CSSColor extends Color {

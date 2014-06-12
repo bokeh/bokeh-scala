@@ -23,6 +23,7 @@ trait DefaultImplicits {
     implicit object AngleUnitsDefault extends DefaultValue[AngleUnits](AngleUnits.Deg)
     implicit object DimensionDefault extends DefaultValue[Dimension](Dimension.Width)
     implicit object LocationDefault extends DefaultValue[Location](Location.Top)
+    implicit object AnchorDefault extends DefaultValue[Anchor](Anchor.TopLeft)
     implicit object ColorDefault extends DefaultValue[Color](Color.White)
     implicit def SeqDefault[T]: DefaultValue[Seq[T]] = new DefaultValue[Seq[T]](Seq())
     implicit def ListDefault[T]: DefaultValue[List[T]] = new DefaultValue[List[T]](Nil)

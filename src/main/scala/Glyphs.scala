@@ -59,13 +59,18 @@ class Image extends BaseGlyph {
     object dw extends DataSpec[Double]
     object dh extends DataSpec[Double]
     object palette extends DataSpec[Double]
+    object dilate extends Field[Boolean]
 }
 
-class ImageURI extends BaseGlyph {
+class ImageURL extends BaseGlyph {
+    object url extends DataSpec[String]
     object x extends DataSpec[Double]
     object y extends DataSpec[Double]
+    object w extends DataSpec[Double]
+    object h extends DataSpec[Double]
     object angle extends DataSpec[Double]
-    object url extends DataSpec[String]
+    object dilate extends Field[Boolean]
+    object anchor extends Field[Anchor]
 }
 
 class ImageRGBA extends BaseGlyph {
@@ -74,6 +79,7 @@ class ImageRGBA extends BaseGlyph {
     object y extends DataSpec[Double]
     object dw extends DataSpec[Double]
     object dh extends DataSpec[Double]
+    object dilate extends Field[Boolean]
 }
 
 class Line extends BaseGlyph with LineProps {
@@ -133,6 +139,7 @@ class Rect extends BaseGlyph with FillProps with LineProps {
     object width extends DataSpec[Double]
     object height extends DataSpec[Double]
     object angle extends DataSpec[Double]
+    object dilate extends Field[Boolean]
 }
 
 class Segment extends BaseGlyph with LineProps {
@@ -156,4 +163,20 @@ class Wedge extends BaseGlyph with FillProps with LineProps {
     object start_angle extends DataSpec[Double]
     object end_angle extends DataSpec[Double]
     object direction extends Field[Direction]
+}
+
+class Gear extends BaseGlyph with LineProps with FillProps {
+    object x extends DataSpec[Double]
+    object y extends DataSpec[Double]
+    object angle extends DataSpec[Double]
+    object module extends DataSpec[Double] // module >= 0
+    object teeth extends DataSpec[Int]
+    object pressure_angle extends DataSpec[Double] {
+        default = Some(20)
+        // TODO: units = Some(AngleUnits.Deg)
+    }
+    object shaft_size extends DataSpec[Double] { // shaft_size >= 0
+        default = Some(0.3)
+    }
+    object internal extends DataSpec[Boolean]
 }
