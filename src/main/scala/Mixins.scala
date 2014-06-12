@@ -22,5 +22,5 @@ trait TextProps { self: PlotObject =>
     object text_color extends Field[Color](Color.Black)
     object text_alpha extends Field[Percent](100%%)
     object text_align extends Field[TextAlign]
-    object text_baseline extends Field[Baseline]
+    object text_baseline extends Field[TextBaseline]
 }
