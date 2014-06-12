@@ -24,9 +24,7 @@ class Triangle extends Marker
 
 class Cross extends Marker
 
-class Xmarker extends Marker {
-    override val viewModel: String = "x"
-}
+class X extends Marker
 
 class Diamond extends Marker
 
