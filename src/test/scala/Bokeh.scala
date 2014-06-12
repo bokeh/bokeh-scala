@@ -33,19 +33,19 @@ class BokehSpec extends Specification {
         "support Image glyph" in {
             val obj = new Image().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 13
+            obj.fieldsWithValues.length shouldEqual 14
         }
 
-        "support ImageURI glyph" in {
-            val obj = new ImageURI().id("xyz")
+        "support ImageURL glyph" in {
+            val obj = new ImageURL().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 11
+            obj.fieldsWithValues.length shouldEqual 15
         }
 
         "support ImageRGBA glyph" in {
             val obj = new ImageRGBA().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 12
+            obj.fieldsWithValues.length shouldEqual 13
         }
 
         "support Line glyph" in {
@@ -99,7 +99,7 @@ class BokehSpec extends Specification {
         "support Rect glyph" in {
             val obj = new Rect().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 21
+            obj.fieldsWithValues.length shouldEqual 22
         }
 
         "support Segment glyph" in {
@@ -145,7 +145,7 @@ class BokehSpec extends Specification {
         }
 
         "support Xmarker marker" in {
-            val obj = new Xmarker().id("xyz")
+            val obj = new X().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 19
         }
@@ -241,19 +241,19 @@ class BokehSpec extends Specification {
         "support LinearAxis" in {
             val obj = new LinearAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 10
+            obj.fieldsWithValues.length shouldEqual 12
         }
 
         "support CategoricalAxis" in {
             val obj = new CategoricalAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 10
+            obj.fieldsWithValues.length shouldEqual 12
         }
 
         "support DatetimeAxis" in {
             val obj = new DatetimeAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 13
+            obj.fieldsWithValues.length shouldEqual 16
         }
 
         "support Grid" in {
@@ -278,13 +278,13 @@ class BokehSpec extends Specification {
         "support PreviewSaveTool" in {
             val obj = new PreviewSaveTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 4
+            obj.fieldsWithValues.length shouldEqual 2
         }
 
         "support EmbedTool" in {
             val obj = new EmbedTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 4
+            obj.fieldsWithValues.length shouldEqual 2
         }
 
         "support ResetTool" in {
@@ -321,13 +321,13 @@ class BokehSpec extends Specification {
         "support Plot" in {
             val obj = new Plot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 21
+            obj.fieldsWithValues.length shouldEqual 22
         }
 
         "support GridPlot" in {
             val obj = new GridPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 23
+            obj.fieldsWithValues.length shouldEqual 24
         }
 
 
