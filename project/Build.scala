@@ -133,7 +133,7 @@ object BokehBuild extends Build {
     lazy val bokehSettings = Defaults.coreDefaultSettings ++ commonSettings ++ pluginSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ Seq(compiler.value, breeze, shapeless, jopt, play_json, opencsv, specs2)
+            scalaio ++ Seq(compiler.value, breeze, shapeless, jopt, play_json, specs2)
         },
         fork in run := true,
         parallelExecution in Test := false,
@@ -154,6 +154,13 @@ object BokehBuild extends Build {
         }
     )
 
+    lazy val sampledataSettings = Defaults.coreDefaultSettings ++ commonSettings ++ Seq(
+        libraryDependencies ++= {
+            import Dependencies._
+            scalaio ++ Seq(opencsv, specs2)
+        }
+    )
+
     lazy val examplesSettings = Defaults.coreDefaultSettings ++ commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
@@ -161,9 +168,10 @@ object BokehBuild extends Build {
         }
     )
 
-    lazy val bokeh = project in file(".") settings(bokehSettings: _*) dependsOn(bokehCore) aggregate(bokehCore)
-    lazy val bokehCore = project in file("core") settings(coreSettings: _*)
-    lazy val bokehExamples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh)
+    lazy val bokeh = project in file(".") settings(bokehSettings: _*) dependsOn(core, sampledata) aggregate(core, sampledata)
+    lazy val core = project in file("core") settings(coreSettings: _*)
+    lazy val sampledata = project in file("sampledata") settings(sampledataSettings: _*) dependsOn(core)
+    lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh)
 
-    override def projects = Seq(bokeh, bokehCore, bokehExamples)
+    override def projects = Seq(bokeh, core, sampledata, examples)
 }
