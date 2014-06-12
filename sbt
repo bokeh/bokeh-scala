@@ -44,6 +44,3 @@ then
 fi
 
 java $JVM_OPTS -jar $SBT_LAUNCHER $SBT_OPTS
-EXIT_CODE=$?
-echo
-exit $EXIT_CODE

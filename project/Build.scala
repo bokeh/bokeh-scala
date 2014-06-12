@@ -5,14 +5,43 @@ import sbtassembly.{Plugin=>SbtAssembly}
 import org.sbtidea.SbtIdeaPlugin
 import com.typesafe.sbt.SbtPgp
 
-object ProjectBuild extends Build {
+object Dependencies {
+    val scalaio = {
+        val namespace = "com.github.scala-incubator.io"
+        val version = "0.4.3"
+        Seq(namespace %% "scala-io-core" % version,
+            namespace %% "scala-io-file" % version)
+    }
+
+    val breeze = "org.scalanlp" %% "breeze" % "0.8.1"
+
+    val shapeless = "com.chuusai" % "shapeless" % "2.0.0" cross CrossVersion.full
+
+    val jopt = "net.sf.jopt-simple" % "jopt-simple" % "4.5"
+
+    val play_json = "com.typesafe.play" %% "play-json" % "2.2.1"
+
+    val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
+
+    val specs2 = "org.specs2" %% "specs2" % "2.3.11" % "test"
+
+    val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
+
+    val compiler = Def.setting { "org.scala-lang" % "scala-compiler" % scalaVersion.value }
+
+    val paradise = "org.scalamacros" % "paradise" % "2.0.0" cross CrossVersion.full
+
+    val quasiquotes = "org.scalamacros" %% "quasiquotes" % "2.0.0"
+}
+
+object BokehBuild extends Build {
     override lazy val settings = super.settings ++ Seq(
         organization := "org.continuumio",
         version := "0.1-SNAPSHOT",
         description := "Scala bindings for Bokeh plotting library",
         homepage := Some(url("http://bokeh.pydata.org")),
         licenses := Seq("MIT-style" -> url("http://www.opensource.org/licenses/mit-license.php")),
-        scalaVersion := "2.10.3",
+        scalaVersion := "2.10.4",
         scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature", "-language:_"),
         shellPrompt := { state =>
             "continuum (%s)> ".format(Project.extract(state).currentProject.id)
@@ -24,35 +53,6 @@ object ProjectBuild extends Build {
             Resolver.typesafeRepo("releases"),
             Resolver.typesafeRepo("snapshots"))
     )
-
-    object Dependencies {
-        val scalaio = {
-            val namespace = "com.github.scala-incubator.io"
-            val version = "0.4.2"
-            Seq(namespace %% "scala-io-core" % version,
-                namespace %% "scala-io-file" % version)
-        }
-
-        val breeze = "org.scalanlp" %% "breeze" % "0.6"
-
-        val shapeless = "com.chuusai" % "shapeless" % "2.0.0-M1" cross CrossVersion.full
-
-        val jopt = "net.sf.jopt-simple" % "jopt-simple" % "4.5"
-
-        val play_json = "com.typesafe.play" %% "play-json" % "2.2.1"
-
-        val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
-
-        val specs2 = "org.specs2" %% "specs2" % "2.3.8" % "test"
-
-        val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
-
-        val compiler = Def.setting { "org.scala-lang" % "scala-compiler" % scalaVersion.value }
-
-        val paradise = Def.setting { "org.scalamacros" % "paradise" % "2.0.0-M3" cross CrossVersion.full }
-
-        val quasiquotes = Def.setting { "org.scalamacros" % "quasiquotes" % "2.0.0-M3" cross CrossVersion.full }
-    }
 
     val bokehDir = settingKey[File]("Location of Bokeh library.")
     val runAll = taskKey[Unit]("Run all discovered main classes.")
@@ -130,40 +130,40 @@ object ProjectBuild extends Build {
 
     lazy val pluginSettings = pgpSettings ++ ideaSettings ++ assemblySettings
 
-    lazy val bokehSettings = Project.defaultSettings ++ commonSettings ++ pluginSettings ++ {
-        Seq(libraryDependencies ++= {
-                import Dependencies._
-                scalaio ++ Seq(compiler.value, breeze, shapeless, jopt, play_json, opencsv, specs2)
-            },
-            fork in run := true,
-            parallelExecution in Test := false,
-            initialCommands in Compile := """
-                import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
-                import scalax.io.JavaConverters._
-                import scalax.file.Path
-                import play.api.libs.json.Json
-                import org.continuumio.bokeh._
-                """)
-    }
+    lazy val bokehSettings = Defaults.coreDefaultSettings ++ commonSettings ++ pluginSettings ++ Seq(
+        libraryDependencies ++= {
+            import Dependencies._
+            scalaio ++ Seq(compiler.value, breeze, shapeless, jopt, play_json, opencsv, specs2)
+        },
+        fork in run := true,
+        parallelExecution in Test := false,
+        initialCommands in Compile := """
+            import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
+            import scalax.io.JavaConverters._
+            import scalax.file.Path
+            import play.api.libs.json.Json
+            import org.continuumio.bokeh._
+            """
+    )
 
-    lazy val coreSettings = Project.defaultSettings ++ commonSettings ++ {
-        Seq(addCompilerPlugin("org.scalamacros" % "paradise" % "2.0.0-M3" cross CrossVersion.full),
-            libraryDependencies ++= {
-                import Dependencies._
-                Seq(reflect.value, quasiquotes.value, shapeless, play_json, specs2)
-            })
-    }
+    lazy val coreSettings = Defaults.coreDefaultSettings ++ commonSettings ++ Seq(
+        addCompilerPlugin(Dependencies.paradise),
+        libraryDependencies ++= {
+            import Dependencies._
+            Seq(reflect.value, quasiquotes, shapeless, play_json, specs2)
+        }
+    )
 
-    lazy val examplesSettings = Project.defaultSettings ++ commonSettings ++ {
-        Seq(libraryDependencies ++= {
-                import Dependencies._
-                Seq(breeze, specs2)
-            })
-    }
+    lazy val examplesSettings = Defaults.coreDefaultSettings ++ commonSettings ++ Seq(
+        libraryDependencies ++= {
+            import Dependencies._
+            Seq(breeze, specs2)
+        }
+    )
 
-    lazy val bokeh = Project(id="bokeh", base=file("."), settings=bokehSettings) dependsOn(bokehCore) aggregate(bokehCore)
-    lazy val bokehCore = Project(id="bokeh-core", base=file("core"), settings=coreSettings)
-    lazy val bokehExamples = Project(id="bokeh-examples", base=file("examples"), settings=examplesSettings) dependsOn(bokeh)
+    lazy val bokeh = project in file(".") settings(bokehSettings: _*) dependsOn(bokehCore) aggregate(bokehCore)
+    lazy val bokehCore = project in file("core") settings(coreSettings: _*)
+    lazy val bokehExamples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh)
 
     override def projects = Seq(bokeh, bokehCore, bokehExamples)
 }
