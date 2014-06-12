@@ -98,18 +98,18 @@ object Location extends Enum[Location] {
     case object Max extends Location
 }
 
+sealed trait Orientation extends EnumType
+object Orientation extends Enum[Orientation] {
+    case object Horizontal extends Orientation
+    case object Vertical extends Orientation
+}
+
 sealed trait LegendOrientation extends EnumType
 object LegendOrientation extends Enum[LegendOrientation] {
     case object TopRight extends LegendOrientation
     case object TopLeft extends LegendOrientation
     case object BottomLeft extends LegendOrientation
     case object BottomRight extends LegendOrientation
-}
-
-sealed trait LabelOrientation extends EnumType
-object LabelOrientation extends Enum[LabelOrientation] {
-    case object Horizontal extends LabelOrientation
-    case object Vertical extends LabelOrientation
 }
 
 sealed trait BorderSymmetry extends EnumType
@@ -140,6 +140,14 @@ object Anchor extends Enum[Anchor] {
     case object BottomLeft extends Anchor
     case object LeftCenter extends Anchor
     case object Center extends Anchor
+}
+
+sealed trait ColumnType extends EnumType
+object ColumnType extends Enum[ColumnType] {
+    case object Text extends ColumnType
+    case object Numeric extends ColumnType
+    case object Date extends ColumnType
+    case object AutoComplete extends ColumnType
 }
 
 sealed trait Color

@@ -38,11 +38,12 @@ trait EnumDefaults {
     implicit object DatetimeUnitsDefault extends DefaultValue[DatetimeUnits](DatetimeUnits.Seconds)
     implicit object DimensionDefault extends DefaultValue[Dimension](Dimension.Width)
     implicit object LocationDefault extends DefaultValue[Location](Location.Top)
+    implicit object OrientationDefault extends DefaultValue[Orientation](Orientation.Horizontal)
     implicit object LegendOrientationDefault extends DefaultValue[LegendOrientation](LegendOrientation.TopRight)
-    implicit object LabelOrientationDefault extends DefaultValue[LabelOrientation](LabelOrientation.Horizontal)
     implicit object BorderSymmetryDefault extends DefaultValue[BorderSymmetry](BorderSymmetry.Horizontal)
     implicit object DashPatternDefault extends DefaultValue[DashPattern](DashPattern.Solid)
     implicit object AnchorDefault extends DefaultValue[Anchor](Anchor.TopLeft)
+    implicit object ColumnTypeDefault extends DefaultValue[ColumnType](ColumnType.Text)
     implicit object ColorDefault extends DefaultValue[Color](Color.White)
 }
 

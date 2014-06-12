@@ -17,7 +17,7 @@ abstract class Axis extends GuideRenderer {
     //// object axis_label_props extends Include(TextProps, prefix="axis_label")
 
     object major_label_standoff extends Field[Int]
-    object major_label_orientation extends Field[LabelOrientation] // Either[Orientation, Double]
+    object major_label_orientation extends Field[Orientation] // Either[Orientation, Double]
     //// object major_label_props extends Include(TextProps, prefix="major_label")
 
     //// object axis_props extends Include(LineProps, prefix="axis")
