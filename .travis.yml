@@ -1,10 +1,10 @@
 language: scala
 
 scala:
-    - 2.10.3
+    - 2.10.4
 
 jdk:
     - openjdk6
     - oraclejdk7
 
-script: ./sbt ++$TRAVIS_SCALA_VERSION bokeh-examples/compile bokeh/test bokeh-examples/runAll
+script: ./sbt ++$TRAVIS_SCALA_VERSION bokeh/compile bokeh-examples/compile bokeh/test bokeh-examples/runAll
