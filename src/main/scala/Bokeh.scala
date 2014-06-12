@@ -16,6 +16,8 @@ abstract class PlotObject extends HasFields with Renderable {
     object id extends Field[String](Utils.uuid4())
 }
 
+abstract class Widget extends PlotObject
+
 class PlotContext extends PlotObject {
-    object children extends Field[List[Plot]]
+    object children extends Field[List[Widget]]
 }

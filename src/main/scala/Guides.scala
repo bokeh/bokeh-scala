@@ -3,11 +3,14 @@ package org.continuumio.bokeh
 abstract class GuideRenderer extends Renderer {
     object plot extends Field[Plot]
     object dimension extends Field[Int](0)
+    // object bounds extends Field[Either[Auto, (Float, Float)]]
 }
 
 abstract class Axis extends GuideRenderer {
     object location extends Field[Location] // Either[Location, Float]
-    // object bounds extends String('auto')
+
+    object ticker extends Field[Ticker]
+    object formatter extends Field[TickFormatter]
 
     object axis_label extends Field[String]
     object axis_label_standoff extends Field[Int]
@@ -29,16 +32,13 @@ class LinearAxis extends Axis
 class CategoricalAxis extends Axis
 
 class DatetimeAxis extends LinearAxis {
-    // object axis_label extends Field[String]("date")
-    // object scale extends Field[String]("time")
+    object scale extends Field[String]("time")
     object num_labels extends Field[Int](8)
     object char_width extends Field[Int](10)
     object fill_ratio extends Field[Double](0.3)
-    // object formats extends Dict({"days": ["%m/%d/%Y"]})
 }
 
 class Grid extends GuideRenderer {
-    // object bounds extends String('auto')
-    object is_datetime extends Field[Boolean](false)
+    object axis extends Field[Axis]
     //// object grid_props extends Include(LineProps, prefix="grid")
 }

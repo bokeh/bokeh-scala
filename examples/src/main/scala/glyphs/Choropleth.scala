@@ -71,8 +71,8 @@ object Choropleth extends App {
         .data_sources(List(state_source, county_source))
         .border_fill(Color.White)
         .title("2009 Unemployment Data")
-        .width(1300)
-        .height(800)
+        .plot_width(1300)
+        .plot_height(800)
 
     val resizetool = new ResizeTool().plot(plot)
 

@@ -5,22 +5,16 @@ sealed abstract class Tool extends PlotObject {
 }
 
 class PanTool extends Tool {
-    object dimensions extends Field[List[Dimension]]
+    object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
 }
 
 class WheelZoomTool extends Tool {
-    object dimensions extends Field[List[Dimension]]
+    object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
 }
 
-class PreviewSaveTool extends Tool {
-    object dimensions extends Field[List[Dimension]]
-    object dataranges extends Field[List[DataRange]]
-}
+class PreviewSaveTool extends Tool
 
-class EmbedTool extends Tool {
-    object dimensions extends Field[List[Dimension]]
-    object dataranges extends Field[List[DataRange]]
-}
+class EmbedTool extends Tool
 
 class ResetTool extends Tool
 
@@ -41,4 +35,11 @@ class BoxSelectTool extends Tool {
 class HoverTool extends Tool {
     object renderers extends Field[List[Renderer]]
     object tooltips extends Field[Map[String, String]]
+}
+
+class ObjectExplorerTool extends Tool
+
+class DataRangeBoxSelectTool extends Tool {
+    object xselect extends Field[List[Range]]
+    object yselect extends Field[List[Range]]
 }

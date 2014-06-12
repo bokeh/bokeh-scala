@@ -55,7 +55,7 @@ class FileLocator() {
 }
 
 abstract class Session extends Serializer {
-    def save(plots: Plot*)
+    def save(objs: Widget*)
     def view()
 }
 
@@ -70,8 +70,8 @@ class HTMLFileSession(val file: File) extends Session {
 
     val title = "Bokeh Plots"
 
-    def save(plots: Plot*) {
-        val context = new PlotContext().children(plots.toList)
+    def save(objs: Widget*) {
+        val context = new PlotContext().children(objs.toList)
         val models = serializeObjs(collectObjs(context))
         val spec = PlotSpec(models, context.getRef, Utils.uuid4())
         val (scripts, styles) = collectScriptsAndStyles(context)

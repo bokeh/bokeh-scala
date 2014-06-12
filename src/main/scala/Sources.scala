@@ -3,6 +3,11 @@ package org.continuumio.bokeh
 import annotation.implicitNotFound
 import breeze.linalg.DenseVector
 
+class ColumnsRef extends PlotObject with NoRefs {
+    object ref extends Field[DataSource]
+    object columns extends Field[List[Symbol]]
+}
+
 sealed abstract class DataSource extends PlotObject {
     object column_names extends Field[List[String]]
     object selected extends Field[List[String]]

@@ -7,17 +7,18 @@ class Range1d extends Range {
     object end extends Field[Double]
 }
 
-abstract class DataRange extends Range
-
-class ColumnsRef extends PlotObject with NoRefs {
-    object ref extends Field[DataSource]
-    object columns extends Field[List[Symbol]]
+abstract class DataRange extends Range {
+    object sources extends Field[List[ColumnsRef]]
 }
 
 class DataRange1d extends DataRange {
+    object rangepadding extends Field[Double](0.1)
+
     object start extends Field[Double]
     object end extends Field[Double]
+}
 
-    object sources extends Field[List[ColumnsRef]]
-    object rangepadding extends Field[Double](0.1)
+class FactorRange extends Range {
+    // XXX: technically List[Any] but only List[String] is really supported
+    object factors extends Field[List[String]]
 }

@@ -78,7 +78,7 @@ object Hover extends App with LinAlgHelpers {
         .angle(0.0)
         .text_alpha(0.5)
         .text_font_size("5pt")
-        .text_baseline(Baseline.Middle)
+        .text_baseline(TextBaseline.Middle)
         .text_align(TextAlign.Center)
 
     val text_renderer = new Glyph()

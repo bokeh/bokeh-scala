@@ -46,8 +46,8 @@ object Anscombe extends App {
             .y_range(ydr)
             .data_sources(List(lines_source, circles_source))
             .title(title)
-            .width(400)
-            .height(400)
+            .plot_width(400)
+            .plot_height(400)
             .border_fill(Color.White)
             .background_fill("#e9e0db")
         val xaxis = new LinearAxis().plot(plot).dimension(0).location(Location.Bottom)/*.axis_line_color()*/
@@ -74,7 +74,7 @@ object Anscombe extends App {
     val IV  = make_plot("IV",  'xiv,  'yiv)
 
     val children = List(List(I, II), List(III, IV))
-    val grid = new GridPlot().children(children).width(800)
+    val grid = new GridPlot().children(children).plot_width(800)
 
     val session = new HTMLFileSession("anscombe.html")
     session.save(grid)
