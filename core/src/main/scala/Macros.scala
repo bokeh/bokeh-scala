@@ -12,7 +12,7 @@ object Macros {
         c.Expr[List[String]](Apply(reify(List).tree, literals))
     }
 
-    def members[A] = macro membersImpl[A]
+    def members[A]: List[String] = macro membersImpl[A]
 
     def fieldsImpl[A: c.WeakTypeTag](c: Context): c.Expr[List[String]] = {
         import c.universe._
@@ -43,7 +43,7 @@ object Macros {
         )
     }
 
-    def fields[A] = macro fieldsImpl[A]
+    def fields[A]: List[String] = macro fieldsImpl[A]
 }
 
 object JsonImpl {
