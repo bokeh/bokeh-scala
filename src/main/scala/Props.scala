@@ -61,10 +61,8 @@ trait HasFields extends core.HListable with DefaultImplicits { self =>
 
         val fieldName: Option[String] = None
 
-        def defaultValue: Option[FieldType] = {
-            val default = implicitly[DefaultValue[FieldType]].default
-            if (default == null) None else Some(default)
-        }
+        def defaultValue: Option[FieldType] =
+            Option(implicitly[DefaultValue[FieldType]].default)
 
         protected var data: Option[FieldType] = None
         protected var dirty: Boolean = false
