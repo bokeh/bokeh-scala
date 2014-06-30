@@ -60,6 +60,7 @@ object BokehBuild extends Build {
         scalaVersion := "2.11.1",
         crossScalaVersions := Seq("2.10.4", "2.11.1"),
         scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature", "-language:_"),
+        addCompilerPlugin(Dependencies.paradise),
         shellPrompt := { state =>
             "continuum (%s)> ".format(Project.extract(state).currentProject.id)
         },
@@ -164,7 +165,6 @@ object BokehBuild extends Build {
     )
 
     lazy val coreSettings = Defaults.coreDefaultSettings ++ commonSettings ++ Seq(
-        addCompilerPlugin(Dependencies.paradise),
         libraryDependencies ++= {
             import Dependencies._
             quasiquotes.value ++ Seq(reflect.value, shapeless.value, play_json, specs2)
