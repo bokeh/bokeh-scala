@@ -4,7 +4,7 @@ import annotation.implicitNotFound
 import breeze.linalg.DenseVector
 
 class ColumnsRef extends PlotObject with NoRefs {
-    object ref extends Field[DataSource]
+    object source extends Field[DataSource]
     object columns extends Field[List[Symbol]]
 }
 
@@ -13,7 +13,7 @@ sealed abstract class DataSource extends PlotObject {
     object selected extends Field[List[String]]
 
     def columns(columns: Symbol*): ColumnsRef =
-        new ColumnsRef().ref(this).columns(columns.toList)
+        new ColumnsRef().source(this).columns(columns.toList)
 }
 
 @implicitNotFound(msg="Can't find ArrayLike type class for type ${A}.")
