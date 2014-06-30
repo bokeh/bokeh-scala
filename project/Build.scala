@@ -6,6 +6,16 @@ import org.sbtidea.SbtIdeaPlugin
 import com.typesafe.sbt.SbtPgp
 
 object Dependencies {
+    val isScala_2_10 = Def.setting {
+        scalaVersion.value.startsWith("2.10")
+    }
+
+    def scala_2_10(moduleID: ModuleID) =
+        Def.setting { if (isScala_2_10.value) Seq(moduleID) else Seq.empty }
+
+    def scala_2_11_+(moduleID: ModuleID) =
+        Def.setting { if (!isScala_2_10.value) Seq(moduleID) else Seq.empty }
+
     val scalaio = {
         val namespace = "com.github.scala-incubator.io"
         val version = "0.4.3"
@@ -15,33 +25,40 @@ object Dependencies {
 
     val breeze = "org.scalanlp" %% "breeze" % "0.8.1"
 
-    val shapeless = "com.chuusai" % "shapeless" % "2.0.0" cross CrossVersion.full
+    val shapeless = Def.setting {
+        val version = "2.0.0"
+        if (scalaVersion.value.startsWith("2.10"))
+            "com.chuusai" %  "shapeless" % version cross CrossVersion.full
+        else
+            "com.chuusai" %% "shapeless" % version
+    }
 
-    val jopt = "net.sf.jopt-simple" % "jopt-simple" % "4.5"
-
-    val play_json = "com.typesafe.play" %% "play-json" % "2.2.1"
-
-    val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
+    val play_json = "com.typesafe.play" %% "play-json" % "2.3.1"
 
     val specs2 = "org.specs2" %% "specs2" % "2.3.11" % "test"
 
-    val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
+    val jopt = "net.sf.jopt-simple" % "jopt-simple" % "4.5"
 
-    val compiler = Def.setting { "org.scala-lang" % "scala-compiler" % scalaVersion.value }
+    val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
+
+    val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
     val paradise = "org.scalamacros" % "paradise" % "2.0.0" cross CrossVersion.full
 
-    val quasiquotes = "org.scalamacros" %% "quasiquotes" % "2.0.0"
+    val quasiquotes = scala_2_10("org.scalamacros" %% "quasiquotes" % "2.0.0")
+
+    val xml = scala_2_11_+("org.scala-lang.modules" %% "scala-xml" % "1.0.2")
 }
 
 object BokehBuild extends Build {
     override lazy val settings = super.settings ++ Seq(
         organization := "org.continuumio",
-        version := "0.1-SNAPSHOT",
+        version := "0.2-SNAPSHOT",
         description := "Scala bindings for Bokeh plotting library",
         homepage := Some(url("http://bokeh.pydata.org")),
         licenses := Seq("MIT-style" -> url("http://www.opensource.org/licenses/mit-license.php")),
-        scalaVersion := "2.10.4",
+        scalaVersion := "2.11.1",
+        crossScalaVersions := Seq("2.10.4", "2.11.1"),
         scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature", "-language:_"),
         shellPrompt := { state =>
             "continuum (%s)> ".format(Project.extract(state).currentProject.id)
@@ -133,7 +150,7 @@ object BokehBuild extends Build {
     lazy val bokehSettings = Defaults.coreDefaultSettings ++ commonSettings ++ pluginSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ Seq(compiler.value, breeze, shapeless, jopt, play_json, specs2)
+            scalaio ++ xml.value ++ Seq(breeze, shapeless.value, jopt, play_json, specs2)
         },
         fork in run := true,
         parallelExecution in Test := false,
@@ -150,14 +167,14 @@ object BokehBuild extends Build {
         addCompilerPlugin(Dependencies.paradise),
         libraryDependencies ++= {
             import Dependencies._
-            Seq(reflect.value, quasiquotes, shapeless, play_json, specs2)
+            quasiquotes.value ++ Seq(reflect.value, shapeless.value, play_json, specs2)
         }
     )
 
     lazy val sampledataSettings = Defaults.coreDefaultSettings ++ commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ Seq(opencsv, specs2)
+            scalaio ++ xml.value ++ Seq(opencsv, specs2)
         }
     )
 
