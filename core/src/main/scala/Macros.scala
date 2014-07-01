@@ -3,49 +3,6 @@ package org.continuumio.bokeh.core
 import scala.reflect.macros.Context
 import play.api.libs.json.Writes
 
-object Macros {
-    def membersImpl[A: c.WeakTypeTag](c: Context): c.Expr[List[String]] = {
-        import c.universe._
-        val tpe = weakTypeOf[A]
-        val members = tpe.members.map(_.name.decoded).toList.distinct
-        val literals = members.map(member => Literal(Constant(member)))
-        c.Expr[List[String]](Apply(reify(List).tree, literals))
-    }
-
-    def members[A]: List[String] = macro membersImpl[A]
-
-    def fieldsImpl[A: c.WeakTypeTag](c: Context): c.Expr[List[String]] = {
-        import c.universe._
-
-        val tpe = weakTypeOf[A]
-        val tpeSymbol = tpe.typeSymbol
-
-        val fieldNames = tpeSymbol
-            .asClass
-            .typeSignature
-            .members
-            .toList
-            .filter(_.isModule)
-            .map(_.asModule)
-            .filter(_.moduleClass
-                     .asClass
-                     .baseClasses
-                     .map(_.fullName)
-                     .contains("org.continuumio.bokeh.Field"))
-            .map(_.name.decoded)
-
-        val fields = fieldNames.map { fieldName =>
-            Literal(Constant(fieldName))
-        }
-
-        c.Expr[List[String]](
-            Apply(reify(List).tree, fields)
-        )
-    }
-
-    def fields[A]: List[String] = macro fieldsImpl[A]
-}
-
 object JsonImpl {
     def writesImpl[T: c.WeakTypeTag](c: Context): c.Expr[Writes[T]] = {
         import c.universe._
