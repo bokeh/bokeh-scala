@@ -8,13 +8,6 @@ import shapeless.ops.hlist.Mapper
 import play.api.libs.json.{Json,Writes,JsValue,JsString,JsArray}
 import breeze.linalg.DenseVector
 
-import org.continuumio.bokeh.core.JsonImpl
-
-object BokehJson {
-    def writes[T]: Writes[T] = macro JsonImpl.writesImpl[T]
-    def sealedWrites[T]: Writes[T] = macro JsonImpl.sealedWritesImpl[T]
-}
-
 trait HListFormats {
     object poly_writer extends Poly1 {
         implicit def default[A:Writes] = at[A](a => implicitly[Writes[A]].writes(a))
