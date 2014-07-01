@@ -148,6 +148,7 @@ object BokehBuild extends Build {
             import scalax.io.JavaConverters._
             import scalax.file.Path
             import play.api.libs.json.Json
+            import org.continuumio.bokeh.core._
             import org.continuumio.bokeh._
             """
     )
@@ -173,10 +174,11 @@ object BokehBuild extends Build {
         }
     )
 
-    lazy val bokeh = project in file(".") settings(bokehSettings: _*) dependsOn(core, sampledata) aggregate(core, sampledata)
+    lazy val bokeh = project in file("bokeh") settings(bokehSettings: _*) dependsOn(core)
     lazy val core = project in file("core") settings(coreSettings: _*)
     lazy val sampledata = project in file("sampledata") settings(sampledataSettings: _*) dependsOn(core)
-    lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh)
+    lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh, sampledata)
+    lazy val all = project in file(".") aggregate(bokeh, core, sampledata, examples)
 
-    override def projects = Seq(bokeh, core, sampledata, examples)
+    override def projects = Seq(bokeh, core, sampledata, examples, all)
 }
