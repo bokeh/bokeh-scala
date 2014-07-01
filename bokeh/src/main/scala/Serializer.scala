@@ -20,6 +20,7 @@ trait Serializer {
             case obj: Double => toJson(obj)
             case obj: String => toJson(obj)
             case obj: Symbol => toJson(obj)
+            case obj: Ref => toJson(obj)
             case obj: core.EnumType => toJson(obj)
             case obj: CSSColor => toJson(obj)
             case obj: Percent => toJson(obj)
@@ -32,7 +33,6 @@ trait Serializer {
                     case (key: Symbol, value) => (key.name, anyToJson(value))
                     case _ => throw new IllegalArgumentException(obj.toString)
                 })
-            case Ref(id, tp) => toJson(Map("id" -> id, "type" -> tp))
             case Some(obj) => anyToJson(obj)
             case None => JsNull
             case obj => throw new IllegalArgumentException(obj.toString)

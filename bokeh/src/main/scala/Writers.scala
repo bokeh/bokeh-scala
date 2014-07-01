@@ -34,6 +34,8 @@ trait Formats {
     implicit def EnumJSON[T <: core.EnumType] = new Writes[T] {
         def writes(value: T) = value.toJson
     }
+
+    implicit val RefJSON = Json.writes[Ref]
 }
 
 object Formats extends Formats
