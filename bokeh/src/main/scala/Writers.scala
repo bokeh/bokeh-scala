@@ -2,7 +2,10 @@ package org.continuumio.bokeh
 
 import scala.reflect.ClassTag
 
-import play.api.libs.json.{Json,Reads,Writes,Format,JsString}
+import shapeless.{HList,Poly1}
+import shapeless.ops.hlist.Mapper
+
+import play.api.libs.json.{Json,Writes,JsValue,JsString,JsArray}
 import breeze.linalg.DenseVector
 
 import org.continuumio.bokeh.core.JsonImpl
@@ -12,7 +15,32 @@ object BokehJson {
     def sealedWrites[T]: Writes[T] = macro JsonImpl.sealedWritesImpl[T]
 }
 
-trait Formats {
+trait HListFormats {
+    object poly_writer extends Poly1 {
+        implicit def default[A:Writes] = at[A](a => implicitly[Writes[A]].writes(a))
+    }
+
+    implicit def HListJSON[T <: HList](implicit map: Mapper[poly_writer.type, T]) = new Writes[T] {
+        def writes(value: T) = {
+            JsArray(map(value).toList.asInstanceOf[List[JsValue]])
+        }
+    }
+}
+
+trait TupleFormats {
+    implicit def Tuple2Writes[T1:Writes, T2:Writes]: Writes[(T1, T2)] = new Writes[(T1, T2)] {
+        def writes(t: (T1, T2)) = JsArray(List(implicitly[Writes[T1]].writes(t._1),
+                                               implicitly[Writes[T2]].writes(t._2)))
+    }
+
+    implicit def Tuple3Writes[T1:Writes, T2:Writes, T3:Writes]: Writes[(T1, T2, T3)] = new Writes[(T1, T2, T3)] {
+        def writes(t: (T1, T2, T3)) = JsArray(List(implicitly[Writes[T1]].writes(t._1),
+                                                   implicitly[Writes[T2]].writes(t._2),
+                                                   implicitly[Writes[T3]].writes(t._3)))
+    }
+}
+
+trait Formats extends HListFormats with TupleFormats {
     implicit def DenseVectorJSON[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
         def writes(vec: DenseVector[T]) =
             implicitly[Writes[Array[T]]].writes(vec.toArray)
