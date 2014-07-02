@@ -1,4 +1,4 @@
-package org.continuumio
+package io.continuum
 
 package object bokeh {
     case class Percent(value: Double) {

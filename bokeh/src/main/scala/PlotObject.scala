@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 case class Ref(id: String, `type`: String)
 

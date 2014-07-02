@@ -1,4 +1,4 @@
-package org.continuumio.bokeh.core
+package io.continuum.bokeh.core
 
 import scala.reflect.macros.Context
 

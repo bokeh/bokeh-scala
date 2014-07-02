@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 trait FillProps { self: HasFields =>
     object fill_color extends DataSpec[Color](Color.Gray)

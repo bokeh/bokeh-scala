@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 package sampledata
 
 object Unemployment extends SampleData {

@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 abstract class BaseGlyph extends HasFields {
     override def typeName: String = Utils.snakify(super.typeName)

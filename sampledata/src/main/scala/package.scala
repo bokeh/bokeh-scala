@@ -1,4 +1,4 @@
-package org.continuumio.bokeh {
+package io.continuum.bokeh {
     package sampledata {
         package object iris {
             def flowers = Flowers.load()

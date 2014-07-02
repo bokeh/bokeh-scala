@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 import annotation.implicitNotFound
 import breeze.linalg.DenseVector

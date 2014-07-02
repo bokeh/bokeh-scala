@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 sealed abstract class Tool extends PlotObject {
     object plot extends Field[Plot]

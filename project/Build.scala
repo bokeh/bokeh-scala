@@ -52,7 +52,7 @@ object Dependencies {
 
 object BokehBuild extends Build {
     override lazy val settings = super.settings ++ Seq(
-        organization := "org.continuumio",
+        organization := "io.continuum.bokeh",
         version := "0.2-SNAPSHOT",
         description := "Scala bindings for Bokeh plotting library",
         homepage := Some(url("http://bokeh.pydata.org")),
@@ -148,8 +148,8 @@ object BokehBuild extends Build {
             import scalax.io.JavaConverters._
             import scalax.file.Path
             import play.api.libs.json.Json
-            import org.continuumio.bokeh.core._
-            import org.continuumio.bokeh._
+            import io.continuum.bokeh.core._
+            import io.continuum.bokeh._
             """
     )
 

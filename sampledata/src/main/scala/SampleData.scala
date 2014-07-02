@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 package sampledata
 
 import java.io.{File,InputStream,FileInputStream,InputStreamReader,FileNotFoundException}

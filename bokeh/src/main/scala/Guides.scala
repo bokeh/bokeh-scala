@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 abstract class GuideRenderer extends Renderer {
     object plot extends Field[Plot]

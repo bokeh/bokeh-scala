@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 class Plot extends Widget { plot =>
     object data_sources extends Field[List[DataSource]]

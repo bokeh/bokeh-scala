@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 sealed abstract class Marker extends BaseGlyph with FillProps with LineProps {
     object x extends DataSpec[Double]

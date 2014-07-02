@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 trait ToolsField extends AbstractField { self: Plot#Field[List[Tool]] =>
     abstract override def set(value: Option[List[Tool]]) {

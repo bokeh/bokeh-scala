@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 import play.api.libs.json.{Json,JsValue,JsArray,JsObject,JsNull}
 

@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 case class DefaultTools(tools: List[DefaultTool]) {
     def |(other: DefaultTool) = new DefaultTools(tools :+ other)

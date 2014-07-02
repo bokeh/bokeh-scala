@@ -1,4 +1,4 @@
-package org.continuumio.bokeh
+package io.continuum.bokeh
 
 import scala.annotation.implicitNotFound
 import java.util.Date

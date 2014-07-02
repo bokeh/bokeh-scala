@@ -14,7 +14,7 @@ Scala bindings for [Bokeh][bokeh] plotting library.
 $ git clone https://github.com/mattpap/bokeh-scala
 $ cd bokeh-scala
 $ ./sbt
-> examples/runMain org.continuumio.bokeh.examples.glyphs.Anscombe
+> examples/runMain io.continuum.bokeh.examples.glyphs.Anscombe
 ```
 or
 ```bash
