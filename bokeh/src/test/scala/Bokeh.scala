@@ -6,204 +6,171 @@ class BokehSpec extends Specification {
     sequential
 
     "glyphs" should {
-        "support AnnularWedge glyph" in {
-            val obj = new AnnularWedge().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 23
-        }
-
-        "support Annulus glyph" in {
-            val obj = new Annulus().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 20
-        }
-
-        "support Arc glyph" in {
-            val obj = new Arc().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 20
-        }
-
-        "support Bezier glyph" in {
-            val obj = new Bezier().id("xyz")
-            obj.id.value shouldEqual "xyz"
+        "support AnnularWedge" in {
+            val obj = new AnnularWedge()
             obj.fieldsWithValues.length shouldEqual 22
         }
 
-        "support Image glyph" in {
-            val obj = new Image().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 14
+        "support Annulus" in {
+            val obj = new Annulus()
+            obj.fieldsWithValues.length shouldEqual 19
         }
 
-        "support ImageURL glyph" in {
-            val obj = new ImageURL().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 15
+        "support Arc" in {
+            val obj = new Arc()
+            obj.fieldsWithValues.length shouldEqual 19
         }
 
-        "support ImageRGBA glyph" in {
-            val obj = new ImageRGBA().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 13
-        }
-
-        "support Line glyph" in {
-            val obj = new Line().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 16
-        }
-
-        "support MultiLine glyph" in {
-            val obj = new MultiLine().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 16
-        }
-
-        "support Oval glyph" in {
-            val obj = new Oval().id("xyz")
-            obj.id.value shouldEqual "xyz"
+        "support Bezier" in {
+            val obj = new Bezier()
             obj.fieldsWithValues.length shouldEqual 21
         }
 
-        "support Patch glyph" in {
-            val obj = new Patch().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 18
+        "support Image" in {
+            val obj = new Image()
+            obj.fieldsWithValues.length shouldEqual 13
         }
 
-        "support Patches glyph" in {
-            val obj = new Patches().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 18
+        "support ImageURL" in {
+            val obj = new ImageURL()
+            obj.fieldsWithValues.length shouldEqual 14
         }
 
-        "support Quad glyph" in {
-            val obj = new Quad().id("xyz")
-            obj.id.value shouldEqual "xyz"
+        "support ImageRGBA" in {
+            val obj = new ImageRGBA()
+            obj.fieldsWithValues.length shouldEqual 12
+        }
+
+        "support Line" in {
+            val obj = new Line()
+            obj.fieldsWithValues.length shouldEqual 15
+        }
+
+        "support MultiLine" in {
+            val obj = new MultiLine()
+            obj.fieldsWithValues.length shouldEqual 15
+        }
+
+        "support Oval" in {
+            val obj = new Oval()
             obj.fieldsWithValues.length shouldEqual 20
         }
 
-        "support Quadratic glyph" in {
-            val obj = new Quadratic().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 20
+        "support Patch" in {
+            val obj = new Patch()
+            obj.fieldsWithValues.length shouldEqual 17
         }
 
-        "support Ray glyph" in {
-            val obj = new Ray().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 18
+        "support Patches" in {
+            val obj = new Patches()
+            obj.fieldsWithValues.length shouldEqual 17
         }
 
-        "support Rect glyph" in {
-            val obj = new Rect().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 22
+        "support Quad" in {
+            val obj = new Quad()
+            obj.fieldsWithValues.length shouldEqual 19
         }
 
-        "support Segment glyph" in {
-            val obj = new Segment().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 18
+        "support Quadratic" in {
+            val obj = new Quadratic()
+            obj.fieldsWithValues.length shouldEqual 19
         }
 
-        "support Text glyph" in {
-            val obj = new Text().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 18
+        "support Ray" in {
+            val obj = new Ray()
+            obj.fieldsWithValues.length shouldEqual 17
         }
 
-        "support Wedge glyph" in {
-            val obj = new Wedge().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 22
+        "support Rect" in {
+            val obj = new Rect()
+            obj.fieldsWithValues.length shouldEqual 21
+        }
+
+        "support Segment" in {
+            val obj = new Segment()
+            obj.fieldsWithValues.length shouldEqual 17
+        }
+
+        "support Text" in {
+            val obj = new Text()
+            obj.fieldsWithValues.length shouldEqual 17
+        }
+
+        "support Wedge" in {
+            val obj = new Wedge()
+            obj.fieldsWithValues.length shouldEqual 21
         }
     }
 
     "markers" should {
-        "support Circle marker" in {
-            val obj = new Circle().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 20
-        }
-
-        "support Square marker" in {
-            val obj = new Square().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 20
-        }
-
-        "support Triangle marker" in {
-            val obj = new Triangle().id("xyz")
-            obj.id.value shouldEqual "xyz"
+        "support Circle" in {
+            val obj = new Circle()
             obj.fieldsWithValues.length shouldEqual 19
         }
 
-        "support Cross marker" in {
-            val obj = new Cross().id("xyz")
-            obj.id.value shouldEqual "xyz"
+        "support Square" in {
+            val obj = new Square()
             obj.fieldsWithValues.length shouldEqual 19
         }
 
-        "support Xmarker marker" in {
-            val obj = new X().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+        "support Triangle" in {
+            val obj = new Triangle()
+            obj.fieldsWithValues.length shouldEqual 18
         }
 
-        "support Diamond marker" in {
-            val obj = new Diamond().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+        "support Cross" in {
+            val obj = new Cross()
+            obj.fieldsWithValues.length shouldEqual 18
         }
 
-        "support InvertedTriangle marker" in {
-            val obj = new InvertedTriangle().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+        "support Xmarker" in {
+            val obj = new X()
+            obj.fieldsWithValues.length shouldEqual 18
         }
 
-        "support SquareX marker" in {
-            val obj = new SquareX().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+        "support Diamond" in {
+            val obj = new Diamond()
+            obj.fieldsWithValues.length shouldEqual 18
         }
 
-        "support Asterisk marker" in {
-            val obj = new Asterisk().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+        "support InvertedTriangle" in {
+            val obj = new InvertedTriangle()
+            obj.fieldsWithValues.length shouldEqual 18
         }
 
-        "support DiamondCross marker" in {
-            val obj = new DiamondCross().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+        "support SquareX" in {
+            val obj = new SquareX()
+            obj.fieldsWithValues.length shouldEqual 18
         }
 
-        "support CircleCross marker" in {
-            val obj = new CircleCross().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+        "support Asterisk" in {
+            val obj = new Asterisk()
+            obj.fieldsWithValues.length shouldEqual 18
         }
 
-        "support HexStar marker" in {
-            val obj = new HexStar().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+        "support DiamondCross" in {
+            val obj = new DiamondCross()
+            obj.fieldsWithValues.length shouldEqual 18
         }
 
-        "support SquareCross marker" in {
-            val obj = new SquareCross().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+        "support CircleCross" in {
+            val obj = new CircleCross()
+            obj.fieldsWithValues.length shouldEqual 18
         }
 
-        "support CircleX marker" in {
-            val obj = new CircleX().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 19
+        "support HexStar" in {
+            val obj = new HexStar()
+            obj.fieldsWithValues.length shouldEqual 18
+        }
+
+        "support SquareCross" in {
+            val obj = new SquareCross()
+            obj.fieldsWithValues.length shouldEqual 18
+        }
+
+        "support CircleX" in {
+            val obj = new CircleX()
+            obj.fieldsWithValues.length shouldEqual 18
         }
     }
 
@@ -223,9 +190,8 @@ class BokehSpec extends Specification {
         }
 
         "support ColumnsRef" in {
-            val obj = new ColumnsRef().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 3
+            val obj = new ColumnsRef()
+            obj.fieldsWithValues.length shouldEqual 2
         }
 
         "support DataRange1d" in {
