@@ -20,9 +20,12 @@ trait TypeDefaults {
     implicit def HasFieldsDefault[T <: HasFields]: DefaultValue[T] = new DefaultValue[T](null.asInstanceOf[T])
 
     implicit def Tuple2Default[T1:DefaultValue, T2:DefaultValue]: DefaultValue[(T1, T2)] =
-        new DefaultValue[(T1, T2)]((implicitly[DefaultValue[T1]].default, implicitly[DefaultValue[T2]].default))
+        new DefaultValue[(T1, T2)]((implicitly[DefaultValue[T1]].default,
+                                    implicitly[DefaultValue[T2]].default))
     implicit def Tuple3Default[T1:DefaultValue, T2:DefaultValue, T3:DefaultValue]: DefaultValue[(T1, T2, T3)] =
-        new DefaultValue[(T1, T2, T3)]((implicitly[DefaultValue[T1]].default, implicitly[DefaultValue[T2]].default, implicitly[DefaultValue[T3]].default))
+        new DefaultValue[(T1, T2, T3)]((implicitly[DefaultValue[T1]].default,
+                                        implicitly[DefaultValue[T2]].default,
+                                        implicitly[DefaultValue[T3]].default))
 }
 
 trait EnumDefaults {
