@@ -3,7 +3,7 @@ package org.continuumio.bokeh
 import annotation.implicitNotFound
 import breeze.linalg.DenseVector
 
-class ColumnsRef extends PlotObject with NoRefs {
+class ColumnsRef extends HasFields {
     object source extends Field[DataSource]
     object columns extends Field[List[Symbol]]
 }

@@ -1,7 +1,7 @@
 package org.continuumio.bokeh
 
-abstract class BaseGlyph extends PlotObject with NoRefs {
-    override def viewModel: String = Utils.snakify(super.viewModel)
+abstract class BaseGlyph extends HasFields {
+    override def typeName: String = Utils.snakify(super.typeName)
 
     object visible extends Field[Boolean]
     //object margin extends Field[Size]

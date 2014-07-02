@@ -46,7 +46,7 @@ class DataSlider extends Renderer {
 }
 
 class BoxSelectionOverlay extends Renderer {
-    override val viewModel = "BoxSelection"
+    override val typeName = "BoxSelection"
 
     object tool extends Field[BoxSelectTool]
 }

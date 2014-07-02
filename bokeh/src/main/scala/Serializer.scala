@@ -39,38 +39,47 @@ trait Serializer {
         }
     }
 
-    def allFieldsWithValues(obj: PlotObject): List[(String, Any)] =
-        ("type", obj.viewModel) :: obj.dirtyFieldsWithValues
+    def allFieldsWithValues(obj: HasFields): List[(String, Any)] =
+        ("type", obj.typeName) :: obj.dirtyFieldsWithValues
 
     def serializeObjs(objs: List[PlotObject]): String = {
         val models = objs.map(getModel).map(_.toJson)
         Json.stringify(JsArray(models))
     }
 
-    def collectObjs(obj: PlotObject): List[PlotObject] = {
+    def collectObjs(obj: HasFields): List[PlotObject] = {
         val objs = collection.mutable.ListBuffer[PlotObject]()
 
         traverse(obj, obj => obj match {
-            case _: NoRefs =>
-            case _ => objs += obj
+            case _: PlotObject => objs += obj
+            case _ =>
         })
 
         objs.toList
     }
 
-    def traverse(obj: PlotObject, fn: PlotObject => Unit) {
+    def traverse(obj: HasFields, fn: PlotObject => Unit) {
         val ids = collection.mutable.HashSet[String]()
+
+        def descendFields(obj: HasFields) {
+            allFieldsWithValues(obj).foreach {
+                case (_, Some(obj)) => descend(obj)
+                case _ =>
+            }
+        }
 
         def descend(obj: Any) {
             obj match {
-                case obj: PlotObject if !ids.contains(obj.id.value) =>
-                    ids += obj.id.value
-                    allFieldsWithValues(obj).foreach {
-                        case (_, Some(obj)) => descend(obj)
-                        case _ =>
+                case obj: PlotObject =>
+                    if (!ids.contains(obj.id.value)) {
+                        ids += obj.id.value
+                        descendFields(obj)
+                        fn(obj)
                     }
-                    fn(obj)
-                case obj: List[_] => obj.map(descend)
+                case obj: HasFields =>
+                    descendFields(obj)
+                case obj: List[_] =>
+                    obj.map(descend)
                 case _ =>
             }
         }
@@ -91,8 +100,8 @@ trait Serializer {
     }
 
     def _replaceWithRefs(obj: Any): Any = obj match {
-        case obj: PlotObject with NoRefs => replaceWithRefs(allFieldsWithValues(obj))
         case obj: PlotObject => obj.getRef
+        case obj: HasFields => replaceWithRefs(allFieldsWithValues(obj))
         case obj: List[_] => obj.map(_replaceWithRefs)
         case obj => obj
     }

@@ -46,7 +46,7 @@ class GridPlot extends Plot {
     object border_space extends Field[Int](0)
 }
 
-class MapOptions extends PlotObject with NoRefs {
+class MapOptions extends HasFields {
     object lat extends Field[Double]
     object lng extends Field[Double]
     object zoom extends Field[Int](12)

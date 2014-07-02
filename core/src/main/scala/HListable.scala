@@ -11,7 +11,6 @@ trait HListable {
 }
 
 object HListable {
-
     def fieldsHListImpl[A <: HListable: c.WeakTypeTag](c: Context): c.Expr[HList] = {
         import c.universe._
 

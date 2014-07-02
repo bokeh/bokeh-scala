@@ -1,7 +1,5 @@
 package org.continuumio.bokeh
 
-trait NoRefs { self: PlotObject => }
-
 case class Ref(id: String, `type`: String)
 
 trait Renderable {
@@ -10,8 +8,7 @@ trait Renderable {
 }
 
 abstract class PlotObject extends HasFields with Renderable {
-    def viewModel: String = getClass.getSimpleName
-    def getRef: Ref = Ref(id.value, viewModel)
+    def getRef: Ref = Ref(id.value, typeName)
 
     object id extends Field[String](Utils.uuid4())
 }

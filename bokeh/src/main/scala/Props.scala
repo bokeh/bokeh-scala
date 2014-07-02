@@ -11,6 +11,8 @@ trait AbstractField {
 trait HasFields extends core.HListable with DefaultImplicits { self =>
     type SelfType = self.type
 
+    def typeName: String = getClass.getSimpleName
+
     final def fieldsList: List[(String, HasFields#Field[_])] = {
         val im = cm.reflect(this)
         val modules = im
