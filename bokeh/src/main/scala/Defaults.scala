@@ -48,4 +48,4 @@ trait EnumDefaults {
 }
 
 trait DefaultImplicits extends TypeDefaults with EnumDefaults
-object DefaultImplicits extends DefaultImplicits
+object DefaultValue extends DefaultImplicits

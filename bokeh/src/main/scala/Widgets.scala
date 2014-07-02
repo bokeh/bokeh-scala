@@ -2,8 +2,6 @@ package org.continuumio.bokeh
 
 import java.util.Date
 
-import DefaultImplicits._
-
 class Panel extends Widget {
     object title extends Field[String]
     object child extends Field[Widget]

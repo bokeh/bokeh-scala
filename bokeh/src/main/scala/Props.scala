@@ -8,7 +8,7 @@ trait AbstractField {
     def set(value: Option[DataType])
 }
 
-trait HasFields extends core.HListable with DefaultImplicits { self =>
+trait HasFields extends core.HListable { self =>
     type SelfType = self.type
 
     def typeName: String = getClass.getSimpleName
