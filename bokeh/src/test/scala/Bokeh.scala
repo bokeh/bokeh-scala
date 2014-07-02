@@ -5,7 +5,7 @@ import org.specs2.mutable._
 class BokehSpec extends Specification {
     sequential
 
-    "Bokeh" should {
+    "glyphs" should {
         "support AnnularWedge glyph" in {
             val obj = new AnnularWedge().id("xyz")
             obj.id.value shouldEqual "xyz"
@@ -119,7 +119,9 @@ class BokehSpec extends Specification {
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 22
         }
+    }
 
+    "markers" should {
         "support Circle marker" in {
             val obj = new Circle().id("xyz")
             obj.id.value shouldEqual "xyz"
@@ -203,15 +205,17 @@ class BokehSpec extends Specification {
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 19
         }
+    }
 
-
+    "renderers" should {
         "support Glyph renderer" in {
             val obj = new Glyph().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 8
         }
+    }
 
-
+    "ranges" should {
         "support Range1d" in {
             val obj = new Range1d().id("xyz")
             obj.id.value shouldEqual "xyz"
@@ -229,15 +233,17 @@ class BokehSpec extends Specification {
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 5
         }
+    }
 
-
+    "sources" should {
         "support ColumnDataSource" in {
             val obj = new ColumnDataSource().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 4
         }
+    }
 
-
+    "guides" should {
         "support LinearAxis" in {
             val obj = new LinearAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
@@ -261,8 +267,9 @@ class BokehSpec extends Specification {
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 4
         }
+    }
 
-
+    "tools" should {
         "support PanTool" in {
             val obj = new PanTool().id("xyz")
             obj.id.value shouldEqual "xyz"
@@ -316,8 +323,9 @@ class BokehSpec extends Specification {
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 4
         }
+    }
 
-
+    "plots" should {
         "support Plot" in {
             val obj = new Plot().id("xyz")
             obj.id.value shouldEqual "xyz"
@@ -329,8 +337,9 @@ class BokehSpec extends Specification {
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 24
         }
+    }
 
-
+    "objects" should {
         "support PlotContext" in {
             val obj = new PlotContext().id("xyz")
             obj.id.value shouldEqual "xyz"
