@@ -38,8 +38,8 @@ object Iris extends App {
     val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Min)
         .axis_label("petal width")/*.bounds((0.0, 2.5))*/.major_tick_in(0)
 
-    val xgrid = new Grid().plot(plot).dimension(0)
-    val ygrid = new Grid().plot(plot).dimension(1)
+    val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
+    val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
 
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)

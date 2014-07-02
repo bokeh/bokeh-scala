@@ -37,8 +37,8 @@ object Glyph2 extends App {
     val xaxis = new LinearAxis().plot(plot).dimension(0).location(Location.Min)
     val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Min)
 
-    val xgrid = new Grid().plot(plot).dimension(0)
-    val ygrid = new Grid().plot(plot).dimension(1)
+    val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
+    val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
 
     plot.renderers := List(xaxis, yaxis, xgrid, ygrid, glyph_renderer)
     plot.tools := List(pantool, wheelzoomtool)

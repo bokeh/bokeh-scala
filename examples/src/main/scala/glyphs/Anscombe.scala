@@ -52,8 +52,8 @@ object Anscombe extends App {
             .background_fill("#e9e0db")
         val xaxis = new LinearAxis().plot(plot).dimension(0).location(Location.Bottom)/*.axis_line_color()*/
         val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Left)/*.axis_line_color()*/
-        val xgrid = new Grid().plot(plot).dimension(0)
-        val ygrid = new Grid().plot(plot).dimension(1)
+        val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
+        val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
         val line_renderer = new Glyph()
             .data_source(lines_source)
             .xdata_range(xdr)

@@ -23,8 +23,8 @@ object Prim extends App {
         val plot = new Plot().x_range(xdr).y_range(ydr).data_sources(source :: Nil).title(name)
         val xaxis = new LinearAxis().plot(plot).dimension(0)
         val yaxis = new LinearAxis().plot(plot).dimension(1)
-        val xgrid = new Grid().plot(plot).dimension(0)
-        val ygrid = new Grid().plot(plot).dimension(1)
+        val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
+        val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
 
         val pantool = new PanTool().plot(plot)
         val wheelzoomtool = new WheelZoomTool().plot(plot)

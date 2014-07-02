@@ -42,8 +42,10 @@ object IrisSplom extends App {
 
         val axes = xaxis.toList ++ yaxis.toList
 
-        val xgrid = new Grid().plot(plot).dimension(0)
-        val ygrid = new Grid().plot(plot).dimension(1)
+        // val xgrid = new Grid().plot(plot).dimension(0)
+        // val ygrid = new Grid().plot(plot).dimension(1)
+
+        val grids = Nil // List(xgrid, ygrid)
 
         val circle = new Circle()
             .x(xname)
@@ -62,7 +64,7 @@ object IrisSplom extends App {
         val pantool = new PanTool().plot(plot)
         val wheelzoomtool = new WheelZoomTool().plot(plot)
 
-        plot.renderers := axes ++ List(xgrid, ygrid, circle_renderer)
+        plot.renderers := axes ++ grids ++ List(circle_renderer)
         plot.tools := List(pantool, wheelzoomtool)
 
         text.foreach { text =>
