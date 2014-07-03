@@ -1,7 +1,6 @@
 import sbt._
 import Keys._
 
-import sbtassembly.{Plugin=>SbtAssembly}
 import org.sbtidea.SbtIdeaPlugin
 import com.typesafe.sbt.SbtPgp
 
@@ -60,6 +59,7 @@ object BokehBuild extends Build {
         scalaVersion := "2.11.1",
         crossScalaVersions := Seq("2.10.4", "2.11.1"),
         scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature", "-language:_"),
+        scalacOptions in (Compile, doc) := Seq("-groups", "-implicits"),
         addCompilerPlugin(Dependencies.paradise),
         shellPrompt := { state =>
             "continuum (%s)> ".format(Project.extract(state).currentProject.id)
@@ -101,7 +101,9 @@ object BokehBuild extends Build {
         )
     )
 
-    lazy val commonSettings = publishSettings ++ Seq(
+    lazy val commonSettings = Defaults.coreDefaultSettings ++ publishSettings ++ Seq(
+        parallelExecution in Test := false,
+        fork in run := true,
         bokehDir := file("..") / "bokeh",
         runAll := {
             val results = (discoveredMainClasses in Compile).value.sorted.map { mainClass =>
@@ -114,7 +116,7 @@ object BokehBuild extends Build {
                     case Some(msg) => logger.error(s"$mainClass: $msg"); Some(mainClass)
                     case None      => logger.success(mainClass);         None
                 }
-            } flatten
+            }.flatten
 
             if (results.nonEmpty) {
                 val failures = results.mkString(", ")
@@ -127,22 +129,13 @@ object BokehBuild extends Build {
 
     lazy val ideaSettings = SbtIdeaPlugin.settings
 
-    lazy val assemblySettings = SbtAssembly.assemblySettings ++ {
-        import SbtAssembly.AssemblyKeys._
-        Seq(test in assembly := {},
-            jarName in assembly := "Bokeh.jar",
-            target in assembly := target.value / "lib")
-    }
+    lazy val pluginSettings = pgpSettings ++ ideaSettings
 
-    lazy val pluginSettings = pgpSettings ++ ideaSettings ++ assemblySettings
-
-    lazy val bokehSettings = Defaults.coreDefaultSettings ++ commonSettings ++ pluginSettings ++ Seq(
+    lazy val bokehSettings = commonSettings ++ pluginSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
             scalaio ++ xml.value ++ Seq(breeze, shapeless.value, jopt, play_json, specs2)
         },
-        fork in run := true,
-        parallelExecution in Test := false,
         initialCommands in Compile := """
             import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
             import scalax.io.JavaConverters._
@@ -153,32 +146,34 @@ object BokehBuild extends Build {
             """
     )
 
-    lazy val coreSettings = Defaults.coreDefaultSettings ++ commonSettings ++ Seq(
+    lazy val coreSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
             quasiquotes.value ++ Seq(reflect.value, shapeless.value, play_json, specs2)
         }
     )
 
-    lazy val sampledataSettings = Defaults.coreDefaultSettings ++ commonSettings ++ Seq(
+    lazy val sampledataSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
             scalaio ++ xml.value ++ Seq(opencsv, specs2)
         }
     )
 
-    lazy val examplesSettings = Defaults.coreDefaultSettings ++ commonSettings ++ Seq(
+    lazy val examplesSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
             Seq(breeze, specs2)
         }
     )
 
+    lazy val allSettings = Seq()
+
     lazy val bokeh = project in file("bokeh") settings(bokehSettings: _*) dependsOn(core)
     lazy val core = project in file("core") settings(coreSettings: _*)
     lazy val sampledata = project in file("sampledata") settings(sampledataSettings: _*) dependsOn(core)
     lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh, sampledata)
-    lazy val all = project in file(".") aggregate(bokeh, core, sampledata, examples)
+    lazy val all = project in file(".") settings(allSettings: _*) aggregate(bokeh, core, sampledata, examples)
 
     override def projects = Seq(bokeh, core, sampledata, examples, all)
 }
