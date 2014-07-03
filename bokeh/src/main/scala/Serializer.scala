@@ -79,7 +79,9 @@ trait Serializer {
                 case obj: HasFields =>
                     descendFields(obj)
                 case obj: List[_] =>
-                    obj.map(descend)
+                    obj.foreach(descend)
+                case obj: Map[_, _] =>
+                    obj.foreach { case (key, value) => descend(key) -> descend(value) }
                 case _ =>
             }
         }
@@ -100,9 +102,14 @@ trait Serializer {
     }
 
     def _replaceWithRefs(obj: Any): Any = obj match {
-        case obj: PlotObject => obj.getRef
-        case obj: HasFields => replaceWithRefs(allFieldsWithValues(obj))
-        case obj: List[_] => obj.map(_replaceWithRefs)
+        case obj: PlotObject =>
+            obj.getRef
+        case obj: HasFields =>
+            replaceWithRefs(allFieldsWithValues(obj))
+        case obj: List[_] =>
+            obj.map(_replaceWithRefs)
+        case obj: Map[_, _] =>
+            obj.map { case (key, value) => _replaceWithRefs(key) -> _replaceWithRefs(value) }
         case obj => obj
     }
 }
