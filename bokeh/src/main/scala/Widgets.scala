@@ -1,4 +1,5 @@
 package io.continuum.bokeh
+package widgets
 
 import java.util.Date
 
