@@ -32,8 +32,9 @@ trait Serializer {
             case obj: Array[_] => JsArray(obj.map(anyToJson))
             case obj: Map[_, _] =>
                 JsObject(obj.toList.map {
-                    case (key: String, value) => (key,      anyToJson(value))
-                    case (key: Symbol, value) => (key.name, anyToJson(value))
+                    case (key: String,        value) => (key,      anyToJson(value))
+                    case (key: Symbol,        value) => (key.name, anyToJson(value))
+                    case (key: core.EnumType, value) => (key.name, anyToJson(value))
                     case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
                 })
             case Some(obj) => anyToJson(obj)
