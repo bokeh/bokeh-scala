@@ -65,5 +65,5 @@ object SampleData {
 }
 
 trait SampleData {
-    def load(fileName: String): List[Array[String]] = SampleData.load(fileName)
+    protected def loadRows(fileName: String): List[Array[String]] = SampleData.load(fileName)
 }

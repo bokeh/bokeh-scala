@@ -4,7 +4,7 @@ package iris
 
 object Flowers extends SampleData {
     def load(): FlowersData = {
-        val List(petal_length, petal_width, sepal_length, sepal_width, species) = load("iris.csv").transpose
+        val List(petal_length, petal_width, sepal_length, sepal_width, species) = loadRows("iris.csv").transpose
         FlowersData(petal_length.map(_.toDouble),
                     petal_width.map(_.toDouble),
                     sepal_length.map(_.toDouble),
