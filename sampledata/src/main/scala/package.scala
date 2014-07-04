@@ -3,6 +3,10 @@ package io.continuum.bokeh {
         package object iris {
             def flowers = Flowers.load()
         }
+
+        package object daylight {
+            def Warsaw2013 = Daylight.load("daylight_warsaw_2013.csv")
+        }
     }
 
     package object sampledata {
