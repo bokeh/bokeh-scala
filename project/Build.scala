@@ -38,6 +38,8 @@ object Dependencies {
 
     val jopt = "net.sf.jopt-simple" % "jopt-simple" % "4.5"
 
+    val joda_time =  "joda-time" % "joda-time" % "2.3"
+
     val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
 
     val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
@@ -134,7 +136,7 @@ object BokehBuild extends Build {
     lazy val bokehSettings = commonSettings ++ pluginSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ xml.value ++ Seq(breeze, shapeless.value, jopt, play_json, specs2)
+            scalaio ++ xml.value ++ Seq(breeze, shapeless.value, jopt, joda_time, play_json, specs2)
         },
         initialCommands in Compile := """
             import scala.reflect.runtime.{universe=>u,currentMirror=>cm}

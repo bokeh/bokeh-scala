@@ -1,7 +1,7 @@
 package io.continuum.bokeh
 
 import scala.annotation.implicitNotFound
-import java.util.Date
+import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 
 @implicitNotFound(msg="Can't find DefaultValue type class for type ${T}.")
 class DefaultValue[T](val default: T)
@@ -12,6 +12,9 @@ trait TypeDefaults {
     implicit object DoubleDefault extends DefaultValue[Double](0.0)
     implicit object StringDefault extends DefaultValue[String]("")
     implicit object PercentDefault extends DefaultValue[Percent](100%%)
+
+    implicit object DateTimeDefault extends DefaultValue[DateTime](new DateTime)
+    implicit object TimeDefault extends DefaultValue[Time](new Time)
     implicit object DateDefault extends DefaultValue[Date](new Date)
 
     implicit def SeqDefault[T]: DefaultValue[Seq[T]] = new DefaultValue[Seq[T]](Seq())

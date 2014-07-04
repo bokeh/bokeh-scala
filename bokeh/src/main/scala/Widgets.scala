@@ -1,7 +1,7 @@
 package io.continuum.bokeh
 package widgets
 
-import java.util.Date
+import org.joda.time.{LocalDate=>Date}
 
 class Panel extends Widget {
     object title extends Field[String]

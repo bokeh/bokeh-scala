@@ -5,7 +5,8 @@ import scala.reflect.ClassTag
 import shapeless.{HList,Poly1}
 import shapeless.ops.hlist.Mapper
 
-import play.api.libs.json.{Json,Writes,JsValue,JsString,JsArray}
+import play.api.libs.json.{Json,Writes,JsValue,JsString,JsNumber,JsArray}
+import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 import breeze.linalg.DenseVector
 
 trait HListFormats {
@@ -33,7 +34,21 @@ trait TupleFormats {
     }
 }
 
-trait Formats extends HListFormats with TupleFormats {
+trait DateTimeFormats {
+    implicit val DateTimeJSON = new Writes[DateTime] {
+        def writes(datetime: DateTime) = JsNumber(datetime.getMillis)
+    }
+
+    implicit val TimeJSON = new Writes[Time] {
+        def writes(time: Time) = JsNumber(time.getMillisOfDay)
+    }
+
+    implicit val DateJSON = new Writes[Date] {
+        def writes(date: Date) = implicitly[Writes[DateTime]].writes(date.toDateTimeAtStartOfDay)
+    }
+}
+
+trait Formats extends HListFormats with TupleFormats with DateTimeFormats {
     implicit def DenseVectorJSON[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
         def writes(vec: DenseVector[T]) =
             implicitly[Writes[Array[T]]].writes(vec.toArray)
