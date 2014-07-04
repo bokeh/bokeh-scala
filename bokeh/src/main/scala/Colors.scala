@@ -2,42 +2,36 @@ package io.continuum.bokeh
 
 import core.{EnumType,Enum}
 
-sealed trait Color
-
-sealed trait CSSColor extends Color {
+sealed trait Color {
     def toCSS: String
 }
 
-case class RGBA(red: Int, green: Int, blue: Int, alpha: Double) extends CSSColor {
-    require(0 <= red   && red   <= 255, s"invalid red component: $red")
-    require(0 <= green && green <= 255, s"invalid green component: $green")
-    require(0 <= blue  && blue  <= 255, s"invalid blue component: $blue")
+abstract class RGBAColor(red: Int, green: Int, blue: Int, alpha: Double) extends Color
 
-    require(0.0 <= alpha && alpha <= 1.0, s"invalid alpha component: $alpha")
-
+case class RGBA(red: Int, green: Int, blue: Int, alpha: Double) extends RGBAColor(red, green, blue, alpha) {
     def toCSS = s"rgba($red, $green, $blue, $alpha)"
 }
 
-case class RGB(red: Int, green: Int, blue: Int) extends RGBA(red, green, blue, 1.0) {
-    require(0 <= red   && red   <= 255, s"invalid red component: $red")
-    require(0 <= green && green <= 255, s"invalid green component: $green")
-    require(0 <= blue  && blue  <= 255, s"invalid blue component: $blue")
-
+case class RGB(red: Int, green: Int, blue: Int) extends RGBAColor(red, green, blue, 1.0) {
     def toHex = f"#$red%02x#$green%02x#$blue%02x"
     def toCSS = s"rgb($red, $green, $blue)"
 }
 
-case class HSLA(hue: Int, saturation: Percent, lightness: Percent, alpha: Double) extends CSSColor {
+abstract class HSLAColor(hue: Int, saturation: Percent, lightness: Percent, alpha: Double) extends Color
+
+case class HSLA(hue: Int, saturation: Percent, lightness: Percent, alpha: Double) extends HSLAColor(hue, saturation, lightness, alpha) {
     def toCSS = s"hsla($hue, $saturation, $lightness, $alpha)"
 }
 
-case class HSL(hue: Int, saturation: Percent, lightness: Percent) extends HSLA(hue, saturation, lightness, 1.0) {
+case class HSL(hue: Int, saturation: Percent, lightness: Percent) extends HSLAColor(hue, saturation, lightness, 1.0) {
     def toCSS = s"hsl($hue, $saturation, $lightness)"
 }
 
-sealed trait NamedColor extends Color with EnumType
+sealed abstract class NamedColor(name: String, red: Int, green: Int, blue: Int) extends RGBAColor(red, green, blue, 1.0) with EnumType {
+    def toCSS = name
+}
 object Color extends Enum[NamedColor] {
-    implicit def StringToCSSColor(color: String): CSSColor = {
+    implicit def StringToColor(color: String): Color = {
         lazy val HexColor = """^#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})$""".r
         lazy val RGBColor = """^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$""".r
 
@@ -50,149 +44,151 @@ object Color extends Enum[NamedColor] {
         }
     }
 
-    case object Indigo extends NamedColor
-    case object Gold extends NamedColor
-    case object Firebrick extends NamedColor
-    case object Indianred extends NamedColor
-    case object Yellow extends NamedColor
-    case object Darkolivegreen extends NamedColor
-    case object Darkseagreen extends NamedColor
-    case object Darkslategrey extends NamedColor
-    case object Mediumvioletred extends NamedColor
-    case object Mediumorchid extends NamedColor
-    case object Chartreuse extends NamedColor
-    case object Mediumblue extends NamedColor
-    case object Black extends NamedColor
-    case object Springgreen extends NamedColor
-    case object Orange extends NamedColor
-    case object Lightsalmon extends NamedColor
-    case object Brown extends NamedColor
-    case object Turquoise extends NamedColor
-    case object Olivedrab extends NamedColor
-    case object Cyan extends NamedColor
-    case object Silver extends NamedColor
-    case object Skyblue extends NamedColor
-    case object Gray extends NamedColor
-    case object Darkturquoise extends NamedColor
-    case object Goldenrod extends NamedColor
-    case object Darkgreen extends NamedColor
-    case object Darkviolet extends NamedColor
-    case object Darkgray extends NamedColor
-    case object Lightpink extends NamedColor
-    case object Teal extends NamedColor
-    case object Darkmagenta extends NamedColor
-    case object Lightgoldenrodyellow extends NamedColor
-    case object Lavender extends NamedColor
-    case object Yellowgreen extends NamedColor
-    case object Thistle extends NamedColor
-    case object Violet extends NamedColor
-    case object Navy extends NamedColor
-    case object Dimgrey extends NamedColor
-    case object Orchid extends NamedColor
-    case object Blue extends NamedColor
-    case object Ghostwhite extends NamedColor
-    case object Honeydew extends NamedColor
-    case object Cornflowerblue extends NamedColor
-    case object Purple extends NamedColor
-    case object Darkkhaki extends NamedColor
-    case object Mediumpurple extends NamedColor
-    case object Cornsilk extends NamedColor
-    case object Red extends NamedColor
-    case object Bisque extends NamedColor
-    case object Slategray extends NamedColor
-    case object Darkcyan extends NamedColor
-    case object Khaki extends NamedColor
-    case object Wheat extends NamedColor
-    case object Deepskyblue extends NamedColor
-    case object Darkred extends NamedColor
-    case object Steelblue extends NamedColor
-    case object Aliceblue extends NamedColor
-    case object Lightslategrey extends NamedColor
-    case object Gainsboro extends NamedColor
-    case object Mediumturquoise extends NamedColor
-    case object Floralwhite extends NamedColor
-    case object Coral extends NamedColor
-    case object Aqua extends NamedColor
-    case object Burlywood extends NamedColor
-    case object Darksalmon extends NamedColor
-    case object Beige extends NamedColor
-    case object Azure extends NamedColor
-    case object Lightsteelblue extends NamedColor
-    case object Oldlace extends NamedColor
-    case object Greenyellow extends NamedColor
-    case object Royalblue extends NamedColor
-    case object Lightseagreen extends NamedColor
-    case object Mistyrose extends NamedColor
-    case object Sienna extends NamedColor
-    case object Lightcoral extends NamedColor
-    case object Orangered extends NamedColor
-    case object Navajowhite extends NamedColor
-    case object Lime extends NamedColor
-    case object Palegreen extends NamedColor
-    case object Lightcyan extends NamedColor
-    case object Seashell extends NamedColor
-    case object Mediumspringgreen extends NamedColor
-    case object Fuchsia extends NamedColor
-    case object Papayawhip extends NamedColor
-    case object Blanchedalmond extends NamedColor
-    case object Peru extends NamedColor
-    case object Aquamarine extends NamedColor
-    case object White extends NamedColor
-    case object Darkslategray extends NamedColor
-    case object Ivory extends NamedColor
-    case object Darkgoldenrod extends NamedColor
-    case object Lawngreen extends NamedColor
-    case object Lightgreen extends NamedColor
-    case object Crimson extends NamedColor
-    case object Forestgreen extends NamedColor
-    case object Maroon extends NamedColor
-    case object Olive extends NamedColor
-    case object Mintcream extends NamedColor
-    case object Antiquewhite extends NamedColor
-    case object Dimgray extends NamedColor
-    case object Hotpink extends NamedColor
-    case object Moccasin extends NamedColor
-    case object Limegreen extends NamedColor
-    case object Saddlebrown extends NamedColor
-    case object Grey extends NamedColor
-    case object Darkslateblue extends NamedColor
-    case object Lightskyblue extends NamedColor
-    case object Deeppink extends NamedColor
-    case object Plum extends NamedColor
-    case object Lightgrey extends NamedColor
-    case object Dodgerblue extends NamedColor
-    case object Slateblue extends NamedColor
-    case object Sandybrown extends NamedColor
-    case object Magenta extends NamedColor
-    case object Tan extends NamedColor
-    case object Rosybrown extends NamedColor
-    case object Pink extends NamedColor
-    case object Lightblue extends NamedColor
-    case object Palevioletred extends NamedColor
-    case object Mediumseagreen extends NamedColor
-    case object Linen extends NamedColor
-    case object Darkorange extends NamedColor
-    case object Powderblue extends NamedColor
-    case object Seagreen extends NamedColor
-    case object Snow extends NamedColor
-    case object Mediumslateblue extends NamedColor
-    case object Midnightblue extends NamedColor
-    case object Paleturquoise extends NamedColor
-    case object Palegoldenrod extends NamedColor
-    case object Whitesmoke extends NamedColor
-    case object Darkorchid extends NamedColor
-    case object Salmon extends NamedColor
-    case object Lightslategray extends NamedColor
-    case object Lemonchiffon extends NamedColor
-    case object Chocolate extends NamedColor
-    case object Tomato extends NamedColor
-    case object Cadetblue extends NamedColor
-    case object Lightyellow extends NamedColor
-    case object Lavenderblush extends NamedColor
-    case object Darkblue extends NamedColor
-    case object Mediumaquamarine extends NamedColor
-    case object Green extends NamedColor
-    case object Blueviolet extends NamedColor
-    case object Peachpuff extends NamedColor
-    case object Darkgrey extends NamedColor
+    case object AliceBlue            extends NamedColor("aliceblue",             240,  248,  255)
+    case object AntiqueWhite         extends NamedColor("antiquewhite",          250,  235,  215)
+    case object Aqua                 extends NamedColor("aqua",                    0,  255,  255)
+    case object AquaMarine           extends NamedColor("aquamarine",            127,  255,  212)
+    case object Azure                extends NamedColor("azure",                 240,  255,  255)
+    case object Beige                extends NamedColor("beige",                 245,  245,  220)
+    case object Bisque               extends NamedColor("bisque",                255,  228,  196)
+    case object Black                extends NamedColor("black",                   0,    0,    0)
+    case object BlanchedAlmond       extends NamedColor("blanchedalmond",        255,  235,  205)
+    case object Blue                 extends NamedColor("blue",                    0,    0,  255)
+    case object BlueViolet           extends NamedColor("blueviolet",            138,   43,  226)
+    case object Brown                extends NamedColor("brown",                 165,   42,   42)
+    case object BurlyWood            extends NamedColor("burlywood",             222,  184,  135)
+    case object CadetBlue            extends NamedColor("cadetblue",              95,  158,  160)
+    case object Chartreuse           extends NamedColor("chartreuse",            127,  255,    0)
+    case object Chocolate            extends NamedColor("chocolate",             210,  105,   30)
+    case object Coral                extends NamedColor("coral",                 255,  127,   80)
+    case object CornFlowerBlue       extends NamedColor("cornflowerblue",        100,  149,  237)
+    case object Cornsilk             extends NamedColor("cornsilk",              255,  248,  220)
+    case object Crimson              extends NamedColor("crimson",               220,   20,   60)
+    case object Cyan                 extends NamedColor("cyan",                    0,  255,  255)
+    case object DarkBlue             extends NamedColor("darkblue",                0,    0,  139)
+    case object DarkCyan             extends NamedColor("darkcyan",                0,  139,  139)
+    case object DarkGoldenRod        extends NamedColor("darkgoldenrod",         184,  134,   11)
+    case object DarkGray             extends NamedColor("darkgray",              169,  169,  169)
+    case object DarkGreen            extends NamedColor("darkgreen",               0,  100,   0)
+    case object DarkGrey             extends NamedColor("darkgrey",              169,  169,  169)
+    case object DarKkhaki            extends NamedColor("darkkhaki",             189,  183,  107)
+    case object DarkMagenta          extends NamedColor("darkmagenta",           139,    0,  139)
+    case object DarkOliveGreen       extends NamedColor("darkolivegreen",         85,  107,   47)
+    case object DarkOrange           extends NamedColor("darkorange",            255,  140,    0)
+    case object DarkOrchid           extends NamedColor("darkorchid",            153,   50,  204)
+    case object DarkRed              extends NamedColor("darkred",               139,    0,    0)
+    case object DarkSalmon           extends NamedColor("darksalmon",            233,  150,  122)
+    case object DarkSeaGreen         extends NamedColor("darkseagreen",          143,  188,  143)
+    case object DarkSlateBlue        extends NamedColor("darkslateblue",          72,   61,  139)
+    case object DarkSlateGray        extends NamedColor("darkslategray",          47,   79,   79)
+    case object DarkSlateGrey        extends NamedColor("darkslategrey",          47,   79,   79)
+    case object DarkTurquoise        extends NamedColor("darkturquoise",           0,  206,  209)
+    case object DarkViolet           extends NamedColor("darkviolet",            148,    0,  211)
+    case object DeepPink             extends NamedColor("deeppink",              255,   20,  147)
+    case object DeepSkyBlue          extends NamedColor("deepskyblue",             0,  191,  255)
+    case object DimGray              extends NamedColor("dimgray",               105,  105,  105)
+    case object DimGrey              extends NamedColor("dimgrey",               105,  105,  105)
+    case object DodgerBlue           extends NamedColor("dodgerblue",             30,  144,  255)
+    case object FireBrick            extends NamedColor("firebrick",             178,   34,   34)
+    case object FloralWhite          extends NamedColor("floralwhite",           255,  250,  240)
+    case object ForestGreen          extends NamedColor("forestgreen",            34,  139,   34)
+    case object Fuchsia              extends NamedColor("fuchsia",               255,    0,  255)
+    case object Gainsboro            extends NamedColor("gainsboro",             220,  220,  220)
+    case object GhostWhite           extends NamedColor("ghostwhite",            248,  248,  255)
+    case object Gold                 extends NamedColor("gold",                  255,  215,    0)
+    case object GoldenRod            extends NamedColor("goldenrod",             218,  165,   32)
+    case object Gray                 extends NamedColor("gray",                  128,  128,  128)
+    case object Green                extends NamedColor("green",                   0,  128,    0)
+    case object GreenYellow          extends NamedColor("greenyellow",           173,  255,   47)
+    case object Grey                 extends NamedColor("grey",                  128,  128,  128)
+    case object HoneyDew             extends NamedColor("honeydew",              240,  255,  240)
+    case object HotPink              extends NamedColor("hotpink",               255,  105,  180)
+    case object IndianRed            extends NamedColor("indianred",             205,   92,   92)
+    case object Indigo               extends NamedColor("indigo",                 75,    0,  130)
+    case object Ivory                extends NamedColor("ivory",                 255,  255,  240)
+    case object Khaki                extends NamedColor("khaki",                 240,  230,  140)
+    case object Lavender             extends NamedColor("lavender",              230,  230,  250)
+    case object LavenderBlush        extends NamedColor("lavenderblush",         255,  240,  245)
+    case object LawnGreen            extends NamedColor("lawngreen",             124,  252,    0)
+    case object LemonChiffon         extends NamedColor("lemonchiffon",          255,  250,  205)
+    case object LightBlue            extends NamedColor("lightblue",             173,  216,  230)
+    case object LightCoral           extends NamedColor("lightcoral",            240,  128,  128)
+    case object LightCyan            extends NamedColor("lightcyan",             224,  255,  255)
+    case object LightGoldenRodYellow extends NamedColor("lightgoldenrodyellow",  250,  250,  210)
+    case object LightGray            extends NamedColor("lightgray",             211,  211,  211)
+    case object LightGreen           extends NamedColor("lightgreen",            144,  238,  144)
+    case object LightGrey            extends NamedColor("lightgrey",             211,  211,  211)
+    case object LightPink            extends NamedColor("lightpink",             255,  182,  193)
+    case object LightSalmon          extends NamedColor("lightsalmon",           255,  160,  122)
+    case object LightSeaGreen        extends NamedColor("lightseagreen",          32,  178,  170)
+    case object LightSkyBlue         extends NamedColor("lightskyblue",          135,  206,  250)
+    case object LightSlateGray       extends NamedColor("lightslategray",        119,  136,  153)
+    case object LightSlateGrey       extends NamedColor("lightslategrey",        119,  136,  153)
+    case object LightSteelBlue       extends NamedColor("lightsteelblue",        176,  196,  222)
+    case object LightYellow          extends NamedColor("lightyellow",           255,  255,  224)
+    case object Lime                 extends NamedColor("lime",                    0,  255,    0)
+    case object LimeGreen            extends NamedColor("limegreen",              50,  205,   50)
+    case object Linen                extends NamedColor("linen",                 250,  240,  230)
+    case object Magenta              extends NamedColor("magenta",               255,    0,  255)
+    case object Maroon               extends NamedColor("maroon",                128,    0,    0)
+    case object MediumAquaMarine     extends NamedColor("mediumaquamarine",      102,  205,  170)
+    case object MediumBlue           extends NamedColor("mediumblue",              0,    0,  205)
+    case object MediumOrchid         extends NamedColor("mediumorchid",          186,   85,  211)
+    case object MediumPurple         extends NamedColor("mediumpurple",          147,  112,  219)
+    case object MediumSeaGreen       extends NamedColor("mediumseagreen",         60,  179,  113)
+    case object MediumSlateBlue      extends NamedColor("mediumslateblue",       123,  104,  238)
+    case object MediumSpringGreen    extends NamedColor("mediumspringgreen",       0,  250,  154)
+    case object MediumTurquoise      extends NamedColor("mediumturquoise",        72,  209,  204)
+    case object MediumVioletRed      extends NamedColor("mediumvioletred",       199,   21,  133)
+    case object MidnightBlue         extends NamedColor("midnightblue",           25,   25,  112)
+    case object MintCream            extends NamedColor("mintcream",             245,  255,  250)
+    case object MistyRose            extends NamedColor("mistyrose",             255,  228,  225)
+    case object Moccasin             extends NamedColor("moccasin",              255,  228,  181)
+    case object NavajoWhite          extends NamedColor("navajowhite",           255,  222,  173)
+    case object Navy                 extends NamedColor("navy",                    0,    0,  128)
+    case object OldLace              extends NamedColor("oldlace",               253,  245,  230)
+    case object Olive                extends NamedColor("olive",                 128,  128,    0)
+    case object OliveDrab            extends NamedColor("olivedrab",             107,  142,   35)
+    case object Orange               extends NamedColor("orange",                255,  165,    0)
+    case object OrangeRed            extends NamedColor("orangered",             255,   69,    0)
+    case object Orchid               extends NamedColor("orchid",                218,  112,  214)
+    case object PaleGoldenRod        extends NamedColor("palegoldenrod",         238,  232,  170)
+    case object PaleGreen            extends NamedColor("palegreen",             152,  251,  152)
+    case object PaleTurquoise        extends NamedColor("paleturquoise",         175,  238,  238)
+    case object PaleVioletRed        extends NamedColor("palevioletred",         219,  112,  147)
+    case object PapayaWhip           extends NamedColor("papayawhip",            255,  239,  213)
+    case object PeachPuff            extends NamedColor("peachpuff",             255,  218,  185)
+    case object Peru                 extends NamedColor("peru",                  205,  133,   63)
+    case object Pink                 extends NamedColor("pink",                  255,  192,  203)
+    case object Plum                 extends NamedColor("plum",                  221,  160,  221)
+    case object PowderBlue           extends NamedColor("powderblue",            176,  224,  230)
+    case object Purple               extends NamedColor("purple",                128,    0,  128)
+    case object Red                  extends NamedColor("red",                   255,    0,    0)
+    case object RosyBrown            extends NamedColor("rosybrown",             188,  143,  143)
+    case object RoyalBlue            extends NamedColor("royalblue",              65,  105,  225)
+    case object SaddleBrown          extends NamedColor("saddlebrown",           139,   69,   19)
+    case object Salmon               extends NamedColor("salmon",                250,  128,  114)
+    case object SandyBrown           extends NamedColor("sandybrown",            244,  164,   96)
+    case object SeaGreen             extends NamedColor("seagreen",               46,  139,   87)
+    case object Seashell             extends NamedColor("seashell",              255,  245,  238)
+    case object Sienna               extends NamedColor("sienna",                160,   82,   45)
+    case object Silver               extends NamedColor("silver",                192,  192,  192)
+    case object SkyBlue              extends NamedColor("skyblue",               135,  206,  235)
+    case object SlateBlue            extends NamedColor("slateblue",             106,   90,  205)
+    case object SlateGray            extends NamedColor("slategray",             112,  128,  144)
+    case object SlateGrey            extends NamedColor("slategrey",             112,  128,  144)
+    case object Snow                 extends NamedColor("snow",                  255,  250,  250)
+    case object SpringGreen          extends NamedColor("springgreen",             0,  255,  127)
+    case object SteelBlue            extends NamedColor("steelblue",              70,  130,  180)
+    case object Tan                  extends NamedColor("tan",                   210,  180,  140)
+    case object Teal                 extends NamedColor("teal",                    0,  128,  128)
+    case object Thistle              extends NamedColor("thistle",               216,  191,  216)
+    case object Tomato               extends NamedColor("tomato",                255,   99,   71)
+    case object Turquoise            extends NamedColor("turquoise",              64,  224,  208)
+    case object Violet               extends NamedColor("violet",                238,  130,  238)
+    case object Wheat                extends NamedColor("wheat",                 245,  222,  179)
+    case object White                extends NamedColor("white",                 255,  255,  255)
+    case object WhiteSmoke           extends NamedColor("whitesmoke",            245,  245,  245)
+    case object Yellow               extends NamedColor("yellow",                255,  255,    0)
+    case object YellowGreen          extends NamedColor("yellowgreen",           154,  205,   50)
 }

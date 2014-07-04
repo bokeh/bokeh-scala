@@ -44,8 +44,8 @@ trait Formats extends HListFormats with TupleFormats {
             implicitly[Writes[Double]].writes(percent.value)
     }
 
-    implicit val CSSColorJSON = new Writes[CSSColor] {
-        def writes(color: CSSColor) = JsString(color.toCSS)
+    implicit val ColorJSON = new Writes[Color] {
+        def writes(color: Color) = JsString(color.toCSS)
     }
 
     implicit val SymbolJSON = new Writes[Symbol] {
