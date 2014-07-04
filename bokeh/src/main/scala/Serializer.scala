@@ -31,11 +31,11 @@ trait Serializer {
                 JsObject(obj.toList.map {
                     case (key: String, value) => (key,      anyToJson(value))
                     case (key: Symbol, value) => (key.name, anyToJson(value))
-                    case _ => throw new IllegalArgumentException(obj.toString)
+                    case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
                 })
             case Some(obj) => anyToJson(obj)
             case None => JsNull
-            case obj => throw new IllegalArgumentException(obj.toString)
+            case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
         }
     }
 
