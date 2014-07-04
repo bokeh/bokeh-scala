@@ -8,15 +8,6 @@ sealed trait CSSColor extends Color {
     def toCSS: String
 }
 
-case class RGB(red: Int, green: Int, blue: Int) extends CSSColor {
-    require(0 <= red   && red   <= 255, s"invalid red component: $red")
-    require(0 <= green && green <= 255, s"invalid green component: $green")
-    require(0 <= blue  && blue  <= 255, s"invalid blue component: $blue")
-
-    def toHex = f"#$red%02x#$green%02x#$blue%02x"
-    def toCSS = s"rgb($red, $green, $blue)"
-}
-
 case class RGBA(red: Int, green: Int, blue: Int, alpha: Double) extends CSSColor {
     require(0 <= red   && red   <= 255, s"invalid red component: $red")
     require(0 <= green && green <= 255, s"invalid green component: $green")
@@ -27,12 +18,21 @@ case class RGBA(red: Int, green: Int, blue: Int, alpha: Double) extends CSSColor
     def toCSS = s"rgba($red, $green, $blue, $alpha)"
 }
 
-case class HSL(hue: Int, saturation: Percent, lightness: Percent) extends CSSColor {
-    def toCSS = s"hsl($hue, $saturation, $lightness)"
+case class RGB(red: Int, green: Int, blue: Int) extends RGBA(red, green, blue, 1.0) {
+    require(0 <= red   && red   <= 255, s"invalid red component: $red")
+    require(0 <= green && green <= 255, s"invalid green component: $green")
+    require(0 <= blue  && blue  <= 255, s"invalid blue component: $blue")
+
+    def toHex = f"#$red%02x#$green%02x#$blue%02x"
+    def toCSS = s"rgb($red, $green, $blue)"
 }
 
 case class HSLA(hue: Int, saturation: Percent, lightness: Percent, alpha: Double) extends CSSColor {
     def toCSS = s"hsla($hue, $saturation, $lightness, $alpha)"
+}
+
+case class HSL(hue: Int, saturation: Percent, lightness: Percent) extends HSLA(hue, saturation, lightness, 1.0) {
+    def toCSS = s"hsl($hue, $saturation, $lightness)"
 }
 
 sealed trait NamedColor extends Color with EnumType
