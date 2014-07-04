@@ -1,10 +1,9 @@
 package io.continuum.bokeh.core
 
 import scala.reflect.macros.Context
-import play.api.libs.json.{JsValue,JsString}
 
 trait EnumType {
-    def toJson: JsValue = JsString(toString.toLowerCase)
+    def name = toString.toLowerCase
 }
 
 trait Enum[T <: EnumType] {

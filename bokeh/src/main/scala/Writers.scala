@@ -53,7 +53,7 @@ trait Formats extends HListFormats with TupleFormats {
     }
 
     implicit def EnumJSON[T <: core.EnumType] = new Writes[T] {
-        def writes(value: T) = value.toJson
+        def writes(value: T) = implicitly[Writes[String]].writes(value.name)
     }
 
     implicit val RefJSON = Json.writes[Ref]
