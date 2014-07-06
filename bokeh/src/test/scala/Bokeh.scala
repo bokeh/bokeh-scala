@@ -7,98 +7,244 @@ class BokehSpec extends Specification {
 
     "glyphs" should {
         "support AnnularWedge" in {
-            val obj = new AnnularWedge()
-            obj.fieldsWithValues.length shouldEqual 22
+            val obj1 = new AnnularWedge()
+            val obj2 = obj1
+                .x('x)
+                .y('y)
+                .inner_radius('inner_radius)
+                .outer_radius('outer_radius)
+                .start_angle('start_angle)
+                .end_angle('end_angle)
+                .direction(Direction.Clock)
+
+            obj1.fieldsWithValues.length shouldEqual 22
         }
 
         "support Annulus" in {
-            val obj = new Annulus()
-            obj.fieldsWithValues.length shouldEqual 19
+            val obj1 = new Annulus()
+            val obj2 = obj1
+                .x('x)
+                .y('y)
+                .inner_radius('inner_radius)
+                .outer_radius('outer_radius)
+
+            obj1.fieldsWithValues.length shouldEqual 19
         }
 
         "support Arc" in {
-            val obj = new Arc()
-            obj.fieldsWithValues.length shouldEqual 19
+            val obj1 = new Arc()
+            val obj2 = obj1
+                .x('x)
+                .y('y)
+                .radius('radius)
+                .start_angle('start_angle)
+                .end_angle('end_angle)
+                .direction(Direction.Clock)
+
+            obj1.fieldsWithValues.length shouldEqual 19
         }
 
         "support Bezier" in {
-            val obj = new Bezier()
-            obj.fieldsWithValues.length shouldEqual 21
+            val obj1 = new Bezier()
+            val obj2 = obj1
+                .x0('x0)
+                .y0('y0)
+                .x1('x1)
+                .y1('y1)
+                .cx0('cx0)
+                .cy0('cy0)
+                .cx1('cx1)
+                .cy1('cy1)
+
+            obj1.fieldsWithValues.length shouldEqual 21
         }
 
         "support Image" in {
-            val obj = new Image()
-            obj.fieldsWithValues.length shouldEqual 13
+            val obj1 = new Image()
+            val obj2 = obj1
+                .image('image)
+                .x('x)
+                .y('y)
+                .dw('dw)
+                .dh('dh)
+                .palette('palette)
+                .dilate(false)
+
+            obj1.fieldsWithValues.length shouldEqual 13
         }
 
         "support ImageURL" in {
-            val obj = new ImageURL()
-            obj.fieldsWithValues.length shouldEqual 14
+            val obj1 = new ImageURL()
+            val obj2 = obj1
+                .url('url)
+                .x('x)
+                .y('y)
+                .w('w)
+                .h('h)
+                .angle('angle)
+                .dilate(false)
+                .anchor(Anchor.TopRight)
+
+            obj1.fieldsWithValues.length shouldEqual 14
         }
 
         "support ImageRGBA" in {
-            val obj = new ImageRGBA()
-            obj.fieldsWithValues.length shouldEqual 12
+            val obj1 = new ImageRGBA()
+            val obj2 = obj1
+                .image('image)
+                .x('x)
+                .y('y)
+                .dw('dw)
+                .dh('dh)
+                .dilate(false)
+
+            obj1.fieldsWithValues.length shouldEqual 12
         }
 
         "support Line" in {
-            val obj = new Line()
-            obj.fieldsWithValues.length shouldEqual 15
+            val obj1 = new Line()
+            val obj2 = obj1
+                .x('x)
+                .y('y)
+
+            obj1.fieldsWithValues.length shouldEqual 15
         }
 
         "support MultiLine" in {
-            val obj = new MultiLine()
-            obj.fieldsWithValues.length shouldEqual 15
+            val obj1 = new MultiLine()
+            val obj2 = obj1
+                .xs('xs)
+                .ys('ys)
+
+            obj1.fieldsWithValues.length shouldEqual 15
         }
 
         "support Oval" in {
-            val obj = new Oval()
-            obj.fieldsWithValues.length shouldEqual 20
+            val obj1 = new Oval()
+            val obj2 = obj1
+                .x('x)
+                .y('y)
+                .width('width)
+                .height('height)
+                .angle('angle)
+
+            obj1.fieldsWithValues.length shouldEqual 20
         }
 
         "support Patch" in {
-            val obj = new Patch()
-            obj.fieldsWithValues.length shouldEqual 17
+            val obj1 = new Patch()
+            val obj2 = obj1
+                .x('x)
+                .y('y)
+
+            obj1.fieldsWithValues.length shouldEqual 17
         }
 
         "support Patches" in {
-            val obj = new Patches()
-            obj.fieldsWithValues.length shouldEqual 17
+            val obj1 = new Patches()
+            val obj2 = obj1
+                .xs('xs)
+                .ys('ys)
+
+            obj1.fieldsWithValues.length shouldEqual 17
         }
 
         "support Quad" in {
-            val obj = new Quad()
-            obj.fieldsWithValues.length shouldEqual 19
+            val obj1 = new Quad()
+            val obj2 = obj1
+                .left('left)
+                .right('right)
+                .bottom('bottom)
+                .top('top)
+
+            obj1.fieldsWithValues.length shouldEqual 19
         }
 
         "support Quadratic" in {
-            val obj = new Quadratic()
-            obj.fieldsWithValues.length shouldEqual 19
+            val obj1 = new Quadratic()
+            val obj2 = obj1
+                .x0('x0)
+                .y0('y0)
+                .x1('x1)
+                .y1('y1)
+                .cx('cx)
+                .cy('cy)
+
+            obj1.fieldsWithValues.length shouldEqual 19
         }
 
         "support Ray" in {
-            val obj = new Ray()
-            obj.fieldsWithValues.length shouldEqual 17
+            val obj1 = new Ray()
+            val obj2 = obj1
+                .x('x)
+                .y('y)
+                .angle('angle)
+                .length('length)
+
+            obj1.fieldsWithValues.length shouldEqual 17
         }
 
         "support Rect" in {
-            val obj = new Rect()
-            obj.fieldsWithValues.length shouldEqual 21
+            val obj1 = new Rect()
+            val obj2 = obj1
+                .x('x)
+                .y('y)
+                .width('width)
+                .height('height)
+                .angle('angle)
+                .dilate(false)
+
+            obj1.fieldsWithValues.length shouldEqual 21
         }
 
         "support Segment" in {
-            val obj = new Segment()
-            obj.fieldsWithValues.length shouldEqual 17
+            val obj1 = new Segment()
+            val obj2 = obj1
+                .x0('x0)
+                .y0('y0)
+                .x1('x1)
+                .y1('y1)
+
+            obj1.fieldsWithValues.length shouldEqual 17
         }
 
         "support Text" in {
-            val obj = new Text()
-            obj.fieldsWithValues.length shouldEqual 17
+            val obj1 = new Text()
+            val obj2 = obj1
+                .x('x)
+                .y('y)
+                .text('text)
+                .angle('angle)
+
+            obj1.fieldsWithValues.length shouldEqual 17
         }
 
         "support Wedge" in {
-            val obj = new Wedge()
-            obj.fieldsWithValues.length shouldEqual 21
+            val obj1 = new Wedge()
+            val obj2 = obj1
+                .x('x)
+                .y('y)
+                .radius('radius)
+                .start_angle('start_angle)
+                .end_angle('end_angle)
+                .direction(Direction.Clock)
+
+            obj1.fieldsWithValues.length shouldEqual 21
+        }
+
+        "support Gear" in {
+            val obj1 = new Gear()
+            val obj2 = obj1
+                .x('x)
+                .y('y)
+                .angle('angle)
+                .module('module)
+                .teeth('teeth)
+                .pressure_angle('pressure_angle)
+                .shaft_size('shaft_size)
+                .internal('internal)
+
+            obj1.fieldsWithValues.length shouldEqual 23
         }
     }
 
