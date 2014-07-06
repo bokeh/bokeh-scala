@@ -141,9 +141,7 @@ object BokehBuild extends Build {
 
     lazy val pluginSettings = pgpSettings ++ ideaSettings ++ scoverageSettings ++ coverallsSettings
 
-    lazy val baseSettings = commonSettings ++ pluginSettings
-
-    lazy val bokehSettings = baseSettings ++ Seq(
+    lazy val bokehSettings = commonSettings ++ pluginSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
             scalaio ++ xml.value ++ Seq(breeze, shapeless.value, jopt, joda_time, play_json, specs2)
@@ -157,6 +155,8 @@ object BokehBuild extends Build {
             import io.continuum.bokeh._
             """
     )
+
+    lazy val baseSettings = commonSettings ++ scoverageSettings
 
     lazy val coreSettings = baseSettings ++ Seq(
         libraryDependencies ++= {

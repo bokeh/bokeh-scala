@@ -4,7 +4,7 @@ package examples
 import org.specs2.mutable._
 import org.specs2.matcher.TerminationMatchers
 
-class BokehSpec extends Specification with TerminationMatchers {
+class ExamplesSpec extends Specification with TerminationMatchers {
     sequential
 
     val argv = Array[String]()
