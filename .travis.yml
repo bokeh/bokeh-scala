@@ -9,4 +9,8 @@ jdk:
     - oraclejdk7
     - oraclejdk8
 
-script: ./sbt ++$TRAVIS_SCALA_VERSION bokeh/compile examples/compile bokeh/test examples/runAll
+env:
+    global:
+        secure: "EsZUoN3laiGZTJIxfJtmc72QemC+waG/YIuQpSqAguS0OAfFVB1HM3A7TkhbNAFvM5HRFfpE4vU1/qcG4PATyZEtvHqBnxcZ0eAu+6DzAXqnroudF3ShgbT0YTMf1Izpd0tpiN+wBa4xSXWP9fEg432m53ZeevsJqDi68Q/5DXA="
+
+script: ./sbt ++$TRAVIS_SCALA_VERSION all/compile all/coveralls examples/runAll
