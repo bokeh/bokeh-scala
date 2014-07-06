@@ -1,6 +1,7 @@
 import sbt._
 import Keys._
 
+import scoverage.ScoverageSbtPlugin
 import org.sbtidea.SbtIdeaPlugin
 import com.typesafe.sbt.SbtPgp
 
@@ -38,7 +39,7 @@ object Dependencies {
 
     val jopt = "net.sf.jopt-simple" % "jopt-simple" % "4.5"
 
-    val joda_time =  "joda-time" % "joda-time" % "2.3"
+    val joda_time = "joda-time" % "joda-time" % "2.3"
 
     val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
 
@@ -131,7 +132,12 @@ object BokehBuild extends Build {
 
     lazy val ideaSettings = SbtIdeaPlugin.settings
 
-    lazy val pluginSettings = pgpSettings ++ ideaSettings
+    lazy val scoverageSettings = ScoverageSbtPlugin.instrumentSettings ++ {
+        import ScoverageSbtPlugin._
+        Seq(parallelExecution in ScoverageTest := (parallelExecution in Test).value)
+    }
+
+    lazy val pluginSettings = pgpSettings ++ ideaSettings ++ scoverageSettings
 
     lazy val bokehSettings = commonSettings ++ pluginSettings ++ Seq(
         libraryDependencies ++= {
