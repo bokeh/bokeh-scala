@@ -25,14 +25,6 @@ object Dependencies {
 
     val breeze = "org.scalanlp" %% "breeze" % "0.8.1"
 
-    val shapeless = Def.setting {
-        val version = "2.0.0"
-        if (scalaVersion.value.startsWith("2.10"))
-            "com.chuusai" %  "shapeless" % version cross CrossVersion.full
-        else
-            "com.chuusai" %% "shapeless" % version
-    }
-
     val play_json = "com.typesafe.play" %% "play-json" % "2.3.1"
 
     val specs2 = "org.specs2" %% "specs2" % "2.3.11" % "test"
@@ -144,7 +136,7 @@ object BokehBuild extends Build {
     lazy val bokehSettings = commonSettings ++ bokehPlugins ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ xml.value ++ Seq(breeze, shapeless.value, jopt, joda_time, play_json, specs2)
+            scalaio ++ xml.value ++ Seq(breeze, jopt, joda_time, play_json, specs2)
         },
         initialCommands in Compile := """
             import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
@@ -158,7 +150,7 @@ object BokehBuild extends Build {
     lazy val coreSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            quasiquotes.value ++ Seq(reflect.value, shapeless.value, play_json, specs2)
+            quasiquotes.value ++ Seq(reflect.value, play_json, specs2)
         }
     )
 

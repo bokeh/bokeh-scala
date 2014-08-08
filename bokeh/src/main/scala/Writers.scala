@@ -2,24 +2,9 @@ package io.continuum.bokeh
 
 import scala.reflect.ClassTag
 
-import shapeless.{HList,Poly1}
-import shapeless.ops.hlist.Mapper
-
 import play.api.libs.json.{Json,Writes,JsValue,JsString,JsNumber,JsArray}
 import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 import breeze.linalg.DenseVector
-
-trait HListFormats {
-    object poly_writer extends Poly1 {
-        implicit def default[A:Writes] = at[A](a => implicitly[Writes[A]].writes(a))
-    }
-
-    implicit def HListJSON[T <: HList](implicit map: Mapper[poly_writer.type, T]) = new Writes[T] {
-        def writes(value: T) = {
-            JsArray(map(value).toList.asInstanceOf[List[JsValue]])
-        }
-    }
-}
 
 trait TupleFormats {
     implicit def Tuple2Writes[T1:Writes, T2:Writes]: Writes[(T1, T2)] = new Writes[(T1, T2)] {
@@ -48,7 +33,7 @@ trait DateTimeFormats {
     }
 }
 
-trait Formats extends HListFormats with TupleFormats with DateTimeFormats {
+trait Formats extends TupleFormats with DateTimeFormats {
     implicit def DenseVectorJSON[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
         def writes(vec: DenseVector[T]) =
             implicitly[Writes[Array[T]]].writes(vec.toArray)

@@ -8,7 +8,7 @@ trait AbstractField {
     def set(value: Option[DataType])
 }
 
-trait HasFields extends core.HListable { self =>
+trait HasFields { self =>
     type SelfType = self.type
 
     def typeName: String = getClass.getSimpleName
@@ -51,7 +51,7 @@ trait HasFields extends core.HListable { self =>
         }
     }
 
-    class Field[FieldType:DefaultValue] extends AbstractField with HField {
+    class Field[FieldType:DefaultValue] extends AbstractField {
         type DataType = FieldType
 
         def owner: SelfType = self
