@@ -45,7 +45,7 @@ object Dependencies {
 
     val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
-    val paradise = "org.scalamacros" % "paradise" % "2.0.0" cross CrossVersion.full
+    val paradise = "org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full
 
     val quasiquotes = scala_2_10("org.scalamacros" %% "quasiquotes" % "2.0.0")
 
@@ -59,8 +59,8 @@ object BokehBuild extends Build {
         description := "Scala bindings for Bokeh plotting library",
         homepage := Some(url("http://bokeh.pydata.org")),
         licenses := Seq("MIT-style" -> url("http://www.opensource.org/licenses/mit-license.php")),
-        scalaVersion := "2.11.1",
-        crossScalaVersions := Seq("2.10.4", "2.11.1"),
+        scalaVersion := "2.11.2",
+        crossScalaVersions := Seq("2.10.4", "2.11.2"),
         scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature", "-language:_"),
         scalacOptions in (Compile, doc) := Seq("-groups", "-implicits"),
         addCompilerPlugin(Dependencies.paradise),
