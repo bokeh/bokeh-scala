@@ -67,7 +67,6 @@ object BokehBuild extends Build {
             Resolver.typesafeRepo("snapshots"))
     )
 
-    val bokehDir = settingKey[File]("Location of Bokeh library.")
     val runAll = taskKey[Unit]("Run all discovered main classes.")
 
     lazy val publishSettings = Seq(
@@ -99,7 +98,6 @@ object BokehBuild extends Build {
     lazy val commonSettings = Defaults.coreDefaultSettings ++ publishSettings ++ Seq(
         parallelExecution in Test := false,
         fork in run := true,
-        bokehDir := file("..") / "bokeh",
         runAll := {
             val results = (discoveredMainClasses in Compile).value.sorted.map { mainClass =>
                 val classpath = Attributed.data((fullClasspath in Compile).value)
@@ -147,6 +145,8 @@ object BokehBuild extends Build {
             """
     )
 
+    lazy val bokehjsSettings = BokehJS.bokehjsSettings
+
     lazy val coreSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
@@ -172,11 +172,12 @@ object BokehBuild extends Build {
         publishArtifact := false
     )
 
-    lazy val bokeh = project in file("bokeh") settings(bokehSettings: _*) dependsOn(core)
+    lazy val bokeh = project in file("bokeh") settings(bokehSettings: _*) dependsOn(core, bokehjs)
+    lazy val bokehjs = project in file("bokehjs/bokehjs") settings(bokehjsSettings: _*)
     lazy val core = project in file("core") settings(coreSettings: _*)
     lazy val sampledata = project in file("sampledata") settings(sampledataSettings: _*) dependsOn(core)
     lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh, sampledata)
-    lazy val all = project in file(".") settings(allSettings: _*) aggregate(bokeh, core, sampledata, examples)
+    lazy val all = project in file(".") settings(allSettings: _*) aggregate(bokeh, bokehjs, core, sampledata, examples)
 
-    override def projects = Seq(bokeh, core, sampledata, examples, all)
+    override def projects = Seq(bokeh, bokehjs, core, sampledata, examples, all)
 }
