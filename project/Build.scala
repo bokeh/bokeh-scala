@@ -27,7 +27,7 @@ object Dependencies {
 
     val play_json = "com.typesafe.play" %% "play-json" % "2.3.1"
 
-    val specs2 = "org.specs2" %% "specs2" % "2.3.11" % "test"
+    val specs2 = "org.specs2" %% "specs2" % "2.3.11" % Test
 
     val jopt = "net.sf.jopt-simple" % "jopt-simple" % "4.5"
 
