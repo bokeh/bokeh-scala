@@ -1,7 +1,5 @@
 package io.continuum.bokeh
 
-import core.{EnumType,Enum}
-
 sealed trait LineJoin extends EnumType
 object LineJoin extends Enum[LineJoin] {
     case object Miter extends LineJoin

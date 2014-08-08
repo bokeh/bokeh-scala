@@ -67,7 +67,7 @@ trait Formats extends HListFormats with TupleFormats with DateTimeFormats {
         def writes(symbol: Symbol) = JsString(symbol.name)
     }
 
-    implicit def EnumJSON[T <: core.EnumType] = new Writes[T] {
+    implicit def EnumJSON[T <: EnumType] = new Writes[T] {
         def writes(value: T) = implicitly[Writes[String]].writes(value.name)
     }
 

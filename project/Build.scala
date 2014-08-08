@@ -151,7 +151,6 @@ object BokehBuild extends Build {
             import scalax.io.JavaConverters._
             import scalax.file.Path
             import play.api.libs.json.Json
-            import io.continuum.bokeh.core._
             import io.continuum.bokeh._
             """
     )

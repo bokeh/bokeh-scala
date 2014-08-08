@@ -1,7 +1,5 @@
 package io.continuum.bokeh
 
-import core.{EnumType,Enum}
-
 sealed trait Color {
     def toCSS: String
 }

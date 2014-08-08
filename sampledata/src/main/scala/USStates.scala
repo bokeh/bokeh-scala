@@ -16,8 +16,8 @@ object USStates extends SampleData {
 
 case class USStateData(name: String, region: String, lats: List[Double], lons: List[Double])
 
-sealed trait USState extends core.EnumType
-object USState extends core.Enum[USState] {
+sealed trait USState extends EnumType
+object USState extends Enum[USState] {
     def unapply(code: String): Option[USState] = _fromString.lift(code)
 
     def _fromString: PartialFunction[String, USState] = {

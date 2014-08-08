@@ -23,7 +23,7 @@ trait Serializer {
             case obj: Ref => toJson(obj)
             case obj: Color => toJson(obj)
             case obj: Percent => toJson(obj)
-            case obj: core.EnumType => toJson(obj)
+            case obj: EnumType => toJson(obj)
             case obj: org.joda.time.DateTime => toJson(obj)
             case obj: org.joda.time.LocalTime => toJson(obj)
             case obj: org.joda.time.LocalDate => toJson(obj)
@@ -32,9 +32,9 @@ trait Serializer {
             case obj: Array[_] => JsArray(obj.map(anyToJson))
             case obj: Map[_, _] =>
                 JsObject(obj.toList.map {
-                    case (key: String,        value) => (key,      anyToJson(value))
-                    case (key: Symbol,        value) => (key.name, anyToJson(value))
-                    case (key: core.EnumType, value) => (key.name, anyToJson(value))
+                    case (key: String,   value) => (key,      anyToJson(value))
+                    case (key: Symbol,   value) => (key.name, anyToJson(value))
+                    case (key: EnumType, value) => (key.name, anyToJson(value))
                     case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
                 })
             case Some(obj) => anyToJson(obj)
