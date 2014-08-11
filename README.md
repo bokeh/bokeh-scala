@@ -12,7 +12,7 @@ Scala bindings for [Bokeh][bokeh] plotting library.
 ## Usage
 
 ```bash
-$ git clone https://github.com/mattpap/bokeh-scala
+$ git clone --recursive https://github.com/mattpap/bokeh-scala
 $ cd bokeh-scala
 $ ./sbt
 > examples/runMain io.continuum.bokeh.examples.glyphs.Anscombe
@@ -21,6 +21,11 @@ or
 ```bash
 > examples/runAll
 ```
+
+## Development
+
+bokeh-scala uses submodules, so either clone with `--recursive` or use
+`git submodule update`.
 
 ## Support
 
