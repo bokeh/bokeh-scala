@@ -74,8 +74,7 @@ class HTMLFileSession(val file: File) extends Session {
         val context = new PlotContext().children(objs.toList)
         val models = serializeObjs(collectObjs(context))
         val spec = PlotSpec(models, context.getRef, Utils.uuid4())
-        val (scripts, styles) = collectScriptsAndStyles(context)
-        val html = stringify(renderHTML(spec :: Nil, scripts, styles))
+        val html = stringify(renderHTML(spec :: Nil, Nil, Nil))
         Path(file).write(html)
     }
 
@@ -96,15 +95,6 @@ class HTMLFileSession(val file: File) extends Session {
         files.styles.map { style =>
             <link rel="stylesheet" type="text/css" href={ style.toString }/>
         } ++ styles
-    }
-
-    def collectScriptsAndStyles(obj: PlotObject): (List[xml.Node], List[xml.Node]) = {
-        val scripts = collection.mutable.ListBuffer[xml.Node]()
-        val styles = collection.mutable.ListBuffer[xml.Node]()
-
-        traverse(obj, { obj => scripts ++= obj.scripts; styles ++= obj.styles })
-
-        (scripts.toList.distinct, styles.toList.distinct)
     }
 
     def asScript(script: String): xml.Node =

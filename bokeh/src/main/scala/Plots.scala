@@ -54,7 +54,4 @@ class MapOptions extends HasFields {
 
 class GMapPlot extends Plot {
     object map_options extends Field[MapOptions]
-
-    override def scripts: List[xml.Node] =
-        <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> :: super.scripts
 }
