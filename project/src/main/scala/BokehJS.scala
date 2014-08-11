@@ -8,14 +8,11 @@ import EcoPlugin.{EcoKeys,ecoSettings=>pluginEcoSettings}
 
 object BokehJS {
     object BokehJSKeys {
-        val requirejs = taskKey[(File, File)]("Run RequireJS optimizer")
+        val requirejs = taskKey[Seq[File]]("Run RequireJS optimizer")
         val requirejsConfig = settingKey[RequireJSSettings]("RequireJS settings")
 
         val copyVendor = taskKey[Seq[File]]("Copy vendor/** from src to build")
         val copyCSS = taskKey[Seq[File]]("Generate bokeh.min.css")
-
-        val build = taskKey[Unit]("Build CoffeeScript, LESS, ECO, etc.")
-        val deploy = taskKey[Unit]("Generate bokeh(.min).{js,css}")
     }
 
     import BokehJSKeys._
@@ -24,6 +21,7 @@ object BokehJS {
         sourceDirectory in (Compile, JsKeys.js) <<= (sourceDirectory in Compile)(_ / "coffee"),
         resourceManaged in (Compile, JsKeys.js) <<= (resourceManaged in Compile)(_ / "js"),
         compile in Compile <<= compile in Compile dependsOn (JsKeys.js in Compile),
+        resourceGenerators in Compile <+= JsKeys.js in Compile,
         JsKeys.compilationLevel in (Compile, JsKeys.js) := CompilationLevel.WHITESPACE_ONLY,
         JsKeys.variableRenamingPolicy in (Compile, JsKeys.js) := VariableRenamingPolicy.OFF,
         JsKeys.prettyPrint in (Compile, JsKeys.js) := true)
@@ -32,12 +30,14 @@ object BokehJS {
         sourceDirectory in (Compile, LessKeys.less) <<= (sourceDirectory in Compile)(_ / "less"),
         resourceManaged in (Compile, LessKeys.less) <<= (resourceManaged in Compile)(_ / "css"),
         compile in Compile <<= compile in Compile dependsOn (LessKeys.less in Compile),
+        resourceGenerators in Compile <+= LessKeys.less in Compile,
         includeFilter in (Compile, LessKeys.less) := "bokeh.less")
 
     lazy val ecoSettings = pluginEcoSettings ++ Seq(
         sourceDirectory in (Compile, EcoKeys.eco) <<= (sourceDirectory in Compile)(_ / "coffee"),
         resourceManaged in (Compile, EcoKeys.eco) <<= (resourceManaged in Compile)(_ / "js"),
-        compile in Compile <<= compile in Compile dependsOn (EcoKeys.eco in Compile))
+        compile in Compile <<= compile in Compile dependsOn (EcoKeys.eco in Compile),
+        resourceGenerators in Compile <+= EcoKeys.eco in Compile)
 
     lazy val requirejsSettings = Seq(
         requirejsConfig in Compile := {
@@ -67,8 +67,12 @@ object BokehJS {
             IO.write(optFile, opt)
             IO.write(minFile, min)
 
-            (optFile, minFile)
-        } dependsOn (build in Compile))
+            Seq(optFile, minFile)
+        } dependsOn (JsKeys.js in Compile)
+          dependsOn (EcoKeys.eco in Compile)
+          dependsOn (BokehJSKeys.copyVendor in Compile),
+        compile in Compile <<= compile in Compile dependsOn (requirejs in Compile),
+        resourceGenerators in Compile <+= requirejs in Compile)
 
     lazy val pluginSettings = jsSettings ++ lessSettings ++ ecoSettings ++ requirejsSettings
 
@@ -82,6 +86,7 @@ object BokehJS {
             val toCopy = (PathFinder(source) ***) pair Path.rebase(source, target)
             IO.copy(toCopy, overwrite=true).toSeq
         },
+        resourceGenerators in Compile <+= copyVendor in Compile,
         copyCSS in Compile <<= Def.task {
             val cssDir = resourceManaged in (Compile, LessKeys.less) value
             val inFile = cssDir / "bokeh.css"
@@ -89,8 +94,5 @@ object BokehJS {
             IO.copyFile(inFile, outFile)
             Seq(outFile)
         } dependsOn (LessKeys.less in Compile),
-        resourceGenerators in Compile <+= copyVendor in Compile,
-        resourceGenerators in Compile <+= copyCSS in Compile,
-        build in Compile <<= Def.task {} dependsOn (resources in Compile),
-        deploy in Compile <<= Def.task {} dependsOn (requirejs in Compile))
+        resourceGenerators in Compile <+= copyCSS in Compile)
 }
