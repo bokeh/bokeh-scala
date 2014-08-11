@@ -169,7 +169,8 @@ object BokehBuild extends Build {
     )
 
     lazy val allSettings = Seq(
-        publishArtifact := false
+        publish := {},
+        publishLocal := {}
     )
 
     lazy val bokeh = project in file("bokeh") settings(bokehSettings: _*) dependsOn(core, bokehjs)
