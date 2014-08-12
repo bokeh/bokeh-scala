@@ -22,7 +22,7 @@ trait LinAlgHelpers {
     implicit def NumericRangeToDenseVector[T:ClassTag](range: NumericRange[T]) = new DenseVector(range.toArray)
 }
 
-object Hover extends App with LinAlgHelpers {
+object Hover extends Example with LinAlgHelpers {
     val (xx, yy) = meshgrid(0.0 to 100.0 by 4.0,
                             0.0 to 100.0 by 4.0)
 

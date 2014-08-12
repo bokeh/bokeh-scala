@@ -4,7 +4,7 @@ package glyphs
 
 import org.joda.time.{LocalTime=>Time,LocalDate=>Date}
 
-object Daylight extends App {
+object Daylight extends Example {
     val daylight = sampledata.daylight.Warsaw2013
 
     val source = new ColumnDataSource()

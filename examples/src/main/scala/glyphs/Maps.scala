@@ -2,7 +2,7 @@ package io.continuum.bokeh
 package examples
 package glyphs
 
-object Maps extends App {
+object Maps extends Example {
     val x_range = new Range1d()
     val y_range = new Range1d()
 

@@ -4,7 +4,7 @@ package glyphs
 
 import breeze.linalg.{DenseMatrix,linspace}
 
-object Anscombe extends App {
+object Anscombe extends Example {
     val quartets = List('xi, 'yi, 'xii, 'yii, 'xiii, 'yiii, 'xiv, 'yiv)
 
     val raw_columns = DenseMatrix(

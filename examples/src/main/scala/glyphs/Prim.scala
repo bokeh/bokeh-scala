@@ -2,7 +2,7 @@ package io.continuum.bokeh
 package examples
 package glyphs
 
-object Prim extends App {
+object Prim extends Example {
     val x = 1.0 to 6.0 by 1.0
     val y = 5.0 to 0.0 by -1.0
 

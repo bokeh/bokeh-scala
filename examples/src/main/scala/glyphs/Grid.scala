@@ -6,7 +6,7 @@ import breeze.linalg.linspace
 import breeze.numerics.{sin,cos,tan}
 import math.{Pi=>pi}
 
-object Grid extends App {
+object Grid extends Example {
     val x = linspace(-2*pi, 2*pi, 1000)
 
     val source = new ColumnDataSource()

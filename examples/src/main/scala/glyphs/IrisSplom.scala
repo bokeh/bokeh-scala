@@ -6,7 +6,7 @@ import sampledata.iris.flowers
 
 import math.{Pi=>pi}
 
-object IrisSplom extends App {
+object IrisSplom extends Example {
     val colormap = Map("setosa" -> Color.Red, "versicolor" -> Color.Green, "virginica" -> Color.Blue)
 
     val source = new ColumnDataSource()

@@ -6,7 +6,7 @@ import breeze.linalg.DenseVector
 import breeze.numerics.{sin,cos}
 import math.{Pi=>pi}
 
-object Glyph2 extends App {
+object Glyph2 extends Example {
     val x = DenseVector(-2*pi to 2*pi by 0.1 toArray)
     val y = sin(x)
     val r = (cos(x) + 1.0)*6.0 + 6.0

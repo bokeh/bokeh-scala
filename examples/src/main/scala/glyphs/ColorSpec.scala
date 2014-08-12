@@ -2,7 +2,7 @@ package io.continuum.bokeh
 package examples
 package glyphs
 
-object ColorSpec extends App {
+object ColorSpec extends Example {
     val color: List[Color] = List(RGB(0, 100, 120), Color.Green, Color.Blue, "#2c7fb8", RGBA(120, 230, 150, 0.5))
 
     val source = new ColumnDataSource()

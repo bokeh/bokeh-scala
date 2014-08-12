@@ -4,7 +4,7 @@ package glyphs
 
 import sampledata.iris.flowers
 
-object Iris extends App {
+object Iris extends Example {
     val colormap = Map("setosa" -> Color.Red, "versicolor" -> Color.Green, "virginica" -> Color.Blue)
 
     val source = new ColumnDataSource()

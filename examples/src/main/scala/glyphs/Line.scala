@@ -6,7 +6,7 @@ import breeze.linalg.linspace
 import breeze.numerics.sin
 import math.{Pi=>pi}
 
-object Line extends App {
+object Line extends Example {
     val x = linspace(-2*pi, 2*pi, 1000)
     val y = sin(x)
 

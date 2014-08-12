@@ -6,7 +6,7 @@ import breeze.linalg.{linspace,DenseVector}
 import breeze.numerics.sin
 import math.{Pi=>pi}
 
-object DateAxis extends App {
+object DateAxis extends Example {
     val x = -2*pi to 2*pi by 0.1 toArray
     val y = sin(x)
 

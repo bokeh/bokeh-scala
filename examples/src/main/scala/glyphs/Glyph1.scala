@@ -5,7 +5,7 @@ package glyphs
 import breeze.numerics.sin
 import math.{Pi=>pi}
 
-object Glyph1 extends App {
+object Glyph1 extends Example {
     val x = -2*pi to 2*pi by 0.1 toArray
     val y = sin(x)
 

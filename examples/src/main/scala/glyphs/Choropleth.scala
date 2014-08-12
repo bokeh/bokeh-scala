@@ -4,7 +4,7 @@ package glyphs
 
 import sampledata.USState.{AK,HI}
 
-object Choropleth extends App {
+object Choropleth extends Example {
     val excluded_states: Set[sampledata.USState] = Set(AK, HI)
 
     val us_states = sampledata.us_states -- excluded_states
