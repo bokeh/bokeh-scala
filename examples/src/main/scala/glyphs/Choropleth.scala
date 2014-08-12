@@ -79,7 +79,7 @@ object Choropleth extends App {
     plot.renderers := List(county_renderer, state_renderer)
     plot.tools := List(resizetool)
 
-    val session = new HTMLFileSession("choropleth.html")
-    session.save(plot)
-    println(s"Wrote ${session.file}. Open ${session.url} in a web browser.")
+    val document = new Document(plot)
+    val html = document.save("choropleth.html")
+    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

@@ -47,7 +47,7 @@ object Iris extends App {
     plot.renderers := List(xaxis, yaxis, xgrid, ygrid, glyph_renderer)
     plot.tools := List(pantool, wheelzoomtool)
 
-    val session = new HTMLFileSession("iris.html")
-    session.save(plot)
-    println(s"Wrote ${session.file}. Open ${session.url} in a web browser.")
+    val document = new Document(plot)
+    val html = document.save("iris.html")
+    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

@@ -76,7 +76,7 @@ object Anscombe extends App {
     val children = List(List(I, II), List(III, IV))
     val grid = new GridPlot().children(children).plot_width(800)
 
-    val session = new HTMLFileSession("anscombe.html")
-    session.save(grid)
-    println(s"Wrote ${session.file}. Open ${session.url} in a web browser.")
+    val document = new Document(grid)
+    val html = document.save("anscombe.html")
+    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

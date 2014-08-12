@@ -48,7 +48,7 @@ object Maps extends App {
     plot.data_sources := source :: Nil
     plot.renderers <<= (circle_renderer :: _)
 
-    val session = new HTMLFileSession("maps.html")
-    session.save(plot)
-    println(s"Wrote ${session.file}. Open ${session.url} in a web browser.")
+    val document = new Document(plot)
+    val html = document.save("maps.html")
+    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

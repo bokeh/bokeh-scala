@@ -47,7 +47,7 @@ object Prim extends App {
         make_plot("wedge", new Wedge().x('x).y('y).radius(0.5).start_angle(0.9).end_angle(3.2)) ::
         Nil
 
-    val session = new HTMLFileSession("prim.html")
-    session.save(plots: _*)
-    println(s"Wrote ${session.file}. Open ${session.url} in a web browser.")
+    val document = new Document(plots: _*)
+    val html = document.save("prim.html")
+    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

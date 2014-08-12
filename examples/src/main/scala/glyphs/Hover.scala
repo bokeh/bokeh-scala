@@ -102,7 +102,7 @@ object Hover extends App with LinAlgHelpers {
     plot.renderers := List(xaxis, yaxis, circle_renderer, text_renderer)
     plot.tools <<= (_ :+ hover)
 
-    val session = new HTMLFileSession("hover.html")
-    session.save(plot)
-    println(s"Wrote ${session.file}. Open ${session.url} in a web browser.")
+    val document = new Document(plot)
+    val html = document.save("hover.html")
+    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

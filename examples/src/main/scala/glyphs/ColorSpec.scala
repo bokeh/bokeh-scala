@@ -32,7 +32,7 @@ object ColorSpec extends App {
     plot.renderers := List(xaxis, yaxis, glyph_renderer)
     plot.tools := List(pantool, wheelzoomtool)
 
-    val session = new HTMLFileSession("colorspec.html")
-    session.save(plot)
-    println(s"Wrote ${session.file}. Open ${session.url} in a web browser.")
+    val document = new Document(plot)
+    val html = document.save("colorspec.html")
+    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

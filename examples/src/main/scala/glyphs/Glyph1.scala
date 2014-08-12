@@ -35,7 +35,7 @@ object Glyph1 extends App {
     plot.renderers := List(xaxis, yaxis, glyph_renderer)
     plot.tools := List(pantool, wheelzoomtool)
 
-    val session = new HTMLFileSession("glyph1.html")
-    session.save(plot)
-    println(s"Wrote ${session.file}. Open ${session.url} in a web browser.")
+    val document = new Document(plot)
+    val html = document.save("glyph1.html")
+    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

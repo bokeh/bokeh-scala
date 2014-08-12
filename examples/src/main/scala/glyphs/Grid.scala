@@ -50,7 +50,7 @@ object Grid extends App {
     val children = List(List(plot1, plot2), List(plot3, plot4))
     val grid = new GridPlot().children(children)
 
-    val session = new HTMLFileSession("grid.html")
-    session.save(grid)
-    println(s"Wrote ${session.file}. Open ${session.url} in a web browser.")
+    val document = new Document(grid)
+    val html = document.save("grid.html")
+    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

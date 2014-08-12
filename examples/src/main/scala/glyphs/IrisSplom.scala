@@ -106,7 +106,7 @@ object IrisSplom extends App {
 
     val grid = new GridPlot().children(plots).title("iris_splom")
 
-    val session = new HTMLFileSession("iris_splom.html")
-    session.save(grid)
-    println(s"Wrote ${session.file}. Open ${session.url} in a web browser.")
+    val document = new Document(grid)
+    val html = document.save("iris_splom.html")
+    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }
