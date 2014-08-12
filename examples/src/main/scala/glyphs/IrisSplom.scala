@@ -42,10 +42,10 @@ object IrisSplom extends Example {
 
         val axes = xaxis.toList ++ yaxis.toList
 
-        // val xgrid = new Grid().plot(plot).dimension(0)
-        // val ygrid = new Grid().plot(plot).dimension(1)
+        val xgrid = new Grid().plot(plot).dimension(0)
+        val ygrid = new Grid().plot(plot).dimension(1)
 
-        val grids = Nil // List(xgrid, ygrid)
+        val grids = List(xgrid, ygrid)
 
         val circle = new Circle()
             .x(xname)
