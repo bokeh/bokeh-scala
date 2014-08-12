@@ -67,7 +67,7 @@ object BokehBuild extends Build {
             Resolver.typesafeRepo("snapshots"))
     )
 
-    val runAll = taskKey[Unit]("Run all discovered main classes.")
+    val runAll = inputKey[Unit]("Run all discovered main classes.")
 
     lazy val publishSettings = Seq(
         publishTo := {
@@ -99,17 +99,18 @@ object BokehBuild extends Build {
         parallelExecution in Test := false,
         fork in run := true,
         runAll := {
-            val results = (discoveredMainClasses in Compile).value.sorted.map { mainClass =>
+            val args = Def.spaceDelimited("<args>").parsed
+            val results = (discoveredMainClasses in Compile).value.sorted.flatMap { mainClass =>
                 val classpath = Attributed.data((fullClasspath in Compile).value)
                 val logger = streams.value.log
 
-                val result = (runner in run).value.run(mainClass, classpath, Nil, logger)
+                val result = (runner in run).value.run(mainClass, classpath, args, logger)
 
                 result match {
                     case Some(msg) => logger.error(s"$mainClass: $msg"); Some(mainClass)
                     case None      => logger.success(mainClass);         None
                 }
-            }.flatten
+            }
 
             if (results.nonEmpty) {
                 val failures = results.mkString(", ")
