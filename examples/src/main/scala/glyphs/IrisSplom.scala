@@ -37,14 +37,13 @@ object IrisSplom extends Example {
             .title("")
             .min_border(2)
 
-        val xaxis = if (xax) Some(new LinearAxis().plot(plot).dimension(0).location(Location.Bottom)) else None
-        val yaxis = if (yax) Some(new LinearAxis().plot(plot).dimension(1).location(Location.Left)) else None
+        val xaxis = new LinearAxis().plot(plot).dimension(0).location(Location.Bottom)
+        val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Left)
 
-        val axes = xaxis.toList ++ yaxis.toList
+        val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
+        val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
 
-        val xgrid = new Grid().plot(plot).dimension(0)
-        val ygrid = new Grid().plot(plot).dimension(1)
-
+        val axes = List(xax.option(xaxis), yax.option(yaxis)).flatten
         val grids = List(xgrid, ygrid)
 
         val circle = new Circle()

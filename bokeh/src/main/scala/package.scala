@@ -9,6 +9,10 @@ package object bokeh {
 
     implicit def DoubleToPercent(value: Double): Percent = Percent(value)
 
+    implicit class BooleanOps(val bool: Boolean) extends AnyVal {
+        final def option[A](value: => A): Option[A] = if (bool) Some(value) else None
+    }
+
     implicit class StringNode(script: String) {
         def asScript: xml.Node = {
             <script type="text/javascript">{xml.Unparsed(s"""
