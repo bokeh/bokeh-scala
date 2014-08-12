@@ -3,7 +3,7 @@ package io.continuum.bokeh
 abstract class GuideRenderer extends Renderer {
     object plot extends Field[Plot]
     object dimension extends Field[Int](0)
-    // object bounds extends Field[Either[Auto, (Float, Float)]]
+    object bounds extends Field[(Float, Float)] // Either[Auto, (Float, Float)]]
 }
 
 abstract class Axis extends GuideRenderer {
