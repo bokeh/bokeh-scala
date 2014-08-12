@@ -14,18 +14,16 @@ class Plot extends Widget { plot =>
     object renderers extends Field[List[Renderer]]
     object tools extends Field[List[Tool]] with ToolsField
 
-    object plot_width extends Field[Int](600) with ReactiveField[Int] {
-        val reactors = (plot.canvas_width := _) :: (plot.outer_width := _) :: Nil
-    }
-    object plot_height extends Field[Int](600) with ReactiveField[Int] {
-        val reactors = (plot.canvas_height := _) :: (plot.outer_height := _) :: Nil
-    }
+    object left extends Field[List[PlotObject]]
+    object right extends Field[List[PlotObject]]
+    object above extends Field[List[PlotObject]]
+    object below extends Field[List[PlotObject]]
 
-    object canvas_width extends Field[Int](600)
-    object canvas_height extends Field[Int](600)
+    object plot_width extends Field[Int](600)
+    object plot_height extends Field[Int](600)
 
-    object outer_width extends Field[Int](600)
-    object outer_height extends Field[Int](600)
+    object background_fill extends Field[Color](Color.White)
+    object border_fill extends Field[Color](Color.White)
 
     object min_border_top extends Field[Int](50)
     object min_border_bottom extends Field[Int](50)
@@ -33,17 +31,8 @@ class Plot extends Widget { plot =>
     object min_border_right extends Field[Int](50)
     object min_border extends Field[Int](50)
 
-    object border_symmetry extends Field[BorderSymmetry]
-
-    object background_fill extends Field[Color](Color.White)
-    object border_fill extends Field[Color](Color.White)
-
-    object script_inject_snippet extends Field[String]
-}
-
-class GridPlot extends Plot {
-    object children extends Field[List[List[Plot]]]
-    object border_space extends Field[Int](0)
+    object h_symmetry extends Field[Boolean](true)
+    object v_symmetry extends Field[Boolean](false)
 }
 
 class MapOptions extends HasFields {
@@ -54,4 +43,9 @@ class MapOptions extends HasFields {
 
 class GMapPlot extends Plot {
     object map_options extends Field[MapOptions]
+}
+
+class GridPlot extends Plot {
+    object children extends Field[List[List[Plot]]]
+    object border_space extends Field[Int](0)
 }

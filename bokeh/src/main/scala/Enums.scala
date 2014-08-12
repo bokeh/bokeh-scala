@@ -92,8 +92,6 @@ object Location extends Enum[Location] {
     case object Bottom extends Location
     case object Left extends Location
     case object Right extends Location
-    case object Min extends Location
-    case object Max extends Location
 }
 
 sealed trait Orientation extends EnumType

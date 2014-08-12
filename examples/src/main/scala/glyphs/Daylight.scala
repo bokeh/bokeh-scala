@@ -70,8 +70,8 @@ object Daylight extends App {
     plot.renderers <<= (glyphs ++ _)
 
     val xformatter = new DatetimeTickFormatter().formats(Map(DatetimeUnits.Months -> List("%b %Y")))
-    val xaxis = new DatetimeAxis().plot(plot).dimension(0).formatter(xformatter)
-    val yaxis = new DatetimeAxis().plot(plot).dimension(1)
+    val xaxis = new DatetimeAxis().plot(plot).dimension(0).location(Location.Bottom).formatter(xformatter)
+    val yaxis = new DatetimeAxis().plot(plot).dimension(1).location(Location.Left)
     val xgrid = new Grid().plot(plot).dimension(0).axis(xaxis)
     val ygrid = new Grid().plot(plot).dimension(1).axis(yaxis)
 

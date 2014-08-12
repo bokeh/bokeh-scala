@@ -16,10 +16,6 @@ object Maps extends App {
         .y_range(y_range)
         .map_options(map_options)
         .data_sources(Nil)
-        .canvas_width(600)
-        .canvas_height(600)
-        .outer_width(600)
-        .outer_height(600)
         .title("Austin")
 
     val select_tool = new BoxSelectTool()

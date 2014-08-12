@@ -23,8 +23,8 @@ object ColorSpec extends App {
 
     val plot = new Plot().x_range(xdr).y_range(ydr).data_sources(source :: Nil)
 
-    val xaxis = new DatetimeAxis().plot(plot).dimension(0).location(Location.Min)
-    val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Min)
+    val xaxis = new DatetimeAxis().plot(plot).dimension(0).location(Location.Bottom)
+    val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Left)
 
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)
