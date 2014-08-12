@@ -37,6 +37,8 @@ trait Serializer {
                     case (key: EnumType, value) => (key.name, anyToJson(value))
                     case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
                 })
+            case (obj1, obj2) => JsArray(List(anyToJson(obj1), anyToJson(obj2)))
+            case (obj1, obj2, obj3) => JsArray(List(anyToJson(obj1), anyToJson(obj2), anyToJson(obj2)))
             case Some(obj) => anyToJson(obj)
             case None => JsNull
             case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
