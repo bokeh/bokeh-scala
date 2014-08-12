@@ -1,7 +1,6 @@
 package io.continuum.bokeh
 
 import java.io.File
-import java.net.URL
 import java.awt.Desktop
 
 import scalax.io.JavaConverters._
@@ -39,8 +38,10 @@ class HTMLFile(val file: File) {
 
 class HTMLFileWriter(contexts: List[PlotContext]) extends Serializer {
 
+    val resources = Resources.AbsoluteDev
+
     def write(file: File): HTMLFile = {
-        val html = stringify(renderHTML(specs))
+        val html = stringify(renderHTML(specs()))
         Path(file).write(html)
         new HTMLFile(file)
     }
@@ -50,7 +51,7 @@ class HTMLFileWriter(contexts: List[PlotContext]) extends Serializer {
         def modelType = modelRef.`type`
     }
 
-    def specs: List[PlotSpec] = {
+    def specs(): List[PlotSpec] = {
         contexts.map { context =>
             val models = serializeObjs(collectObjs(context))
             PlotSpec(models, context.getRef, Utils.uuid4())
@@ -64,42 +65,12 @@ class HTMLFileWriter(contexts: List[PlotContext]) extends Serializer {
         s"$doctype\n${writer.toString}"
     }
 
-    implicit class StringNode(script: String) {
-        def asScript: xml.Node = {
-            <script type="text/javascript">{xml.Unparsed(s"""
-            // <![CDATA[
-            $script
-            // ]]>
-            """)}</script>
-        }
-
-        def asStyle: xml.Node = {
-            <style>{xml.Unparsed(s"""
-            // <![CDATA[
-            $script
-            // ]]>
-            """)}</style>
-        }
-    }
-
-    def getResource(path: String): String = {
-        getClass.getClassLoader.getResource(path).asInput.chars.mkString
-    }
-
-    def scripts: List[xml.Node] = {
-        (getResource("js/bokeh.min.js") :: Nil).map(_.asScript)
-    }
-
-    def styles: List[xml.Node] = {
-        (getResource("css/bokeh.min.css") :: Nil).map(_.asStyle)
-    }
-
     def renderHTML(specs: List[PlotSpec]): xml.Node = {
         <html lang="en">
             <head>
                 <meta charset="utf-8" />
-                { styles }
-                { scripts }
+                { resources.styles }
+                { resources.scripts }
             </head>
             <body>
                 { renderPlots(specs) }
@@ -117,17 +88,16 @@ class HTMLFileWriter(contexts: List[PlotContext]) extends Serializer {
     }
 
     def renderPlot(spec: PlotSpec): xml.Node = {
-        s"""
-        |(function() {
-        |    var models = ${spec.models};
-        |    var modelid = "${spec.modelId}";
-        |    var modeltype = "${spec.modelType}";
-        |    var elementid = "#${spec.elementId}";
-        |    console.log(modelid, modeltype, elementid);
-        |    Bokeh.load_models(models);
-        |    var model = Bokeh.Collections(modeltype).get(modelid);
-        |    var view = new model.default_view({model: model, el: elementid});
-        |})();
-        """.stripMargin.trim.asScript
+        val code = s"""
+            |var models = ${spec.models};
+            |var modelid = "${spec.modelId}";
+            |var modeltype = "${spec.modelType}";
+            |var elementid = "#${spec.elementId}";
+            |console.log(modelid, modeltype, elementid);
+            |Bokeh.load_models(models);
+            |var model = Bokeh.Collections(modeltype).get(modelid);
+            |var view = new model.default_view({model: model, el: elementid});
+            """
+        resources.wrap(code.stripMargin.trim).asScript
     }
 }
