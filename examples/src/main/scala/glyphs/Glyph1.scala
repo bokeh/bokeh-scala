@@ -37,5 +37,5 @@ object Glyph1 extends Example {
 
     val document = new Document(plot)
     val html = document.save("glyph1.html")
-    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
+    info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

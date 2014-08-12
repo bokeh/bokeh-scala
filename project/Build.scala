@@ -29,7 +29,7 @@ object Dependencies {
 
     val specs2 = "org.specs2" %% "specs2" % "2.3.11" % Test
 
-    val jopt = "net.sf.jopt-simple" % "jopt-simple" % "4.5"
+    val scopt = "com.github.scopt" %% "scopt" % "3.2.0"
 
     val joda_time = "joda-time" % "joda-time" % "2.3"
 
@@ -134,7 +134,7 @@ object BokehBuild extends Build {
     lazy val bokehSettings = commonSettings ++ bokehPlugins ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ xml.value ++ Seq(breeze, jopt, joda_time, play_json, specs2)
+            scalaio ++ xml.value ++ Seq(breeze, joda_time, play_json, specs2)
         },
         initialCommands in Compile := """
             import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
@@ -164,7 +164,7 @@ object BokehBuild extends Build {
     lazy val examplesSettings = commonSettings ++ scoverageSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            Seq(breeze, specs2)
+            Seq(breeze, scopt, specs2)
         }
     )
 

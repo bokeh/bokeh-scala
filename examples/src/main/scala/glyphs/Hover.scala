@@ -104,5 +104,5 @@ object Hover extends Example with LinAlgHelpers {
 
     val document = new Document(plot)
     val html = document.save("hover.html")
-    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
+    info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

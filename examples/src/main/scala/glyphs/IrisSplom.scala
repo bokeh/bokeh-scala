@@ -108,5 +108,5 @@ object IrisSplom extends Example {
 
     val document = new Document(grid)
     val html = document.save("iris_splom.html")
-    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
+    info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

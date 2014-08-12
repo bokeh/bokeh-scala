@@ -78,5 +78,5 @@ object Anscombe extends Example {
 
     val document = new Document(grid)
     val html = document.save("anscombe.html")
-    println(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
+    info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }
