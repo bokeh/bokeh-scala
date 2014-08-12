@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-class Plot extends Widget { plot =>
+class Plot extends Widget {
     object data_sources extends Field[List[DataSource]]
 
     object x_range extends Field[Range]
