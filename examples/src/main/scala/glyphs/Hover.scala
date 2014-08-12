@@ -103,6 +103,6 @@ object Hover extends Example with LinAlgHelpers {
     plot.tools <<= (_ :+ hover)
 
     val document = new Document(plot)
-    val html = document.save("hover.html")
+    val html = document.save("hover.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

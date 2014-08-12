@@ -83,6 +83,6 @@ object Daylight extends Example {
     plot.renderers <<= (legend :: _)
 
     val document = new Document(plot)
-    val html = document.save("daylight.html")
+    val html = document.save("daylight.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

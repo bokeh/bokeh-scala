@@ -80,6 +80,6 @@ object Choropleth extends Example {
     plot.tools := List(resizetool)
 
     val document = new Document(plot)
-    val html = document.save("choropleth.html")
+    val html = document.save("choropleth.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

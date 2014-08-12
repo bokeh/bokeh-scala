@@ -44,6 +44,6 @@ object Glyph2 extends Example {
     plot.tools := List(pantool, wheelzoomtool)
 
     val document = new Document(plot)
-    val html = document.save("glyph2.html")
+    val html = document.save("glyph2.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

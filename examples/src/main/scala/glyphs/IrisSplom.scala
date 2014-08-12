@@ -106,6 +106,6 @@ object IrisSplom extends Example {
     val grid = new GridPlot().children(plots).title("iris_splom")
 
     val document = new Document(grid)
-    val html = document.save("iris_splom.html")
+    val html = document.save("iris_splom.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

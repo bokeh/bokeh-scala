@@ -77,6 +77,6 @@ object Anscombe extends Example {
     val grid = new GridPlot().children(children).plot_width(800)
 
     val document = new Document(grid)
-    val html = document.save("anscombe.html")
+    val html = document.save("anscombe.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

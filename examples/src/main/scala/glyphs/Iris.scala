@@ -48,6 +48,6 @@ object Iris extends Example {
     plot.tools := List(pantool, wheelzoomtool)
 
     val document = new Document(plot)
-    val html = document.save("iris.html")
+    val html = document.save("iris.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

@@ -15,11 +15,15 @@ class Document(objs: Widget*) {
         objects ++= objs
     }
 
-    def save(file: File): HTMLFile = {
+    protected def save(file: File, resources: Option[Resources]): HTMLFile = {
         val contexts = objects.toList.map(obj => new PlotContext().children(obj :: Nil))
-        new HTMLFileWriter(contexts).write(file)
+        new HTMLFileWriter(contexts, resources).write(file)
     }
 
+    def save(file: File, resources: Resources): HTMLFile = save(file, Some(resources))
+    def save(file: File): HTMLFile = save(file, None)
+
+    def save(path: String, resources: Resources): HTMLFile = save(new File(path), resources)
     def save(path: String): HTMLFile = save(new File(path))
 }
 
@@ -36,9 +40,9 @@ class HTMLFile(val file: File) {
     }
 }
 
-class HTMLFileWriter(contexts: List[PlotContext]) extends Serializer {
+class HTMLFileWriter(contexts: List[PlotContext], _resources: Option[Resources]) extends Serializer {
 
-    val resources = Resources.AbsoluteDev
+    val resources = _resources getOrElse Resources.default
 
     def write(file: File): HTMLFile = {
         val html = stringify(renderHTML(specs()))

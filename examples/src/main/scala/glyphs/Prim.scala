@@ -48,6 +48,6 @@ object Prim extends Example {
         Nil
 
     val document = new Document(plots: _*)
-    val html = document.save("prim.html")
+    val html = document.save("prim.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

@@ -51,6 +51,6 @@ object Grid extends Example {
     val grid = new GridPlot().children(children)
 
     val document = new Document(grid)
-    val html = document.save("grid.html")
+    val html = document.save("grid.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

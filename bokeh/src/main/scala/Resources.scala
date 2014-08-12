@@ -97,4 +97,21 @@ object Resources {
     case object AbsoluteDev extends DevelopmentResources {
         def resolveFile(file: File): File = file
     }
+
+    private val fromStringPF: PartialFunction[String, Resources] = {
+        // case "cdn" => CDN
+        // case "cdn-min" => CDNMin
+        case "inline" => Inline
+        case "inline-min" => InlineMin
+        // case "relative" => Relative
+        // case "relative-min" => RelativeMin
+        // case "relative-dev" => RelativeDev
+        // case "absolute" => Absolute
+        // case "absolute-min" => AbsoluteMin
+        case "absolute-dev" => AbsoluteDev
+    }
+
+    def fromString(string: String): Option[Resources] = fromStringPF.lift(string)
+
+    val default = InlineMin
 }

@@ -1,8 +1,18 @@
 package io.continuum.bokeh
 package examples
 
+import scopt.{OptionParser,Read}
+
+object CustomReads {
+    implicit val resourcesReads: Read[Resources] = Read.reads { string =>
+        Resources.fromString(string) getOrElse {
+            throw new IllegalArgumentException(s"'$string' is not a valid resource mode.")
+        }
+    }
+}
+
 trait Example extends App {
-    case class Config(dev: Boolean = false, quiet: Boolean = false)
+    case class Config(resources: Resources = Resources.default, quiet: Boolean = false)
 
     def config: Config = _config
     private var _config: Config = _
@@ -10,8 +20,14 @@ trait Example extends App {
     private def parse(): Config = {
         val example = getClass.getSimpleName.stripSuffix("$")
         val parser = new scopt.OptionParser[Config](example) {
+            import CustomReads._
+
+            opt[Resources]('r', "resources")
+                .action { (resources, config) => config.copy(resources=resources) }
+                .text("enable development resources (uses requirejs)")
+
             opt[Unit]('d', "dev")
-                .action { (_, config) => config.copy(dev=true) }
+                .action { (_, config) => config.copy(resources=Resources.AbsoluteDev) }
                 .text("enable development resources (uses requirejs)")
 
             opt[Unit]('q', "quiet")

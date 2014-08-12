@@ -37,6 +37,6 @@ object Line extends Example {
     plot.tools := List(pantool, wheelzoomtool)
 
     val document = new Document(plot)
-    val html = document.save("line.html")
+    val html = document.save("line.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }

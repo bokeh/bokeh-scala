@@ -45,6 +45,6 @@ object Maps extends Example {
     plot.renderers <<= (circle_renderer :: _)
 
     val document = new Document(plot)
-    val html = document.save("maps.html")
+    val html = document.save("maps.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }
