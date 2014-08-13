@@ -24,9 +24,7 @@ package object bokeh {
 
         def asStyle: xml.Node = {
             <style>{xml.Unparsed(s"""
-            // <![CDATA[
             $script
-            // ]]>
             """)}</style>
         }
     }
