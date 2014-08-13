@@ -71,12 +71,12 @@ object Hover extends Example with LinAlg {
 
     val hover = new HoverTool()
         .tooltips(Map(
-            "index"         -> "$index",
-            "fill_color"    -> "$color[hex,swatch]:fill_color",
-            "radius"        -> "@radius",
-            "data (x, y)"   -> "(@x, @y)",
-            "cursor (x, y)" -> "($x, $y)",
-            "canvas (x, y)" -> "($sx, $sy)"))
+            "index"         -> s"$$index",
+            "fill_color"    -> s"$$color[hex,swatch]:fill_color",
+            "radius"        -> s"@radius",
+            "data (x, y)"   -> s"(@x, @y)",
+            "cursor (x, y)" -> s"($$x, $$y)",
+            "canvas (x, y)" -> s"($$sx, $$sy)"))
 
     val xaxis = new LinearAxis().plot(plot).dimension(0).location(Location.Bottom)
     val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Left)
