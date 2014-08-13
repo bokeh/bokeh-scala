@@ -31,8 +31,13 @@ else
     JVM_OPTS=""
 fi
 
+function F2j {
+    echo "-Dcom.github.fommil.netlib.$1=com.github.fommil.netlib.F2j$1"
+}
+
 JVM_DEFAULTS="-Dfile.encoding=UTF-8 -Xss8M -Xmx2G -XX:MaxPermSize=1024M -XX:ReservedCodeCacheSize=64M -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled"
-JVM_OPTS="$JVM_DEFAULTS $JVM_OPTS"
+JVM_EXTRAS="$(F2j BLAS) $(F2j LAPACK) $(F2j ARPACK)"
+JVM_OPTS="$JVM_DEFAULTS $JVM_EXTRAS $JVM_OPTS"
 
 SBT_VERSION=$(cat project/build.properties | grep sbt.version | cut -d'=' -f2)
 SBT_LAUNCHER="$(dirname $0)/project/sbt-launch-$SBT_VERSION.jar"
