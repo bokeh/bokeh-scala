@@ -43,7 +43,7 @@ trait EnumDefaults {
     implicit object AngleUnitsDefault extends DefaultValue[AngleUnits](AngleUnits.Deg)
     implicit object DatetimeUnitsDefault extends DefaultValue[DatetimeUnits](DatetimeUnits.Seconds)
     implicit object DimensionDefault extends DefaultValue[Dimension](Dimension.Width)
-    implicit object LocationDefault extends DefaultValue[Location](Location.Top)
+    implicit object LocationDefault extends DefaultValue[Location](Location.Auto)
     implicit object OrientationDefault extends DefaultValue[Orientation](Orientation.Horizontal)
     implicit object LegendOrientationDefault extends DefaultValue[LegendOrientation](LegendOrientation.TopRight)
     implicit object BorderSymmetryDefault extends DefaultValue[BorderSymmetry](BorderSymmetry.Horizontal)

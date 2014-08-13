@@ -37,8 +37,10 @@ object IrisSplom extends Example {
             .title("")
             .min_border(2)
 
-        val xaxis = new LinearAxis().plot(plot).dimension(0).location(Location.Bottom)
-        val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Left)
+        val xaxis = new LinearAxis().plot(plot).location(Location.Below)
+        val yaxis = new LinearAxis().plot(plot).location(Location.Left)
+        plot.below <<= (xaxis +: _)
+        plot.left <<= (yaxis +: _)
 
         val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
         val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)

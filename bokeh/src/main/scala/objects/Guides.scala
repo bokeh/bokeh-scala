@@ -2,15 +2,17 @@ package io.continuum.bokeh
 
 abstract class GuideRenderer extends Renderer {
     object plot extends Field[Plot]
-    object dimension extends Field[Int](0)
     object bounds extends Field[(Double, Double)] // Either[Auto, (Float, Float)]]
 }
 
 abstract class Axis extends GuideRenderer {
-    object location extends Field[Location] // Either[Location, Float]
+    object location extends Field[Location]
 
-    object ticker extends Field[Ticker]
-    object formatter extends Field[TickFormatter]
+    def defaultTicker: Ticker
+    def defaultFormatter: TickFormatter
+
+    object ticker extends Field[Ticker](defaultTicker)
+    object formatter extends Field[TickFormatter](defaultFormatter)
 
     object axis_label extends Field[String]
     object axis_label_standoff extends Field[Int]
@@ -27,11 +29,27 @@ abstract class Axis extends GuideRenderer {
     object major_tick_out extends Field[Int]
 }
 
-class LinearAxis extends Axis
+abstract class ContinuousAxis extends Axis
 
-class CategoricalAxis extends Axis
+class LinearAxis extends ContinuousAxis {
+    def defaultTicker: Ticker = new BasicTicker()
+    def defaultFormatter: TickFormatter = new BasicTickFormatter()
+}
+
+class LogAxis extends ContinuousAxis {
+    def defaultTicker: Ticker = new LogTicker().num_minor_ticks(10)
+    def defaultFormatter: TickFormatter = new LogTickFormatter()
+}
+
+class CategoricalAxis extends Axis {
+    def defaultTicker: Ticker = new CategoricalTicker()
+    def defaultFormatter: TickFormatter = new CategoricalTickFormatter()
+}
 
 class DatetimeAxis extends LinearAxis {
+    override def defaultTicker: Ticker = new DatetimeTicker()
+    override def defaultFormatter: TickFormatter = new DatetimeTickFormatter()
+
     object scale extends Field[String]("time")
     object num_labels extends Field[Int](8)
     object char_width extends Field[Int](10)
@@ -39,6 +57,13 @@ class DatetimeAxis extends LinearAxis {
 }
 
 class Grid extends GuideRenderer {
-    object axis extends Field[Axis]
+    object dimension extends Field[Int](0)
+    object ticker extends Field[Ticker]
+
+    def axis(axis: Axis): SelfType = {
+        axis.ticker.valueOpt.foreach(this.ticker := _)
+        this
+    }
+
     //// object grid_props extends Include(LineProps, prefix="grid")
 }

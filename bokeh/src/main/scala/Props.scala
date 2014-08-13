@@ -56,7 +56,7 @@ trait HasFields { self =>
 
         def owner: SelfType = self
 
-        def this(value: FieldType) = {
+        def this(value: => FieldType) = {
             this()
             internalSet(Some(value))
         }

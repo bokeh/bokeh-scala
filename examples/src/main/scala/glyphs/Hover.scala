@@ -78,8 +78,10 @@ object Hover extends Example with LinAlg {
             "cursor (x, y)" -> s"($$x, $$y)",
             "canvas (x, y)" -> s"($$sx, $$sy)"))
 
-    val xaxis = new LinearAxis().plot(plot).dimension(0).location(Location.Bottom)
-    val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Left)
+    val xaxis = new LinearAxis().plot(plot).location(Location.Below)
+    val yaxis = new LinearAxis().plot(plot).location(Location.Left)
+    plot.below <<= (xaxis +: _)
+    plot.left <<= (yaxis +: _)
 
     plot.renderers := List(xaxis, yaxis, circle_renderer, text_renderer)
     plot.tools <<= (_ :+ hover)

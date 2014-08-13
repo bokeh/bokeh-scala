@@ -33,10 +33,12 @@ object Iris extends Example {
 
     val plot = new Plot().x_range(xdr).y_range(ydr).data_sources(source :: Nil).title("Iris Data")
 
-    val xaxis = new LinearAxis().plot(plot).dimension(0).location(Location.Bottom)
+    val xaxis = new LinearAxis().plot(plot).location(Location.Below)
         .axis_label("petal length").bounds((1.0, 7.0)).major_tick_in(0)
-    val yaxis = new LinearAxis().plot(plot).dimension(1).location(Location.Left)
+    val yaxis = new LinearAxis().plot(plot).location(Location.Left)
         .axis_label("petal width").bounds((0.0, 2.5)).major_tick_in(0)
+    plot.below <<= (xaxis +: _)
+    plot.left <<= (yaxis +: _)
 
     val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
     val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)

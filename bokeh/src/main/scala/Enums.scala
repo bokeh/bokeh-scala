@@ -88,8 +88,9 @@ object Dimension extends Enum[Dimension] {
 
 sealed trait Location extends EnumType
 object Location extends Enum[Location] {
-    case object Top extends Location
-    case object Bottom extends Location
+    case object Auto extends Location
+    case object Above extends Location
+    case object Below extends Location
     case object Left extends Location
     case object Right extends Location
 }

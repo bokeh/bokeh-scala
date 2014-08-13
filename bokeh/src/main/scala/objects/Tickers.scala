@@ -1,9 +1,12 @@
 package io.continuum.bokeh
 
-abstract class Ticker extends PlotObject
+abstract class Ticker extends PlotObject {
+    object num_minor_ticks extends Field[Int](5)
+}
 
 class AdaptiveTicker extends Ticker {
     object base extends Field[Double](10.0)
+    object mantissas extends Field[List[Double]](List(2, 5, 10))
     object min_interval extends Field[Double](0.0)
     object max_interval extends Field[Double](100.0)
 }
@@ -28,11 +31,13 @@ class YearsTicker extends Ticker
 
 class BasicTicker extends Ticker
 
+class LogTicker extends Ticker
+
 class CategoricalTicker extends Ticker
 
 class DatetimeTicker extends Ticker
 
-class TickFormatter extends PlotObject
+abstract class TickFormatter extends PlotObject
 
 class BasicTickFormatter extends TickFormatter {
     // object precision extends Field[Either[Auto, Int]]
@@ -40,6 +45,8 @@ class BasicTickFormatter extends TickFormatter {
     object power_limit_high extends Field[Int](5)
     object power_limit_low extends Field[Int](-3)
 }
+
+class LogTickFormatter extends TickFormatter
 
 class CategoricalTickFormatter extends TickFormatter
 
