@@ -128,9 +128,7 @@ object BokehBuild extends Build {
         Seq(parallelExecution in ScoverageTest := (parallelExecution in Test).value)
     }
 
-    lazy val coverallsSettings = CoverallsPlugin.coverallsSettings
-
-    lazy val bokehPlugins = pgpSettings ++ ideaSettings ++ scoverageSettings ++ coverallsSettings
+    lazy val bokehPlugins = pgpSettings ++ ideaSettings ++ scoverageSettings
 
     lazy val bokehSettings = commonSettings ++ bokehPlugins ++ Seq(
         libraryDependencies ++= {

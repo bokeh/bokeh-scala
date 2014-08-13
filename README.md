@@ -3,7 +3,6 @@
 Scala bindings for [Bokeh][bokeh] plotting library.
 
 [![Build Status][travis]](https://travis-ci.org/mattpap/bokeh-scala)
-[![Coverage Status][coveralls]](https://coveralls.io/r/mattpap/bokeh-scala)
 
 ## Requirements
 
@@ -40,5 +39,4 @@ Published under [The MIT License][license], see LICENSE.
 [bokeh]: http://bokeh.pydata.org
 [group]: https://groups.google.com/a/continuum.io/forum/#!forum/bokeh
 [travis]: https://api.travis-ci.org/mattpap/bokeh-scala.png?branch=master
-[coveralls]: https://coveralls.io/repos/mattpap/bokeh-scala/badge.png
 [license]: http://www.opensource.org/licenses/mit-license.php
