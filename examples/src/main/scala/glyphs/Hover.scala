@@ -2,27 +2,9 @@ package io.continuum.bokeh
 package examples
 package glyphs
 
-import scala.reflect.ClassTag
-import scala.collection.immutable.NumericRange
-import breeze.linalg.{DenseVector,DenseMatrix}
+import breeze.linalg.DenseVector
 
-trait LinAlgHelpers {
-    def meshgrid(x1: DenseVector[Double], x2: DenseVector[Double]): (DenseMatrix[Double], DenseMatrix[Double]) = {
-        val x1Mesh = DenseMatrix.zeros[Double](x2.length, x1.length)
-        for (i <- 0 until x2.length) {
-            x1Mesh(i, ::) := x1.t
-        }
-        val x2Mesh = DenseMatrix.zeros[Double](x2.length, x1.length)
-        for (i <- 0 until x1.length) {
-            x2Mesh(::, i) := x2
-        }
-        (x1Mesh, x2Mesh)
-    }
-
-    implicit def NumericRangeToDenseVector[T:ClassTag](range: NumericRange[T]) = new DenseVector(range.toArray)
-}
-
-object Hover extends Example with LinAlgHelpers {
+object Hover extends Example with LinAlg {
     val (xx, yy) = meshgrid(0.0 to 100.0 by 4.0,
                             0.0 to 100.0 by 4.0)
 
