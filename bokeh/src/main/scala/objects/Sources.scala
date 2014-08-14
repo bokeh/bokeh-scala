@@ -27,7 +27,7 @@ object ArrayLike {
 }
 
 class ColumnDataSource extends DataSource {
-    object data extends Field[Map[Symbol, Any]] // TODO: HList/HRecord
+    object data extends Field[Map[Symbol, Any]]
 
     def addColumn[A:ArrayLike](name: Symbol, array: A): SelfType = {
         data := data.value + (name -> array)

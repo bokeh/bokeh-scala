@@ -4,9 +4,9 @@ abstract class BaseGlyph extends HasFields {
     override def typeName: String = Utils.snakify(super.typeName)
 
     object visible extends Field[Boolean]
-    //object margin extends Field[Size]
-    //object halign extends Field[Align]
-    //object valign extends Field[Align]
+    // TODO: object margin extends Field[Size]
+    // TODO: object halign extends Field[Align]
+    // TODO: object valign extends Field[Align]
 
     object radius_units extends Field[Units]
     object length_units extends Field[Units]

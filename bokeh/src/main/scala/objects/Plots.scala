@@ -8,8 +8,8 @@ class Plot extends Widget {
 
     object title extends Field[String]
 
-    // object title_props extends Include(TextProps, prefix="title")
-    // object outline_props extends Include(LineProps, prefix="outline")
+    // TODO: object title_props extends Include(TextProps, prefix="title")
+    // TODO: object outline_props extends Include(LineProps, prefix="outline")
 
     object renderers extends Field[List[Renderer]]
     object tools extends Field[List[Tool]] with ToolsField

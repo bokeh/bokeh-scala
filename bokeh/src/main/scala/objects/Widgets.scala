@@ -47,7 +47,7 @@ abstract class InputWidget[T:DefaultValue] extends Widget {
 class TextInput extends InputWidget[String]
 
 class Select extends InputWidget[String] {
-    object options extends Field[List[String]] // List[Either[String, Dict[String, String]]]
+    object options extends Field[List[String]] // TODO: List[Either[String, Dict[String, String]]]
 }
 
 class Slider extends InputWidget[Double] {
@@ -59,19 +59,19 @@ class Slider extends InputWidget[Double] {
 
 class DateRangeSlider extends InputWidget[(Date, Date)] {
     object bounds extends Field[(Date, Date)]
-    // object range extends Field[(RelativeDelta, RelativeDelta)]
-    // object step extends Field[RelativeDelta
-    // object formatter extends Field[Either[String, Function[Date]]]
-    // object scales extends Field[DateRangeSliderScales] ... first, next, stop, label, format
+    // TODO: object range extends Field[(RelativeDelta, RelativeDelta)]
+    // TODO: object step extends Field[RelativeDelta
+    // TODO: object formatter extends Field[Either[String, Function[Date]]]
+    // TODO: object scales extends Field[DateRangeSliderScales] ... first, next, stop, label, format
     object enabled extends Field[Boolean](true)
     object arrows extends Field[Boolean](true)
-    // object value_labels extends Field[] // Enum("show", "hide", "change")
-    // object wheel_mode extends OptionalField[] // Enum("scroll", "zoom", default=None)
+    // TODO: object value_labels extends Field[] // Enum("show", "hide", "change")
+    // TODO: object wheel_mode extends OptionalField[] // Enum("scroll", "zoom", default=None)
 }
 
 class DatePicker extends InputWidget[Date] {
-    // object min_date extends OptionalField[Date]
-    // object max_date extends OptionalField[Date]
+    // TODO: object min_date extends OptionalField[Date]
+    // TODO: object max_date extends OptionalField[Date]
 }
 
 class TableWidget extends Widget

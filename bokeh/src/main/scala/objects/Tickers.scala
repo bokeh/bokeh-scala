@@ -40,7 +40,7 @@ class DatetimeTicker extends Ticker
 abstract class TickFormatter extends PlotObject
 
 class BasicTickFormatter extends TickFormatter {
-    // object precision extends Field[Either[Auto, Int]]
+    // TODO: object precision extends Field[Either[Auto, Int]]
     object use_scientific extends Field[Boolean](true)
     object power_limit_high extends Field[Int](5)
     object power_limit_low extends Field[Int](-3)

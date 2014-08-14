@@ -3,7 +3,7 @@ package io.continuum.bokeh
 abstract class Renderer extends PlotObject
 
 class Glyph extends Renderer {
-    // object server_data_source extends Field[ServerDataSource]
+    // TODO: object server_data_source extends Field[ServerDataSource]
     object data_source extends Field[DataSource]
     object xdata_range extends Field[Range]
     object ydata_range extends Field[Range]
@@ -24,9 +24,9 @@ class Glyph extends Renderer {
 class Legend extends Renderer {
     object plot extends Field[Plot]
     object orientation extends Field[LegendOrientation]
-    // object border extends Include(LineProps, prefix="border")
+    // TODO: object border extends Include(LineProps, prefix="border")
 
-    // object label_props extends Include(TextProps, prefix="label")
+    // TODO: object label_props extends Include(TextProps, prefix="label")
     object label_standoff extends Field[Int](15)
     object label_height extends Field[Int](20)
     object label_width extends Field[Int](50)
