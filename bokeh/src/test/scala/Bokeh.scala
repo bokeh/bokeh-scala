@@ -359,19 +359,19 @@ class BokehSpec extends Specification {
         "support LinearAxis" in {
             val obj = new LinearAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 13
+            obj.fieldsWithValues.length shouldEqual 12
         }
 
         "support CategoricalAxis" in {
             val obj = new CategoricalAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 13
+            obj.fieldsWithValues.length shouldEqual 12
         }
 
         "support DatetimeAxis" in {
             val obj = new DatetimeAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 17
+            obj.fieldsWithValues.length shouldEqual 16
         }
 
         "support Grid" in {
