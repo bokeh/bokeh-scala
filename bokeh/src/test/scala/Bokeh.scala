@@ -418,6 +418,12 @@ class BokehSpec extends Specification {
             obj.fieldsWithValues.length shouldEqual 2
         }
 
+        "support ClickTool" in {
+            val obj = new ClickTool().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fieldsWithValues.length shouldEqual 4
+        }
+
         "support CrosshairTool" in {
             val obj = new CrosshairTool().id("xyz")
             obj.id.value shouldEqual "xyz"
@@ -427,13 +433,13 @@ class BokehSpec extends Specification {
         "support BoxZoomTool" in {
             val obj = new BoxZoomTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 4
+            obj.fieldsWithValues.length shouldEqual 2
         }
 
         "support BoxSelectTool" in {
             val obj = new BoxSelectTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 4
+            obj.fieldsWithValues.length shouldEqual 6
         }
     }
 

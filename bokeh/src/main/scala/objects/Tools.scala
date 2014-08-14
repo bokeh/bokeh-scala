@@ -20,21 +20,26 @@ class ResetTool extends Tool
 
 class ResizeTool extends Tool
 
+class ClickTool extends Tool {
+    object names extends Field[List[String]]
+    object always_active extends Field[Boolean](true)
+}
+
 class CrosshairTool extends Tool
 
-class BoxZoomTool extends Tool {
-    object renderers extends Field[List[Renderer]]
-    object select_every_mousemove extends Field[Boolean](true)
-}
+class BoxZoomTool extends Tool
 
 class BoxSelectTool extends Tool {
     object renderers extends Field[List[Renderer]]
     object select_every_mousemove extends Field[Boolean](true)
+    object select_x extends Field[Boolean](true)
+    object select_y extends Field[Boolean](true)
 }
 
 class HoverTool extends Tool {
     object renderers extends Field[List[Renderer]]
     object tooltips extends Field[Map[String, String]]
+    object always_active extends Field[Boolean](true)
 }
 
 class ObjectExplorerTool extends Tool

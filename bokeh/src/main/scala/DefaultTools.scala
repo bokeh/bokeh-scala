@@ -17,6 +17,7 @@ trait DefaultToolsImpl {
     case object Embed extends DefaultTool              { def toTool = new EmbedTool()              }
     case object Reset extends DefaultTool              { def toTool = new ResetTool()              }
     case object Resize extends DefaultTool             { def toTool = new ResizeTool()             }
+    case object Click extends DefaultTool              { def toTool = new ClickTool()              }
     case object Crosshair extends DefaultTool          { def toTool = new CrosshairTool()          }
     case object BoxZoom extends DefaultTool            { def toTool = new BoxZoomTool()            }
     case object BoxSelect extends DefaultTool          { def toTool = new BoxSelectTool()          }
