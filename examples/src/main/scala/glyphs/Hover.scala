@@ -4,7 +4,7 @@ package glyphs
 
 import breeze.linalg.DenseVector
 
-object Hover extends Example with LinAlg {
+object Hover extends Example with LinAlg with Tools {
     val (xx, yy) = meshgrid(0.0 to 100.0 by 4.0,
                             0.0 to 100.0 by 4.0)
 
@@ -34,10 +34,7 @@ object Hover extends Example with LinAlg {
         .x_range(xdr)
         .y_range(ydr)
         .data_sources(source :: Nil)
-        .tools {
-            import DefaultTools._
-            Pan|WheelZoom|BoxZoom|Reset|PreviewSave
-        }
+        .tools(Pan|WheelZoom|BoxZoom|Reset|PreviewSave)
 
     val circle = new Circle()
         .x('x)
