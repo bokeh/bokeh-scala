@@ -51,9 +51,9 @@ trait HasFields { self =>
 
         def owner: SelfType = self
 
-        def this(value: => FieldType) = {
+        def this(value: FieldType) = {
             this()
-            internalSet(Some(value))
+            _value = Some(value)
         }
 
         val fieldName: Option[String] = None
@@ -61,22 +61,18 @@ trait HasFields { self =>
         def defaultValue: Option[FieldType] =
             Option(implicitly[DefaultValue[FieldType]].default)
 
-        protected var data: Option[FieldType] = None
-        protected var dirty: Boolean = false
+        protected var _value: Option[FieldType] = None
+        protected var _dirty: Boolean = false
 
-        final def isDirty: Boolean = dirty
+        final def isDirty: Boolean = _dirty
 
-        def valueOpt: Option[FieldType] = data orElse defaultValue
+        def valueOpt: Option[FieldType] = _value orElse defaultValue
 
         def value: FieldType = valueOpt.get
 
-        final def internalSet(value: Option[FieldType]) {
-            data = value
-            dirty = true
-        }
-
         def set(value: Option[FieldType]) {
-            internalSet(value)
+            _value = value
+            _dirty = true
         }
 
         final def :=(value: FieldType) {
@@ -103,38 +99,63 @@ trait HasFields { self =>
     class DataSpec[FieldType:DefaultValue] extends Field[FieldType] {
         def this(value: FieldType) = {
             this()
-            internalSet(Some(value))
+            _value = Some(value)
         }
 
-        protected var field: Option[Symbol] = None
-        protected var units: Option[Units] = None
-        protected var default: Option[FieldType] = None
+        def this(value: FieldType, units: Units) = {
+            this(value)
+            _units = Some(units)
+        }
 
-        protected def set(field: Option[Symbol] = None, units: Option[Units] = None, default: Option[FieldType] = None) {
-            field.foreach(field => this.field = Some(field))
-            units.foreach(units => this.units = Some(units))
-            default.foreach(default => this.default = Some(default))
-            dirty = true
+        def this(field: Symbol) = {
+            this()
+            _field = Some(field)
+        }
+
+        def this(field: Symbol, units: Units) = {
+            this(field)
+            _units = Some(units)
+        }
+
+        protected var _field: Option[Symbol] = None
+        protected var _units: Option[Units] = None
+
+        def fieldOpt: Option[Symbol] = _field
+        def unitsOpt: Option[Units] = _units
+
+        def field: Symbol = _field.get
+        def units: Units = _units.get
+
+        def apply(value: FieldType, units: Units): SelfType = {
+            set(Some(value))
+            _units = Some(units)
+            _dirty = true
+            owner
         }
 
         def apply(field: Symbol): SelfType = {
-            set(field=Some(field))
+            _field = Some(field)
+            _dirty = true
+            owner
+        }
+
+        def apply(units: Units): SelfType = {
+            _units = Some(units)
+            _dirty = true
             owner
         }
 
         def apply(field: Symbol, units: Units): SelfType = {
-            set(field=Some(field), units=Some(units))
-            owner
-        }
-
-        def apply(field: Symbol, units: Units, default: FieldType): SelfType = {
-            set(field=Some(field), units=Some(units), default=Some(default))
+            _field = Some(field)
+            _units = Some(units)
+            _dirty = true
             owner
         }
 
         def toMap: Map[String, Any] = {
-            val fields = ("value" -> valueOpt) :: ("field" -> field) :: ("units" -> units) :: ("default" -> default) :: Nil
-            fields.collect { case (name, Some(value)) => (name, value) } toMap
+            val source = fieldOpt.map("field" -> _) orElse valueOpt.map("value" -> _)
+            val units = unitsOpt.map("units" -> _)
+            (source.toList ++ units.toList).toMap
         }
 
         override def toSerializable: Any = toMap
