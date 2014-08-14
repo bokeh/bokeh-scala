@@ -38,17 +38,12 @@ trait HasFields { self =>
     }
 
     final def fieldsWithValues: List[(String, Any)] = {
-        fieldsList.map {
-            case (name, data: DataSpec[_]) => (name, data.toMap)
-            case (name, field: Field[_]) => (name, field.valueOpt)
-        }
+        fieldsList.map { case (name, field) => (name, field.toSerializable) }
     }
 
     final def dirtyFieldsWithValues: List[(String, Any)] = {
-        fieldsList.filter(_._2.isDirty).map {
-            case (name, data: DataSpec[_]) => (name, data.toMap)
-            case (name, field: Field[_]) => (name, field.valueOpt)
-        }
+        fieldsList.filter(_._2.isDirty)
+                  .map { case (name, field) => (name, field.toSerializable) }
     }
 
     class Field[FieldType:DefaultValue] extends AbstractField {
@@ -101,6 +96,8 @@ trait HasFields { self =>
             set(None)
             owner
         }
+
+        def toSerializable: Any = valueOpt
     }
 
     class DataSpec[FieldType:DefaultValue] extends Field[FieldType] {
@@ -139,5 +136,7 @@ trait HasFields { self =>
             val fields = ("value" -> valueOpt) :: ("field" -> field) :: ("units" -> units) :: ("default" -> default) :: Nil
             fields.collect { case (name, Some(value)) => (name, value) } toMap
         }
+
+        override def toSerializable: Any = toMap
     }
 }
