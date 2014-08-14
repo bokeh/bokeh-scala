@@ -7,7 +7,7 @@ trait FillProps { self: HasFields =>
 
 trait LineProps { self: HasFields =>
     object line_color extends DataSpec[Color](Color.Black)
-    object line_width extends Field[Double](1) // Size
+    object line_width extends Field[Double](1.0) with NonNegative
     object line_alpha extends Field[Percent](100%%)
     object line_join extends Field[LineJoin]
     object line_cap extends Field[LineCap]

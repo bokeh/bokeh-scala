@@ -2,10 +2,26 @@ package io.continuum.bokeh
 
 import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
 
+case class Validator[T](fn: T => Boolean, message: String)
+class ValueError(message: String) extends Exception(message)
+
 trait AbstractField {
     type DataType
 
     def set(value: Option[DataType])
+
+    def validators: List[Validator[DataType]] = Nil
+
+    def validate(value: DataType): List[String] = {
+        validators.filterNot(_.fn(value)).map(_.message)
+    }
+
+    def validates(value: DataType) {
+        validate(value) match {
+            case error :: _ => throw new ValueError(error)
+            case Nil =>
+        }
+    }
 }
 
 trait HasFields { self =>
@@ -53,7 +69,7 @@ trait HasFields { self =>
 
         def this(value: FieldType) = {
             this()
-            _value = Some(value)
+            setValue(Some(value))
         }
 
         val fieldName: Option[String] = None
@@ -70,8 +86,13 @@ trait HasFields { self =>
 
         def value: FieldType = valueOpt.get
 
-        def set(value: Option[FieldType]) {
+        def setValue(value: Option[FieldType]) {
+            value.foreach(validates)
             _value = value
+        }
+
+        def set(value: Option[FieldType]) {
+            setValue(value)
             _dirty = true
         }
 
@@ -99,7 +120,7 @@ trait HasFields { self =>
     class DataSpec[FieldType:DefaultValue] extends Field[FieldType] {
         def this(value: FieldType) = {
             this()
-            _value = Some(value)
+            setValue(Some(value))
         }
 
         def this(value: FieldType, units: Units) = {

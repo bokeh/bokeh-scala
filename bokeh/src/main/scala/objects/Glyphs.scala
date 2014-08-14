@@ -18,8 +18,8 @@ abstract class BaseGlyph extends HasFields {
 class AnnularWedge extends BaseGlyph with FillProps with LineProps {
     object x extends DataSpec[Double]
     object y extends DataSpec[Double]
-    object inner_radius extends DataSpec[Double] // with Radius
-    object outer_radius extends DataSpec[Double] // with Radius
+    object inner_radius extends DataSpec[Double] with NonNegative
+    object outer_radius extends DataSpec[Double] with NonNegative
     object start_angle extends DataSpec[Double]
     object end_angle extends DataSpec[Double]
     object direction extends Field[Direction]
@@ -28,14 +28,14 @@ class AnnularWedge extends BaseGlyph with FillProps with LineProps {
 class Annulus extends BaseGlyph with FillProps with LineProps {
     object x extends DataSpec[Double]
     object y extends DataSpec[Double]
-    object inner_radius extends DataSpec[Double] // with Radius
-    object outer_radius extends DataSpec[Double] // with Radius
+    object inner_radius extends DataSpec[Double] with NonNegative
+    object outer_radius extends DataSpec[Double] with NonNegative
 }
 
 class Arc extends BaseGlyph with LineProps {
     object x extends DataSpec[Double]
     object y extends DataSpec[Double]
-    object radius extends DataSpec[Double] // with Radius
+    object radius extends DataSpec[Double] with NonNegative
     object start_angle extends DataSpec[Double]
     object end_angle extends DataSpec[Double]
     object direction extends Field[Direction]
@@ -159,7 +159,7 @@ class Text extends BaseGlyph with TextProps {
 class Wedge extends BaseGlyph with FillProps with LineProps {
     object x extends DataSpec[Double]
     object y extends DataSpec[Double]
-    object radius extends DataSpec[Double]             // TODO: with Radius
+    object radius extends DataSpec[Double] with NonNegative
     object start_angle extends DataSpec[Double]
     object end_angle extends DataSpec[Double]
     object direction extends Field[Direction]
@@ -169,9 +169,9 @@ class Gear extends BaseGlyph with LineProps with FillProps {
     object x extends DataSpec[Double]
     object y extends DataSpec[Double]
     object angle extends DataSpec[Double]
-    object module extends DataSpec[Double]             // TODO: module >= 0
+    object module extends DataSpec[Double] with NonNegative
     object teeth extends DataSpec[Int]
     object pressure_angle extends DataSpec[Double](20) // TODO: units = Some(AngleUnits.Deg)
-    object shaft_size extends DataSpec[Double](0.3)    // TODO: shaft_size >= 0
+    object shaft_size extends DataSpec[Double](0.3) with NonNegative
     object internal extends DataSpec[Boolean]
 }
