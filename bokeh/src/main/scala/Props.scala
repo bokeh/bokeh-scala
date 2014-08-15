@@ -69,7 +69,7 @@ trait HasFields { self =>
 
         def this(value: FieldType) = {
             this()
-            setValue(Some(value))
+            set(Some(value))
         }
 
         val fieldName: Option[String] = None
@@ -77,12 +77,12 @@ trait HasFields { self =>
         def defaultValue: Option[FieldType] =
             Option(implicitly[DefaultValue[FieldType]].default)
 
-        protected var _value: Option[FieldType] = None
+        protected var _value: Option[FieldType] = defaultValue
         protected var _dirty: Boolean = false
 
         final def isDirty: Boolean = _dirty
 
-        def valueOpt: Option[FieldType] = _value orElse defaultValue
+        def valueOpt: Option[FieldType] = _value
 
         def value: FieldType = valueOpt.get
 
