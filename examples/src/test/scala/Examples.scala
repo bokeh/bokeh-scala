@@ -7,7 +7,7 @@ import org.specs2.matcher.TerminationMatchers
 class ExamplesSpec extends Specification with TerminationMatchers {
     sequential
 
-    val argv = Array[String]("--quiet")
+    val argv = Array[String]("--quiet", "--dev")
 
     "examples.glyphs" should {
         "run Anscombe" in {
