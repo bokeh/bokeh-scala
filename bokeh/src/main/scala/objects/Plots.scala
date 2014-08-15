@@ -25,11 +25,11 @@ class Plot extends Widget {
     object background_fill extends Field[Color](Color.White)
     object border_fill extends Field[Color](Color.White)
 
-    object min_border_top extends Field[Int](50)
-    object min_border_bottom extends Field[Int](50)
-    object min_border_left extends Field[Int](50)
-    object min_border_right extends Field[Int](50)
-    object min_border extends Field[Int](50)
+    object min_border_top extends Field[Int]
+    object min_border_bottom extends Field[Int]
+    object min_border_left extends Field[Int]
+    object min_border_right extends Field[Int]
+    object min_border extends Field[Int]
 
     object h_symmetry extends Field[Boolean](true)
     object v_symmetry extends Field[Boolean](false)
