@@ -6,17 +6,17 @@ case class Validator[T](fn: T => Boolean, message: String)
 class ValueError(message: String) extends Exception(message)
 
 trait AbstractField {
-    type DataType
+    type ValueType
 
-    def set(value: Option[DataType])
+    def set(value: Option[ValueType])
 
-    def validators: List[Validator[DataType]] = Nil
+    def validators: List[Validator[ValueType]] = Nil
 
-    def validate(value: DataType): List[String] = {
+    def validate(value: ValueType): List[String] = {
         validators.filterNot(_.fn(value)).map(_.message)
     }
 
-    def validates(value: DataType) {
+    def validates(value: ValueType) {
         validate(value) match {
             case error :: _ => throw new ValueError(error)
             case Nil =>
@@ -63,7 +63,7 @@ trait HasFields { self =>
     }
 
     class Field[FieldType:DefaultValue] extends AbstractField {
-        type DataType = FieldType
+        type ValueType = FieldType
 
         def owner: SelfType = self
 
