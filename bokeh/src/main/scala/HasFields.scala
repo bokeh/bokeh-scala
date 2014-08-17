@@ -120,7 +120,12 @@ trait HasFields { self =>
     class DataSpec[FieldType:DefaultValue] extends Field[FieldType] {
         def this(value: FieldType) = {
             this()
-            setValue(Some(value))
+            set(Some(value))
+        }
+
+        def this(units: Units) = {
+            this()
+            _units = Some(units)
         }
 
         def this(value: FieldType, units: Units) = {
@@ -147,6 +152,12 @@ trait HasFields { self =>
         def field: Symbol = _field.get
         def units: Units = _units.get
 
+        def apply(units: Units): SelfType = {
+            _units = Some(units)
+            _dirty = true
+            owner
+        }
+
         def apply(value: FieldType, units: Units): SelfType = {
             set(Some(value))
             _units = Some(units)
@@ -156,12 +167,6 @@ trait HasFields { self =>
 
         def apply(field: Symbol): SelfType = {
             _field = Some(field)
-            _dirty = true
-            owner
-        }
-
-        def apply(units: Units): SelfType = {
-            _units = Some(units)
             _dirty = true
             owner
         }
