@@ -52,16 +52,18 @@ object Direction extends Enum[Direction] {
     case object AntiClock extends Direction
 }
 
-sealed trait Units extends EnumType
-object Units extends Enum[Units] {
-    case object Screen extends Units
-    case object Data extends Units
+trait Units
+
+sealed trait SpatialUnits extends EnumType with Units
+object SpatialUnits extends Enum[SpatialUnits] {
+    case object Screen extends SpatialUnits
+    case object Data extends SpatialUnits
 }
 
-sealed trait AngleUnits extends EnumType
-object AngleUnits extends Enum[AngleUnits] {
-    case object Deg extends AngleUnits
-    case object Rad extends AngleUnits
+sealed trait AngularUnits extends EnumType with Units
+object AngularUnits extends Enum[AngularUnits] {
+    case object Deg extends AngularUnits
+    case object Rad extends AngularUnits
 }
 
 sealed trait DatetimeUnits extends EnumType

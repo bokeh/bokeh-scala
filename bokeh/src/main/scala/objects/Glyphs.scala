@@ -8,11 +8,11 @@ abstract class BaseGlyph extends HasFields {
     // TODO: object halign extends Field[Align]
     // TODO: object valign extends Field[Align]
 
-    object radius_units extends Field[Units]
-    object length_units extends Field[Units]
-    object angle_units extends Field[AngleUnits]
-    object start_angle_units extends Field[AngleUnits]
-    object end_angle_units extends Field[AngleUnits]
+    object radius_units extends Field[SpatialUnits]
+    object length_units extends Field[SpatialUnits]
+    object angle_units extends Field[AngularUnits]
+    object start_angle_units extends Field[AngularUnits]
+    object end_angle_units extends Field[AngularUnits]
 }
 
 class AnnularWedge extends BaseGlyph with FillProps with LineProps {
@@ -171,7 +171,7 @@ class Gear extends BaseGlyph with LineProps with FillProps {
     object angle extends DataSpec[Double]
     object module extends DataSpec[Double] with NonNegative
     object teeth extends DataSpec[Int]
-    object pressure_angle extends DataSpec[Double](20) // TODO: units = Some(AngleUnits.Deg)
+    object pressure_angle extends DataSpec[Double](20) // TODO: units = Some(AngularUnits.Deg)
     object shaft_size extends DataSpec[Double](0.3) with NonNegative
     object internal extends DataSpec[Boolean]
 }

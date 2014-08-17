@@ -8,7 +8,7 @@ class Glyph extends Renderer {
     object xdata_range extends Field[Range]
     object ydata_range extends Field[Range]
 
-    object units extends Field[Units]
+    object units extends Field[SpatialUnits]
 
     object glyph extends Field[BaseGlyph] {
         override val fieldName = Some("glyphspec")

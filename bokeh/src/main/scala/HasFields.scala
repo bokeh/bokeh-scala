@@ -123,12 +123,12 @@ trait HasFields { self =>
             set(Some(value))
         }
 
-        def this(units: Units) = {
+        def this(units: SpatialUnits) = {
             this()
             _units = Some(units)
         }
 
-        def this(value: FieldType, units: Units) = {
+        def this(value: FieldType, units: SpatialUnits) = {
             this(value)
             _units = Some(units)
         }
@@ -138,27 +138,27 @@ trait HasFields { self =>
             _field = Some(field)
         }
 
-        def this(field: Symbol, units: Units) = {
+        def this(field: Symbol, units: SpatialUnits) = {
             this(field)
             _units = Some(units)
         }
 
         protected var _field: Option[Symbol] = None
-        protected var _units: Option[Units] = None
+        protected var _units: Option[SpatialUnits] = None
 
         def fieldOpt: Option[Symbol] = _field
-        def unitsOpt: Option[Units] = _units
+        def unitsOpt: Option[SpatialUnits] = _units
 
         def field: Symbol = _field.get
-        def units: Units = _units.get
+        def units: SpatialUnits = _units.get
 
-        def apply(units: Units): SelfType = {
+        def apply(units: SpatialUnits): SelfType = {
             _units = Some(units)
             _dirty = true
             owner
         }
 
-        def apply(value: FieldType, units: Units): SelfType = {
+        def apply(value: FieldType, units: SpatialUnits): SelfType = {
             set(Some(value))
             _units = Some(units)
             _dirty = true
@@ -171,7 +171,7 @@ trait HasFields { self =>
             owner
         }
 
-        def apply(field: Symbol, units: Units): SelfType = {
+        def apply(field: Symbol, units: SpatialUnits): SelfType = {
             _field = Some(field)
             _units = Some(units)
             _dirty = true

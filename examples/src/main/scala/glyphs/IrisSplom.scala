@@ -70,8 +70,8 @@ object IrisSplom extends Example {
 
         text.foreach { text =>
             val text_glyph = new Text()
-                .x('xcenter, Units.Screen)
-                .y('ycenter, Units.Screen)
+                .x('xcenter, SpatialUnits.Screen)
+                .y('ycenter, SpatialUnits.Screen)
                 .text(text.replaceAll("_", " "))
                 .angle(pi/4)
                 .text_font_style(FontStyle.Bold)

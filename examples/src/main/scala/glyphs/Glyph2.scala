@@ -19,7 +19,7 @@ object Glyph2 extends Example {
     val circle = new Circle()
         .x('x)
         .y('y)
-        .radius('r, Units.Screen)
+        .radius('r, SpatialUnits.Screen)
         .fill_color(Color.Red)
         .line_color(Color.Black)
 

@@ -39,7 +39,7 @@ object Maps extends Example {
         .xdata_range(x_range)
         .ydata_range(y_range)
         .glyph(new Circle().x('lon).y('lat).fill_color('fill).size(15)
-               .radius_units(Units.Screen).line_color(Color.Black))
+            .radius_units(SpatialUnits.Screen).line_color(Color.Black))
 
     plot.data_sources := source :: Nil
     plot.renderers <<= (circle_renderer :: _)
