@@ -53,11 +53,11 @@ trait HasFields { self =>
         names.zip(instances)
     }
 
-    final def fieldsWithValues: List[(String, Any)] = {
+    final def fieldsWithValues: List[(String, Option[Any])] = {
         fieldsList.map { case (name, field) => (name, field.toSerializable) }
     }
 
-    final def dirtyFieldsWithValues: List[(String, Any)] = {
+    final def dirtyFieldsWithValues: List[(String, Option[Any])] = {
         fieldsList.filter(_._2.isDirty)
                   .map { case (name, field) => (name, field.toSerializable) }
     }
@@ -114,7 +114,7 @@ trait HasFields { self =>
             owner
         }
 
-        def toSerializable: Any = valueOpt
+        def toSerializable: Option[Any] = valueOpt
     }
 
     class DataSpec[FieldType:DefaultValue] extends Field[FieldType] {
@@ -179,6 +179,6 @@ trait HasFields { self =>
             (source.toList ++ units.toList).toMap
         }
 
-        override def toSerializable: Any = toMap
+        override def toSerializable: Option[Any] = Some(toMap)
     }
 }
