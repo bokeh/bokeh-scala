@@ -56,14 +56,14 @@ trait Units
 
 sealed trait SpatialUnits extends EnumType with Units
 object SpatialUnits extends Enum[SpatialUnits] {
-    case object Screen extends SpatialUnits
     case object Data extends SpatialUnits
+    case object Screen extends SpatialUnits
 }
 
 sealed trait AngularUnits extends EnumType with Units
 object AngularUnits extends Enum[AngularUnits] {
-    case object Deg extends AngularUnits
     case object Rad extends AngularUnits
+    case object Deg extends AngularUnits
 }
 
 sealed trait DatetimeUnits extends EnumType
