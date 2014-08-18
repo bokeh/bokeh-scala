@@ -130,7 +130,7 @@ class Ray extends BaseGlyph with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object angle extends Angular[Double]
-    object length extends Spatial[Double] with NonNegative
+    object length extends Spatial[Double](SpatialUnits.Screen) with NonNegative
 }
 
 class Rect extends BaseGlyph with FillProps with LineProps {
