@@ -24,11 +24,14 @@ trait Example extends App {
 
             opt[Resources]('r', "resources")
                 .action { (resources, config) => config.copy(resources=resources) }
-                .text("enable development resources (uses requirejs)")
+                .text("configure access to external resources")
 
             opt[Unit]('d', "dev")
-                .action { (_, config) => config.copy(resources=Resources.AbsoluteDev) }
-                .text("enable development resources (uses requirejs)")
+                .action { (_, config) =>
+                    IdGenerator.setImplementation(CounterGenerator, silent=true)
+                    config.copy(resources=Resources.AbsoluteDev)
+                }
+                .text("enable development mode")
 
             opt[Unit]('q', "quiet")
                 .action { (_, config) => config.copy(quiet=true) }

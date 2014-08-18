@@ -21,9 +21,9 @@ object CounterGenerator extends IdGenerator {
 object IdGenerator {
     private var implementation: Option[IdGenerator] = None
 
-    def setImplementation(impl: IdGenerator) {
+    def setImplementation(impl: IdGenerator, silent: Boolean=false) {
         implementation match {
-            case Some(_) => throw new IllegalStateException("ID generator was already configured")
+            case Some(_) => if (!silent) throw new IllegalStateException("ID generator was already configured")
             case None    => implementation = Some(impl)
         }
     }
