@@ -138,7 +138,7 @@ trait HasFields { self =>
         }
 
         def toMap: Map[String, Any] = {
-            (fieldOpt.map("field" -> _) orElse valueOpt.map("value" -> _)).toList.toMap
+            Map(fieldOpt.map("field" -> _).getOrElse("value" -> valueOpt))
         }
 
         override def toSerializable: Option[Any] = Some(toMap)
