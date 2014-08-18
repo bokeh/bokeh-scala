@@ -7,6 +7,8 @@ trait EnumType {
 }
 
 trait Enum[T <: EnumType] {
+    type ValueType = T
+
     def values: Set[T] = macro EnumImpl.valuesImpl[T]
     // def unapply(string: String): Option[T] = macro EnumImpl.unapplyImpl[T]
     def fromString: PartialFunction[String, T] = macro EnumImpl.fromStringImpl[T]
