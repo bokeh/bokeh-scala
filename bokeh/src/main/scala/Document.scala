@@ -58,7 +58,7 @@ class HTMLFileWriter(contexts: List[PlotContext], _resources: Option[Resources])
     def specs(): List[PlotSpec] = {
         contexts.map { context =>
             val models = serializeObjs(collectObjs(context))
-            PlotSpec(models, context.getRef, Utils.uuid4())
+            PlotSpec(models, context.getRef, IdGenerator.next())
         }
     }
 
