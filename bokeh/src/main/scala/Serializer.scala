@@ -41,12 +41,14 @@ trait Serializer {
             case (obj1, obj2, obj3) => JsArray(List(anyToJson(obj1), anyToJson(obj2), anyToJson(obj2)))
             case Some(obj) => anyToJson(obj)
             case None => JsNull
+            case obj: PlotObject => toJson(obj.getRef)
+            case obj: HasFields => anyToJson(allFieldsWithValues(obj))
             case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
         }
     }
 
-    def allFieldsWithValues(obj: HasFields): List[(String, Any)] =
-        ("type", obj.typeName) :: obj.dirtyFieldsWithValues
+    def allFieldsWithValues(obj: HasFields): Map[String, Any] =
+        ("type", obj.typeName) :: obj.dirtyFieldsWithValues toMap
 
     def serializeObjs(objs: List[PlotObject]): String = {
         val models = objs.map(getModel).map(_.toJson)
@@ -97,25 +99,6 @@ trait Serializer {
 
     def getModel(obj: PlotObject): Model = {
         val Ref(id, tp) = obj.getRef
-        Model(id, tp, replaceWithRefs(allFieldsWithValues(obj)), None)
-    }
-
-    def replaceWithRefs(fields: List[(String, Any)]): Map[String, Any] = {
-        fields.map {
-            case (name, Some(value)) => (name, _replaceWithRefs(value))
-            case field => field
-        } toMap
-    }
-
-    def _replaceWithRefs(obj: Any): Any = obj match {
-        case obj: PlotObject =>
-            obj.getRef
-        case obj: HasFields =>
-            replaceWithRefs(allFieldsWithValues(obj))
-        case obj: List[_] =>
-            obj.map(_replaceWithRefs)
-        case obj: Map[_, _] =>
-            obj.map { case (key, value) => _replaceWithRefs(key) -> _replaceWithRefs(value) }
-        case obj => obj
+        Model(id, tp, allFieldsWithValues(obj), None)
     }
 }
