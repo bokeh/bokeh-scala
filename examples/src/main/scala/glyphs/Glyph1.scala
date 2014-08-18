@@ -28,8 +28,8 @@ object Glyph1 extends Example {
 
     val xaxis = new LinearAxis().plot(plot).location(Location.Below)
     val yaxis = new LinearAxis().plot(plot).location(Location.Left)
-    plot.below <<= (xaxis +: _)
-    plot.left <<= (yaxis +: _)
+    plot.below <<= (xaxis :: _)
+    plot.left <<= (yaxis :: _)
 
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)

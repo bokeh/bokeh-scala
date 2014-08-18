@@ -23,8 +23,8 @@ object Prim extends Example {
         val plot = new Plot().x_range(xdr).y_range(ydr).data_sources(source :: Nil).title(name)
         val xaxis = new LinearAxis().plot(plot).location(Location.Below)
         val yaxis = new LinearAxis().plot(plot).location(Location.Left)
-        plot.below <<= (xaxis +: _)
-        plot.left <<= (yaxis +: _)
+        plot.below <<= (xaxis :: _)
+        plot.left <<= (yaxis :: _)
         val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
         val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
 

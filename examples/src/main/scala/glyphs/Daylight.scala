@@ -72,8 +72,8 @@ object Daylight extends Example {
     val xformatter = new DatetimeTickFormatter().formats(Map(DatetimeUnits.Months -> List("%b %Y")))
     val xaxis = new DatetimeAxis().plot(plot).location(Location.Below).formatter(xformatter)
     val yaxis = new DatetimeAxis().plot(plot).location(Location.Left)
-    plot.below <<= (xaxis +: _)
-    plot.left <<= (yaxis +: _)
+    plot.below <<= (xaxis :: _)
+    plot.left <<= (yaxis :: _)
     val xgrid = new Grid().plot(plot).dimension(0).axis(xaxis)
     val ygrid = new Grid().plot(plot).dimension(1).axis(yaxis)
 

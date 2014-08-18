@@ -77,8 +77,8 @@ object Hover extends Example with LinAlg with Tools {
 
     val xaxis = new LinearAxis().plot(plot).location(Location.Below)
     val yaxis = new LinearAxis().plot(plot).location(Location.Left)
-    plot.below <<= (xaxis +: _)
-    plot.left <<= (yaxis +: _)
+    plot.below <<= (xaxis :: _)
+    plot.left <<= (yaxis :: _)
 
     plot.renderers := List(xaxis, yaxis, circle_renderer, text_renderer)
     plot.tools <<= (_ :+ hover)

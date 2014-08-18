@@ -37,8 +37,8 @@ object Iris extends Example {
         .axis_label("petal length").bounds((1.0, 7.0)).major_tick_in(0)
     val yaxis = new LinearAxis().plot(plot).location(Location.Left)
         .axis_label("petal width").bounds((0.0, 2.5)).major_tick_in(0)
-    plot.below <<= (xaxis +: _)
-    plot.left <<= (yaxis +: _)
+    plot.below <<= (xaxis :: _)
+    plot.left <<= (yaxis :: _)
 
     val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
     val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
