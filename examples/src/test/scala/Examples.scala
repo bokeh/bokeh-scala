@@ -30,6 +30,10 @@ class ExamplesSpec extends Specification with TerminationMatchers {
             glyphs.Daylight.main(argv) must not(throwA[Throwable])
         }
 
+        "run Gears" in {
+            glyphs.Gears.main(argv) must not(throwA[Throwable])
+        }
+
         "run Glyph1" in {
             glyphs.Glyph1.main(argv) must not(throwA[Throwable])
         }

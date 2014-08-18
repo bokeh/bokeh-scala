@@ -173,5 +173,5 @@ class Gear extends BaseGlyph with LineProps with FillProps {
     object teeth extends Vectorized[Int] // TODO: with NonNegative
     object pressure_angle extends Angular[Double](20, AngularUnits.Deg)
     object shaft_size extends Spatial[Double](0.3) with NonNegative
-    object internal extends Vectorized[Boolean]
+    object internal extends Vectorized[Boolean](false)
 }
