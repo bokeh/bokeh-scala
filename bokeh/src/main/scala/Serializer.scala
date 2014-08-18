@@ -2,7 +2,7 @@ package io.continuum.bokeh
 
 import play.api.libs.json.{Json,JsValue,JsArray,JsObject,JsNull}
 
-trait Serializer {
+trait JSONSerializer {
     case class Model(id: String, `type`: String, attributes: Map[String, Any], doc: Option[String]) {
         def toJson: JsValue =
             Json.obj("id" -> Json.toJson(id),
@@ -50,9 +50,15 @@ trait Serializer {
     def allFieldsWithValues(obj: HasFields): Map[String, Any] =
         ("type", obj.typeName) :: obj.dirtyFieldsWithValues toMap
 
+    val stringifyFn: JsValue => String
+
+    def stringify(obj: PlotObject): String = {
+        serializeObjs(collectObjs(obj))
+    }
+
     def serializeObjs(objs: List[PlotObject]): String = {
         val models = objs.map(getModel).map(_.toJson)
-        Json.stringify(JsArray(models))
+        stringifyFn(JsArray(models))
     }
 
     def collectObjs(obj: HasFields): List[PlotObject] = {

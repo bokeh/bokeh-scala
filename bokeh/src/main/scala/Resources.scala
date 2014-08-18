@@ -6,12 +6,18 @@ import java.net.URL
 import scalax.io.JavaConverters._
 import scalax.file.Path
 
+import play.api.libs.json.{Json,JsValue}
+
 sealed trait Resources {
     def scripts: List[xml.Node]
     def styles: List[xml.Node]
 
     def wrap(code: String): String = {
         s"(function() {\n$code\n})();"
+    }
+
+    def stringify(value: JsValue): String = {
+        Json.stringify(value)
     }
 
     protected def getResource(path: String): URL = {
@@ -84,6 +90,10 @@ object Resources {
         override def wrap(code: String): String = {
             val wrapped = super.wrap(code)
             s"require(['jquery', 'main'], function($$, Bokeh) {\n$wrapped\n});"
+        }
+
+        override def stringify(value: JsValue): String = {
+            Json.prettyPrint(value)
         }
     }
 

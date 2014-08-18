@@ -40,9 +40,12 @@ class HTMLFile(val file: File) {
     }
 }
 
-class HTMLFileWriter(contexts: List[PlotContext], _resources: Option[Resources]) extends Serializer {
+class HTMLFileWriter(contexts: List[PlotContext], _resources: Option[Resources]) {
 
     val resources = _resources getOrElse Resources.default
+    val serializer = new JSONSerializer {
+        val stringifyFn = resources.stringify _
+    }
 
     def write(file: File): HTMLFile = {
         val html = stringify(renderHTML(specs()))
@@ -57,7 +60,7 @@ class HTMLFileWriter(contexts: List[PlotContext], _resources: Option[Resources])
 
     def specs(): List[PlotSpec] = {
         contexts.map { context =>
-            val models = serializeObjs(collectObjs(context))
+            val models = serializer.stringify(context)
             PlotSpec(models, context.getRef, IdGenerator.next())
         }
     }
