@@ -1,12 +1,12 @@
 package io.continuum.bokeh
 
 trait FillProps { self: HasFields =>
-    object fill_color extends DataSpec[Color](Color.Gray)
+    object fill_color extends Vectorized[Color](Color.Gray)
     object fill_alpha extends Field[Percent](100%%)
 }
 
 trait LineProps { self: HasFields =>
-    object line_color extends DataSpec[Color](Color.Black)
+    object line_color extends Vectorized[Color](Color.Black)
     object line_width extends Field[Double](1.0) with NonNegative
     object line_alpha extends Field[Percent](100%%)
     object line_join extends Field[LineJoin]

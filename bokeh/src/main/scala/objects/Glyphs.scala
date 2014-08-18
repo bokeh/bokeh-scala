@@ -16,162 +16,162 @@ abstract class BaseGlyph extends HasFields {
 }
 
 class AnnularWedge extends BaseGlyph with FillProps with LineProps {
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object inner_radius extends DataSpec[Double] with NonNegative
-    object outer_radius extends DataSpec[Double] with NonNegative
-    object start_angle extends DataSpec[Double]
-    object end_angle extends DataSpec[Double]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object inner_radius extends Spatial[Double] with NonNegative
+    object outer_radius extends Spatial[Double] with NonNegative
+    object start_angle extends Angular[Double]
+    object end_angle extends Angular[Double]
     object direction extends Field[Direction]
 }
 
 class Annulus extends BaseGlyph with FillProps with LineProps {
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object inner_radius extends DataSpec[Double] with NonNegative
-    object outer_radius extends DataSpec[Double] with NonNegative
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object inner_radius extends Spatial[Double] with NonNegative
+    object outer_radius extends Spatial[Double] with NonNegative
 }
 
 class Arc extends BaseGlyph with LineProps {
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object radius extends DataSpec[Double] with NonNegative
-    object start_angle extends DataSpec[Double]
-    object end_angle extends DataSpec[Double]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object radius extends Spatial[Double] with NonNegative
+    object start_angle extends Angular[Double]
+    object end_angle extends Angular[Double]
     object direction extends Field[Direction]
 }
 
 class Bezier extends BaseGlyph with LineProps {
-    object x0 extends DataSpec[Double]
-    object y0 extends DataSpec[Double]
-    object x1 extends DataSpec[Double]
-    object y1 extends DataSpec[Double]
-    object cx0 extends DataSpec[Double]
-    object cy0 extends DataSpec[Double]
-    object cx1 extends DataSpec[Double]
-    object cy1 extends DataSpec[Double]
+    object x0 extends Spatial[Double]
+    object y0 extends Spatial[Double]
+    object x1 extends Spatial[Double]
+    object y1 extends Spatial[Double]
+    object cx0 extends Spatial[Double]
+    object cy0 extends Spatial[Double]
+    object cx1 extends Spatial[Double]
+    object cy1 extends Spatial[Double]
 }
 
 class Image extends BaseGlyph {
-    object image extends DataSpec[Seq[Seq[Int]]]
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object dw extends DataSpec[Double]
-    object dh extends DataSpec[Double]
-    object palette extends DataSpec[Double]
+    object image extends Vectorized[Seq[Seq[Int]]]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object dw extends Spatial[Double] with NonNegative
+    object dh extends Spatial[Double] with NonNegative
+    object palette extends Vectorized[Double]
     object dilate extends Field[Boolean]
 }
 
 class ImageURL extends BaseGlyph {
-    object url extends DataSpec[String]
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object w extends DataSpec[Double]
-    object h extends DataSpec[Double]
-    object angle extends DataSpec[Double]
+    object url extends Vectorized[String]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object w extends Spatial[Double] with NonNegative
+    object h extends Spatial[Double] with NonNegative
+    object angle extends Angular[Double]
     object dilate extends Field[Boolean]
     object anchor extends Field[Anchor]
 }
 
 class ImageRGBA extends BaseGlyph {
-    object image extends DataSpec[Seq[Seq[Double]]]
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object dw extends DataSpec[Double]
-    object dh extends DataSpec[Double]
+    object image extends Vectorized[Seq[Seq[Double]]]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object dw extends Spatial[Double] with NonNegative
+    object dh extends Spatial[Double] with NonNegative
     object dilate extends Field[Boolean]
 }
 
 class Line extends BaseGlyph with LineProps {
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
 }
 
 class MultiLine extends BaseGlyph with LineProps {
-    object xs extends DataSpec[Seq[Double]]
-    object ys extends DataSpec[Seq[Double]]
+    object xs extends Spatial[Seq[Double]]
+    object ys extends Spatial[Seq[Double]]
 }
 
 class Oval extends BaseGlyph with FillProps with LineProps {
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object width extends DataSpec[Double]
-    object height extends DataSpec[Double]
-    object angle extends DataSpec[Double]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object width extends Spatial[Double] with NonNegative
+    object height extends Spatial[Double] with NonNegative
+    object angle extends Angular[Double]
 }
 
 class Patch extends BaseGlyph with FillProps with LineProps {
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
 }
 
 class Patches extends BaseGlyph with LineProps with FillProps {
-    object xs extends DataSpec[Seq[Double]]
-    object ys extends DataSpec[Seq[Double]]
+    object xs extends Spatial[Seq[Double]]
+    object ys extends Spatial[Seq[Double]]
 }
 
 class Quad extends BaseGlyph with FillProps with LineProps {
-    object left extends DataSpec[Double]
-    object right extends DataSpec[Double]
-    object bottom extends DataSpec[Double]
-    object top extends DataSpec[Double]
+    object left extends Spatial[Double]
+    object right extends Spatial[Double]
+    object bottom extends Spatial[Double]
+    object top extends Spatial[Double]
 }
 
 class Quadratic extends BaseGlyph with LineProps {
-    object x0 extends DataSpec[Double]
-    object y0 extends DataSpec[Double]
-    object x1 extends DataSpec[Double]
-    object y1 extends DataSpec[Double]
-    object cx extends DataSpec[Double]
-    object cy extends DataSpec[Double]
+    object x0 extends Spatial[Double]
+    object y0 extends Spatial[Double]
+    object x1 extends Spatial[Double]
+    object y1 extends Spatial[Double]
+    object cx extends Spatial[Double]
+    object cy extends Spatial[Double]
 }
 
 class Ray extends BaseGlyph with LineProps {
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object angle extends DataSpec[Double]
-    object length extends DataSpec[Double]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object angle extends Angular[Double]
+    object length extends Spatial[Double] with NonNegative
 }
 
 class Rect extends BaseGlyph with FillProps with LineProps {
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object width extends DataSpec[Double]
-    object height extends DataSpec[Double]
-    object angle extends DataSpec[Double]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object width extends Spatial[Double] with NonNegative
+    object height extends Spatial[Double] with NonNegative
+    object angle extends Angular[Double]
     object dilate extends Field[Boolean]
 }
 
 class Segment extends BaseGlyph with LineProps {
-    object x0 extends DataSpec[Double]
-    object y0 extends DataSpec[Double]
-    object x1 extends DataSpec[Double]
-    object y1 extends DataSpec[Double]
+    object x0 extends Spatial[Double]
+    object y0 extends Spatial[Double]
+    object x1 extends Spatial[Double]
+    object y1 extends Spatial[Double]
 }
 
 class Text extends BaseGlyph with TextProps {
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object text extends DataSpec[String]
-    object angle extends DataSpec[Double]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object text extends Vectorized[String]
+    object angle extends Angular[Double]
 }
 
 class Wedge extends BaseGlyph with FillProps with LineProps {
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object radius extends DataSpec[Double] with NonNegative
-    object start_angle extends DataSpec[Double]
-    object end_angle extends DataSpec[Double]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object radius extends Spatial[Double] with NonNegative
+    object start_angle extends Angular[Double]
+    object end_angle extends Angular[Double]
     object direction extends Field[Direction]
 }
 
 class Gear extends BaseGlyph with LineProps with FillProps {
-    object x extends DataSpec[Double]
-    object y extends DataSpec[Double]
-    object angle extends DataSpec[Double]
-    object module extends DataSpec[Double] with NonNegative
-    object teeth extends DataSpec[Int]
-    object pressure_angle extends DataSpec[Double](20) // TODO: units = Some(AngularUnits.Deg)
-    object shaft_size extends DataSpec[Double](0.3) with NonNegative
-    object internal extends DataSpec[Boolean]
+    object x extends Spatial[Double]
+    object y extends Spatial[Double]
+    object angle extends Angular[Double]
+    object module extends Spatial[Double] with NonNegative
+    object teeth extends Vectorized[Int] // TODO: with NonNegative
+    object pressure_angle extends Angular[Double](20) // TODO: units = Some(AngularUnits.Deg)
+    object shaft_size extends Spatial[Double](0.3) with NonNegative
+    object internal extends Vectorized[Boolean]
 }

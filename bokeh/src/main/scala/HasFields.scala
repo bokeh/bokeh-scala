@@ -117,7 +117,69 @@ trait HasFields { self =>
         def toSerializable: Option[Any] = valueOpt
     }
 
-    class DataSpec[FieldType:DefaultValue] extends Field[FieldType] {
+    class Vectorized[FieldType:DefaultValue] extends Field[FieldType] {
+        def this(value: FieldType) = {
+            this()
+            set(Some(value))
+        }
+
+        protected var _field: Option[Symbol] = None
+        def fieldOpt: Option[Symbol] = _field
+        def field: Symbol = _field.get
+
+        def setField(field: Option[Symbol]) {
+            _field = field
+            _dirty = true
+        }
+
+        def apply(field: Symbol): SelfType = {
+            setField(Some(field))
+            owner
+        }
+
+        def toMap: Map[String, Any] = {
+            (fieldOpt.map("field" -> _) orElse valueOpt.map("value" -> _)).toList.toMap
+        }
+
+        override def toSerializable: Option[Any] = Some(toMap)
+    }
+
+    abstract class VectorizedWithUnits[FieldType:DefaultValue, UnitsType <: Units: DefaultValue] extends Vectorized[FieldType] {
+        def defaultUnits: Option[UnitsType] =
+            Option(implicitly[DefaultValue[UnitsType]].default)
+
+        protected var _units: Option[UnitsType] = defaultUnits
+        def unitsOpt: Option[UnitsType] = _units
+        def units: UnitsType = _units.get
+
+        def setUnits(units: Option[UnitsType]) {
+            _units = units
+            _dirty = true
+        }
+
+        def apply(units: UnitsType): SelfType = {
+            setUnits(Some(units))
+            owner
+        }
+
+        def apply(value: FieldType, units: UnitsType): SelfType = {
+            set(Some(value))
+            setUnits(Some(units))
+            owner
+        }
+
+        def apply(field: Symbol, units: UnitsType): SelfType = {
+            setField(Some(field))
+            setUnits(Some(units))
+            owner
+        }
+
+        override def toMap: Map[String, Any] = {
+            super.toMap ++ unitsOpt.map("units" -> _).toList
+        }
+    }
+
+    class Spatial[FieldType:DefaultValue] extends VectorizedWithUnits[FieldType, SpatialUnits] {
         def this(value: FieldType) = {
             this()
             set(Some(value))
@@ -125,65 +187,31 @@ trait HasFields { self =>
 
         def this(units: SpatialUnits) = {
             this()
-            _units = Some(units)
+            setUnits(Some(units))
+            _dirty = false  // XXX: hack, see size vs. radius
         }
 
         def this(value: FieldType, units: SpatialUnits) = {
             this(value)
-            _units = Some(units)
+            setUnits(Some(units))
         }
+    }
 
-        def this(field: Symbol) = {
+    class Angular[FieldType:DefaultValue] extends VectorizedWithUnits[FieldType, AngularUnits] {
+        def this(value: FieldType) = {
             this()
-            _field = Some(field)
-        }
-
-        def this(field: Symbol, units: SpatialUnits) = {
-            this(field)
-            _units = Some(units)
-        }
-
-        protected var _field: Option[Symbol] = None
-        protected var _units: Option[SpatialUnits] = None
-
-        def fieldOpt: Option[Symbol] = _field
-        def unitsOpt: Option[SpatialUnits] = _units
-
-        def field: Symbol = _field.get
-        def units: SpatialUnits = _units.get
-
-        def apply(units: SpatialUnits): SelfType = {
-            _units = Some(units)
-            _dirty = true
-            owner
-        }
-
-        def apply(value: FieldType, units: SpatialUnits): SelfType = {
             set(Some(value))
-            _units = Some(units)
-            _dirty = true
-            owner
         }
 
-        def apply(field: Symbol): SelfType = {
-            _field = Some(field)
-            _dirty = true
-            owner
+        def this(units: AngularUnits) = {
+            this()
+            setUnits(Some(units))
+            _dirty = false  // XXX: hack, see size vs. radius
         }
 
-        def apply(field: Symbol, units: SpatialUnits): SelfType = {
-            _field = Some(field)
-            _units = Some(units)
-            _dirty = true
-            owner
+        def this(value: FieldType, units: AngularUnits) = {
+            this(value)
+            setUnits(Some(units))
         }
-
-        def toMap: Map[String, Any] = {
-            val source = fieldOpt.map("field" -> _) orElse valueOpt.map("value" -> _)
-            val units = unitsOpt.map("units" -> _)
-            (source.toList ++ units.toList).toMap
-        }
-
-        override def toSerializable: Option[Any] = Some(toMap)
     }
 }
