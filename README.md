@@ -2,7 +2,7 @@
 
 Scala bindings for [Bokeh][bokeh] plotting library.
 
-[![Build Status][travis]](https://travis-ci.org/mattpap/bokeh-scala)
+[![Build Status][travis]](https://travis-ci.org/bokeh/bokeh-scala)
 
 ## Requirements
 
@@ -11,7 +11,7 @@ Scala bindings for [Bokeh][bokeh] plotting library.
 ## Usage
 
 ```bash
-$ git clone --recursive https://github.com/mattpap/bokeh-scala
+$ git clone --recursive https://github.com/bokeh/bokeh-scala
 $ cd bokeh-scala
 $ ./sbt
 > examples/runMain io.continuum.bokeh.examples.glyphs.Anscombe
@@ -38,5 +38,5 @@ Published under [The MIT License][license], see LICENSE.
 
 [bokeh]: http://bokeh.pydata.org
 [group]: https://groups.google.com/a/continuum.io/forum/#!forum/bokeh
-[travis]: https://api.travis-ci.org/mattpap/bokeh-scala.png?branch=master
+[travis]: https://api.travis-ci.org/bokeh/bokeh-scala.png?branch=master
 [license]: http://www.opensource.org/licenses/mit-license.php

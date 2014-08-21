@@ -82,8 +82,8 @@ object BokehBuild extends Build {
         pomIncludeRepository := { _ => false },
         pomExtra := (
             <scm>
-                <url>https://github.com/mattpap/bokeh-scala</url>
-                <connection>scm:git:https://github.com/mattpap/bokeh-scala.git</connection>
+                <url>https://github.com/bokeh/bokeh-scala</url>
+                <connection>scm:git:https://github.com/bokeh/bokeh-scala.git</connection>
             </scm>
             <developers>
                 <developer>
