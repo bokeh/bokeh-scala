@@ -10,6 +10,18 @@ Scala bindings for [Bokeh][bokeh] plotting library.
 
 ## Usage
 
+Binary release artifacts are published to Sonatype OSS and synced to Maven
+Central. To include latest stable version of bokeh in your project, use:
+
+```scala
+libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.2"
+```
+
+## Development
+
+bokeh uses submodules, so either clone with `--recursive` or use
+`git submodule update`.
+
 ```bash
 $ git clone --recursive https://github.com/bokeh/bokeh-scala
 $ cd bokeh-scala
@@ -20,11 +32,6 @@ or
 ```bash
 > examples/runAll
 ```
-
-## Development
-
-bokeh-scala uses submodules, so either clone with `--recursive` or use
-`git submodule update`.
 
 ## Support
 
