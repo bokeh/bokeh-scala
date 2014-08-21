@@ -25,7 +25,7 @@ object Dependencies {
 
     val breeze = "org.scalanlp" %% "breeze" % "0.8.1"
 
-    val play_json = "com.typesafe.play" %% "play-json" % "2.3.1"
+    val play_json = "com.typesafe.play" %% "play-json" % "2.4.0-M1"
 
     val specs2 = "org.specs2" %% "specs2" % "2.3.11" % Test
 
@@ -59,12 +59,7 @@ object BokehBuild extends Build {
         shellPrompt := { state =>
             "continuum (%s)> ".format(Project.extract(state).currentProject.id)
         },
-        cancelable := true,
-        resolvers ++= Seq(
-            Resolver.sonatypeRepo("releases"),
-            Resolver.sonatypeRepo("snapshots"),
-            Resolver.typesafeRepo("releases"),
-            Resolver.typesafeRepo("snapshots"))
+        cancelable := true
     )
 
     val runAll = inputKey[Unit]("Run all discovered main classes.")
