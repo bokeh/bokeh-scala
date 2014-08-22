@@ -15,7 +15,6 @@ object Maps extends Example {
         .x_range(x_range)
         .y_range(y_range)
         .map_options(map_options)
-        .data_sources(Nil)
         .title("Austin")
 
     val select_tool = new BoxSelectTool()
@@ -41,7 +40,6 @@ object Maps extends Example {
         .glyph(new Circle().x('lon).y('lat).fill_color('fill).size(15)
             .radius_units(SpatialUnits.Screen).line_color(Color.Black))
 
-    plot.data_sources := source :: Nil
     plot.renderers <<= (circle_renderer :: _)
 
     val document = new Document(plot)

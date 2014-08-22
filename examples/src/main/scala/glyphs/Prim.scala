@@ -20,7 +20,7 @@ object Prim extends Example {
             .ydata_range(ydr)
             .glyph(glyph)
 
-        val plot = new Plot().x_range(xdr).y_range(ydr).data_sources(source :: Nil).title(name)
+        val plot = new Plot().x_range(xdr).y_range(ydr).title(name)
         val xaxis = new LinearAxis().plot(plot).location(Location.Below)
         val yaxis = new LinearAxis().plot(plot).location(Location.Left)
         plot.below <<= (xaxis :: _)

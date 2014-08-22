@@ -31,7 +31,7 @@ object Iris extends Example {
         .ydata_range(ydr)
         .glyph(circle)
 
-    val plot = new Plot().x_range(xdr).y_range(ydr).data_sources(source :: Nil).title("Iris Data")
+    val plot = new Plot().x_range(xdr).y_range(ydr).title("Iris Data")
 
     val xaxis = new LinearAxis().plot(plot).location(Location.Below)
         .axis_label("petal length").bounds((1.0, 7.0)).major_tick_in(0)

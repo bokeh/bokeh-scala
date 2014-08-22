@@ -24,7 +24,7 @@ object Glyph1 extends Example {
         .ydata_range(ydr)
         .glyph(circle)
 
-    val plot = new Plot().x_range(xdr).y_range(ydr).data_sources(source :: Nil)
+    val plot = new Plot().x_range(xdr).y_range(ydr)
 
     val xaxis = new LinearAxis().plot(plot).location(Location.Below)
     val yaxis = new LinearAxis().plot(plot).location(Location.Left)

@@ -33,7 +33,6 @@ object Hover extends Example with LinAlg with Tools {
         .title("Color Scatter Example")
         .x_range(xdr)
         .y_range(ydr)
-        .data_sources(source :: Nil)
         .tools(Pan|WheelZoom|BoxZoom|Reset|PreviewSave)
 
     val circle = new Circle()

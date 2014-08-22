@@ -29,7 +29,7 @@ object Glyph2 extends Example {
         .ydata_range(ydr)
         .glyph(circle)
 
-    val plot = new Plot().x_range(xdr).y_range(ydr).data_sources(source :: Nil).title("glyph2")
+    val plot = new Plot().x_range(xdr).y_range(ydr).title("glyph2")
 
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)

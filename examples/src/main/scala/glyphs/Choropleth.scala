@@ -68,7 +68,6 @@ object Choropleth extends Example {
     val plot = new Plot()
         .x_range(xdr)
         .y_range(ydr)
-        .data_sources(List(state_source, county_source))
         .border_fill(Color.White)
         .title("2009 Unemployment Data")
         .plot_width(1300)

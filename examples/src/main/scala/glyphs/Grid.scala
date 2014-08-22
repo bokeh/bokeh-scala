@@ -22,7 +22,7 @@ object Grid extends Example {
         val xdr = _xdr getOrElse new DataRange1d().sources(source.columns(xname) :: Nil)
         val ydr = _ydr getOrElse new DataRange1d().sources(source.columns(yname) :: Nil)
 
-        val plot = new Plot().x_range(xdr).y_range(ydr).data_sources(source :: Nil)
+        val plot = new Plot().x_range(xdr).y_range(ydr)
 
         val xaxis = new LinearAxis().plot(plot).location(Location.Below)
         val yaxis = new LinearAxis().plot(plot).location(Location.Left)

@@ -44,7 +44,6 @@ object Anscombe extends Example {
         val plot = new Plot()
             .x_range(xdr)
             .y_range(ydr)
-            .data_sources(List(lines_source, circles_source))
             .title(title)
             .plot_width(400)
             .plot_height(400)

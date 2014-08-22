@@ -29,7 +29,6 @@ object IrisSplom extends Example {
         val plot = new Plot()
             .x_range(xdr)
             .y_range(ydr)
-            .data_sources(source :: Nil)
             .background_fill("#ffeedd")
             .plot_width(250)
             .plot_height(250)
@@ -86,7 +85,6 @@ object IrisSplom extends Example {
                 .ydata_range(ydr)
                 .glyph(text_glyph)
 
-            plot.data_sources := text_source :: plot.data_sources.value
             plot.renderers := text_renderer :: plot.renderers.value
         }
 
