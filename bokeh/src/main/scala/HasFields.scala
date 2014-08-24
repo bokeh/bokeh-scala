@@ -5,11 +5,7 @@ import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
 case class Validator[T](fn: T => Boolean, message: String)
 class ValueError(message: String) extends Exception(message)
 
-trait AbstractField {
-    type ValueType
-
-    def set(value: Option[ValueType])
-
+trait ValidableField { self: AbstractField =>
     def validators: List[Validator[ValueType]] = Nil
 
     def validate(value: ValueType): List[String] = {
@@ -62,7 +58,7 @@ trait HasFields { self =>
                   .map { case (name, field) => (name, field.toSerializable) }
     }
 
-    class Field[FieldType:DefaultValue] extends AbstractField {
+    class Field[FieldType:DefaultValue] extends AbstractField with ValidableField {
         type ValueType = FieldType
 
         def owner: SelfType = self
