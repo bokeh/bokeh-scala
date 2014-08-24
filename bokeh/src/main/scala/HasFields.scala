@@ -1,6 +1,7 @@
 package io.continuum.bokeh
 
 import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
+import play.api.libs.json.{JsValue,JsObject}
 
 case class Validator[T](fn: T => Boolean, message: String)
 class ValueError(message: String) extends Exception(message)
@@ -24,6 +25,8 @@ trait HasFields { self =>
     type SelfType = self.type
 
     def typeName: String = getClass.getSimpleName
+
+    def toJson: JsValue = JsObject(Nil)
 
     final def fieldsList: List[(String, HasFields#Field[_])] = {
         val im = cm.reflect(this)

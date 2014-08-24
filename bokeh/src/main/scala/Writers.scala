@@ -57,6 +57,13 @@ trait Formats extends TupleFormats with DateTimeFormats {
     }
 
     implicit val RefJSON = Json.writes[Ref]
+
+    implicit val HasFieldsJSON = new Writes[HasFields] {
+        def writes(obj: HasFields) = obj match {
+            case (obj: PlotObject) => implicitly[Writes[Ref]].writes(obj.getRef)
+            case _                 => obj.toJson
+        }
+    }
 }
 
 object Formats extends Formats
