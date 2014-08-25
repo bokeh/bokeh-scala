@@ -2,6 +2,7 @@ package io.continuum.bokeh
 
 import annotation.implicitNotFound
 import breeze.linalg.DenseVector
+import play.api.libs.json.Writes
 
 @fields class ColumnsRef extends HasFields {
     object source extends Field[DataSource]
@@ -26,10 +27,10 @@ object ArrayLike {
     implicit def DenseVectorToArrayLike[T] = new ArrayLike[DenseVector[T]]
 }
 
-/* TODO: @fields*/ class ColumnDataSource extends DataSource {
+@fields class ColumnDataSource extends DataSource {
     object data extends Field[Map[Symbol, Any]]
 
-    def addColumn[A:ArrayLike](name: Symbol, array: A): SelfType = {
+    def addColumn[A:ArrayLike:Writes](name: Symbol, array: A): SelfType = {
         data := data.value + (name -> array)
         this
     }

@@ -61,7 +61,7 @@ trait HasFields { self =>
                   .map { case (name, field) => (name, field.toSerializable) }
     }
 
-    class Field[FieldType:DefaultValue] extends AbstractField with ValidableField {
+    class Field[FieldType:DefaultValue:Writes] extends AbstractField with ValidableField {
         type ValueType = FieldType
 
         def owner: SelfType = self
@@ -119,7 +119,7 @@ trait HasFields { self =>
             valueOpt.map(writer.writes)
     }
 
-    class Vectorized[FieldType:DefaultValue] extends Field[FieldType] {
+    class Vectorized[FieldType:DefaultValue:Writes] extends Field[FieldType] {
         def this(value: FieldType) = {
             this()
             set(Some(value))
@@ -153,7 +153,7 @@ trait HasFields { self =>
         }
     }
 
-    abstract class VectorizedWithUnits[FieldType:DefaultValue, UnitsType <: Units with EnumType: DefaultValue] extends Vectorized[FieldType] {
+    abstract class VectorizedWithUnits[FieldType:DefaultValue:Writes, UnitsType <: Units with EnumType: DefaultValue] extends Vectorized[FieldType] {
         def defaultUnits: Option[UnitsType] =
             Option(implicitly[DefaultValue[UnitsType]].default)
 
@@ -194,7 +194,7 @@ trait HasFields { self =>
         }
     }
 
-    class Spatial[FieldType:DefaultValue] extends VectorizedWithUnits[FieldType, SpatialUnits] {
+    class Spatial[FieldType:DefaultValue:Writes] extends VectorizedWithUnits[FieldType, SpatialUnits] {
         def this(value: FieldType) = {
             this()
             set(Some(value))
@@ -212,7 +212,7 @@ trait HasFields { self =>
         }
     }
 
-    class Angular[FieldType:DefaultValue] extends VectorizedWithUnits[FieldType, AngularUnits] {
+    class Angular[FieldType:DefaultValue:Writes] extends VectorizedWithUnits[FieldType, AngularUnits] {
         def this(value: FieldType) = {
             this()
             set(Some(value))

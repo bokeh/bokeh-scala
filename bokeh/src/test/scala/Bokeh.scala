@@ -390,7 +390,7 @@ class BokehSpec extends Specification {
             val obj = new ColumnDataSource().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 4
-            // TODO: obj.toJson.fields.length shouldEqual 4
+            obj.toJson.fields.length shouldEqual 4
         }
     }
 

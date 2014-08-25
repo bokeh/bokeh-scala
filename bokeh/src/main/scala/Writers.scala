@@ -6,6 +6,19 @@ import play.api.libs.json.{Json,Writes,JsValue,JsString,JsNumber,JsArray,JsObjec
 import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 import breeze.linalg.DenseVector
 
+trait MapFormats {
+    implicit def StringMapWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
+        def writes(obj: Map[String, V]) =
+            JsObject(obj.map { case (k, v) => (k, implicitly[Writes[V]].writes(v)) } toSeq)
+    }
+
+    implicit def EnumTypeMapWrites[E <: EnumType:Writes, V:Writes]: Writes[Map[E, V]] = new Writes[Map[E, V]] {
+        def writes(obj: Map[E, V]) = {
+            JsObject(obj.map { case (k, v) => (k.name, implicitly[Writes[V]].writes(v)) } toSeq)
+        }
+    }
+}
+
 trait TupleFormats {
     implicit def Tuple2Writes[T1:Writes, T2:Writes]: Writes[(T1, T2)] = new Writes[(T1, T2)] {
         def writes(t: (T1, T2)) = JsArray(List(implicitly[Writes[T1]].writes(t._1),
@@ -33,17 +46,7 @@ trait DateTimeFormats {
     }
 }
 
-trait Formats extends TupleFormats with DateTimeFormats {
-    implicit def StringMapWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
-        def writes(obj: Map[String, V]) =
-            JsObject(obj.map { case (k, v) => (k, implicitly[Writes[V]].writes(v)) } toList)
-    }
-
-    implicit def SymbolMapWrites[V:Writes]: Writes[Map[Symbol, V]] = new Writes[Map[Symbol, V]] {
-        def writes(obj: Map[Symbol, V]) =
-            implicitly[Writes[Map[String, V]]].writes(obj.map { case (k, v) => (k.name, v) })
-    }
-
+trait Formats extends MapFormats with TupleFormats with DateTimeFormats {
     implicit def DenseVectorJSON[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
         def writes(vec: DenseVector[T]) =
             implicitly[Writes[Array[T]]].writes(vec.toArray)
@@ -68,11 +71,37 @@ trait Formats extends TupleFormats with DateTimeFormats {
 
     implicit val RefJSON = Json.writes[Ref]
 
+    implicit def FieldJSON[T:Writes] = new Writes[AbstractField { type ValueType = T }] {
+        def writes(obj: AbstractField { type ValueType = T }) =
+            implicitly[Writes[Option[T]]].writes(obj.valueOpt)
+    }
+
     implicit val HasFieldsJSON = new Writes[HasFields] {
         def writes(obj: HasFields) = obj match {
             case (obj: PlotObject) => implicitly[Writes[Ref]].writes(obj.getRef)
             case _                 => obj.toJson
         }
+    }
+
+    implicit val SymbolAnyMapWrites: Writes[Map[Symbol, Any]] = new Writes[Map[Symbol, Any]] {
+        private def anyToJson(obj: Any): JsValue = obj match {
+            case obj: Boolean        => Json.toJson(obj)
+            case obj: Int            => Json.toJson(obj)
+            case obj: Double         => Json.toJson(obj)
+            case obj: String         => Json.toJson(obj)
+            case obj: Color          => Json.toJson(obj)
+            case obj: Percent        => Json.toJson(obj)
+            case obj: EnumType       => Json.toJson(obj)
+            case obj: DateTime       => Json.toJson(obj)
+            case obj: Time           => Json.toJson(obj)
+            case obj: Date           => Json.toJson(obj)
+            case obj: Traversable[_] => JsArray(obj.map(anyToJson).toSeq)
+            case obj: DenseVector[_] => JsArray(obj.iterator.map(_._2).map(anyToJson).toSeq)
+            case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
+        }
+
+        def writes(obj: Map[Symbol, Any]) =
+            JsObject(obj.map { case (k, v) => (k.name, anyToJson(v)) } toList)
     }
 }
 
