@@ -1,3 +1,3 @@
 package io.continuum.bokeh
 
-abstract class Widget extends PlotObject
+@fields abstract class Widget extends PlotObject

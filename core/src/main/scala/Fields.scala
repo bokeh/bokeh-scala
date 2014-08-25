@@ -3,7 +3,7 @@ package io.continuum.bokeh
 import scala.annotation.StaticAnnotation
 import scala.reflect.macros.Context
 
-import play.api.libs.json.{Writes,JsValue,JsObject}
+import play.api.libs.json.{Writes,JsObject}
 
 trait AbstractField {
     type ValueType
@@ -20,9 +20,9 @@ trait Refs[Ref] {
 }
 
 object Fields {
-    def toJson[T](obj: T): JsValue = macro toJsonImpl[T]
+    def toJson[T](obj: T): JsObject = macro toJsonImpl[T]
 
-    def toJsonImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[JsValue] = {
+    def toJsonImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[JsObject] = {
         import c.universe._
 
         case class Member(member: ModuleSymbol, name: String, valueType: Type, neededImplicit: Tree)
@@ -55,7 +55,7 @@ object Fields {
             q"($name, $valueOpt.map($neededImplicit.writes _).getOrElse($play.JsNull))"
         }
 
-        c.Expr[JsValue](q"$play.JsObject(List(..$values))")
+        c.Expr[JsObject](q"$play.JsObject(List(..$values))")
     }
 
     def macroTransformImpl(c: Context)(annottees: c.Expr[Any]*): c.Expr[Any] = {
@@ -64,7 +64,7 @@ object Fields {
         annottees.map(_.tree) match {
             case ClassDef(mods, name, tparams, tpl @ Template(parents, sf, body)) :: companion =>
                 val method = q"""
-                    override def toJson: play.api.libs.json.JsValue = {
+                    override def toJson: play.api.libs.json.JsObject = {
                         import io.continuum.bokeh.Formats._
                         io.continuum.bokeh.Fields.toJson(this)
                     }

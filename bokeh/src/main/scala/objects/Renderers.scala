@@ -1,8 +1,8 @@
 package io.continuum.bokeh
 
-abstract class Renderer extends PlotObject
+@fields abstract class Renderer extends PlotObject
 
-class Glyph extends Renderer {
+@fields class Glyph extends Renderer {
     // TODO: object server_data_source extends Field[ServerDataSource]
     object data_source extends Field[DataSource]
     object xdata_range extends Field[Range]
@@ -21,7 +21,7 @@ class Glyph extends Renderer {
     }
 }
 
-class Legend extends Renderer {
+@fields class Legend extends Renderer {
     object plot extends Field[Plot]
     object orientation extends Field[LegendOrientation]
     // TODO: object border extends Include(LineProps, prefix="border")
@@ -39,13 +39,13 @@ class Legend extends Renderer {
     object legends extends Field[Map[String, List[Glyph]]]
 }
 
-class DataSlider extends Renderer {
+@fields class DataSlider extends Renderer {
     object plot extends Field[Plot]
     object data_source extends Field[DataSource]
     object field extends Field[String]
 }
 
-class BoxSelectionOverlay extends Renderer {
+@fields class BoxSelectionOverlay extends Renderer {
     override val typeName = "BoxSelection"
 
     object tool extends Field[BoxSelectTool]

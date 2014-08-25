@@ -2,7 +2,7 @@ package io.continuum.bokeh
 
 import scala.reflect.ClassTag
 
-import play.api.libs.json.{Json,Writes,JsValue,JsString,JsNumber,JsArray}
+import play.api.libs.json.{Json,Writes,JsValue,JsString,JsNumber,JsArray,JsObject}
 import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 import breeze.linalg.DenseVector
 
@@ -34,6 +34,16 @@ trait DateTimeFormats {
 }
 
 trait Formats extends TupleFormats with DateTimeFormats {
+    implicit def StringMapWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
+        def writes(obj: Map[String, V]) =
+            JsObject(obj.map { case (k, v) => (k, implicitly[Writes[V]].writes(v)) } toList)
+    }
+
+    implicit def SymbolMapWrites[V:Writes]: Writes[Map[Symbol, V]] = new Writes[Map[Symbol, V]] {
+        def writes(obj: Map[Symbol, V]) =
+            implicitly[Writes[Map[String, V]]].writes(obj.map { case (k, v) => (k.name, v) })
+    }
+
     implicit def DenseVectorJSON[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
         def writes(vec: DenseVector[T]) =
             implicitly[Writes[Array[T]]].writes(vec.toArray)

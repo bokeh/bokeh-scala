@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-class Plot extends Widget {
+@fields class Plot extends Widget {
     object x_range extends Field[Range]
     object y_range extends Field[Range]
 
@@ -33,17 +33,17 @@ class Plot extends Widget {
     object v_symmetry extends Field[Boolean](false)
 }
 
-class MapOptions extends HasFields {
+@fields class MapOptions extends HasFields {
     object lat extends Field[Double]
     object lng extends Field[Double]
     object zoom extends Field[Int](12)
 }
 
-class GMapPlot extends Plot {
+@fields class GMapPlot extends Plot {
     object map_options extends Field[MapOptions]
 }
 
-class GridPlot extends Plot {
+@fields class GridPlot extends Plot {
     object children extends Field[List[List[Plot]]]
     object border_space extends Field[Int](0)
 }

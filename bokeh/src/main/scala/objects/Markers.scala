@@ -1,39 +1,39 @@
 package io.continuum.bokeh
 
-sealed abstract class Marker extends BaseGlyph with FillProps with LineProps {
+@fields sealed abstract class Marker extends BaseGlyph with FillProps with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object size extends Spatial[Double](SpatialUnits.Screen) with NonNegative
 }
 
-class Circle extends Marker {
+@fields class Circle extends Marker {
     object radius extends Spatial[Double](SpatialUnits.Data) with NonNegative
 }
 
-class Square extends Marker {
+@fields class Square extends Marker {
     object angle extends Angular[Double]
 }
 
-class Triangle extends Marker
+@fields class Triangle extends Marker
 
-class Cross extends Marker
+@fields class Cross extends Marker
 
-class X extends Marker
+@fields class X extends Marker
 
-class Diamond extends Marker
+@fields class Diamond extends Marker
 
-class InvertedTriangle extends Marker
+@fields class InvertedTriangle extends Marker
 
-class SquareX extends Marker
+@fields class SquareX extends Marker
 
-class Asterisk extends Marker
+@fields class Asterisk extends Marker
 
-class DiamondCross extends Marker
+@fields class DiamondCross extends Marker
 
-class CircleCross extends Marker
+@fields class CircleCross extends Marker
 
-class HexStar extends Marker
+@fields class HexStar extends Marker
 
-class SquareCross extends Marker
+@fields class SquareCross extends Marker
 
-class CircleX extends Marker
+@fields class CircleX extends Marker

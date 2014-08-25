@@ -18,6 +18,7 @@ class BokehSpec extends Specification {
                 .direction(Direction.Clock)
 
             obj1.fieldsWithValues.length shouldEqual 22
+            obj1.toJson.fields.length shouldEqual 22
         }
 
         "support Annulus" in {
@@ -29,6 +30,7 @@ class BokehSpec extends Specification {
                 .outer_radius('outer_radius)
 
             obj1.fieldsWithValues.length shouldEqual 19
+            obj1.toJson.fields.length shouldEqual 19
         }
 
         "support Arc" in {
@@ -42,6 +44,7 @@ class BokehSpec extends Specification {
                 .direction(Direction.Clock)
 
             obj1.fieldsWithValues.length shouldEqual 19
+            obj1.toJson.fields.length shouldEqual 19
         }
 
         "support Bezier" in {
@@ -57,6 +60,7 @@ class BokehSpec extends Specification {
                 .cy1('cy1)
 
             obj1.fieldsWithValues.length shouldEqual 21
+            obj1.toJson.fields.length shouldEqual 21
         }
 
         "support Image" in {
@@ -71,6 +75,7 @@ class BokehSpec extends Specification {
                 .dilate(false)
 
             obj1.fieldsWithValues.length shouldEqual 13
+            obj1.toJson.fields.length shouldEqual 13
         }
 
         "support ImageURL" in {
@@ -86,6 +91,7 @@ class BokehSpec extends Specification {
                 .anchor(Anchor.TopRight)
 
             obj1.fieldsWithValues.length shouldEqual 14
+            obj1.toJson.fields.length shouldEqual 14
         }
 
         "support ImageRGBA" in {
@@ -99,6 +105,7 @@ class BokehSpec extends Specification {
                 .dilate(false)
 
             obj1.fieldsWithValues.length shouldEqual 12
+            obj1.toJson.fields.length shouldEqual 12
         }
 
         "support Line" in {
@@ -108,6 +115,7 @@ class BokehSpec extends Specification {
                 .y('y)
 
             obj1.fieldsWithValues.length shouldEqual 15
+            obj1.toJson.fields.length shouldEqual 15
         }
 
         "support MultiLine" in {
@@ -117,6 +125,7 @@ class BokehSpec extends Specification {
                 .ys('ys)
 
             obj1.fieldsWithValues.length shouldEqual 15
+            obj1.toJson.fields.length shouldEqual 15
         }
 
         "support Oval" in {
@@ -129,6 +138,7 @@ class BokehSpec extends Specification {
                 .angle('angle)
 
             obj1.fieldsWithValues.length shouldEqual 20
+            obj1.toJson.fields.length shouldEqual 20
         }
 
         "support Patch" in {
@@ -138,6 +148,7 @@ class BokehSpec extends Specification {
                 .y('y)
 
             obj1.fieldsWithValues.length shouldEqual 17
+            obj1.toJson.fields.length shouldEqual 17
         }
 
         "support Patches" in {
@@ -147,6 +158,7 @@ class BokehSpec extends Specification {
                 .ys('ys)
 
             obj1.fieldsWithValues.length shouldEqual 17
+            obj1.toJson.fields.length shouldEqual 17
         }
 
         "support Quad" in {
@@ -158,6 +170,7 @@ class BokehSpec extends Specification {
                 .top('top)
 
             obj1.fieldsWithValues.length shouldEqual 19
+            obj1.toJson.fields.length shouldEqual 19
         }
 
         "support Quadratic" in {
@@ -171,6 +184,7 @@ class BokehSpec extends Specification {
                 .cy('cy)
 
             obj1.fieldsWithValues.length shouldEqual 19
+            obj1.toJson.fields.length shouldEqual 19
         }
 
         "support Ray" in {
@@ -182,6 +196,7 @@ class BokehSpec extends Specification {
                 .length('length)
 
             obj1.fieldsWithValues.length shouldEqual 17
+            obj1.toJson.fields.length shouldEqual 17
         }
 
         "support Rect" in {
@@ -195,6 +210,7 @@ class BokehSpec extends Specification {
                 .dilate(false)
 
             obj1.fieldsWithValues.length shouldEqual 21
+            obj1.toJson.fields.length shouldEqual 21
         }
 
         "support Segment" in {
@@ -206,6 +222,7 @@ class BokehSpec extends Specification {
                 .y1('y1)
 
             obj1.fieldsWithValues.length shouldEqual 17
+            obj1.toJson.fields.length shouldEqual 17
         }
 
         "support Text" in {
@@ -217,6 +234,7 @@ class BokehSpec extends Specification {
                 .angle('angle)
 
             obj1.fieldsWithValues.length shouldEqual 17
+            obj1.toJson.fields.length shouldEqual 17
         }
 
         "support Wedge" in {
@@ -230,6 +248,7 @@ class BokehSpec extends Specification {
                 .direction(Direction.Clock)
 
             obj1.fieldsWithValues.length shouldEqual 21
+            obj1.toJson.fields.length shouldEqual 21
         }
 
         "support Gear" in {
@@ -245,6 +264,7 @@ class BokehSpec extends Specification {
                 .internal('internal)
 
             obj1.fieldsWithValues.length shouldEqual 23
+            obj1.toJson.fields.length shouldEqual 23
         }
     }
 
@@ -252,71 +272,85 @@ class BokehSpec extends Specification {
         "support Circle" in {
             val obj = new Circle()
             obj.fieldsWithValues.length shouldEqual 19
+            obj.toJson.fields.length shouldEqual 19
         }
 
         "support Square" in {
             val obj = new Square()
             obj.fieldsWithValues.length shouldEqual 19
+            obj.toJson.fields.length shouldEqual 19
         }
 
         "support Triangle" in {
             val obj = new Triangle()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
 
         "support Cross" in {
             val obj = new Cross()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
 
         "support Xmarker" in {
             val obj = new X()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
 
         "support Diamond" in {
             val obj = new Diamond()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
 
         "support InvertedTriangle" in {
             val obj = new InvertedTriangle()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
 
         "support SquareX" in {
             val obj = new SquareX()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
 
         "support Asterisk" in {
             val obj = new Asterisk()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
 
         "support DiamondCross" in {
             val obj = new DiamondCross()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
 
         "support CircleCross" in {
             val obj = new CircleCross()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
 
         "support HexStar" in {
             val obj = new HexStar()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
 
         "support SquareCross" in {
             val obj = new SquareCross()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
 
         "support CircleX" in {
             val obj = new CircleX()
             obj.fieldsWithValues.length shouldEqual 18
+            obj.toJson.fields.length shouldEqual 18
         }
     }
 
@@ -325,6 +359,7 @@ class BokehSpec extends Specification {
             val obj = new Glyph().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 8
+            obj.toJson.fields.length shouldEqual 8
         }
     }
 
@@ -333,17 +368,20 @@ class BokehSpec extends Specification {
             val obj = new Range1d().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 3
+            obj.toJson.fields.length shouldEqual 3
         }
 
         "support ColumnsRef" in {
             val obj = new ColumnsRef()
             obj.fieldsWithValues.length shouldEqual 2
+            obj.toJson.fields.length shouldEqual 2
         }
 
         "support DataRange1d" in {
             val obj = new DataRange1d().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 5
+            obj.toJson.fields.length shouldEqual 5
         }
     }
 
@@ -352,6 +390,7 @@ class BokehSpec extends Specification {
             val obj = new ColumnDataSource().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 4
+            // TODO: obj.toJson.fields.length shouldEqual 4
         }
     }
 
@@ -360,24 +399,28 @@ class BokehSpec extends Specification {
             val obj = new LinearAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 12
+            obj.toJson.fields.length shouldEqual 12
         }
 
         "support CategoricalAxis" in {
             val obj = new CategoricalAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 12
+            obj.toJson.fields.length shouldEqual 12
         }
 
         "support DatetimeAxis" in {
             val obj = new DatetimeAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 16
+            obj.toJson.fields.length shouldEqual 16
         }
 
         "support Grid" in {
             val obj = new Grid().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 5
+            obj.toJson.fields.length shouldEqual 5
         }
     }
 
@@ -386,60 +429,70 @@ class BokehSpec extends Specification {
             val obj = new PanTool().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 3
+            obj.toJson.fields.length shouldEqual 3
         }
 
         "support WheelZoomTool" in {
             val obj = new WheelZoomTool().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 3
+            obj.toJson.fields.length shouldEqual 3
         }
 
         "support PreviewSaveTool" in {
             val obj = new PreviewSaveTool().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 2
+            obj.toJson.fields.length shouldEqual 2
         }
 
         "support EmbedTool" in {
             val obj = new EmbedTool().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 2
+            obj.toJson.fields.length shouldEqual 2
         }
 
         "support ResetTool" in {
             val obj = new ResetTool().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 2
+            obj.toJson.fields.length shouldEqual 2
         }
 
         "support ResizeTool" in {
             val obj = new ResizeTool().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 2
+            obj.toJson.fields.length shouldEqual 2
         }
 
         "support ClickTool" in {
             val obj = new ClickTool().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 4
+            obj.toJson.fields.length shouldEqual 4
         }
 
         "support CrosshairTool" in {
             val obj = new CrosshairTool().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 2
+            obj.toJson.fields.length shouldEqual 2
         }
 
         "support BoxZoomTool" in {
             val obj = new BoxZoomTool().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 2
+            obj.toJson.fields.length shouldEqual 2
         }
 
         "support BoxSelectTool" in {
             val obj = new BoxSelectTool().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 6
+            obj.toJson.fields.length shouldEqual 6
         }
     }
 
@@ -448,12 +501,14 @@ class BokehSpec extends Specification {
             val obj = new Plot().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 21
+            obj.toJson.fields.length shouldEqual 21
         }
 
         "support GridPlot" in {
             val obj = new GridPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 23
+            obj.toJson.fields.length shouldEqual 23
         }
     }
 
@@ -462,6 +517,7 @@ class BokehSpec extends Specification {
             val obj = new PlotContext().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fieldsWithValues.length shouldEqual 2
+            obj.toJson.fields.length shouldEqual 2
         }
     }
 }
