@@ -6,7 +6,7 @@ import play.api.libs.json.{Json,Writes,JsValue,JsString,JsNumber,JsArray,JsObjec
 import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 import breeze.linalg.DenseVector
 
-trait MapFormats {
+trait MapWrites {
     implicit def StringMapWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
         def writes(obj: Map[String, V]) =
             JsObject(obj.map { case (k, v) => (k, implicitly[Writes[V]].writes(v)) } toSeq)
@@ -19,7 +19,7 @@ trait MapFormats {
     }
 }
 
-trait TupleFormats {
+trait TupleWrites {
     implicit def Tuple2Writes[T1:Writes, T2:Writes]: Writes[(T1, T2)] = new Writes[(T1, T2)] {
         def writes(t: (T1, T2)) = JsArray(List(implicitly[Writes[T1]].writes(t._1),
                                                implicitly[Writes[T2]].writes(t._2)))
@@ -32,7 +32,7 @@ trait TupleFormats {
     }
 }
 
-trait DateTimeFormats {
+trait DateTimeWrites {
     implicit val DateTimeJSON = new Writes[DateTime] {
         def writes(datetime: DateTime) = JsNumber(datetime.getMillis)
     }
@@ -46,37 +46,37 @@ trait DateTimeFormats {
     }
 }
 
-trait Formats extends MapFormats with TupleFormats with DateTimeFormats {
-    implicit def DenseVectorJSON[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
+trait BokehWrites {
+    implicit def DenseVectorWrites[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
         def writes(vec: DenseVector[T]) =
             implicitly[Writes[Array[T]]].writes(vec.toArray)
     }
 
-    implicit val PercentJSON = new Writes[Percent] {
+    implicit val PercentWrites = new Writes[Percent] {
         def writes(percent: Percent) =
             implicitly[Writes[Double]].writes(percent.value)
     }
 
-    implicit val ColorJSON = new Writes[Color] {
+    implicit val ColorWrites = new Writes[Color] {
         def writes(color: Color) = JsString(color.toCSS)
     }
 
-    implicit val SymbolJSON = new Writes[Symbol] {
+    implicit val SymbolWrites = new Writes[Symbol] {
         def writes(symbol: Symbol) = JsString(symbol.name)
     }
 
-    implicit def EnumJSON[T <: EnumType] = new Writes[T] {
+    implicit def EnumWrites[T <: EnumType] = new Writes[T] {
         def writes(value: T) = implicitly[Writes[String]].writes(value.name)
     }
 
-    implicit val RefJSON = Json.writes[Ref]
+    implicit val RefWrites = Json.writes[Ref]
 
-    implicit def FieldJSON[T:Writes] = new Writes[AbstractField { type ValueType = T }] {
+    implicit def FieldWrites[T:Writes] = new Writes[AbstractField { type ValueType = T }] {
         def writes(obj: AbstractField { type ValueType = T }) =
             implicitly[Writes[Option[T]]].writes(obj.valueOpt)
     }
 
-    implicit val HasFieldsJSON = new Writes[HasFields] {
+    implicit val HasFieldsWrites = new Writes[HasFields] {
         def writes(obj: HasFields) = obj match {
             case (obj: PlotObject) => implicitly[Writes[Ref]].writes(obj.getRef)
             case _                 => obj.toJson + ("type" -> JsString(obj.typeName))
@@ -106,4 +106,5 @@ trait Formats extends MapFormats with TupleFormats with DateTimeFormats {
     }
 }
 
+trait Formats extends MapWrites with TupleWrites with DateTimeWrites with BokehWrites
 object Formats extends Formats
