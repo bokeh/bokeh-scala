@@ -95,6 +95,8 @@ trait JSONSerializer {
                     obj.foreach(descend)
                 case obj: Map[_, _] =>
                     obj.foreach { case (key, value) => descend(key) -> descend(value) }
+                case obj: Product =>
+                    obj.productIterator.foreach(descend)
                 case _ =>
             }
         }
