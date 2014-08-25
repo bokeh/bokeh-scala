@@ -79,7 +79,7 @@ trait Formats extends MapFormats with TupleFormats with DateTimeFormats {
     implicit val HasFieldsJSON = new Writes[HasFields] {
         def writes(obj: HasFields) = obj match {
             case (obj: PlotObject) => implicitly[Writes[Ref]].writes(obj.getRef)
-            case _                 => obj.toJson
+            case _                 => obj.toJson + ("type" -> JsString(obj.typeName))
         }
     }
 
@@ -95,6 +95,7 @@ trait Formats extends MapFormats with TupleFormats with DateTimeFormats {
             case obj: DateTime       => Json.toJson(obj)
             case obj: Time           => Json.toJson(obj)
             case obj: Date           => Json.toJson(obj)
+            case obj: Array[_]       => JsArray(obj.map(anyToJson).toSeq)
             case obj: Traversable[_] => JsArray(obj.map(anyToJson).toSeq)
             case obj: DenseVector[_] => JsArray(obj.iterator.map(_._2).map(anyToJson).toSeq)
             case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")

@@ -3,7 +3,7 @@ package io.continuum.bokeh
 import scala.annotation.StaticAnnotation
 import scala.reflect.macros.Context
 
-import play.api.libs.json.{Writes,JsObject}
+import play.api.libs.json.{Writes,JsValue}
 
 trait AbstractField {
     type ValueType
@@ -20,42 +20,21 @@ trait Refs[Ref] {
 }
 
 object Fields {
-    def toJson[T](obj: T): JsObject = macro toJsonImpl[T]
+    def values[T](obj: T): List[(String, Option[JsValue])] = macro valuesImpl[T]
 
-    def toJsonImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[JsObject] = {
+    def valuesImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[List[(String, Option[JsValue])]] = {
         import c.universe._
 
-        case class Member(member: ModuleSymbol, name: String, valueType: Type, neededImplicit: Tree)
-
-        val members = weakTypeOf[T].members
+        val values = weakTypeOf[T].members
             .filter(_.isModule)
             .map(_.asModule)
             .filter(_.typeSignature <:< typeOf[AbstractField])
             .map { member =>
-                val memberType = member.typeSignature
-                val valueType = memberType.member(newTypeName("ValueType")).typeSignatureIn(memberType)
-                val writesType = appliedType(typeOf[Writes[_]].typeConstructor, valueType :: Nil)
-                val neededImplicit = c.inferImplicitValue(writesType)
-                Member(member, member.name.decoded, valueType, neededImplicit)
+                val field = q"$obj.${member.name.toTermName}"
+                q"($field.fieldName.getOrElse(${member.name.decoded}), $field.toJson)"
             }
 
-        val missingWrites = members.collect {
-            case Member(_, _, valueType, EmptyTree) => valueType
-        }
-
-        if (missingWrites.nonEmpty) {
-            val types = missingWrites.toList.distinct.mkString(", ")
-            c.abort(c.enclosingPosition, s"No implicit writes for $types available.")
-        }
-
-        val play = q"play.api.libs.json"
-
-        val values = members.map { case Member(member, name, _, neededImplicit) =>
-            val json = q"$obj.${member.name.toTermName}.toJson($neededImplicit)"
-            q"($name, $json.getOrElse($play.JsNull))"
-        }
-
-        c.Expr[JsObject](q"$play.JsObject(List(..$values))")
+        c.Expr[List[(String, Option[JsValue])]](q"List(..$values)")
     }
 
     def macroTransformImpl(c: Context)(annottees: c.Expr[Any]*): c.Expr[Any] = {
@@ -64,8 +43,8 @@ object Fields {
         annottees.map(_.tree) match {
             case ClassDef(mods, name, tparams, tpl @ Template(parents, sf, body)) :: companion =>
                 val method = q"""
-                    override def toJson: play.api.libs.json.JsObject = {
-                        io.continuum.bokeh.Fields.toJson(this)
+                    override def values: List[(String, Option[play.api.libs.json.JsValue])] = {
+                        io.continuum.bokeh.Fields.values(this)
                     }
                 """
                 val decl = ClassDef(mods, name, tparams, Template(parents, sf, body :+ method))

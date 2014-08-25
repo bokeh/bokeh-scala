@@ -26,7 +26,9 @@ trait HasFields { self =>
 
     def typeName: String = getClass.getSimpleName
 
-    def toJson: JsObject
+    def values: List[(String, Option[JsValue])]
+
+    def toJson: JsObject = JsObject(values.collect { case (name, Some(value)) => (name, value) })
 
     final def fieldsList: List[(String, HasFields#Field[_])] = {
         val im = cm.reflect(this)
@@ -115,8 +117,13 @@ trait HasFields { self =>
 
         def toSerializable: Option[Any] = valueOpt
 
-        def toJson(writer: Writes[ValueType]): Option[JsValue] =
-            valueOpt.map(writer.writes)
+        def toJson: Option[JsValue] = {
+            if (isDirty) Some(_toJson) else None
+        }
+
+        def _toJson: JsValue = {
+            valueOpt.map(implicitly[Writes[ValueType]].writes _) getOrElse JsNull
+        }
     }
 
     class Vectorized[FieldType:DefaultValue:Writes] extends Field[FieldType] {
@@ -145,11 +152,11 @@ trait HasFields { self =>
 
         override def toSerializable: Option[Any] = Some(toMap)
 
-        override def toJson(writer: Writes[ValueType]): Option[JsValue] = {
+        override def _toJson: JsObject = {
             val value = fieldOpt
                 .map { field => "field" -> implicitly[Writes[Symbol]].writes(field) }
-                .getOrElse { "value" -> super.toJson(writer).getOrElse(JsNull) }
-            Some(JsObject(List(value)))
+                .getOrElse { "value" -> super._toJson }
+            JsObject(List(value))
         }
     }
 
@@ -187,10 +194,11 @@ trait HasFields { self =>
             super.toMap ++ unitsOpt.map("units" -> _).toList
         }
 
-        override def toJson(writer: Writes[ValueType]): Option[JsValue] = {
-            super.toJson(writer).map { case JsObject(values) =>
-                JsObject(values ++ unitsOpt.map(units => "units" -> implicitly[Writes[UnitsType]].writes(units)).toSeq)
-            }
+        override def _toJson: JsObject = {
+            val json = super._toJson
+            unitsOpt.map {
+                units => json + ("units" -> implicitly[Writes[UnitsType]].writes(units))
+            } getOrElse json
         }
     }
 

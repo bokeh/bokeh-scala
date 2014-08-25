@@ -1,53 +1,15 @@
 package io.continuum.bokeh
 
-import play.api.libs.json.{Json,JsValue,JsArray,JsObject,JsNull}
+import play.api.libs.json.{Json,JsValue,JsArray,JsObject,JsString}
 
 trait JSONSerializer {
-    case class Model(id: String, `type`: String, attributes: Map[String, Any], doc: Option[String]) {
+    case class Model(id: String, `type`: String, attributes: JsObject, doc: Option[String]) {
         def toJson: JsValue =
             Json.obj("id" -> Json.toJson(id),
                      "type" -> Json.toJson(`type`),
-                     "attributes" -> anyToJson(attributes),
+                     "attributes" -> attributes,
                      "doc" -> Json.toJson(doc))
     }
-
-    def anyToJson(obj: Any): JsValue = {
-        import Json.toJson
-        obj match {
-            case obj: Boolean => toJson(obj)
-            case obj: Int => toJson(obj)
-            case obj: Double => toJson(obj)
-            case obj: String => toJson(obj)
-            case obj: Symbol => toJson(obj)
-            case obj: Ref => toJson(obj)
-            case obj: Color => toJson(obj)
-            case obj: Percent => toJson(obj)
-            case obj: EnumType => toJson(obj)
-            case obj: org.joda.time.DateTime => toJson(obj)
-            case obj: org.joda.time.LocalTime => toJson(obj)
-            case obj: org.joda.time.LocalDate => toJson(obj)
-            case obj: breeze.linalg.DenseVector[Double] => toJson(obj)
-            case obj: Seq[_] => JsArray(obj.map(anyToJson))
-            case obj: Array[_] => JsArray(obj.map(anyToJson))
-            case obj: Map[_, _] =>
-                JsObject(obj.toList.map {
-                    case (key: String,   value) => (key,      anyToJson(value))
-                    case (key: Symbol,   value) => (key.name, anyToJson(value))
-                    case (key: EnumType, value) => (key.name, anyToJson(value))
-                    case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
-                })
-            case (obj1, obj2) => JsArray(List(anyToJson(obj1), anyToJson(obj2)))
-            case (obj1, obj2, obj3) => JsArray(List(anyToJson(obj1), anyToJson(obj2), anyToJson(obj2)))
-            case Some(obj) => anyToJson(obj)
-            case None => JsNull
-            case obj: PlotObject => toJson(obj.getRef)
-            case obj: HasFields => anyToJson(allFieldsWithValues(obj))
-            case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
-        }
-    }
-
-    def allFieldsWithValues(obj: HasFields): Map[String, Any] =
-        ("type", obj.typeName) :: obj.dirtyFieldsWithValues toMap
 
     val stringifyFn: JsValue => String
 
@@ -75,7 +37,7 @@ trait JSONSerializer {
         val ids = collection.mutable.HashSet[String]()
 
         def descendFields(obj: HasFields) {
-            allFieldsWithValues(obj).foreach {
+            obj.dirtyFieldsWithValues.foreach {
                 case (_, Some(obj)) => descend(obj)
                 case _ =>
             }
@@ -106,6 +68,6 @@ trait JSONSerializer {
 
     def getModel(obj: PlotObject): Model = {
         val Ref(id, tp) = obj.getRef
-        Model(id, tp, allFieldsWithValues(obj), None)
+        Model(id, tp, obj.toJson + ("type" -> JsString(obj.typeName)), None)
     }
 }
