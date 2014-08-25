@@ -1,7 +1,7 @@
 package io.continuum.bokeh
 
 import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
-import play.api.libs.json.JsObject
+import play.api.libs.json.{Writes,JsValue,JsObject,JsNull}
 
 case class Validator[T](fn: T => Boolean, message: String)
 class ValueError(message: String) extends Exception(message)
@@ -114,6 +114,9 @@ trait HasFields { self =>
         }
 
         def toSerializable: Option[Any] = valueOpt
+
+        def toJson(writer: Writes[ValueType]): Option[JsValue] =
+            valueOpt.map(writer.writes)
     }
 
     class Vectorized[FieldType:DefaultValue] extends Field[FieldType] {
@@ -141,9 +144,16 @@ trait HasFields { self =>
         }
 
         override def toSerializable: Option[Any] = Some(toMap)
+
+        override def toJson(writer: Writes[ValueType]): Option[JsValue] = {
+            val value = fieldOpt
+                .map { field => "field" -> Formats.SymbolJSON.writes(field) }
+                .getOrElse { "value" -> super.toJson(writer).getOrElse(JsNull) }
+            Some(JsObject(List(value)))
+        }
     }
 
-    abstract class VectorizedWithUnits[FieldType:DefaultValue, UnitsType <: Units: DefaultValue] extends Vectorized[FieldType] {
+    abstract class VectorizedWithUnits[FieldType:DefaultValue, UnitsType <: Units with EnumType: DefaultValue] extends Vectorized[FieldType] {
         def defaultUnits: Option[UnitsType] =
             Option(implicitly[DefaultValue[UnitsType]].default)
 
@@ -175,6 +185,12 @@ trait HasFields { self =>
 
         override def toMap: Map[String, Any] = {
             super.toMap ++ unitsOpt.map("units" -> _).toList
+        }
+
+        override def toJson(writer: Writes[ValueType]): Option[JsValue] = {
+            super.toJson(writer).map { case JsObject(values) =>
+                JsObject(values ++ unitsOpt.map(units => "units" -> Formats.EnumJSON[UnitsType].writes(units)).toSeq)
+            }
         }
     }
 

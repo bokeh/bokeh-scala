@@ -51,8 +51,8 @@ object Fields {
         val play = q"play.api.libs.json"
 
         val values = members.map { case Member(member, name, _, neededImplicit) =>
-            val valueOpt = q"$obj.${member.name.toTermName}.valueOpt"
-            q"($name, $valueOpt.map($neededImplicit.writes _).getOrElse($play.JsNull))"
+            val json = q"$obj.${member.name.toTermName}.toJson($neededImplicit)"
+            q"($name, $json.getOrElse($play.JsNull))"
         }
 
         c.Expr[JsObject](q"$play.JsObject(List(..$values))")
