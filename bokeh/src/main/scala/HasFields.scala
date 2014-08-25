@@ -26,7 +26,7 @@ trait HasFields { self =>
 
     def typeName: String = getClass.getSimpleName
 
-    def toJson: JsObject = JsObject(Nil)
+    def toJson: JsObject
 
     final def fieldsList: List[(String, HasFields#Field[_])] = {
         val im = cm.reflect(this)

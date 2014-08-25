@@ -34,7 +34,7 @@ object Fields {
             .map { member =>
                 val memberType = member.typeSignature
                 val valueType = memberType.member(newTypeName("ValueType")).typeSignatureIn(memberType)
-                val writesType = appliedType(typeOf[Writes[_]].typeConstructor, valueType)
+                val writesType = appliedType(typeOf[Writes[_]].typeConstructor, valueType :: Nil)
                 val neededImplicit = c.inferImplicitValue(writesType)
                 Member(member, member.name.decoded, valueType, neededImplicit)
             }
@@ -51,7 +51,7 @@ object Fields {
         val play = q"play.api.libs.json"
 
         val values = members.map { case Member(member, name, _, neededImplicit) =>
-            val valueOpt = q"$obj.${member.name}.valueOpt"
+            val valueOpt = q"$obj.${member.name.toTermName}.valueOpt"
             q"($name, $valueOpt.map($neededImplicit.writes _).getOrElse($play.JsNull))"
         }
 
