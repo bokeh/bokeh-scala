@@ -2,7 +2,7 @@ package io.continuum
 
 import java.io.File
 
-package object bokeh {
+package object bokeh extends Formats {
     implicit class IntPercent(value: Int) {
         def %% : Percent = Percent(value.toDouble/100)
     }

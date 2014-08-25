@@ -13,7 +13,6 @@ trait JSONSerializer {
 
     def anyToJson(obj: Any): JsValue = {
         import Json.toJson
-        import Formats._
         obj match {
             case obj: Boolean => toJson(obj)
             case obj: Int => toJson(obj)

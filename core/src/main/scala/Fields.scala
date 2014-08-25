@@ -65,7 +65,6 @@ object Fields {
             case ClassDef(mods, name, tparams, tpl @ Template(parents, sf, body)) :: companion =>
                 val method = q"""
                     override def toJson: play.api.libs.json.JsObject = {
-                        import io.continuum.bokeh.Formats._
                         io.continuum.bokeh.Fields.toJson(this)
                     }
                 """

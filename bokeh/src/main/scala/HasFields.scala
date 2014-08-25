@@ -147,7 +147,7 @@ trait HasFields { self =>
 
         override def toJson(writer: Writes[ValueType]): Option[JsValue] = {
             val value = fieldOpt
-                .map { field => "field" -> Formats.SymbolJSON.writes(field) }
+                .map { field => "field" -> implicitly[Writes[Symbol]].writes(field) }
                 .getOrElse { "value" -> super.toJson(writer).getOrElse(JsNull) }
             Some(JsObject(List(value)))
         }
@@ -189,7 +189,7 @@ trait HasFields { self =>
 
         override def toJson(writer: Writes[ValueType]): Option[JsValue] = {
             super.toJson(writer).map { case JsObject(values) =>
-                JsObject(values ++ unitsOpt.map(units => "units" -> Formats.EnumJSON[UnitsType].writes(units)).toSeq)
+                JsObject(values ++ unitsOpt.map(units => "units" -> implicitly[Writes[UnitsType]].writes(units)).toSeq)
             }
         }
     }
