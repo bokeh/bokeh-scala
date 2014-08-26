@@ -90,8 +90,15 @@ object BokehBuild extends Build {
             </developers>
         ),
         credentials ++= {
-            val path = Path.userHome / ".sonatype" / "credentials.sbt"
-            if (path.exists) Credentials(path) :: Nil else Nil
+            (for {
+                username <- Option(System.getenv().get("SONATYPE_USERNAME"))
+                password <- Option(System.getenv().get("SONATYPE_PASSWORD"))
+            } yield {
+                Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", username, password)
+            }) orElse {
+                val path = Path.userHome / ".sonatype" / "credentials.sbt"
+                if (path.exists) Some(Credentials(path)) else None
+            } toList
         }
     )
 
