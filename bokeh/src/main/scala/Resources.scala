@@ -30,11 +30,15 @@ sealed trait Resources {
 }
 
 object Resources {
-    private val jsMin = "bokeh.min.js"
-    private val jsUnMin = "bokeh.js"
+    private val bokehjsVersion = "0.5.2"
+    private def resource(ext: String, version: Boolean=false, minified: Boolean=false) =
+        s"bokeh${if (version) "-" + bokehjsVersion else ""}${if (minified) ".min" else ""}.$ext"
 
-    private val cssMin = "bokeh.min.css"
-    private val cssUnMin = "bokeh.css"
+    private val jsMin = resource("js", minified=true)
+    private val jsUnMin = resource("js")
+
+    private val cssMin = resource("css", minified=true)
+    private val cssUnMin = resource("css")
 
     trait InlineResources extends Resources {
         def inlineJS(path: String): xml.Node = loadResource("js/" + path).asScript
@@ -108,9 +112,18 @@ object Resources {
         def resolveFile(file: File): File = file
     }
 
+    abstract class Remote(url: URL) extends ExternalResources {
+        def includeJS(path: String): xml.Node = new URL(url, "/" + path).asScript
+        def includeCSS(path: String): xml.Node = new URL(url, "/" + path).asStyle
+
+        def scripts = includeJS(resource("js", true, true)) :: Nil
+        def styles = includeCSS(resource("css", true, true)) :: Nil
+    }
+
+    case object CDN extends Remote(new URL("http://cdn.pydata.org"))
+
     private val fromStringPF: PartialFunction[String, Resources] = {
-        // case "cdn" => CDN
-        // case "cdn-min" => CDNMin
+        case "cdn" => CDN
         case "inline" => Inline
         case "inline-min" => InlineMin
         // case "relative" => Relative

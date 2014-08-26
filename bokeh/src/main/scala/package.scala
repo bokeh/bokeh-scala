@@ -1,6 +1,7 @@
 package io.continuum
 
 import java.io.File
+import java.net.URL
 
 package object bokeh extends Formats {
     implicit class IntPercent(value: Int) {
@@ -36,6 +37,16 @@ package object bokeh extends Formats {
 
         def asStyle: xml.Node = {
             <link rel="stylesheet" href={file.getPath}></link>
+        }
+    }
+
+    implicit class URLNode(url: URL) {
+        def asScript: xml.Node = {
+            <script type="text/javascript" src={url.toString}></script>
+        }
+
+        def asStyle: xml.Node = {
+            <link rel="stylesheet" href={url.toString}></link>
         }
     }
 }
