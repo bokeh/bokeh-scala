@@ -17,6 +17,16 @@ Central. To include latest stable version of bokeh in your project, use:
 libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.2"
 ```
 
+Development snapshots are available as well. To use this you have to add
+Sonatype's snapshots repository to your build:
+
+```scala
+resolvers += Opts.resolver.sonatypeSnapshots
+libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.2-SNAPSHOT"
+```
+
+See [this][sample] sample project for detailed integration example.
+
 ## Development
 
 bokeh uses submodules, so either clone with `--recursive` or use
@@ -44,6 +54,7 @@ Copyright &copy; 2014 by Mateusz Paprocki and contributors.
 Published under [The MIT License][license], see LICENSE.
 
 [bokeh]: http://bokeh.pydata.org
+[sample]: https://github.com/bokeh/bokeh-scala-sample
 [group]: https://groups.google.com/a/continuum.io/forum/#!forum/bokeh
 [travis]: https://api.travis-ci.org/bokeh/bokeh-scala.png?branch=master
 [license]: http://www.opensource.org/licenses/mit-license.php
