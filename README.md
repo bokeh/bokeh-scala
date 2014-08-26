@@ -33,7 +33,7 @@ bokeh uses submodules, so either clone with `--recursive` or use
 `git submodule update`.
 
 ```bash
-$ git clone --recursive https://github.com/bokeh/bokeh-scala
+$ git clone --recursive https://github.com/bokeh/bokeh-scala.git
 $ cd bokeh-scala
 $ ./sbt
 > examples/runMain io.continuum.bokeh.examples.glyphs.Anscombe
