@@ -88,7 +88,11 @@ object BokehBuild extends Build {
                     <url>mateuszpaprocki.pl</url>
                 </developer>
             </developers>
-        )
+        ),
+        credentials ++= {
+            val path = Path.userHome / ".sonatype" / "credentials.sbt"
+            if (path.exists) Credentials(path) :: Nil else Nil
+        }
     )
 
     lazy val commonSettings = Defaults.coreDefaultSettings ++ publishSettings ++ Seq(
@@ -140,7 +144,7 @@ object BokehBuild extends Build {
             """
     )
 
-    lazy val bokehjsSettings = BokehJS.bokehjsSettings
+    lazy val bokehjsSettings = commonSettings ++ BokehJS.bokehjsSettings
 
     lazy val coreSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
