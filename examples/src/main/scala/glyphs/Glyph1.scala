@@ -2,12 +2,11 @@ package io.continuum.bokeh
 package examples
 package glyphs
 
-import breeze.numerics.sin
-import math.{Pi=>pi}
+import math.{Pi=>pi,sin}
 
 object Glyph1 extends Example {
-    val x = -2*pi to 2*pi by 0.1 toArray
-    val y = sin(x)
+    val x = -2*pi to 2*pi by 0.1
+    val y = x.map(sin)
 
     val source = new ColumnDataSource()
         .addColumn('x, x)
