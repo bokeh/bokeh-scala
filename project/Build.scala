@@ -1,6 +1,7 @@
 import sbt._
 import Keys._
 
+import sbtunidoc.{Plugin=>UnidocPlugin}
 import scoverage.ScoverageSbtPlugin
 import org.sbtidea.SbtIdeaPlugin
 import com.typesafe.sbt.SbtPgp
@@ -130,6 +131,8 @@ object BokehBuild extends Build {
 
     lazy val ideaSettings = SbtIdeaPlugin.settings
 
+    lazy val unidocSettings = UnidocPlugin.unidocSettings
+
     lazy val scoverageSettings = ScoverageSbtPlugin.instrumentSettings ++ {
         import ScoverageSbtPlugin._
         Seq(parallelExecution in ScoverageTest := (parallelExecution in Test).value)
@@ -174,7 +177,7 @@ object BokehBuild extends Build {
         }
     )
 
-    lazy val allSettings = Seq(
+    lazy val allSettings = unidocSettings ++ Seq(
         publish := {},
         publishLocal := {}
     )
