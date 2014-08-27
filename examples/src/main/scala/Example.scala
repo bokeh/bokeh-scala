@@ -3,7 +3,7 @@ package examples
 
 import scopt.{OptionParser,Read}
 
-object CustomReads {
+private object CustomReads {
     implicit val resourcesReads: Read[Resources] = Read.reads { string =>
         Resources.fromString(string) getOrElse {
             throw new IllegalArgumentException(s"'$string' is not a valid resource mode.")
