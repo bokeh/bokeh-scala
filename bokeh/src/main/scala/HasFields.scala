@@ -3,24 +3,6 @@ package io.continuum.bokeh
 import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
 import play.api.libs.json.{Writes,JsValue,JsObject,JsNull}
 
-case class Validator[T](fn: T => Boolean, message: String)
-class ValueError(message: String) extends Exception(message)
-
-trait ValidableField { self: AbstractField =>
-    def validators: List[Validator[ValueType]] = Nil
-
-    def validate(value: ValueType): List[String] = {
-        validators.filterNot(_.fn(value)).map(_.message)
-    }
-
-    def validates(value: ValueType) {
-        validate(value) match {
-            case error :: _ => throw new ValueError(error)
-            case Nil =>
-        }
-    }
-}
-
 trait HasFields { self =>
     type SelfType = self.type
 
