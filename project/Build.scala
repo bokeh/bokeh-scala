@@ -65,6 +65,7 @@ object BokehBuild extends Build {
     )
 
     val runAll = inputKey[Unit]("Run all discovered main classes.")
+    val upload = taskKey[Unit]("Upload scaladoc to S3.")
 
     lazy val publishSettings = Seq(
         publishTo := {
@@ -92,12 +93,12 @@ object BokehBuild extends Build {
         ),
         credentials ++= {
             (for {
-                username <- Option(System.getenv().get("SONATYPE_USERNAME"))
-                password <- Option(System.getenv().get("SONATYPE_PASSWORD"))
+                username <- sys.env.get("SONATYPE_USERNAME")
+                password <- sys.env.get("SONATYPE_PASSWORD")
             } yield {
                 Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", username, password)
             }) orElse {
-                val path = Path.userHome / ".sonatype" / "credentials.sbt"
+                val path = Path.userHome / ".sonatype" / "credentials"
                 if (path.exists) Some(Credentials(path)) else None
             } toList
         }
@@ -178,8 +179,15 @@ object BokehBuild extends Build {
     )
 
     lazy val allSettings = unidocSettings ++ Seq(
+        publishLocal := {},
         publish := {},
-        publishLocal := {}
+        upload := {
+            import UnidocPlugin.{ScalaUnidoc,UnidocKeys}
+            (UnidocKeys.unidoc in Compile).value
+            val local = target in (ScalaUnidoc, UnidocKeys.unidoc) value
+            val remote = s"s3://bokeh-scala/docs/${scalaBinaryVersion.value}/${version.value}"
+            s"aws s3 sync $local $remote --delete --acl public-read" !
+        }
     )
 
     lazy val bokeh = project in file("bokeh") settings(bokehSettings: _*) dependsOn(core, bokehjs)

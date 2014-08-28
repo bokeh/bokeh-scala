@@ -9,4 +9,11 @@ jdk:
     - oraclejdk7
     - oraclejdk8
 
-script: ./sbt ++$TRAVIS_SCALA_VERSION compile scoverage:test
+script: ./sbt ++$TRAVIS_SCALA_VERSION compile test unidoc
+
+after_success: project/travis/upload
+
+env:
+    global:
+        - secure: "Xbx1OWKZh161gTgU+qxeR1rL8ujMDA6la3Qs4sOMyxKv2G4nWcM1ekMMn00EpQQqjs7CUhq9NMVufSDmq31D8jYPRkHI7qpgn+H2h5h4ekYfL5K94oBVyoTmUMxvzRCObBnoJnStj3Dv9V6F7edKP1sdRW2kUWqQqABS/jMlnkY="
+        - secure: "DocRPLY2/zE4kG1mlJNrSJ5RqmSO3cOM3WJZN/7C9SAh5yYWpcguRR2aB+fJ1nljOF1R7yu+zngWUKYB59dWF034Z9XNdy9AOmxtY/5NI73xLi5W8etKIK+QDXr8tVHxRAd/ba67rcXG3Mg28tUvw+hZmYy/UJ7HJnLpHG5taM4="
