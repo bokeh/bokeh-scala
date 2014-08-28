@@ -31,21 +31,42 @@ else
     JVM_OPTS=""
 fi
 
+function get_property {
+    echo "$(cat project/build.properties | grep $1 | cut -d'=' -f2)"
+}
+
 function F2j {
     echo "-Dcom.github.fommil.netlib.$1=com.github.fommil.netlib.F2j$1"
 }
 
-JVM_DEFAULTS="-Dfile.encoding=UTF-8 -Xss8M -Xmx2G -XX:MaxPermSize=1024M -XX:ReservedCodeCacheSize=64M -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled"
+JVM_DEFAULTS="                     \
+    -Dfile.encoding=UTF-8          \
+    -Xss8M                         \
+    -Xmx2G                         \
+    -XX:MaxPermSize=1024M          \
+    -XX:ReservedCodeCacheSize=64M  \
+    -XX:+UseConcMarkSweepGC        \
+    -XX:+CMSClassUnloadingEnabled"
+
 JVM_EXTRAS="$(F2j BLAS) $(F2j LAPACK) $(F2j ARPACK)"
 JVM_OPTS="$JVM_DEFAULTS $JVM_EXTRAS $JVM_OPTS"
 
-SBT_VERSION=$(cat project/build.properties | grep sbt.version | cut -d'=' -f2)
+SBT_VERSION="$(get_property sbt.version)"
 SBT_LAUNCHER="$(dirname $0)/project/sbt-launch-$SBT_VERSION.jar"
 
 if [ ! -e "$SBT_LAUNCHER" ];
 then
     URL="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/$SBT_VERSION/sbt-launch.jar"
     wget -O $SBT_LAUNCHER $URL
+fi
+
+EXPECTED_MD5="$(get_property sbt.launcher.md5)"
+COMPUTED_MD5="$(openssl md5 -r < $SBT_LAUNCHER | cut -d' ' -f1)"
+
+if [ "$EXPECTED_MD5" != "$COMPUTED_MD5" ];
+then
+    echo "$SBT_LAUNCHER has invalid MD5 signature: expected $EXPECTED_MD5, got $COMPUTED_MD5"
+    exit 1
 fi
 
 java $JVM_OPTS -jar $SBT_LAUNCHER $SBT_OPTS
