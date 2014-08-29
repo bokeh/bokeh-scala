@@ -14,8 +14,6 @@ package io.continuum.bokeh
 
 @fields class PreviewSaveTool extends Tool
 
-@fields class EmbedTool extends Tool
-
 @fields class ResetTool extends Tool
 
 @fields class ResizeTool extends Tool

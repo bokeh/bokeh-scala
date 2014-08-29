@@ -15,7 +15,6 @@ trait Tools {
     case object Pan extends DefaultTool                { def tool = new PanTool()                }
     case object WheelZoom extends DefaultTool          { def tool = new WheelZoomTool()          }
     case object PreviewSave extends DefaultTool        { def tool = new PreviewSaveTool()        }
-    case object Embed extends DefaultTool              { def tool = new EmbedTool()              }
     case object Reset extends DefaultTool              { def tool = new ResetTool()              }
     case object Resize extends DefaultTool             { def tool = new ResizeTool()             }
     case object Click extends DefaultTool              { def tool = new ClickTool()              }

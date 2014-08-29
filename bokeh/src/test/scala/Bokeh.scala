@@ -446,13 +446,6 @@ class BokehSpec extends Specification {
             obj.values.length shouldEqual 2
         }
 
-        "support EmbedTool" in {
-            val obj = new EmbedTool().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 2
-            obj.values.length shouldEqual 2
-        }
-
         "support ResetTool" in {
             val obj = new ResetTool().id("xyz")
             obj.id.value shouldEqual "xyz"
