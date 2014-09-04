@@ -17,8 +17,6 @@ object ColorSpec extends Example {
 
     val glyph_renderer = new Glyph()
         .data_source(source)
-        .xdata_range(xdr)
-        .ydata_range(ydr)
         .glyph(circle)
 
     val plot = new Plot().x_range(xdr).y_range(ydr)

@@ -45,8 +45,6 @@ object Hover extends Example with LinAlg with Tools {
 
     val circle_renderer = new Glyph()
         .data_source(source)
-        .xdata_range(xdr)
-        .ydata_range(ydr)
         .glyph(circle)
 
     val text = new Text()
@@ -61,8 +59,6 @@ object Hover extends Example with LinAlg with Tools {
 
     val text_renderer = new Glyph()
         .data_source(source)
-        .xdata_range(xdr)
-        .ydata_range(ydr)
         .glyph(text)
 
     val hover = new HoverTool()

@@ -55,14 +55,10 @@ object Choropleth extends Example {
 
     val county_renderer = new Glyph()
         .data_source(county_source)
-        .xdata_range(xdr)
-        .ydata_range(ydr)
         .glyph(county_patches)
 
     val state_renderer = new Glyph()
         .data_source(state_source)
-        .xdata_range(xdr)
-        .ydata_range(ydr)
         .glyph(state_patches)
 
     val plot = new Plot()

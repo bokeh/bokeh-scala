@@ -34,8 +34,6 @@ object Grid extends Example {
 
         val renderer = new Glyph()
             .data_source(source)
-            .xdata_range(xdr)
-            .ydata_range(ydr)
             .glyph(new Line().x(xname).y(yname).line_color(line_color))
 
         plot.renderers := List(xaxis, yaxis, renderer)

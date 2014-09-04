@@ -57,8 +57,6 @@ object IrisSplom extends Example {
 
         val circle_renderer = new Glyph()
             .data_source(source)
-            .xdata_range(xdr)
-            .ydata_range(ydr)
             .glyph(circle)
 
         val pantool = new PanTool().plot(plot)
@@ -81,8 +79,6 @@ object IrisSplom extends Example {
                 .text_font_size("28pt")
             val text_renderer = new Glyph()
                 .data_source(text_source)
-                .xdata_range(xdr)
-                .ydata_range(ydr)
                 .glyph(text_glyph)
 
             plot.renderers := text_renderer :: plot.renderers.value

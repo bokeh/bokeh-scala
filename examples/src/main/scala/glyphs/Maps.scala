@@ -35,8 +35,6 @@ object Maps extends Example {
 
     val circle_renderer = new Glyph()
         .data_source(source)
-        .xdata_range(x_range)
-        .ydata_range(y_range)
         .glyph(new Circle().x('lon).y('lat).fill_color('fill).size(15)
             .radius_units(SpatialUnits.Screen).line_color(Color.Black))
 

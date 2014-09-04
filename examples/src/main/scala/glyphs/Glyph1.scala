@@ -16,12 +16,7 @@ object Glyph1 extends Example {
     val ydr = new DataRange1d().sources(source.columns('y) :: Nil)
 
     val circle = new Circle().x('x).y('y).fill_color(Color.Red).size(5).line_color(Color.Black)
-
-    val glyph_renderer = new Glyph()
-        .data_source(source)
-        .xdata_range(xdr)
-        .ydata_range(ydr)
-        .glyph(circle)
+    val glyph_renderer = new Glyph().data_source(source).glyph(circle)
 
     val plot = new Plot().x_range(xdr).y_range(ydr)
 
