@@ -11,6 +11,9 @@ object BokehJS {
         val requirejs = taskKey[Seq[File]]("Run RequireJS optimizer")
         val requirejsConfig = settingKey[RequireJSSettings]("RequireJS settings")
 
+        val bokehjsVersion = taskKey[String]("BokehJS version as obtained from src/coffee/main.coffe")
+        val writeProps = taskKey[Seq[File]]("Write BokehJS configuration to bokehjs.properties")
+
         val copyVendor = taskKey[Seq[File]]("Copy vendor/** from src to build")
         val copyCSS = taskKey[Seq[File]]("Generate bokeh.min.css")
     }
@@ -78,6 +81,25 @@ object BokehJS {
 
     lazy val bokehjsSettings = pluginSettings ++ Seq(
         sourceDirectory in Compile := baseDirectory.value / "src",
+        bokehjsVersion <<= Def.task {
+            val srcDir = sourceDirectory in (Compile, JsKeys.js) value
+            val jsMain = srcDir / "main.coffee"
+            val regex = """^\s*Bokeh.version = '(.*)'\s*$""".r
+            IO.readLines(jsMain) collectFirst {
+                case regex(version) => version
+            } getOrElse {
+                sys.error(s"Unable to read BokehJS version from $jsMain")
+            }
+        },
+        writeProps in Compile <<= Def.task {
+            val resDir = resourceManaged in Compile value
+            val outFile = resDir / "bokehjs.properties"
+            val version = bokehjsVersion value
+            val props = s"bokehjs.version=$version"
+            IO.write(outFile, props)
+            Seq(outFile)
+        },
+        resourceGenerators in Compile <+= writeProps in Compile,
         copyVendor in Compile <<= Def.task {
             val srcDir = sourceDirectory in Compile value
             val resDir = resourceManaged in (Compile, JsKeys.js) value

@@ -2,6 +2,7 @@ package io.continuum.bokeh
 
 import java.io.File
 import java.net.URL
+import java.util.Properties
 
 import scalax.io.JavaConverters._
 import scalax.file.Path
@@ -32,7 +33,17 @@ sealed trait Resources {
 }
 
 object Resources {
-    private val bokehjsVersion = "0.5.2"
+    val bokehjsVersion: String = {
+        val stream = getClass.getClassLoader.getResourceAsStream("bokehjs.properties")
+        try {
+            val props = new java.util.Properties()
+            props.load(stream)
+            props.getProperty("bokehjs.version")
+        } finally {
+            stream.close()
+        }
+    }
+
     private def resource(ext: String, version: Boolean=false, minified: Boolean=false) =
         s"bokeh${if (version) "-" + bokehjsVersion else ""}${if (minified) ".min" else ""}.$ext"
 
