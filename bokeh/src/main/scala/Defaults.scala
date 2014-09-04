@@ -49,7 +49,7 @@ trait EnumDefaults {
     implicit object BorderSymmetryDefault extends DefaultValue[BorderSymmetry](BorderSymmetry.Horizontal)
     implicit object DashPatternDefault extends DefaultValue[DashPattern](DashPattern.Solid)
     implicit object AnchorDefault extends DefaultValue[Anchor](Anchor.TopLeft)
-    implicit object ColumnTypeDefault extends DefaultValue[ColumnType](ColumnType.Text)
+    implicit object ColumnTypeDefault extends DefaultValue[ColumnType](ColumnType.String)
     implicit object ColorDefault extends DefaultValue[Color](Color.White)
 }
 

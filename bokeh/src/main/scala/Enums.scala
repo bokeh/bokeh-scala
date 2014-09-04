@@ -143,10 +143,15 @@ object Anchor extends Enum[Anchor] {
 
 sealed trait ColumnType extends EnumType
 object ColumnType extends Enum[ColumnType] {
-    case object Text extends ColumnType
+    case object String extends ColumnType
     case object Numeric extends ColumnType
     case object Date extends ColumnType
-    case object AutoComplete extends ColumnType
+    case object Checkbox extends ColumnType
+    case object Select extends ColumnType
+    case object Dropdown extends ColumnType
+    case object Autocomplete extends ColumnType
+    case object Password extends ColumnType
+    case object Handsontable extends ColumnType
 }
 
 sealed trait LogLevel extends EnumType
