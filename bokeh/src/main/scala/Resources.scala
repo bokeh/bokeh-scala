@@ -20,6 +20,8 @@ sealed trait Resources {
         Json.stringify(value)
     }
 
+    def logLevel: LogLevel = LogLevel.Info
+
     protected def getResource(path: String): URL = {
         getClass.getClassLoader.getResource(path)
     }
@@ -95,6 +97,8 @@ object Resources {
             val wrapped = super.wrap(code)
             s"require(['jquery', 'main'], function($$, Bokeh) {\n$wrapped\n});"
         }
+
+        override def logLevel: LogLevel = LogLevel.Debug
 
         override def stringify(value: JsValue): String = {
             Json.prettyPrint(value)

@@ -96,11 +96,15 @@ class HTMLFileWriter(contexts: List[PlotContext], _resources: Option[Resources])
 
     def renderPlot(spec: PlotSpec): xml.Node = {
         val code = s"""
+            |Bokeh.set_log_level("${resources.logLevel.name}")
             |var models = ${spec.models};
             |var modelid = "${spec.modelId}";
             |var modeltype = "${spec.modelType}";
             |var elementid = "#${spec.elementId}";
-            |console.log(modelid, modeltype, elementid);
+            |Bokeh.logger.info("Realizing plot:")
+            |Bokeh.logger.info(" - modeltype: " + modeltype);
+            |Bokeh.logger.info(" - modelid:   " + modelid);
+            |Bokeh.logger.info(" - elementid: " + elementid);
             |Bokeh.load_models(models);
             |var model = Bokeh.Collections(modeltype).get(modelid);
             |var view = new model.default_view({model: model, el: elementid});

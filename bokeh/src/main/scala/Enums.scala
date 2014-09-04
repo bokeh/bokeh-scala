@@ -148,3 +148,13 @@ object ColumnType extends Enum[ColumnType] {
     case object Date extends ColumnType
     case object AutoComplete extends ColumnType
 }
+
+sealed trait LogLevel extends EnumType
+object LogLevel extends Enum[ColumnType] {
+    case object Trace extends LogLevel
+    case object Debug extends LogLevel
+    case object Info extends LogLevel
+    case object Warn extends LogLevel
+    case object Error extends LogLevel
+    case object Fatal extends LogLevel
+}
