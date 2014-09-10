@@ -17,6 +17,8 @@ package io.continuum.bokeh
     object above extends Field[List[PlotObject]]
     object below extends Field[List[PlotObject]]
 
+    object toolbar_location extends Field[Location](Location.Above)
+
     object plot_width extends Field[Int](600)
     object plot_height extends Field[Int](600)
 
