@@ -33,7 +33,6 @@ object IrisSplom extends Example {
             .plot_width(250)
             .plot_height(250)
             .border_fill(Color.White)
-            .title("")
             .min_border(2)
 
         val xaxis = new LinearAxis().plot(plot).location(Location.Below)
