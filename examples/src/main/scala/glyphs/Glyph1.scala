@@ -20,8 +20,8 @@ object Glyph1 extends Example {
 
     val plot = new Plot().x_range(xdr).y_range(ydr)
 
-    val xaxis = new LinearAxis().plot(plot).location(Location.Below)
-    val yaxis = new LinearAxis().plot(plot).location(Location.Left)
+    val xaxis = new LinearAxis().plot(plot)
+    val yaxis = new LinearAxis().plot(plot)
     plot.below <<= (xaxis :: _)
     plot.left <<= (yaxis :: _)
 

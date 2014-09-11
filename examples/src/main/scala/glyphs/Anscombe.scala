@@ -49,8 +49,8 @@ object Anscombe extends Example {
             .plot_height(400)
             .border_fill(Color.White)
             .background_fill("#e9e0db")
-        val xaxis = new LinearAxis().plot(plot).location(Location.Below)/*.axis_line_color()*/
-        val yaxis = new LinearAxis().plot(plot).location(Location.Left)/*.axis_line_color()*/
+        val xaxis = new LinearAxis().plot(plot)/*.axis_line_color()*/
+        val yaxis = new LinearAxis().plot(plot)/*.axis_line_color()*/
         plot.below <<= (xaxis :: _)
         plot.left <<= (yaxis :: _)
         val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
