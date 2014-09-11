@@ -5,9 +5,13 @@ package io.continuum.bokeh
     object y_range extends Field[Range]
 
     object title extends Field[String]
+    object extra_x_ranges extends Field[Map[String, Range]]
+    object extra_y_ranges extends Field[Map[String, Range]]
 
     // TODO: object title_props extends Include(TextProps, prefix="title")
     // TODO: object outline_props extends Include(LineProps, prefix="outline")
+    object x_mapper_type extends Field[String]("auto")
+    object y_mapper_type extends Field[String]("auto")
 
     object renderers extends Field[List[Renderer]]
     object tools extends Field[List[Tool]] with ToolsField

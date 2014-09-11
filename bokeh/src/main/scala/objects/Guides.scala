@@ -2,7 +2,10 @@ package io.continuum.bokeh
 
 @fields abstract class GuideRenderer extends Renderer {
     object plot extends Field[Plot]
-    object bounds extends Field[(Double, Double)] // TODO:  Either[Auto, (Float, Float)]]
+    object bounds extends Field[(Double, Double)] // TODO: Either[Auto, (Float, Float)]]
+
+    object x_range_name extends Field[String]("default")
+    object y_range_name extends Field[String]("default")
 }
 
 @fields abstract class Axis extends GuideRenderer {
@@ -19,7 +22,7 @@ package io.continuum.bokeh
     // TODO: object axis_label_props extends Include(TextProps, prefix="axis_label")
 
     object major_label_standoff extends Field[Int]
-    object major_label_orientation extends Field[Orientation] // TODO:ither[Orientation, Double]
+    object major_label_orientation extends Field[Orientation] // TODO: Either[Orientation, Double]
     // TODO: object major_label_props extends Include(TextProps, prefix="major_label")
 
     // TODO: object axis_props extends Include(LineProps, prefix="axis")
