@@ -1,15 +1,17 @@
 package io.continuum.bokeh
 
 @fields class Plot extends Widget {
-    object x_range extends Field[Range]
-    object y_range extends Field[Range]
-
-    object title extends Field[String]
-    object extra_x_ranges extends Field[Map[String, Range]]
-    object extra_y_ranges extends Field[Map[String, Range]]
+    object title extends Field[String]("")
 
     // TODO: object title_props extends Include(TextProps, prefix="title")
     // TODO: object outline_props extends Include(LineProps, prefix="outline")
+
+    object x_range extends Field[Range]
+    object y_range extends Field[Range]
+
+    object extra_x_ranges extends Field[Map[String, Range]]
+    object extra_y_ranges extends Field[Map[String, Range]]
+
     object x_mapper_type extends Field[String]("auto")
     object y_mapper_type extends Field[String]("auto")
 
