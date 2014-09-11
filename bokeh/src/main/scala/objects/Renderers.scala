@@ -35,12 +35,6 @@ package io.continuum.bokeh
     object legends extends Field[Map[String, List[Glyph]]]
 }
 
-@fields class DataSlider extends Renderer {
-    object plot extends Field[Plot]
-    object data_source extends Field[DataSource]
-    object field extends Field[String]
-}
-
 @fields class BoxSelectionOverlay extends Renderer {
     override val typeName = "BoxSelection"
 
