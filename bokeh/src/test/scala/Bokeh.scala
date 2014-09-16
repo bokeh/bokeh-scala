@@ -358,8 +358,8 @@ class BokehSpec extends Specification {
         "support Glyph renderer" in {
             val obj = new Glyph().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 5
-            obj.values.length shouldEqual 5
+            obj.fieldsWithValues.length shouldEqual 7
+            obj.values.length shouldEqual 7
         }
     }
 

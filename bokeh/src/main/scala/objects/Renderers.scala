@@ -15,6 +15,9 @@ package io.continuum.bokeh
     object nonselection_glyph extends Field[BaseGlyph] {
         override val fieldName = Some("nonselection_glyphspec")
     }
+
+    object x_range_name extends Field[String]("default")
+    object y_range_name extends Field[String]("default")
 }
 
 @fields class Legend extends Renderer {
