@@ -154,12 +154,28 @@ object ColumnType extends Enum[ColumnType] {
     case object Handsontable extends ColumnType
 }
 
+sealed trait ButtonType extends EnumType
+object ButtonType extends Enum[ButtonType] {
+    case object Default extends ButtonType
+    case object Primary extends ButtonType
+    case object Success extends ButtonType
+    case object Warning extends ButtonType
+    case object Danger extends ButtonType
+    case object Link extends ButtonType
+}
+
 sealed trait MapType extends EnumType
 object MapType extends Enum[MapType] {
     case object Satellite extends MapType
     case object Roadmap extends MapType
     case object Terrain extends MapType
     case object Hybrid extends MapType
+}
+
+sealed trait Flip extends EnumType
+object Flip extends Enum[Flip] {
+    case object Horizontal extends Flip
+    case object Vertical extends Flip
 }
 
 sealed trait LogLevel extends EnumType

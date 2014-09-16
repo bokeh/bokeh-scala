@@ -50,9 +50,12 @@ trait EnumDefaults {
     implicit object DashPatternDefault extends DefaultValue[DashPattern](DashPattern.Solid)
     implicit object AnchorDefault extends DefaultValue[Anchor](Anchor.TopLeft)
     implicit object ColumnTypeDefault extends DefaultValue[ColumnType](ColumnType.String)
+    implicit object ButtonTypeDefault extends DefaultValue[ButtonType](ButtonType.Default)
     implicit object MapTypeDefault extends DefaultValue[MapType](MapType.Satellite)
+    implicit object FlipDefault extends DefaultValue[Flip](Flip.Horizontal)
     implicit object LogLevelDefault extends DefaultValue[LogLevel](LogLevel.Info)
     implicit object ColorDefault extends DefaultValue[Color](Color.White)
+    implicit object NamedIconDefault extends DefaultValue[NamedIcon](NamedIcon.Adjust)
 }
 
 trait DefaultImplicits extends TypeDefaults with EnumDefaults

@@ -4,6 +4,63 @@ package widgets
 import org.joda.time.{LocalDate=>Date}
 import play.api.libs.json.Writes
 
+@fields class AbstractIcon extends Widget
+
+@fields class Icon extends AbstractIcon {
+    object name extends Field[NamedIcon]
+    object size extends Field[Double] with NonNegative
+    object flip extends Field[Flip]
+    object spin extends Field[Boolean](false)
+}
+
+@fields class AbstractButton extends Widget {
+    object label extends Field[String]("Button")
+    object icon extends Field[AbstractIcon]
+    object `type` extends Field[ButtonType]
+}
+
+@fields class Button extends AbstractButton {
+    object clicks extends Field[Int](0)
+}
+
+@fields class Toggle extends AbstractButton {
+    object active extends Field[Boolean](false)
+}
+
+@fields class Dropdown extends AbstractButton {
+    object action extends Field[String]
+    object default_action extends Field[String]
+    object menu extends Field[List[(String, String)]]
+}
+
+@fields class AbstractGroup extends Widget {
+    object labels extends Field[List[String]]
+}
+
+@fields class Group extends AbstractGroup {
+    object inline extends Field[Boolean](false)
+}
+
+@fields class ButtonGroup extends AbstractGroup {
+    object `type` extends Field[ButtonType]
+}
+
+@fields class CheckboxGroup extends Group {
+    object active extends Field[List[Int]]
+}
+
+@fields class RadioGroup extends Group {
+    object active extends Field[Int]
+}
+
+@fields class CheckboxButtonGroup extends ButtonGroup {
+    object active extends Field[List[Int]]
+}
+
+@fields class RadioButtonGroup extends ButtonGroup {
+    object active extends Field[Int]
+}
+
 @fields class Panel extends Widget {
     object title extends Field[String]
     object child extends Field[Widget]
