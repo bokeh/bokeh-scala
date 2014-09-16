@@ -50,6 +50,7 @@ trait EnumDefaults {
     implicit object DashPatternDefault extends DefaultValue[DashPattern](DashPattern.Solid)
     implicit object AnchorDefault extends DefaultValue[Anchor](Anchor.TopLeft)
     implicit object ColumnTypeDefault extends DefaultValue[ColumnType](ColumnType.String)
+    implicit object LogLevelDefault extends DefaultValue[LogLevel](LogLevel.Info)
     implicit object ColorDefault extends DefaultValue[Color](Color.White)
 }
 
