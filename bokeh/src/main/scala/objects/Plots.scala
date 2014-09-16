@@ -45,6 +45,7 @@ package io.continuum.bokeh
     object lat extends Field[Double]
     object lng extends Field[Double]
     object zoom extends Field[Int](12)
+    object map_type extends Field[MapType]
 }
 
 @fields class GMapPlot extends Plot {

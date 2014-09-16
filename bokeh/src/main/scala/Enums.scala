@@ -154,6 +154,14 @@ object ColumnType extends Enum[ColumnType] {
     case object Handsontable extends ColumnType
 }
 
+sealed trait MapType extends EnumType
+object MapType extends Enum[MapType] {
+    case object Satellite extends MapType
+    case object Roadmap extends MapType
+    case object Terrain extends MapType
+    case object Hybrid extends MapType
+}
+
 sealed trait LogLevel extends EnumType
 object LogLevel extends Enum[ColumnType] {
     case object Trace extends LogLevel
