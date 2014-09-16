@@ -493,15 +493,22 @@ class BokehSpec extends Specification {
         "support Plot" in {
             val obj = new Plot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 26
-            obj.values.length shouldEqual 26
+            obj.fieldsWithValues.length shouldEqual 27
+            obj.values.length shouldEqual 27
+        }
+
+        "support GMapPlot" in {
+            val obj = new GMapPlot().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fieldsWithValues.length shouldEqual 28
+            obj.values.length shouldEqual 28
         }
 
         "support GridPlot" in {
             val obj = new GridPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 28
-            obj.values.length shouldEqual 28
+            obj.fieldsWithValues.length shouldEqual 29
+            obj.values.length shouldEqual 29
         }
     }
 
