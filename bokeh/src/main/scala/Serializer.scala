@@ -3,7 +3,7 @@ package io.continuum.bokeh
 import play.api.libs.json.{Json,JsValue,JsArray,JsObject,JsString}
 
 trait JSONSerializer {
-    case class Model(id: String, `type`: String, attributes: JsObject, doc: Option[String]) {
+    case class Model(id: String, `type`: String, attributes: JsObject, doc: Option[String] = None) {
         def toJson: JsValue =
             Json.obj("id" -> Json.toJson(id),
                      "type" -> Json.toJson(`type`),
@@ -68,6 +68,6 @@ trait JSONSerializer {
 
     def getModel(obj: PlotObject): Model = {
         val Ref(id, tp) = obj.getRef
-        Model(id, tp, obj.toJson + ("type" -> JsString(obj.typeName)), None)
+        Model(id, tp, obj.toJson)
     }
 }
