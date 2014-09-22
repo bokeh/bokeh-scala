@@ -10,6 +10,7 @@ package io.continuum.bokeh {
     }
 
     package object sampledata {
+        def autompg = AutoMPG.load()
         def us_states = USStates.load()
         def us_counties = USCounties.load()
         def unemployment = Unemployment.load()
