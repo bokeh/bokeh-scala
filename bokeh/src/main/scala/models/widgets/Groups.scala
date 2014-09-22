@@ -1,15 +1,15 @@
 package io.continuum.bokeh
 package widgets
 
-@model class AbstractGroup extends Widget {
+@model abstract class AbstractGroup extends Widget {
     object labels extends Field[List[String]]
 }
 
-@model class Group extends AbstractGroup {
+@model abstract class Group extends AbstractGroup {
     object inline extends Field[Boolean](false)
 }
 
-@model class ButtonGroup extends AbstractGroup {
+@model abstract class ButtonGroup extends AbstractGroup {
     object `type` extends Field[ButtonType]
 }
 

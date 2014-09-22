@@ -1,7 +1,9 @@
 package io.continuum.bokeh
 package widgets
 
-@model class TableWidget extends Widget
+@model abstract class TableWidget extends Widget {
+    object source extends Field[DataSource]
+}
 
 @model class TableColumn extends Widget {
     object field extends Field[String]
@@ -15,7 +17,6 @@ package widgets
 }
 
 @model class HandsonTable extends TableWidget {
-    object source extends Field[DataSource]
     object columns extends Field[List[TableColumn]]
     object sorting extends Field[Boolean](true)
 }

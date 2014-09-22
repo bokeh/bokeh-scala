@@ -1,7 +1,7 @@
 package io.continuum.bokeh
 package widgets
 
-@model class AbstractButton extends Widget {
+@model abstract class AbstractButton extends Widget {
     object label extends Field[String]("Button")
     object icon extends Field[AbstractIcon]
     object `type` extends Field[ButtonType]

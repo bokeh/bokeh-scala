@@ -1,7 +1,7 @@
 package io.continuum.bokeh
 package widgets
 
-@model class AbstractIcon extends Widget
+@model abstract class AbstractIcon extends Widget
 
 @model class Icon extends AbstractIcon {
     object name extends Field[NamedIcon]
