@@ -2,12 +2,12 @@ package io.continuum.bokeh
 
 import play.api.libs.json.Writes
 
-@fields class ColumnsRef extends HasFields {
+@model class ColumnsRef extends HasFields {
     object source extends Field[DataSource]
     object columns extends Field[List[Symbol]]
 }
 
-@fields sealed abstract class DataSource extends PlotObject {
+@model sealed abstract class DataSource extends PlotObject {
     object column_names extends Field[List[String]]
     object selected extends Field[List[String]]
 
@@ -15,7 +15,7 @@ import play.api.libs.json.Writes
         new ColumnsRef().source(this).columns(columns.toList)
 }
 
-@fields class ColumnDataSource extends DataSource {
+@model class ColumnDataSource extends DataSource {
     object data extends Field[Map[Symbol, Any]]
 
     def addColumn[A:ArrayLike:Writes](name: Symbol, array: A): SelfType = {

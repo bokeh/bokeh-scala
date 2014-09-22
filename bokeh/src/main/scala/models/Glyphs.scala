@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@fields abstract class BaseGlyph extends HasFields {
+@model abstract class BaseGlyph extends HasFields {
     override def typeName: String = Utils.snakify(super.typeName)
 
     object visible extends Field[Boolean]
@@ -15,7 +15,7 @@ package io.continuum.bokeh
     object end_angle_units extends Field[AngularUnits]
 }
 
-@fields class AnnularWedge extends BaseGlyph with FillProps with LineProps {
+@model class AnnularWedge extends BaseGlyph with FillProps with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object inner_radius extends Spatial[Double] with NonNegative
@@ -25,14 +25,14 @@ package io.continuum.bokeh
     object direction extends Field[Direction]
 }
 
-@fields class Annulus extends BaseGlyph with FillProps with LineProps {
+@model class Annulus extends BaseGlyph with FillProps with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object inner_radius extends Spatial[Double] with NonNegative
     object outer_radius extends Spatial[Double] with NonNegative
 }
 
-@fields class Arc extends BaseGlyph with LineProps {
+@model class Arc extends BaseGlyph with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object radius extends Spatial[Double] with NonNegative
@@ -41,7 +41,7 @@ package io.continuum.bokeh
     object direction extends Field[Direction]
 }
 
-@fields class Bezier extends BaseGlyph with LineProps {
+@model class Bezier extends BaseGlyph with LineProps {
     object x0 extends Spatial[Double]
     object y0 extends Spatial[Double]
     object x1 extends Spatial[Double]
@@ -52,7 +52,7 @@ package io.continuum.bokeh
     object cy1 extends Spatial[Double]
 }
 
-@fields class Image extends BaseGlyph {
+@model class Image extends BaseGlyph {
     object image extends Vectorized[Seq[Seq[Int]]]
     object x extends Spatial[Double]
     object y extends Spatial[Double]
@@ -62,7 +62,7 @@ package io.continuum.bokeh
     object dilate extends Field[Boolean]
 }
 
-@fields class ImageURL extends BaseGlyph {
+@model class ImageURL extends BaseGlyph {
     object url extends Vectorized[String]
     object x extends Spatial[Double]
     object y extends Spatial[Double]
@@ -73,7 +73,7 @@ package io.continuum.bokeh
     object anchor extends Field[Anchor]
 }
 
-@fields class ImageRGBA extends BaseGlyph {
+@model class ImageRGBA extends BaseGlyph {
     object image extends Vectorized[Seq[Seq[Double]]]
     object x extends Spatial[Double]
     object y extends Spatial[Double]
@@ -82,17 +82,17 @@ package io.continuum.bokeh
     object dilate extends Field[Boolean]
 }
 
-@fields class Line extends BaseGlyph with LineProps {
+@model class Line extends BaseGlyph with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
 }
 
-@fields class MultiLine extends BaseGlyph with LineProps {
+@model class MultiLine extends BaseGlyph with LineProps {
     object xs extends Spatial[Seq[Double]]
     object ys extends Spatial[Seq[Double]]
 }
 
-@fields class Oval extends BaseGlyph with FillProps with LineProps {
+@model class Oval extends BaseGlyph with FillProps with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object width extends Spatial[Double] with NonNegative
@@ -100,24 +100,24 @@ package io.continuum.bokeh
     object angle extends Angular[Double]
 }
 
-@fields class Patch extends BaseGlyph with FillProps with LineProps {
+@model class Patch extends BaseGlyph with FillProps with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
 }
 
-@fields class Patches extends BaseGlyph with LineProps with FillProps {
+@model class Patches extends BaseGlyph with LineProps with FillProps {
     object xs extends Spatial[Seq[Double]]
     object ys extends Spatial[Seq[Double]]
 }
 
-@fields class Quad extends BaseGlyph with FillProps with LineProps {
+@model class Quad extends BaseGlyph with FillProps with LineProps {
     object left extends Spatial[Double]
     object right extends Spatial[Double]
     object bottom extends Spatial[Double]
     object top extends Spatial[Double]
 }
 
-@fields class Quadratic extends BaseGlyph with LineProps {
+@model class Quadratic extends BaseGlyph with LineProps {
     object x0 extends Spatial[Double]
     object y0 extends Spatial[Double]
     object x1 extends Spatial[Double]
@@ -126,14 +126,14 @@ package io.continuum.bokeh
     object cy extends Spatial[Double]
 }
 
-@fields class Ray extends BaseGlyph with LineProps {
+@model class Ray extends BaseGlyph with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object angle extends Angular[Double]
     object length extends Spatial[Double](SpatialUnits.Screen) with NonNegative
 }
 
-@fields class Rect extends BaseGlyph with FillProps with LineProps {
+@model class Rect extends BaseGlyph with FillProps with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object width extends Spatial[Double] with NonNegative
@@ -142,21 +142,21 @@ package io.continuum.bokeh
     object dilate extends Field[Boolean]
 }
 
-@fields class Segment extends BaseGlyph with LineProps {
+@model class Segment extends BaseGlyph with LineProps {
     object x0 extends Spatial[Double]
     object y0 extends Spatial[Double]
     object x1 extends Spatial[Double]
     object y1 extends Spatial[Double]
 }
 
-@fields class Text extends BaseGlyph with TextProps {
+@model class Text extends BaseGlyph with TextProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object text extends Vectorized[String]
     object angle extends Angular[Double]
 }
 
-@fields class Wedge extends BaseGlyph with FillProps with LineProps {
+@model class Wedge extends BaseGlyph with FillProps with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object radius extends Spatial[Double] with NonNegative
@@ -165,7 +165,7 @@ package io.continuum.bokeh
     object direction extends Field[Direction]
 }
 
-@fields class Gear extends BaseGlyph with LineProps with FillProps {
+@model class Gear extends BaseGlyph with LineProps with FillProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object angle extends Angular[Double]

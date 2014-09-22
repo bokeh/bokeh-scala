@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@fields class Plot extends Widget {
+@model class Plot extends Widget {
     object title extends Field[String]("")
 
     // TODO: object title_props extends Include(TextProps, prefix="title")
@@ -41,18 +41,18 @@ package io.continuum.bokeh
     object v_symmetry extends Field[Boolean](false)
 }
 
-@fields class MapOptions extends HasFields {
+@model class MapOptions extends HasFields {
     object lat extends Field[Double]
     object lng extends Field[Double]
     object zoom extends Field[Int](12)
     object map_type extends Field[MapType]
 }
 
-@fields class GMapPlot extends Plot {
+@model class GMapPlot extends Plot {
     object map_options extends Field[MapOptions]
 }
 
-@fields class GridPlot extends Plot {
+@model class GridPlot extends Plot {
     object children extends Field[List[List[Plot]]]
     object border_space extends Field[Int](0)
 }

@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@fields abstract class GuideRenderer extends Renderer {
+@model abstract class GuideRenderer extends Renderer {
     object plot extends Field[Plot]
     object bounds extends Field[(Double, Double)] // TODO: Either[Auto, (Float, Float)]]
 
@@ -8,7 +8,7 @@ package io.continuum.bokeh
     object y_range_name extends Field[String]("default")
 }
 
-@fields abstract class Axis extends GuideRenderer {
+@model abstract class Axis extends GuideRenderer {
     object location extends Field[Location]
 
     def defaultTicker: Ticker
@@ -32,24 +32,24 @@ package io.continuum.bokeh
     object major_tick_out extends Field[Int]
 }
 
-@fields abstract class ContinuousAxis extends Axis
+@model abstract class ContinuousAxis extends Axis
 
-@fields class LinearAxis extends ContinuousAxis {
+@model class LinearAxis extends ContinuousAxis {
     def defaultTicker: Ticker = new BasicTicker()
     def defaultFormatter: TickFormatter = new BasicTickFormatter()
 }
 
-@fields class LogAxis extends ContinuousAxis {
+@model class LogAxis extends ContinuousAxis {
     def defaultTicker: Ticker = new LogTicker().num_minor_ticks(10)
     def defaultFormatter: TickFormatter = new LogTickFormatter()
 }
 
-@fields class CategoricalAxis extends Axis {
+@model class CategoricalAxis extends Axis {
     def defaultTicker: Ticker = new CategoricalTicker()
     def defaultFormatter: TickFormatter = new CategoricalTickFormatter()
 }
 
-@fields class DatetimeAxis extends LinearAxis {
+@model class DatetimeAxis extends LinearAxis {
     override def defaultTicker: Ticker = new DatetimeTicker()
     override def defaultFormatter: TickFormatter = new DatetimeTickFormatter()
 
@@ -59,7 +59,7 @@ package io.continuum.bokeh
     object fill_ratio extends Field[Double](0.3)
 }
 
-@fields class Grid extends GuideRenderer {
+@model class Grid extends GuideRenderer {
     object dimension extends Field[Int](0)
     object ticker extends Field[Ticker]
 

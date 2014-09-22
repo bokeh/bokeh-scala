@@ -54,6 +54,6 @@ object Fields {
     }
 }
 
-class fields extends StaticAnnotation {
+class model extends StaticAnnotation {
     def macroTransform(annottees: Any*): Any = macro Fields.macroTransformImpl
 }
