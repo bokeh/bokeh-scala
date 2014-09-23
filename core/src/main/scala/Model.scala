@@ -3,7 +3,7 @@ package io.continuum.bokeh
 import scala.annotation.StaticAnnotation
 import scala.reflect.macros.Context
 
-private object Model {
+private object ModelImpl {
     def macroTransformImpl(c: Context)(annottees: c.Expr[Any]*): c.Expr[Any] = {
         import c.universe._
 
@@ -22,5 +22,5 @@ private object Model {
 }
 
 class model extends StaticAnnotation {
-    def macroTransform(annottees: Any*): Any = macro Model.macroTransformImpl
+    def macroTransform(annottees: Any*): Any = macro ModelImpl.macroTransformImpl
 }
