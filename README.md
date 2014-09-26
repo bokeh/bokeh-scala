@@ -22,16 +22,15 @@ Sonatype's snapshots repository to your build:
 
 ```scala
 resolvers += Opts.resolver.sonatypeSnapshots
-libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.2-SNAPSHOT"
+libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.3-SNAPSHOT"
 ```
 
 See [this][sample] sample project for detailed integration example.
 
 ## Documentation
 
-API docs are available for:
-
-- [0.2-SNAPSHOT][api]
+API docs are available for [stable][api-stable] and [development][api-devel]
+versions.
 
 ## Development
 
@@ -61,7 +60,8 @@ Published under [The MIT License][license], see LICENSE.
 
 [bokeh]: http://bokeh.pydata.org
 [sample]: https://github.com/bokeh/bokeh-scala-sample
-[api]: http://bokeh-scala.s3-website-us-east-1.amazonaws.com/docs/2.11/0.2-SNAPSHOT/index.html
+[api-stable]: http://bokeh-scala.s3-website-us-east-1.amazonaws.com/docs/2.11/0.2/index.html
+[api-devel]: http://bokeh-scala.s3-website-us-east-1.amazonaws.com/docs/2.11/0.3-SNAPSHOT/index.html
 [group]: https://groups.google.com/a/continuum.io/forum/#!forum/bokeh
 [travis]: https://api.travis-ci.org/bokeh/bokeh-scala.png?branch=master
 [license]: http://www.opensource.org/licenses/mit-license.php
