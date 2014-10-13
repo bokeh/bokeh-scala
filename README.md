@@ -60,8 +60,8 @@ Published under [The MIT License][license], see LICENSE.
 
 [bokeh]: http://bokeh.pydata.org
 [sample]: https://github.com/bokeh/bokeh-scala-sample
-[api-stable]: http://bokeh-scala.s3-website-us-east-1.amazonaws.com/docs/2.11/0.2/index.html
-[api-devel]: http://bokeh-scala.s3-website-us-east-1.amazonaws.com/docs/2.11/0.3-SNAPSHOT/index.html
+[api-stable]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.2/index.html
+[api-devel]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.3-SNAPSHOT/index.html
 [group]: https://groups.google.com/a/continuum.io/forum/#!forum/bokeh
 [travis]: https://api.travis-ci.org/bokeh/bokeh-scala.png?branch=master
 [license]: http://www.opensource.org/licenses/mit-license.php
