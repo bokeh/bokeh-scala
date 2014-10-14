@@ -175,6 +175,11 @@ object BokehBuild extends Build {
         libraryDependencies ++= {
             import Dependencies._
             Seq(breeze, scopt, specs2)
+        },
+        javaOptions ++= {
+            val netlib = "com.github.fommil.netlib"
+            val linalg = Seq("BLAS", "LAPACK", "ARPACK")
+            linalg.map(name => s"-D$netlib.$name=$netlib.F2j$name")
         }
     )
 

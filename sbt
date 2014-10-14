@@ -36,10 +36,6 @@ function get_property {
     echo "$(cat project/build.properties | grep $1 | cut -d'=' -f2)"
 }
 
-function F2j {
-    echo "-Dcom.github.fommil.netlib.$1=com.github.fommil.netlib.F2j$1"
-}
-
 JVM_DEFAULTS="                     \
     -Dfile.encoding=UTF-8          \
     -Xss8M                         \
@@ -49,8 +45,7 @@ JVM_DEFAULTS="                     \
     -XX:+UseConcMarkSweepGC        \
     -XX:+CMSClassUnloadingEnabled"
 
-JVM_EXTRAS="$(F2j BLAS) $(F2j LAPACK) $(F2j ARPACK)"
-JVM_OPTS="$JVM_DEFAULTS $JVM_EXTRAS $JVM_OPTS"
+JVM_OPTS="$JVM_DEFAULTS $JVM_OPTS"
 
 SBT_VERSION="$(get_property sbt.version)"
 SBT_LAUNCHER="$(dirname $0)/project/sbt-launch-$SBT_VERSION.jar"
