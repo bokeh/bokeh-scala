@@ -106,7 +106,7 @@ object BokehBuild extends Build {
 
     lazy val commonSettings = Defaults.coreDefaultSettings ++ publishSettings ++ Seq(
         parallelExecution in Test := false,
-        fork in run := true,
+        fork := true,
         runAll := {
             val args = Def.spaceDelimited("<args>").parsed
             val results = (discoveredMainClasses in Compile).value.sorted.flatMap { mainClass =>
