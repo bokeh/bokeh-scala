@@ -40,29 +40,3 @@ package io.continuum.bokeh
     object h_symmetry extends Field[Boolean](true)
     object v_symmetry extends Field[Boolean](false)
 }
-
-@model class GMapOptions extends HasFields {
-    object lat extends Field[Double]
-    object lng extends Field[Double]
-    object zoom extends Field[Int](12)
-    object map_type extends Field[MapType]
-}
-
-@model class GMapPlot extends Plot {
-    object map_options extends Field[GMapOptions]
-}
-
-@model class GeoJSOptions extends HasFields {
-    object lat extends Field[Double]
-    object lng extends Field[Double]
-    object zoom extends Field[Int](12)
-}
-
-@model class GeoJSPlot extends Plot {
-    object map_options extends Field[GeoJSOptions]
-}
-
-@model class GridPlot extends Plot {
-    object children extends Field[List[List[Plot]]]
-    object border_space extends Field[Int](0)
-}
