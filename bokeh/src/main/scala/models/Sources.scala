@@ -9,7 +9,7 @@ import play.api.libs.json.Writes
 
 @model sealed abstract class DataSource extends PlotObject {
     object column_names extends Field[List[String]]
-    object selected extends Field[List[String]]
+    object selected extends Field[List[Int]]
 
     def columns(columns: Symbol*): ColumnsRef =
         new ColumnsRef().source(this).columns(columns.toList)

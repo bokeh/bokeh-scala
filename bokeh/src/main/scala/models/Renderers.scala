@@ -2,19 +2,13 @@ package io.continuum.bokeh
 
 @model abstract class Renderer extends PlotObject
 
-@model class Glyph extends Renderer {
+@model class GlyphRenderer extends Renderer {
     // TODO: object server_data_source extends Field[ServerDataSource]
     object data_source extends Field[DataSource]
 
-    object glyph extends Field[BaseGlyph] {
-        override val fieldName = Some("glyphspec")
-    }
-    object selection_glyph extends Field[BaseGlyph] {
-        override val fieldName = Some("selection_glyphspec")
-    }
-    object nonselection_glyph extends Field[BaseGlyph] {
-        override val fieldName = Some("nonselection_glyphspec")
-    }
+    object glyph extends Field[Glyph]
+    object selection_glyph extends Field[Glyph]
+    object nonselection_glyph extends Field[Glyph]
 
     object x_range_name extends Field[String]("default")
     object y_range_name extends Field[String]("default")
@@ -35,7 +29,7 @@ package io.continuum.bokeh
 
     object legend_padding extends Field[Int](10)
     object legend_spacing extends Field[Int](3)
-    object legends extends Field[Map[String, List[Glyph]]]
+    object legends extends Field[Map[String, List[GlyphRenderer]]]
 }
 
 @model class BoxSelectionOverlay extends Renderer {

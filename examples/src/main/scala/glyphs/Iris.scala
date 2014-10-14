@@ -25,7 +25,7 @@ object Iris extends Example {
         .size(10)
         .line_color('color)
 
-    val glyph_renderer = new Glyph()
+    val renderer = new GlyphRenderer()
         .data_source(source)
         .glyph(circle)
 
@@ -44,7 +44,7 @@ object Iris extends Example {
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)
 
-    plot.renderers := List(xaxis, yaxis, xgrid, ygrid, glyph_renderer)
+    plot.renderers := List(xaxis, yaxis, xgrid, ygrid, renderer)
     plot.tools := List(pantool, wheelzoomtool)
 
     val document = new Document(plot)

@@ -17,7 +17,7 @@ trait Tools {
     case object PreviewSave extends DefaultTool        { def tool = new PreviewSaveTool()        }
     case object Reset extends DefaultTool              { def tool = new ResetTool()              }
     case object Resize extends DefaultTool             { def tool = new ResizeTool()             }
-    case object Click extends DefaultTool              { def tool = new ClickTool()              }
+    case object Tap extends DefaultTool                { def tool = new TapTool()                }
     case object Crosshair extends DefaultTool          { def tool = new CrosshairTool()          }
     case object BoxZoom extends DefaultTool            { def tool = new BoxZoomTool()            }
     case object BoxSelect extends DefaultTool          { def tool = new BoxSelectTool()          }

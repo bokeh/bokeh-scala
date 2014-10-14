@@ -22,17 +22,11 @@ trait HasFields { self =>
             .map(_.asModule)
             .filter(_.typeSignature <:< u.typeOf[HasFields#Field[_]])
             .toList
+        val names = modules.map(_.name.decoded)
         val instances = modules
             .map(im.reflectModule _)
             .map(_.instance)
             .collect { case field: Field[_] => field }
-        val names = instances
-            .map(_.fieldName)
-            .zip(modules)
-            .collect {
-                case (Some(name), _) => name
-                case (_, module) => module.name.decoded
-            }
         names.zip(instances)
     }
 
@@ -54,8 +48,6 @@ trait HasFields { self =>
             this()
             set(Some(value))
         }
-
-        val fieldName: Option[String] = None
 
         def defaultValue: Option[FieldType] =
             Option(implicitly[DefaultValue[FieldType]].default)

@@ -15,7 +15,7 @@ object ColorSpec extends Example {
 
     val circle = new Circle().x('x).y('y).size(15).fill_color('color).line_color(Color.Black)
 
-    val glyph_renderer = new Glyph()
+    val renderer = new GlyphRenderer()
         .data_source(source)
         .glyph(circle)
 
@@ -29,7 +29,7 @@ object ColorSpec extends Example {
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)
 
-    plot.renderers := List(xaxis, yaxis, glyph_renderer)
+    plot.renderers := List(xaxis, yaxis, renderer)
     plot.tools := List(pantool, wheelzoomtool)
 
     val document = new Document(plot)

@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@model sealed abstract class Marker extends BaseGlyph with FillProps with LineProps {
+@model sealed abstract class Marker extends Glyph with FillProps with LineProps {
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object size extends Spatial[Double](SpatialUnits.Screen) with NonNegative

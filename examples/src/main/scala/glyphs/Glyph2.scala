@@ -23,7 +23,7 @@ object Glyph2 extends Example {
         .fill_color(Color.Red)
         .line_color(Color.Black)
 
-    val glyph_renderer = new Glyph()
+    val renderer = new GlyphRenderer()
         .data_source(source)
         .glyph(circle)
 
@@ -40,7 +40,7 @@ object Glyph2 extends Example {
     val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
     val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
 
-    plot.renderers := List(xaxis, yaxis, xgrid, ygrid, glyph_renderer)
+    plot.renderers := List(xaxis, yaxis, xgrid, ygrid, renderer)
     plot.tools := List(pantool, wheelzoomtool)
 
     val document = new Document(plot)

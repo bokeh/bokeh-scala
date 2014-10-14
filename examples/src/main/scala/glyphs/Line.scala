@@ -17,11 +17,11 @@ object Line extends Example {
     val xdr = new DataRange1d().sources(source.columns('x) :: Nil)
     val ydr = new DataRange1d().sources(source.columns('y) :: Nil)
 
-    val line_glyph = new Line().x('x).y('y).line_color(Color.Blue)
+    val line = new Line().x('x).y('y).line_color(Color.Blue)
 
-    val renderer = new Glyph()
+    val renderer = new GlyphRenderer()
         .data_source(source)
-        .glyph(line_glyph)
+        .glyph(line)
 
     val plot = new Plot().x_range(xdr).y_range(ydr)
 

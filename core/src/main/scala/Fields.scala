@@ -30,7 +30,7 @@ object Fields {
             .filter(_.typeSignature <:< typeOf[AbstractField])
             .map { member =>
                 val field = q"$obj.${member.name.toTermName}"
-                q"($field.fieldName.getOrElse(${member.name.decoded}), $field.toJson)"
+                q"(${member.name.decoded}, $field.toJson)"
             }
 
         c.Expr[List[(String, Option[JsValue])]](q"List(..$values)")

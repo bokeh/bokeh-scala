@@ -54,14 +54,14 @@ object IrisSplom extends Example {
             .size(4)
             .line_color('color)
 
-        val circle_renderer = new Glyph()
+        val renderer = new GlyphRenderer()
             .data_source(source)
             .glyph(circle)
 
         val pantool = new PanTool().plot(plot)
         val wheelzoomtool = new WheelZoomTool().plot(plot)
 
-        plot.renderers := axes ++ grids ++ List(circle_renderer)
+        plot.renderers := axes ++ grids ++ List(renderer)
         plot.tools := List(pantool, wheelzoomtool)
 
         text.foreach { text =>
@@ -76,7 +76,7 @@ object IrisSplom extends Example {
                 .text_alpha(0.5)
                 .text_align(TextAlign.Center)
                 .text_font_size("28pt")
-            val text_renderer = new Glyph()
+            val text_renderer = new GlyphRenderer()
                 .data_source(text_source)
                 .glyph(text_glyph)
 

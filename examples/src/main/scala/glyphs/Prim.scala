@@ -13,8 +13,8 @@ object Prim extends Example {
     val xdr = new Range1d().start(0).end(10)
     val ydr = new Range1d().start(0).end(10)
 
-    def make_plot[T <: BaseGlyph](name: String, glyph: T) = {
-        val glyph_renderer = new Glyph()
+    def make_plot[T <: Glyph](name: String, glyph: T) = {
+        val renderer = new GlyphRenderer()
             .data_source(source)
             .glyph(glyph)
 
@@ -29,7 +29,7 @@ object Prim extends Example {
         val pantool = new PanTool().plot(plot)
         val wheelzoomtool = new WheelZoomTool().plot(plot)
 
-        plot.renderers := List(xaxis, yaxis, xgrid, ygrid, glyph_renderer)
+        plot.renderers := List(xaxis, yaxis, xgrid, ygrid, renderer)
         plot.tools := List(pantool, wheelzoomtool)
 
         plot

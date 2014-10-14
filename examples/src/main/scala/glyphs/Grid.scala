@@ -32,7 +32,7 @@ object Grid extends Example {
         val pantool = new PanTool().plot(plot)
         val wheelzoomtool = new WheelZoomTool().plot(plot)
 
-        val renderer = new Glyph()
+        val renderer = new GlyphRenderer()
             .data_source(source)
             .glyph(new Line().x(xname).y(yname).line_color(line_color))
 

@@ -18,7 +18,7 @@ package io.continuum.bokeh
 
 @model class ResizeTool extends Tool
 
-@model class ClickTool extends Tool {
+@model class TapTool extends Tool {
     object names extends Field[List[String]]
     object always_active extends Field[Boolean](true)
 }
@@ -30,11 +30,11 @@ package io.continuum.bokeh
 @model class BoxSelectTool extends Tool {
     object renderers extends Field[List[Renderer]]
     object select_every_mousemove extends Field[Boolean](true)
-    object select_x extends Field[Boolean](true)
-    object select_y extends Field[Boolean](true)
+    object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
 }
 
 @model class HoverTool extends Tool {
+    object names extends Field[List[String]]
     object renderers extends Field[List[Renderer]]
     object tooltips extends Field[Map[String, String]]
     object always_active extends Field[Boolean](true)

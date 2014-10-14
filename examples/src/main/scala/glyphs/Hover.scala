@@ -43,7 +43,7 @@ object Hover extends Example with LinAlg with Tools {
         .fill_alpha(0.6)
         .line_color()
 
-    val circle_renderer = new Glyph()
+    val circle_renderer = new GlyphRenderer()
         .data_source(source)
         .glyph(circle)
 
@@ -57,7 +57,7 @@ object Hover extends Example with LinAlg with Tools {
         .text_baseline(TextBaseline.Middle)
         .text_align(TextAlign.Center)
 
-    val text_renderer = new Glyph()
+    val text_renderer = new GlyphRenderer()
         .data_source(source)
         .glyph(text)
 

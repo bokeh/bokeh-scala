@@ -16,7 +16,7 @@ object Glyph1 extends Example {
     val ydr = new DataRange1d().sources(source.columns('y) :: Nil)
 
     val circle = new Circle().x('x).y('y).fill_color(Color.Red).size(5).line_color(Color.Black)
-    val glyph_renderer = new Glyph().data_source(source).glyph(circle)
+    val renderer = new GlyphRenderer().data_source(source).glyph(circle)
 
     val plot = new Plot().x_range(xdr).y_range(ydr)
 
@@ -28,7 +28,7 @@ object Glyph1 extends Example {
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)
 
-    plot.renderers := List(xaxis, yaxis, glyph_renderer)
+    plot.renderers := List(xaxis, yaxis, renderer)
     plot.tools := List(pantool, wheelzoomtool)
 
     val document = new Document(plot)

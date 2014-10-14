@@ -53,11 +53,11 @@ object Choropleth extends Example {
         .line_color("#884444")
         .line_width(2)
 
-    val county_renderer = new Glyph()
+    val county_renderer = new GlyphRenderer()
         .data_source(county_source)
         .glyph(county_patches)
 
-    val state_renderer = new Glyph()
+    val state_renderer = new GlyphRenderer()
         .data_source(state_source)
         .glyph(state_patches)
 

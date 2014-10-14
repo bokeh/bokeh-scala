@@ -6,10 +6,11 @@ object Maps extends Example {
     val x_range = new Range1d()
     val y_range = new Range1d()
 
-    val map_options = new MapOptions()
+    val map_options = new GMapOptions()
         .lat(30.2861)
         .lng(-97.7394)
         .zoom(15)
+        .map_type(MapType.Satellite)
 
     val plot = new GMapPlot()
         .x_range(x_range)
@@ -33,12 +34,19 @@ object Maps extends Example {
         .addColumn('lon, Array(-97.7394, -97.7390, -97.7405))
         .addColumn('fill, Array(Color.Orange, Color.Blue, Color.Green))
 
-    val circle_renderer = new Glyph()
-        .data_source(source)
-        .glyph(new Circle().x('lon).y('lat).fill_color('fill).size(15)
-            .radius_units(SpatialUnits.Screen).line_color(Color.Black))
+    val circle = new Circle()
+        .x('lon)
+        .y('lat)
+        .fill_color('fill)
+        .size(15)
+        .radius_units(SpatialUnits.Screen)
+        .line_color(Color.Black)
 
-    plot.renderers <<= (circle_renderer :: _)
+    val renderer = new GlyphRenderer()
+        .data_source(source)
+        .glyph(circle)
+
+    plot.renderers <<= (renderer :: _)
 
     val document = new Document(plot)
     val html = document.save("maps.html", config.resources)

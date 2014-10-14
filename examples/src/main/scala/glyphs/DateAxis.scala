@@ -20,7 +20,7 @@ object DateAxis extends Example {
 
     val circle = new Circle().x('times).y('y).fill_color(Color.Red).size(5).line_color(Color.Black)
 
-    val glyph_renderer = new Glyph()
+    val renderer = new GlyphRenderer()
         .data_source(source)
         .glyph(circle)
 
@@ -34,7 +34,7 @@ object DateAxis extends Example {
     val pantool = new PanTool().plot(plot)
     val wheelzoomtool = new WheelZoomTool().plot(plot)
 
-    plot.renderers := List(xaxis, yaxis, glyph_renderer)
+    plot.renderers := List(xaxis, yaxis, renderer)
     plot.tools := List(pantool, wheelzoomtool)
 
     val document = new Document(plot)
