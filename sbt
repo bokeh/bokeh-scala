@@ -53,7 +53,12 @@ SBT_LAUNCHER="$(dirname $0)/project/sbt-launch-$SBT_VERSION.jar"
 if [ ! -e "$SBT_LAUNCHER" ];
 then
     URL="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/$SBT_VERSION/sbt-launch.jar"
-    wget -O $SBT_LAUNCHER $URL
+    if [ $(which wget) ];
+    then
+        wget -O $SBT_LAUNCHER $URL
+    else
+        curl -o $SBT_LAUNCHER $URL
+    fi
 fi
 
 EXPECTED_MD5="$(get_property sbt.launcher.md5)"
