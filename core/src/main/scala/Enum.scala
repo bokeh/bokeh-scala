@@ -10,63 +10,34 @@ trait Enum[T <: EnumType] {
     type ValueType = T
 
     def values: Set[T] = macro EnumImpl.valuesImpl[T]
-    // def unapply(string: String): Option[T] = macro EnumImpl.unapplyImpl[T]
     def fromString: PartialFunction[String, T] = macro EnumImpl.fromStringImpl[T]
 }
 
 object EnumImpl {
+    private def children[T <: EnumType : c.WeakTypeTag](c: Context): Set[c.universe.Symbol] = {
+        import c.universe._
+
+        val tpe = weakTypeOf[T]
+        val cls = tpe.typeSymbol.asClass
+
+        if (!cls.isSealed) c.error(c.enclosingPosition, "must be a sealed trait or class")
+        val children = tpe.typeSymbol.asClass.knownDirectSubclasses
+        if (children.isEmpty) c.error(c.enclosingPosition, "no enumerations found")
+
+        children
+    }
+
     def valuesImpl[T <: EnumType : c.WeakTypeTag](c: Context): c.Expr[Set[T]] = {
         import c.universe._
 
-        val tpe = weakTypeOf[T]
-        val children = tpe.typeSymbol.asClass.knownDirectSubclasses
-
-        if (children.isEmpty) {
-            c.error(c.enclosingPosition, "no direct subclasses found")
-        }
-
-        val values = children.map { child =>
-            c.Expr(Select(c.prefix.tree, newTermName(child.name.decoded)))
-        }
-
-        c.Expr[Set[T]](q"Set[$tpe](..$values)")
-    }
-
-    def unapplyImpl[T <: EnumType : c.WeakTypeTag](c: Context)(string: c.Expr[String]): c.Expr[Option[T]] = {
-        import c.universe._
-
-        val tpe = weakTypeOf[T]
-        val children = tpe.typeSymbol.asClass.knownDirectSubclasses
-
-        if (children.isEmpty) {
-            c.error(c.enclosingPosition, "no direct subclasses found")
-        }
-
-        val cases = children.map { child =>
-            val name = child.name.decoded
-            val value = newTermName(name)
-            cq"$name => Some(${c.prefix.tree}.$value)"
-        }
-
-        c.Expr[Option[T]](q"${string.tree} match { case ..$cases; case _ => None }")
+        val values = children[T](c).map { child => q"${c.prefix.tree}.$child" }
+        c.Expr[Set[T]](q"Set(..$values)")
     }
 
     def fromStringImpl[T <: EnumType : c.WeakTypeTag](c: Context): c.Expr[PartialFunction[String, T]] = {
         import c.universe._
 
-        val tpe = weakTypeOf[T]
-        val children = tpe.typeSymbol.asClass.knownDirectSubclasses
-
-        if (children.isEmpty) {
-            c.error(c.enclosingPosition, "no direct subclasses found")
-        }
-
-        val cases = children.map { child =>
-            val name = child.name.decoded
-            val ret = newTermName(name)
-            cq"$name => ${c.prefix.tree}.$ret"
-        }
-
+        val cases = children[T](c).map { child => cq"${child.name.decoded} => ${c.prefix.tree}.$child" }
         c.Expr[PartialFunction[String, T]](q"{ case ..$cases }")
     }
 }
