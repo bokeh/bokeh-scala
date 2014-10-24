@@ -478,8 +478,29 @@ class BokehSpec extends Specification {
         "support BoxSelectTool" in {
             val obj = new BoxSelectTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 5
-            obj.values.length shouldEqual 5
+            obj.fieldsWithValues.length shouldEqual 6
+            obj.values.length shouldEqual 6
+        }
+
+        "support LassoSelectTool" in {
+            val obj = new LassoSelectTool().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fieldsWithValues.length shouldEqual 4
+            obj.values.length shouldEqual 4
+        }
+
+        "support PolySelectTool" in {
+            val obj = new PolySelectTool().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fieldsWithValues.length shouldEqual 4
+            obj.values.length shouldEqual 4
+        }
+
+        "support HoverTool" in {
+            val obj = new HoverTool().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fieldsWithValues.length shouldEqual 6
+            obj.values.length shouldEqual 6
         }
     }
 
