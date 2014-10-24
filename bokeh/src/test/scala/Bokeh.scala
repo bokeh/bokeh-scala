@@ -335,12 +335,6 @@ class BokehSpec extends Specification {
             obj.values.length shouldEqual 20
         }
 
-        "support HexStar" in {
-            val obj = new HexStar()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
-        }
-
         "support SquareCross" in {
             val obj = new SquareCross()
             obj.fieldsWithValues.length shouldEqual 20
