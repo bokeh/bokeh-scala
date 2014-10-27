@@ -79,8 +79,8 @@ object Daylight extends Example {
 
     plot.renderers <<= (xaxis :: yaxis :: xgrid :: ygrid :: _)
 
-    val legends = Map("sunrise" -> List(line1_glyph),
-                      "sunset"  -> List(line2_glyph))
+    val legends = List("sunrise" -> List(line1_glyph),
+                       "sunset"  -> List(line2_glyph))
     val legend = new Legend().plot(plot).legends(legends)
     plot.renderers <<= (legend :: _)
 

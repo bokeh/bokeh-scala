@@ -30,7 +30,8 @@ package io.continuum.bokeh
 
     object legend_padding extends Field[Int](10)
     object legend_spacing extends Field[Int](3)
-    object legends extends Field[Map[String, List[GlyphRenderer]]]
+
+    object legends extends Field[List[(String, List[GlyphRenderer])]]
 }
 
 @model class BoxSelectionOverlay extends Renderer {
