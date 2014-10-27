@@ -1,7 +1,9 @@
 package io.continuum.bokeh
 
-sealed trait NamedIcon extends EnumType
-object NamedIcon extends Enum[NamedIcon] {
+sealed trait NamedIcon extends EnumType {
+    override val name = Utils.snakify(toString, '-')
+}
+@enum object NamedIcon extends Enumerated[NamedIcon] {
     case object Adjust extends NamedIcon
     case object Adn extends NamedIcon
     case object AlignCenter extends NamedIcon

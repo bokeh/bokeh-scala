@@ -28,7 +28,7 @@ case class HSL(hue: Int, saturation: Percent, lightness: Percent) extends HSLACo
 sealed abstract class NamedColor(red: Int, green: Int, blue: Int) extends RGBAColor(red, green, blue, 1.0) with EnumType {
     def toCSS = name
 }
-object Color extends Enum[NamedColor] {
+@enum object Color extends Enumerated[NamedColor] {
     implicit def StringToColor(color: String): Color = {
         lazy val HexColor = """^#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})$""".r
         lazy val RGBColor = """^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$""".r

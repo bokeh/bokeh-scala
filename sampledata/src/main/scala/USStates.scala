@@ -17,63 +17,7 @@ object USStates extends SampleData {
 case class USStateData(name: String, region: String, lats: List[Double], lons: List[Double])
 
 sealed trait USState extends EnumType
-object USState extends Enum[USState] {
-    def unapply(code: String): Option[USState] = _fromString.lift(code)
-
-    def _fromString: PartialFunction[String, USState] = {
-        case "AK" => AK
-        case "AL" => AL
-        case "AR" => AR
-        case "AZ" => AZ
-        case "CA" => CA
-        case "CO" => CO
-        case "CT" => CT
-        case "DC" => DC
-        case "DE" => DE
-        case "FL" => FL
-        case "GA" => GA
-        case "HI" => HI
-        case "IA" => IA
-        case "ID" => ID
-        case "IL" => IL
-        case "IN" => IN
-        case "KS" => KS
-        case "KY" => KY
-        case "LA" => LA
-        case "MA" => MA
-        case "MD" => MD
-        case "ME" => ME
-        case "MI" => MI
-        case "MN" => MN
-        case "MO" => MO
-        case "MS" => MS
-        case "MT" => MT
-        case "NC" => NC
-        case "ND" => ND
-        case "NE" => NE
-        case "NH" => NH
-        case "NJ" => NJ
-        case "NM" => NM
-        case "NV" => NV
-        case "NY" => NY
-        case "OH" => OH
-        case "OK" => OK
-        case "OR" => OR
-        case "PA" => PA
-        case "RI" => RI
-        case "SC" => SC
-        case "SD" => SD
-        case "TN" => TN
-        case "TX" => TX
-        case "UT" => UT
-        case "VA" => VA
-        case "VT" => VT
-        case "WA" => WA
-        case "WI" => WI
-        case "WV" => WV
-        case "WY" => WY
-    }
-
+@enum object USState extends Enumerated[USState] {
     case object AK extends USState
     case object AL extends USState
     case object AR extends USState
