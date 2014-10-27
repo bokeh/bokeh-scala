@@ -19,14 +19,14 @@ package io.continuum.bokeh
 
     object axis_label extends Field[String]
     object axis_label_standoff extends Field[Int]
-    // TODO: object axis_label_props extends Include(TextProps, prefix="axis_label")
+    axis_label = include[TextProps]
 
     object major_label_standoff extends Field[Int]
     object major_label_orientation extends Field[Orientation] // TODO: Either[Orientation, Double]
-    // TODO: object major_label_props extends Include(TextProps, prefix="major_label")
+    major_label = include[TextProps]
 
-    // TODO: object axis_props extends Include(LineProps, prefix="axis")
-    // TODO: object tick_props extends Include(LineProps, prefix="major_tick")
+    axis = include[LineProps]
+    major_tick = include[LineProps]
 
     object major_tick_in extends Field[Int]
     object major_tick_out extends Field[Int]
@@ -68,5 +68,5 @@ package io.continuum.bokeh
         this
     }
 
-    // TODO: object grid_props extends Include(LineProps, prefix="grid")
+    grid = include[LineProps]
 }

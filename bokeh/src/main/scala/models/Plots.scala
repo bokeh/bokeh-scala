@@ -3,8 +3,8 @@ package io.continuum.bokeh
 @model class Plot extends Widget {
     object title extends Field[String]("")
 
-    // TODO: object title_props extends Include(TextProps, prefix="title")
-    // TODO: object outline_props extends Include(LineProps, prefix="outline")
+    title = include[TextProps]
+    outline = include[LineProps]
 
     object x_range extends Field[Range]
     object y_range extends Field[Range]

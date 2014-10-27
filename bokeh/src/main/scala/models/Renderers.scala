@@ -16,13 +16,14 @@ package io.continuum.bokeh
 
 @model class Legend extends Renderer {
     object plot extends Field[Plot]
-    object orientation extends Field[LegendOrientation]
-    // TODO: object border extends Include(LineProps, prefix="border")
 
-    // TODO: object label_props extends Include(TextProps, prefix="label")
+    object orientation extends Field[LegendOrientation]
+    border = include[LineProps]
+
     object label_standoff extends Field[Int](15)
     object label_height extends Field[Int](20)
     object label_width extends Field[Int](50)
+    label = include[TextProps]
 
     object glyph_height extends Field[Int](20)
     object glyph_width extends Field[Int](20)

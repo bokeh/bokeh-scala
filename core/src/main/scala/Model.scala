@@ -9,12 +9,31 @@ private object ModelImpl {
 
         annottees.map(_.tree) match {
             case ClassDef(mods, name, tparams, tpl @ Template(parents, sf, body)) :: companion =>
-                val method = q"""
+                val expandedBody = body.flatMap {
+                    case q"$prefix = include[$mixin]" =>
+                        val tpe = c.typecheck(tq"$mixin", c.TYPEmode).tpe
+
+                        val fields = tpe.members
+                            .filter(_.isModule)
+                            .map(_.asModule)
+                            .filter(_.typeSignature <:< typeOf[AbstractField])
+
+                        fields.map { field =>
+                            val name = newTermName(s"${prefix}_${field.name}")
+                            val sig = field.typeSignature
+                            val tpe = sig.member(newTypeName("ValueType")).typeSignatureIn(sig)
+                            q"object $name extends Field[$tpe]"
+                        }
+                    case field => field :: Nil
+                }
+
+                val valuesMethod = q"""
                     override def values: List[(String, Option[play.api.libs.json.JsValue])] = {
                         io.continuum.bokeh.Fields.values(this)
                     }
                 """
-                val decl = ClassDef(mods, name, tparams, Template(parents, sf, body :+ method))
+
+                val decl = ClassDef(mods, name, tparams, Template(parents, sf, expandedBody :+ valuesMethod))
                 c.Expr[Any](Block(decl :: companion, Literal(Constant(()))))
             case _ => c.abort(c.enclosingPosition, "expected a class")
         }

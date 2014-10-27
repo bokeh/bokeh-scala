@@ -392,29 +392,29 @@ class BokehSpec extends Specification {
         "support LinearAxis" in {
             val obj = new LinearAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 14
-            obj.values.length shouldEqual 14
+            obj.fieldsWithValues.length shouldEqual 42
+            obj.values.length shouldEqual 42
         }
 
         "support CategoricalAxis" in {
             val obj = new CategoricalAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 14
-            obj.values.length shouldEqual 14
+            obj.fieldsWithValues.length shouldEqual 42
+            obj.values.length shouldEqual 42
         }
 
         "support DatetimeAxis" in {
             val obj = new DatetimeAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 18
-            obj.values.length shouldEqual 18
+            obj.fieldsWithValues.length shouldEqual 46
+            obj.values.length shouldEqual 46
         }
 
         "support Grid" in {
             val obj = new Grid().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 7
-            obj.values.length shouldEqual 7
+            obj.fieldsWithValues.length shouldEqual 14
+            obj.values.length shouldEqual 14
         }
     }
 
@@ -508,22 +508,22 @@ class BokehSpec extends Specification {
         "support Plot" in {
             val obj = new Plot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 27
-            obj.values.length shouldEqual 27
+            obj.fieldsWithValues.length shouldEqual 41
+            obj.values.length shouldEqual 41
         }
 
         "support GMapPlot" in {
             val obj = new GMapPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 28
-            obj.values.length shouldEqual 28
+            obj.fieldsWithValues.length shouldEqual 42
+            obj.values.length shouldEqual 42
         }
 
         "support GridPlot" in {
             val obj = new GridPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 29
-            obj.values.length shouldEqual 29
+            obj.fieldsWithValues.length shouldEqual 43
+            obj.values.length shouldEqual 43
         }
     }
 
