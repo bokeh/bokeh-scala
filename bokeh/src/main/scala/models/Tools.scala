@@ -46,6 +46,7 @@ package io.continuum.bokeh
 @model class HoverTool extends TransientSelectTool {
     object tooltips extends Field[List[(String, String)]]
     object always_active extends Field[Boolean](true)
+    object snap_to_data extends Field[Boolean](true)
 }
 
 @model class DataRangeBoxSelectTool extends Tool {
