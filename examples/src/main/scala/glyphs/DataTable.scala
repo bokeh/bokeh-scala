@@ -2,10 +2,13 @@ package io.continuum.bokeh
 package examples
 package glyphs
 
-import ColumnType.{Numeric,Autocomplete,Dropdown}
-import widgets.{TableColumn,HandsonTable}
+import widgets.{
+    VBox,
+    DataTable,TableColumn,
+    NumberFormatter,StringFormatter,
+    IntEditor,NumberEditor,StringEditor,SelectEditor}
 
-object DataTable extends Example {
+object DataTables extends Example {
     val mpg = sampledata.autompg
 
     val source = new ColumnDataSource()
@@ -20,27 +23,62 @@ object DataTable extends Example {
         .addColumn('cty, mpg.cty)
         .addColumn('hwy, mpg.hwy)
 
-    val manufacturers = mpg.manufacturer.distinct.sorted
-    val models        = mpg.model.distinct.sorted
-    val transmissions = mpg.trans.distinct.sorted
-    val drives        = mpg.drv.distinct.sorted
-    val classes       = mpg.cls.distinct.sorted
+    val plot = {
+        val xdr = new DataRange1d().sources(source.columns('index) :: Nil)
+        val ydr = new DataRange1d().sources(source.columns('cty) :: source.columns('hwy) :: Nil)
+        val plot = new Plot().title().x_range(xdr).y_range(ydr).plot_width(1000).plot_height(300)
+        val xaxis = new LinearAxis().plot(plot)
+        plot.below <<= (xaxis :: _)
+        val yaxis = new LinearAxis().plot(plot)
+        val ygrid = new Grid().plot(plot).dimension(1).ticker(yaxis.ticker.value)
+        plot.left <<= (yaxis :: _)
+        val cty_glyph = new Circle().x('index).y('cty).fill_color("#396285").size(8).fill_alpha(0.5).line_alpha(0.5)
+        val hwy_glyph = new Circle().x('index).y('hwy).fill_color("#CE603D").size(8).fill_alpha(0.5).line_alpha(0.5)
+        val cty = new GlyphRenderer().data_source(source).glyph(cty_glyph)
+        val hwy = new GlyphRenderer().data_source(source).glyph(hwy_glyph)
+        plot.renderers := List(cty, hwy, xaxis, yaxis, ygrid)
+        val tooltips = List(
+            ("Manufacturer", "@manufacturer"),
+            ("Model",        "@model"),
+            ("Displacement", "@displ"),
+            ("Year",         "@year"),
+            ("Cylinders",    "@cyl"),
+            ("Transmission", "@trans"),
+            ("Drive",        "@drv"),
+            ("Class",        "@class")
+        )
+        val cty_hover_tool = new HoverTool().plot(plot).renderers(cty :: Nil).tooltips(tooltips :+ ("City MPG"    -> "@cty"))
+        val hwy_hover_tool = new HoverTool().plot(plot).renderers(hwy :: Nil).tooltips(tooltips :+ ("Highway MPG" -> "@hwy"))
+        val select_tool = new BoxSelectTool().plot(plot).renderers(cty :: hwy :: Nil).dimensions(Dimension.Width :: Nil)
+        plot.tools := List(cty_hover_tool, hwy_hover_tool, select_tool)
+        plot
+    }
 
-    val columns =
-        new TableColumn().field("manufacturer").header("Manufacturer").`type`(Autocomplete).source(manufacturers)   ::
-        new TableColumn().field("model").header("Model").`type`(Autocomplete).source(models)                        ::
-        new TableColumn().field("displ").header("Displacement").`type`(Numeric).format("0.00")                      ::
-        new TableColumn().field("year").header("Year").`type`(Numeric)                                              ::
-        new TableColumn().field("cyl").header("Cylinders").`type`(Numeric)                                          ::
-        new TableColumn().field("trans").header("Transmission").`type`(Dropdown).strict(true).source(transmissions) ::
-        new TableColumn().field("drv").header("Drive").`type`(Autocomplete).strict(true).source(drives)             ::
-        new TableColumn().field("cls").header("Class").`type`(Autocomplete).strict(true).source(classes)            ::
-        new TableColumn().field("cty").header("City MPG").`type`(Numeric)                                           ::
-        new TableColumn().field("hwy").header("Highway MPG").`type`(Numeric)                                        :: Nil
+    val data_table = {
+        val manufacturers = mpg.manufacturer.distinct.sorted
+        val models        = mpg.model.distinct.sorted
+        val transmissions = mpg.trans.distinct.sorted
+        val drives        = mpg.drv.distinct.sorted
+        val classes       = mpg.cls.distinct.sorted
 
-    val table = new HandsonTable().source(source).columns(columns).sorting(true)
+        val columns = List(
+            new TableColumn().field('manufacturer) .title("Manufacturer") .editor(new SelectEditor().options(manufacturers)) .formatter(new StringFormatter().font_style(FontStyle.Bold)),
+            new TableColumn().field('model)        .title("Model")        .editor(new StringEditor().completions(models)),
+            new TableColumn().field('displ)        .title("Displacement") .editor(new NumberEditor().step(0.1))              .formatter(new NumberFormatter().format("0.0")),
+            new TableColumn().field('year)         .title("Year")         .editor(new IntEditor()),
+            new TableColumn().field('cyl)          .title("Cylinders")    .editor(new IntEditor()),
+            new TableColumn().field('trans)        .title("Transmission") .editor(new SelectEditor().options(transmissions)),
+            new TableColumn().field('drv)          .title("Drive")        .editor(new SelectEditor().options(drives)),
+            new TableColumn().field('class)        .title("Class")        .editor(new SelectEditor().options(classes)),
+            new TableColumn().field('cty)          .title("City MPG")     .editor(new IntEditor()),
+            new TableColumn().field('hwy)          .title("Highway MPG")  .editor(new IntEditor())
+        )
+        new DataTable().source(source).columns(columns).editable(true)
+    }
 
-    val document = new Document(table)
+    val layout = new VBox().children(plot :: data_table :: Nil)
+
+    val document = new Document(layout)
     val html = document.save("data_table.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }
