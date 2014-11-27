@@ -22,7 +22,6 @@ trait Tools {
     case object BoxZoom extends DefaultTool            { def tool = new BoxZoomTool()            }
     case object BoxSelect extends DefaultTool          { def tool = new BoxSelectTool()          }
     case object Hover extends DefaultTool              { def tool = new HoverTool()              }
-    case object ObjectExplorer extends DefaultTool     { def tool = new ObjectExplorerTool()     }
     case object DataRangeBoxSelect extends DefaultTool { def tool = new DataRangeBoxSelectTool() }
 
     implicit def ToolsetToList(tools: Toolset): List[Tool] = tools.toList
