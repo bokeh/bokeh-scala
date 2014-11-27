@@ -11,6 +11,7 @@ trait TypeDefaults {
     implicit object IntDefault extends DefaultValue[Int](0)
     implicit object DoubleDefault extends DefaultValue[Double](0.0)
     implicit object StringDefault extends DefaultValue[String]("")
+    implicit object SymbolDefault extends DefaultValue[Symbol](Symbol(""))
     implicit object PercentDefault extends DefaultValue[Percent](100%%)
 
     implicit object DateTimeDefault extends DefaultValue[DateTime](new DateTime)
@@ -56,6 +57,9 @@ trait EnumDefaults {
     implicit object LogLevelDefault extends DefaultValue[LogLevel](LogLevel.Info)
     implicit object ColorDefault extends DefaultValue[Color](Color.White)
     implicit object NamedIconDefault extends DefaultValue[NamedIcon](NamedIcon.Adjust)
+    implicit object CheckmarkDefault extends DefaultValue[Checkmark](Checkmark.Check)
+    implicit object SortDefault extends DefaultValue[Sort](Sort.Ascending)
+    implicit object LanguageDefault extends DefaultValue[Language](Language.`en`)
 }
 
 trait DefaultImplicits extends TypeDefaults with EnumDefaults

@@ -187,3 +187,50 @@ sealed trait LogLevel extends EnumType with SnakeCase
     case object Error extends LogLevel
     case object Fatal extends LogLevel
 }
+
+sealed trait Checkmark extends EnumType with DashCase
+@enum object Checkmark extends Enumerated[Checkmark] {
+    case object Check extends Checkmark
+    case object CheckCircle extends Checkmark
+    case object CheckCircleO extends Checkmark
+    case object CheckSquare extends Checkmark
+    case object CheckSquareO extends Checkmark
+}
+
+sealed trait Sort extends EnumType with SnakeCase
+@enum object Sort extends Enumerated[Sort] {
+    case object Ascending extends Sort
+    case object Descending extends Sort
+}
+
+sealed trait Language extends EnumType
+@enum object Language extends Enumerated[Language] {
+    case object `be-nl` extends Language
+    case object `chs` extends Language
+    case object `cs` extends Language
+    case object `da-dk` extends Language
+    case object `de-ch` extends Language
+    case object `de` extends Language
+    case object `en` extends Language
+    case object `en-gb` extends Language
+    case object `es-ES` extends Language
+    case object `es` extends Language
+    case object `et` extends Language
+    case object `fi` extends Language
+    case object `fr-CA` extends Language
+    case object `fr-ch` extends Language
+    case object `fr` extends Language
+    case object `hu` extends Language
+    case object `it` extends Language
+    case object `ja` extends Language
+    case object `nl-nl` extends Language
+    case object `pl` extends Language
+    case object `pt-br` extends Language
+    case object `pt-pt` extends Language
+    case object `ru` extends Language
+    case object `ru-UA` extends Language
+    case object `sk` extends Language
+    case object `th` extends Language
+    case object `tr` extends Language
+    case object `uk-UA` extends Language
+}

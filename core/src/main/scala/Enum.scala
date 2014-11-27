@@ -15,6 +15,10 @@ trait SnakeCase { self: EnumType =>
     override val name = Utils.snakify(toString)
 }
 
+trait DashCase { self: EnumType =>
+    override val name = Utils.snakify(toString, '-')
+}
+
 trait Enumerated[T <: EnumType] {
     type ValueType = T
 
