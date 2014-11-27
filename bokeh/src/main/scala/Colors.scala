@@ -42,6 +42,8 @@ sealed abstract class NamedColor(red: Int, green: Int, blue: Int) extends RGBACo
         }
     }
 
+    case object Transparent          extends Color { def toCSS = "transparent" }
+
     case object AliceBlue            extends NamedColor(240, 248, 255)
     case object AntiqueWhite         extends NamedColor(250, 235, 215)
     case object Aqua                 extends NamedColor(  0, 255, 255)
