@@ -25,7 +25,7 @@ object DataTables extends Example {
 
     val plot = {
         val xdr = new DataRange1d().sources(source.columns('index) :: Nil)
-        val ydr = new DataRange1d().sources(source.columns('cty) :: source.columns('hwy) :: Nil)
+        val ydr = new DataRange1d().sources(source.columns('cty, 'hwy) :: Nil)
         val plot = new Plot().title().x_range(xdr).y_range(ydr).plot_width(1000).plot_height(300)
         val xaxis = new LinearAxis().plot(plot)
         plot.below <<= (xaxis :: _)
