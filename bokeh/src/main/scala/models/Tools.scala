@@ -44,7 +44,7 @@ package io.continuum.bokeh
 @model class PolySelectTool extends SelectTool
 
 @model class HoverTool extends TransientSelectTool {
-    object tooltips extends Field[Map[String, String]]
+    object tooltips extends Field[List[(String, String)]]
     object always_active extends Field[Boolean](true)
 }
 

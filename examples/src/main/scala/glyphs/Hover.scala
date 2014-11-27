@@ -62,7 +62,7 @@ object Hover extends Example with LinAlg with Tools {
         .glyph(text)
 
     val hover = new HoverTool()
-        .tooltips(Map(
+        .tooltips(List(
             "index"         -> s"$$index",
             "fill_color"    -> s"$$color[hex,swatch]:fill_color",
             "radius"        -> s"@radius",
