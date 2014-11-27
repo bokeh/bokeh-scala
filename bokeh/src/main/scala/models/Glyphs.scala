@@ -59,6 +59,7 @@ package io.continuum.bokeh
     object dh extends Spatial[Double] with NonNegative
     object palette extends Vectorized[Double]
     object dilate extends Field[Boolean]
+    object color_mapper extends Field[ColorMapper]
 }
 
 @model class ImageURL extends Glyph {
