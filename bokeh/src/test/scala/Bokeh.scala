@@ -392,22 +392,22 @@ class BokehSpec extends Specification {
         "support LinearAxis" in {
             val obj = new LinearAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 42
-            obj.values.length shouldEqual 42
+            obj.fieldsWithValues.length shouldEqual 51
+            obj.values.length shouldEqual 51
         }
 
         "support CategoricalAxis" in {
             val obj = new CategoricalAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 42
-            obj.values.length shouldEqual 42
+            obj.fieldsWithValues.length shouldEqual 51
+            obj.values.length shouldEqual 51
         }
 
         "support DatetimeAxis" in {
             val obj = new DatetimeAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 46
-            obj.values.length shouldEqual 46
+            obj.fieldsWithValues.length shouldEqual 55
+            obj.values.length shouldEqual 55
         }
 
         "support Grid" in {
@@ -499,8 +499,8 @@ class BokehSpec extends Specification {
         "support HoverTool" in {
             val obj = new HoverTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 6
-            obj.values.length shouldEqual 6
+            obj.fieldsWithValues.length shouldEqual 7
+            obj.values.length shouldEqual 7
         }
     }
 
