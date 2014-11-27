@@ -26,10 +26,14 @@ package io.continuum.bokeh
     major_label = include[TextProps]
 
     axis = include[LineProps]
-    major_tick = include[LineProps]
 
+    major_tick = include[LineProps]
     object major_tick_in extends Field[Int]
     object major_tick_out extends Field[Int]
+
+    minor_tick = include[LineProps]
+    object minor_tick_in extends Field[Int]
+    object minor_tick_out extends Field[Int]
 }
 
 @model abstract class ContinuousAxis extends Axis
