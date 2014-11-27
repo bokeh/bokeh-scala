@@ -22,8 +22,8 @@ class ExamplesSpec extends Specification with TerminationMatchers {
             glyphs.ColorSpec.main(argv) must not(throwA[Throwable])
         }
 
-        "run DataTable" in {
-            glyphs.DataTable.main(argv) must not(throwA[Throwable])
+        "run DataTables" in {
+            glyphs.DataTables.main(argv) must not(throwA[Throwable])
         }
 
         "run DateAxis" in {
