@@ -9,7 +9,7 @@ jdk:
     - oraclejdk7
     - oraclejdk8
 
-script: ./sbt ++$TRAVIS_SCALA_VERSION compile test unidoc
+script: ./sbt ++$TRAVIS_SCALA_VERSION compile test
 
 after_success: project/travis/upload
 
