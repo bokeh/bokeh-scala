@@ -13,10 +13,23 @@ object LessPlugin extends sbt.Plugin {
         type S = LessSource
         type G = LessGraph
 
-        val parents: List[LessSource] = Nil
+        protected val importRegex = """^\s*@import\s*(?:\(([a-z]+)\))?\s*"([^"]+)";.*$""".r
 
-        def isTemplated: Boolean =
-            src.getPath.contains(".template")
+        protected def parseImport(line: String): Option[String] = {
+            line match {
+                case importRegex(_, path) if path.endsWith(".less") && !path.contains("@{") => Some(path)
+                case _                                                                      => None
+            }
+        }
+
+        lazy val parents: List[LessSource] = {
+            for {
+                line <- IO.readLines(src).toList
+                path <- parseImport(line)
+            } yield graph.getSource(path, this)
+        }
+
+        def isTemplated: Boolean = src.getPath.contains(".template")
 
         val compileFunction: String =
             """
@@ -40,7 +53,7 @@ object LessPlugin extends sbt.Plugin {
             |
             |    new less.Parser(options).parse(code, function (e, root) {
             |        if (e) { throw e; }
-            |        css = root.toCSS({ compress: false })
+            |        css = root.toCSS({ compress: false });
             |    });
             |
             |    return css;
@@ -161,8 +174,8 @@ object LessPlugin extends sbt.Plugin {
             lessGraph                 <<= lessGraphTask,
             less                      <<= compileTask
         )) ++ Seq(
-            cleanFiles               <+=  resourceManaged in less in conf,
-            watchSources             <++= watchSources in less in conf
+            cleanFiles                <+=  resourceManaged in less in conf,
+            watchSources              <++= watchSources in less in conf
         )
     }
 
