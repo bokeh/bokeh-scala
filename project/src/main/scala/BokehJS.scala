@@ -37,8 +37,8 @@ object BokehJS {
         includeFilter in (Compile, LessKeys.less) := "bokeh.less")
 
     lazy val ecoSettings = pluginEcoSettings ++ Seq(
-        sourceDirectory in (Compile, EcoKeys.eco) <<= (sourceDirectory in Compile)(_ / "coffee"),
-        resourceManaged in (Compile, EcoKeys.eco) <<= (resourceManaged in Compile)(_ / "js"),
+        sourceDirectory in (Compile, EcoKeys.eco) <<= sourceDirectory in (Compile, JsKeys.js),
+        resourceManaged in (Compile, EcoKeys.eco) <<= resourceManaged in (Compile, JsKeys.js),
         compile in Compile <<= compile in Compile dependsOn (EcoKeys.eco in Compile),
         resourceGenerators in Compile <+= EcoKeys.eco in Compile)
 
