@@ -60,6 +60,7 @@ trait EnumDefaults {
     implicit object CheckmarkDefault extends DefaultValue[Checkmark](Checkmark.Check)
     implicit object SortDefault extends DefaultValue[Sort](Sort.Ascending)
     implicit object LanguageDefault extends DefaultValue[Language](Language.`en`)
+    implicit object LogoDefault extends DefaultValue[Logo](Logo.Normal)
 }
 
 trait DefaultImplicits extends TypeDefaults with EnumDefaults

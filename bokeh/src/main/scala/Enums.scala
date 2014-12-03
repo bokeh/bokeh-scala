@@ -234,3 +234,9 @@ sealed trait Language extends EnumType
     case object `tr` extends Language
     case object `uk-UA` extends Language
 }
+
+sealed trait Logo extends EnumType
+@enum object Logo extends Enumerated[Logo] {
+    case object Normal extends Logo
+    case object Grey extends Logo
+}
