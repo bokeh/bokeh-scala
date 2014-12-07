@@ -24,9 +24,9 @@ object Dependencies {
             namespace %% "scala-io-file" % version)
     }
 
-    val breeze = "org.scalanlp" %% "breeze" % "0.8.1"
+    val breeze = "org.scalanlp" %% "breeze" % "0.10"
 
-    val play_json = "com.typesafe.play" %% "play-json" % "2.4.0-M1"
+    val play_json = "com.typesafe.play" %% "play-json" % "2.4.0-M2"
 
     val specs2 = "org.specs2" %% "specs2" % "2.3.11" % Test
 
