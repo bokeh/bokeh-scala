@@ -2,7 +2,7 @@ package io.continuum.bokeh
 
 import scala.reflect.ClassTag
 
-import play.api.libs.json.{Json,Writes,JsValue,JsString,JsNumber,JsArray,JsObject}
+import play.api.libs.json.{Json,Writes,JsValue,JsString,JsNumber,JsArray,JsObject,JsNull}
 import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 import breeze.linalg.DenseVector
 
@@ -95,6 +95,7 @@ trait BokehWrites {
             case obj: DateTime       => Json.toJson(obj)
             case obj: Time           => Json.toJson(obj)
             case obj: Date           => Json.toJson(obj)
+            case obj: Option[_]      => obj.map(anyToJson).getOrElse(JsNull)
             case obj: Array[_]       => JsArray(obj.map(anyToJson).toSeq)
             case obj: Traversable[_] => JsArray(obj.map(anyToJson).toSeq)
             case obj: DenseVector[_] => JsArray(obj.iterator.map(_._2).map(anyToJson).toSeq)
