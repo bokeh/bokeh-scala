@@ -12,6 +12,7 @@ object DataTables extends Example {
     val mpg = sampledata.autompg
 
     val source = new ColumnDataSource()
+        .addColumn('index, mpg.index)
         .addColumn('manufacturer, mpg.manufacturer)
         .addColumn('model, mpg.model)
         .addColumn('displ, mpg.displ)
@@ -45,7 +46,7 @@ object DataTables extends Example {
             ("Cylinders",    "@cyl"),
             ("Transmission", "@trans"),
             ("Drive",        "@drv"),
-            ("Class",        "@class")
+            ("Class",        "@cls")
         )
         val cty_hover_tool = new HoverTool().plot(plot).renderers(cty :: Nil).tooltips(tooltips :+ ("City MPG"    -> "@cty"))
         val hwy_hover_tool = new HoverTool().plot(plot).renderers(hwy :: Nil).tooltips(tooltips :+ ("Highway MPG" -> "@hwy"))
@@ -69,7 +70,7 @@ object DataTables extends Example {
             new TableColumn().field('cyl)          .title("Cylinders")    .editor(new IntEditor()),
             new TableColumn().field('trans)        .title("Transmission") .editor(new SelectEditor().options(transmissions)),
             new TableColumn().field('drv)          .title("Drive")        .editor(new SelectEditor().options(drives)),
-            new TableColumn().field('class)        .title("Class")        .editor(new SelectEditor().options(classes)),
+            new TableColumn().field('cls)          .title("Class")        .editor(new SelectEditor().options(classes)),
             new TableColumn().field('cty)          .title("City MPG")     .editor(new IntEditor()),
             new TableColumn().field('hwy)          .title("Highway MPG")  .editor(new IntEditor())
         )
@@ -79,6 +80,6 @@ object DataTables extends Example {
     val layout = new VBox().children(plot :: data_table :: Nil)
 
     val document = new Document(layout)
-    val html = document.save("data_table.html", config.resources)
+    val html = document.save("data_tables.html", config.resources)
     info(s"Wrote ${html.file}. Open ${html.url} in a web browser.")
 }
