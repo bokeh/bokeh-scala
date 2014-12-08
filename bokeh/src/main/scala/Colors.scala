@@ -70,7 +70,7 @@ sealed abstract class NamedColor(red: Int, green: Int, blue: Int) extends RGBACo
     case object DarkGray             extends NamedColor(169, 169, 169)
     case object DarkGreen            extends NamedColor(  0, 100,   0)
     case object DarkGrey             extends NamedColor(169, 169, 169)
-    case object DarKkhaki            extends NamedColor(189, 183, 107)
+    case object DarkKhaki            extends NamedColor(189, 183, 107)
     case object DarkMagenta          extends NamedColor(139,   0, 139)
     case object DarkOliveGreen       extends NamedColor( 85, 107,  47)
     case object DarkOrange           extends NamedColor(255, 140,   0)
