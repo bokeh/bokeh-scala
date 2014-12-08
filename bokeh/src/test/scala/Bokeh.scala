@@ -70,7 +70,7 @@ class BokehSpec extends Specification {
                 .palette('palette)
                 .dilate(false)
 
-            obj1.fields.length shouldEqual 15
+            obj1.fields.length shouldEqual 16
         }
 
         "support ImageURL" in {
@@ -454,19 +454,19 @@ class BokehSpec extends Specification {
         "support Plot" in {
             val obj = new Plot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 41
+            obj.fields.length shouldEqual 42
         }
 
         "support GMapPlot" in {
             val obj = new GMapPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 42
+            obj.fields.length shouldEqual 43
         }
 
         "support GridPlot" in {
             val obj = new GridPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 43
+            obj.fields.length shouldEqual 44
         }
     }
 
