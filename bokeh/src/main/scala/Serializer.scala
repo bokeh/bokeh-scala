@@ -2,7 +2,7 @@ package io.continuum.bokeh
 
 import play.api.libs.json.{Json,JsValue,JsArray,JsObject,JsString}
 
-trait JSONSerializer {
+class JSONSerializer(val stringifyFn: JsValue => String) {
     case class Model(id: String, `type`: String, attributes: JsObject, doc: Option[String] = None)
 
     implicit val ModelFormat = Json.format[Model]
@@ -11,8 +11,6 @@ trait JSONSerializer {
         val Ref(id, tp) = obj.getRef
         Model(id, tp, obj.toJson)
     }
-
-    val stringifyFn: JsValue => String
 
     def stringify(obj: PlotObject): String = {
         serializeObjs(collectObjs(obj))
