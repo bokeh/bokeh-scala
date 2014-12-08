@@ -17,8 +17,7 @@ class BokehSpec extends Specification {
                 .end_angle('end_angle)
                 .direction(Direction.Clock)
 
-            obj1.fieldsWithValues.length shouldEqual 24
-            obj1.values.length shouldEqual 24
+            obj1.fields.length shouldEqual 24
         }
 
         "support Annulus" in {
@@ -29,8 +28,7 @@ class BokehSpec extends Specification {
                 .inner_radius('inner_radius)
                 .outer_radius('outer_radius)
 
-            obj1.fieldsWithValues.length shouldEqual 21
-            obj1.values.length shouldEqual 21
+            obj1.fields.length shouldEqual 21
         }
 
         "support Arc" in {
@@ -43,8 +41,7 @@ class BokehSpec extends Specification {
                 .end_angle('end_angle)
                 .direction(Direction.Clock)
 
-            obj1.fieldsWithValues.length shouldEqual 21
-            obj1.values.length shouldEqual 21
+            obj1.fields.length shouldEqual 21
         }
 
         "support Bezier" in {
@@ -59,8 +56,7 @@ class BokehSpec extends Specification {
                 .cx1('cx1)
                 .cy1('cy1)
 
-            obj1.fieldsWithValues.length shouldEqual 23
-            obj1.values.length shouldEqual 23
+            obj1.fields.length shouldEqual 23
         }
 
         "support Image" in {
@@ -74,8 +70,7 @@ class BokehSpec extends Specification {
                 .palette('palette)
                 .dilate(false)
 
-            obj1.fieldsWithValues.length shouldEqual 15
-            obj1.values.length shouldEqual 15
+            obj1.fields.length shouldEqual 15
         }
 
         "support ImageURL" in {
@@ -90,8 +85,7 @@ class BokehSpec extends Specification {
                 .dilate(false)
                 .anchor(Anchor.TopRight)
 
-            obj1.fieldsWithValues.length shouldEqual 16
-            obj1.values.length shouldEqual 16
+            obj1.fields.length shouldEqual 16
         }
 
         "support ImageRGBA" in {
@@ -104,8 +98,7 @@ class BokehSpec extends Specification {
                 .dh('dh)
                 .dilate(false)
 
-            obj1.fieldsWithValues.length shouldEqual 14
-            obj1.values.length shouldEqual 14
+            obj1.fields.length shouldEqual 14
         }
 
         "support Line" in {
@@ -114,8 +107,7 @@ class BokehSpec extends Specification {
                 .x('x)
                 .y('y)
 
-            obj1.fieldsWithValues.length shouldEqual 17
-            obj1.values.length shouldEqual 17
+            obj1.fields.length shouldEqual 17
         }
 
         "support MultiLine" in {
@@ -124,8 +116,7 @@ class BokehSpec extends Specification {
                 .xs('xs)
                 .ys('ys)
 
-            obj1.fieldsWithValues.length shouldEqual 17
-            obj1.values.length shouldEqual 17
+            obj1.fields.length shouldEqual 17
         }
 
         "support Oval" in {
@@ -137,8 +128,7 @@ class BokehSpec extends Specification {
                 .height('height)
                 .angle('angle)
 
-            obj1.fieldsWithValues.length shouldEqual 22
-            obj1.values.length shouldEqual 22
+            obj1.fields.length shouldEqual 22
         }
 
         "support Patch" in {
@@ -147,8 +137,7 @@ class BokehSpec extends Specification {
                 .x('x)
                 .y('y)
 
-            obj1.fieldsWithValues.length shouldEqual 19
-            obj1.values.length shouldEqual 19
+            obj1.fields.length shouldEqual 19
         }
 
         "support Patches" in {
@@ -157,8 +146,7 @@ class BokehSpec extends Specification {
                 .xs('xs)
                 .ys('ys)
 
-            obj1.fieldsWithValues.length shouldEqual 19
-            obj1.values.length shouldEqual 19
+            obj1.fields.length shouldEqual 19
         }
 
         "support Quad" in {
@@ -169,8 +157,7 @@ class BokehSpec extends Specification {
                 .bottom('bottom)
                 .top('top)
 
-            obj1.fieldsWithValues.length shouldEqual 21
-            obj1.values.length shouldEqual 21
+            obj1.fields.length shouldEqual 21
         }
 
         "support Quadratic" in {
@@ -183,8 +170,7 @@ class BokehSpec extends Specification {
                 .cx('cx)
                 .cy('cy)
 
-            obj1.fieldsWithValues.length shouldEqual 21
-            obj1.values.length shouldEqual 21
+            obj1.fields.length shouldEqual 21
         }
 
         "support Ray" in {
@@ -195,8 +181,7 @@ class BokehSpec extends Specification {
                 .angle('angle)
                 .length('length)
 
-            obj1.fieldsWithValues.length shouldEqual 19
-            obj1.values.length shouldEqual 19
+            obj1.fields.length shouldEqual 19
         }
 
         "support Rect" in {
@@ -209,8 +194,7 @@ class BokehSpec extends Specification {
                 .angle('angle)
                 .dilate(false)
 
-            obj1.fieldsWithValues.length shouldEqual 23
-            obj1.values.length shouldEqual 23
+            obj1.fields.length shouldEqual 23
         }
 
         "support Segment" in {
@@ -221,8 +205,7 @@ class BokehSpec extends Specification {
                 .x1('x1)
                 .y1('y1)
 
-            obj1.fieldsWithValues.length shouldEqual 19
-            obj1.values.length shouldEqual 19
+            obj1.fields.length shouldEqual 19
         }
 
         "support Text" in {
@@ -233,8 +216,7 @@ class BokehSpec extends Specification {
                 .text('text)
                 .angle('angle)
 
-            obj1.fieldsWithValues.length shouldEqual 19
-            obj1.values.length shouldEqual 19
+            obj1.fields.length shouldEqual 19
         }
 
         "support Wedge" in {
@@ -247,8 +229,7 @@ class BokehSpec extends Specification {
                 .end_angle('end_angle)
                 .direction(Direction.Clock)
 
-            obj1.fieldsWithValues.length shouldEqual 23
-            obj1.values.length shouldEqual 23
+            obj1.fields.length shouldEqual 23
         }
 
         "support Gear" in {
@@ -263,88 +244,74 @@ class BokehSpec extends Specification {
                 .shaft_size('shaft_size)
                 .internal('internal)
 
-            obj1.fieldsWithValues.length shouldEqual 25
-            obj1.values.length shouldEqual 25
+            obj1.fields.length shouldEqual 25
         }
     }
 
     "markers" should {
         "support Circle" in {
             val obj = new Circle()
-            obj.fieldsWithValues.length shouldEqual 21
-            obj.values.length shouldEqual 21
+            obj.fields.length shouldEqual 21
         }
 
         "support Square" in {
             val obj = new Square()
-            obj.fieldsWithValues.length shouldEqual 21
-            obj.values.length shouldEqual 21
+            obj.fields.length shouldEqual 21
         }
 
         "support Triangle" in {
             val obj = new Triangle()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
+            obj.fields.length shouldEqual 20
         }
 
         "support Cross" in {
             val obj = new Cross()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
+            obj.fields.length shouldEqual 20
         }
 
         "support Xmarker" in {
             val obj = new X()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
+            obj.fields.length shouldEqual 20
         }
 
         "support Diamond" in {
             val obj = new Diamond()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
+            obj.fields.length shouldEqual 20
         }
 
         "support InvertedTriangle" in {
             val obj = new InvertedTriangle()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
+            obj.fields.length shouldEqual 20
         }
 
         "support SquareX" in {
             val obj = new SquareX()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
+            obj.fields.length shouldEqual 20
         }
 
         "support Asterisk" in {
             val obj = new Asterisk()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
+            obj.fields.length shouldEqual 20
         }
 
         "support DiamondCross" in {
             val obj = new DiamondCross()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
+            obj.fields.length shouldEqual 20
         }
 
         "support CircleCross" in {
             val obj = new CircleCross()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
+            obj.fields.length shouldEqual 20
         }
 
         "support SquareCross" in {
             val obj = new SquareCross()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
+            obj.fields.length shouldEqual 20
         }
 
         "support CircleX" in {
             val obj = new CircleX()
-            obj.fieldsWithValues.length shouldEqual 20
-            obj.values.length shouldEqual 20
+            obj.fields.length shouldEqual 20
         }
     }
 
@@ -352,8 +319,7 @@ class BokehSpec extends Specification {
         "support GlyphRenderer" in {
             val obj = new GlyphRenderer().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 7
-            obj.values.length shouldEqual 7
+            obj.fields.length shouldEqual 7
         }
     }
 
@@ -361,21 +327,18 @@ class BokehSpec extends Specification {
         "support Range1d" in {
             val obj = new Range1d().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 3
-            obj.values.length shouldEqual 3
+            obj.fields.length shouldEqual 3
         }
 
         "support ColumnsRef" in {
             val obj = new ColumnsRef()
-            obj.fieldsWithValues.length shouldEqual 2
-            obj.values.length shouldEqual 2
+            obj.fields.length shouldEqual 2
         }
 
         "support DataRange1d" in {
             val obj = new DataRange1d().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 5
-            obj.values.length shouldEqual 5
+            obj.fields.length shouldEqual 5
         }
     }
 
@@ -383,8 +346,7 @@ class BokehSpec extends Specification {
         "support ColumnDataSource" in {
             val obj = new ColumnDataSource().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 4
-            obj.values.length shouldEqual 4
+            obj.fields.length shouldEqual 4
         }
     }
 
@@ -392,29 +354,25 @@ class BokehSpec extends Specification {
         "support LinearAxis" in {
             val obj = new LinearAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 51
-            obj.values.length shouldEqual 51
+            obj.fields.length shouldEqual 51
         }
 
         "support CategoricalAxis" in {
             val obj = new CategoricalAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 51
-            obj.values.length shouldEqual 51
+            obj.fields.length shouldEqual 51
         }
 
         "support DatetimeAxis" in {
             val obj = new DatetimeAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 55
-            obj.values.length shouldEqual 55
+            obj.fields.length shouldEqual 55
         }
 
         "support Grid" in {
             val obj = new Grid().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 14
-            obj.values.length shouldEqual 14
+            obj.fields.length shouldEqual 14
         }
     }
 
@@ -422,85 +380,73 @@ class BokehSpec extends Specification {
         "support PanTool" in {
             val obj = new PanTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 3
-            obj.values.length shouldEqual 3
+            obj.fields.length shouldEqual 3
         }
 
         "support WheelZoomTool" in {
             val obj = new WheelZoomTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 3
-            obj.values.length shouldEqual 3
+            obj.fields.length shouldEqual 3
         }
 
         "support PreviewSaveTool" in {
             val obj = new PreviewSaveTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 2
-            obj.values.length shouldEqual 2
+            obj.fields.length shouldEqual 2
         }
 
         "support ResetTool" in {
             val obj = new ResetTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 2
-            obj.values.length shouldEqual 2
+            obj.fields.length shouldEqual 2
         }
 
         "support ResizeTool" in {
             val obj = new ResizeTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 2
-            obj.values.length shouldEqual 2
+            obj.fields.length shouldEqual 2
         }
 
         "support TapTool" in {
             val obj = new TapTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 4
-            obj.values.length shouldEqual 4
+            obj.fields.length shouldEqual 4
         }
 
         "support CrosshairTool" in {
             val obj = new CrosshairTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 2
-            obj.values.length shouldEqual 2
+            obj.fields.length shouldEqual 2
         }
 
         "support BoxZoomTool" in {
             val obj = new BoxZoomTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 2
-            obj.values.length shouldEqual 2
+            obj.fields.length shouldEqual 2
         }
 
         "support BoxSelectTool" in {
             val obj = new BoxSelectTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 6
-            obj.values.length shouldEqual 6
+            obj.fields.length shouldEqual 6
         }
 
         "support LassoSelectTool" in {
             val obj = new LassoSelectTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 4
-            obj.values.length shouldEqual 4
+            obj.fields.length shouldEqual 4
         }
 
         "support PolySelectTool" in {
             val obj = new PolySelectTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 4
-            obj.values.length shouldEqual 4
+            obj.fields.length shouldEqual 4
         }
 
         "support HoverTool" in {
             val obj = new HoverTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 7
-            obj.values.length shouldEqual 7
+            obj.fields.length shouldEqual 7
         }
     }
 
@@ -508,22 +454,19 @@ class BokehSpec extends Specification {
         "support Plot" in {
             val obj = new Plot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 41
-            obj.values.length shouldEqual 41
+            obj.fields.length shouldEqual 41
         }
 
         "support GMapPlot" in {
             val obj = new GMapPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 42
-            obj.values.length shouldEqual 42
+            obj.fields.length shouldEqual 42
         }
 
         "support GridPlot" in {
             val obj = new GridPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 43
-            obj.values.length shouldEqual 43
+            obj.fields.length shouldEqual 43
         }
     }
 
@@ -531,8 +474,7 @@ class BokehSpec extends Specification {
         "support PlotContext" in {
             val obj = new PlotContext().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fieldsWithValues.length shouldEqual 2
-            obj.values.length shouldEqual 2
+            obj.fields.length shouldEqual 2
         }
     }
 }
