@@ -117,10 +117,17 @@ class HTMLFileWriter(contexts: List[PlotContext], resources: Resources = Resourc
         s"$doctype\n${writer.toString}"
     }
 
+    protected def renderTitle: Option[Node] = {
+        contexts.flatMap(_.children.value)
+                .collectFirst { case plot: Plot => plot.title.value }
+                .map { title => <title>{title}</title> }
+    }
+
     protected def renderFile(fragment: HTMLFragment): Node = {
         <html lang="en">
             <head>
                 <meta charset="utf-8" />
+                { renderTitle orNull }
                 { fragment.styles }
                 { fragment.scripts }
             </head>
