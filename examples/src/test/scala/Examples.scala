@@ -14,12 +14,20 @@ class ExamplesSpec extends Specification with TerminationMatchers {
             glyphs.Anscombe.main(argv) must not(throwA[Throwable])
         }
 
+        "run Calendars" in {
+            glyphs.Calendars.main(argv) must not(throwA[Throwable])
+        }
+
         "run Choropleth" in {
             glyphs.Choropleth.main(argv) must not(throwA[Throwable])
         }
 
         "run ColorSpec" in {
             glyphs.ColorSpec.main(argv) must not(throwA[Throwable])
+        }
+
+        "run Colors" in {
+            glyphs.Colors.main(argv) must not(throwA[Throwable])
         }
 
         "run DataTables" in {
@@ -32,6 +40,10 @@ class ExamplesSpec extends Specification with TerminationMatchers {
 
         "run Daylight" in {
             glyphs.Daylight.main(argv) must not(throwA[Throwable])
+        }
+
+        "run Gauges" in {
+            glyphs.Gauges.main(argv) must not(throwA[Throwable])
         }
 
         "run Gears" in {
@@ -72,6 +84,10 @@ class ExamplesSpec extends Specification with TerminationMatchers {
 
         "run Prim" in {
             glyphs.Prim.main(argv) must not(throwA[Throwable])
+        }
+
+        "run TwinAxis" in {
+            glyphs.TwinAxis.main(argv) must not(throwA[Throwable])
         }
     }
 }
