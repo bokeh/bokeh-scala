@@ -11,8 +11,7 @@ case class RGBA(red: Int, green: Int, blue: Int, alpha: Double) extends RGBAColo
 }
 
 case class RGB(red: Int, green: Int, blue: Int) extends RGBAColor(red, green, blue, 1.0) {
-    def toHex = f"#$red%02x#$green%02x#$blue%02x"
-    def toCSS = s"rgb($red, $green, $blue)"
+    def toCSS = f"#$red%02x$green%02x$blue%02x" // XXX: s"rgb($red, $green, $blue)"?
 }
 
 abstract class HSLAColor(hue: Int, saturation: Percent, lightness: Percent, alpha: Double) extends Color
