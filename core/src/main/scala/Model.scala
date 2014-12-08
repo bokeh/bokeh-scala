@@ -29,13 +29,17 @@ private object ModelImpl {
                     case field => field :: Nil
                 }
 
-                val valuesMethod = q"""
+                val extraMethods = List(q"""
                     override def values: List[(String, Option[play.api.libs.json.JsValue])] = {
                         io.continuum.bokeh.Fields.values(this)
                     }
-                """
+                """, q"""
+                    override def fields: List[io.continuum.bokeh.AbstractField] = {
+                        io.continuum.bokeh.Fields.fields(this)
+                    }
+                """)
 
-                val decl = ClassDef(mods, name, tparams, Template(parents, sf, expandedBody :+ valuesMethod))
+                val decl = ClassDef(mods, name, tparams, Template(parents, sf, expandedBody ++ extraMethods))
                 c.Expr[Any](Block(decl :: companion, Literal(Constant(()))))
             case _ => c.abort(c.enclosingPosition, "expected a class")
         }

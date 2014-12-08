@@ -35,10 +35,7 @@ class JSONSerializer(val stringifyFn: JsValue => String) {
         val ids = collection.mutable.HashSet[String]()
 
         def descendFields(obj: HasFields) {
-            obj.dirtyFieldsWithValues.foreach {
-                case (_, Some(obj)) => descend(obj)
-                case _ =>
-            }
+            obj.fields.map(_.valueOpt).foreach(_.foreach(descend _))
         }
 
         def descend(obj: Any) {

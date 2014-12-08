@@ -35,4 +35,20 @@ object Fields {
 
         c.Expr[List[(String, Option[JsValue])]](q"List(..$values)")
     }
+
+    def fields[T](obj: T): List[AbstractField] = macro fieldsImpl[T]
+
+    def fieldsImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[List[AbstractField]] = {
+        import c.universe._
+
+        val fields = weakTypeOf[T].members
+            .filter(_.isModule)
+            .map(_.asModule)
+            .filter(_.typeSignature <:< typeOf[AbstractField])
+            .map { member =>
+                q"$obj.${member.name.toTermName}"
+            }
+
+        c.Expr[List[AbstractField]](q"List(..$fields)")
+    }
 }

@@ -9,35 +9,9 @@ trait HasFields { self =>
     def typeName: String = getClass.getSimpleName
 
     def values: List[(String, Option[JsValue])]
+    def fields: List[AbstractField]
 
     def toJson: JsObject = JsObject(values.collect { case (name, Some(value)) => (name, value) })
-
-    final def fieldsList: List[(String, HasFields#Field[_])] = {
-        val im = cm.reflect(this)
-        val modules = im
-            .symbol
-            .typeSignature
-            .members
-            .filter(_.isModule)
-            .map(_.asModule)
-            .filter(_.typeSignature <:< u.typeOf[HasFields#Field[_]])
-            .toList
-        val names = modules.map(_.name.decoded)
-        val instances = modules
-            .map(im.reflectModule _)
-            .map(_.instance)
-            .collect { case field: Field[_] => field }
-        names.zip(instances)
-    }
-
-    final def fieldsWithValues: List[(String, Option[Any])] = {
-        fieldsList.map { case (name, field) => (name, field.toSerializable) }
-    }
-
-    final def dirtyFieldsWithValues: List[(String, Option[Any])] = {
-        fieldsList.filter(_._2.isDirty)
-                  .map { case (name, field) => (name, field.toSerializable) }
-    }
 
     class Field[FieldType:DefaultValue:Writes] extends AbstractField with ValidableField {
         type ValueType = FieldType
