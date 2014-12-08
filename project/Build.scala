@@ -34,7 +34,7 @@ object Dependencies {
 
     val scopt = "com.github.scopt" %% "scopt" % "3.2.0"
 
-    val joda_time = "joda-time" % "joda-time" % "2.3"
+    val joda_time = "joda-time" % "joda-time" % "2.6"
 
     val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
 
