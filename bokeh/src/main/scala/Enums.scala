@@ -54,13 +54,13 @@ sealed trait Direction extends EnumType with SnakeCase
 
 trait Units
 
-sealed trait SpatialUnits extends EnumType with Units
+sealed trait SpatialUnits extends EnumType with SnakeCase with Units
 @enum object SpatialUnits extends Enumerated[SpatialUnits] {
     case object Data extends SpatialUnits
     case object Screen extends SpatialUnits
 }
 
-sealed trait AngularUnits extends EnumType with Units
+sealed trait AngularUnits extends EnumType with SnakeCase with Units
 @enum object AngularUnits extends Enumerated[AngularUnits] {
     case object Rad extends AngularUnits
     case object Deg extends AngularUnits
@@ -235,7 +235,7 @@ sealed trait Language extends EnumType
     case object `uk-UA` extends Language
 }
 
-sealed trait Logo extends EnumType
+sealed trait Logo extends EnumType with SnakeCase
 @enum object Logo extends Enumerated[Logo] {
     case object Normal extends Logo
     case object Grey extends Logo

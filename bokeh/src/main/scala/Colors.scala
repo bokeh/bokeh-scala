@@ -25,7 +25,7 @@ case class HSL(hue: Int, saturation: Percent, lightness: Percent) extends HSLACo
     def toCSS = s"hsl($hue, $saturation, $lightness)"
 }
 
-sealed abstract class NamedColor(red: Int, green: Int, blue: Int) extends RGBAColor(red, green, blue, 1.0) with EnumType {
+sealed abstract class NamedColor(red: Int, green: Int, blue: Int) extends RGBAColor(red, green, blue, 1.0) with EnumType with LowerCase {
     def toCSS = name
 }
 @enum object Color extends Enumerated[NamedColor] {
