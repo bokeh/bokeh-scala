@@ -69,9 +69,11 @@ object Calendars extends Example {
             .addColumn('month_days,      month_days)
             .addColumn('day_backgrounds, (List(week_days)*month_weeks).flatten)
 
-        val holidays = sampledata.us_holidays.collect {
-            case sampledata.Holiday(date, summary) if date.year == year && date.month == month && summary.contains("(US-OPM)") =>
-                sampledata.Holiday(date, summary.replace("(US-OPM)", "").trim())
+        import sampledata.{us_holidays,Holiday}
+
+        val holidays = us_holidays.collect {
+            case Holiday(date, summary) if date.getYear == year && date.month == month && summary.contains("(US-OPM)") =>
+                Holiday(date, summary.replace("(US-OPM)", "").trim())
         }
 
         val holidays_source = new ColumnDataSource()
