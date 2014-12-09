@@ -5,11 +5,16 @@ import java.io.{File,InputStream,FileInputStream,InputStreamReader,FileNotFoundE
 import java.util.zip.GZIPInputStream
 import java.net.URL
 
+import scala.collection.JavaConverters._
+
 import scalax.io.JavaConverters._
 import scalax.file.Path
 
 import au.com.bytecode.opencsv.CSVReader
-import scala.collection.JavaConverters._
+
+import net.fortuna.ical4j.model.{Calendar,Component}
+import net.fortuna.ical4j.model.component.VEvent
+import net.fortuna.ical4j.data.CalendarBuilder
 
 object SampleData {
     lazy val dataPath: Path = {
@@ -71,4 +76,13 @@ trait CSVSampleData extends SampleData {
         reader.readAll().asScala.toList
     }
 }
+
+trait ICalSampleData {
+    protected def loadEvents(fileName: String): List[VEvent] = {
+        val input = SampleData.getStream(fileName)
+        val builder = new CalendarBuilder()
+        val calendar = builder.build(input)
+        val components = calendar.getComponents(Component.VEVENT)
+        components.asScala.toList.collect { case event: VEvent => event }
+    }
 }

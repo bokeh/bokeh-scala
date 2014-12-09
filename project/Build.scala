@@ -38,6 +38,8 @@ object Dependencies {
 
     val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
 
+    val ical4j = "org.mnode.ical4j" % "ical4j" % "1.0.2"
+
     val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
     val paradise = "org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full
@@ -169,7 +171,7 @@ object BokehBuild extends Build {
     lazy val sampledataSettings = commonSettings ++ scoverageSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ xml.value ++ Seq(opencsv, specs2)
+            scalaio ++ xml.value ++ Seq(opencsv, ical4j, specs2)
         }
     )
 
