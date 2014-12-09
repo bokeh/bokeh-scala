@@ -19,14 +19,6 @@ object SampleData {
         path
     }
 
-    def load(fileName: String): List[Array[String]] = {
-        val inputStream = getStream(fileName) orElse getGZipStream(fileName) getOrElse {
-            throw new FileNotFoundException(s"can't locate $fileName(.gz) in resources, .bokeh/data or S3")
-        }
-        val reader = new CSVReader(new InputStreamReader(inputStream), ',', '"', '\\', 1)
-        reader.readAll().asScala.toList
-    }
-
     def getStreamFromResources(fileName: String): Option[InputStream] = {
         Option(getClass.getClassLoader.getResourceAsStream(fileName))
     }
@@ -37,12 +29,18 @@ object SampleData {
         fileOption.map(new FileInputStream(_))
     }
 
-    def getStream(fileName: String): Option[InputStream] = {
+    def getFileStream(fileName: String): Option[InputStream] = {
         getStreamFromResources(fileName) orElse getStreamFromFile(fileName)
     }
 
     def getGZipStream(fileName: String): Option[InputStream] = {
-        getStream(fileName + ".gz").map(new GZIPInputStream(_))
+        getFileStream(fileName + ".gz").map(new GZIPInputStream(_))
+    }
+
+    def getStream(fileName: String): InputStream = {
+        getFileStream(fileName) orElse getGZipStream(fileName) getOrElse {
+            throw new FileNotFoundException(s"can't locate $fileName(.gz) in resources, .bokeh/data or S3")
+        }
     }
 
     val dataUrl = new URL("https://s3.amazonaws.com/bokeh_data/")
@@ -64,6 +62,13 @@ object SampleData {
     }
 }
 
-trait SampleData {
-    protected def loadRows(fileName: String): List[Array[String]] = SampleData.load(fileName)
+trait SampleData
+
+trait CSVSampleData extends SampleData {
+    protected def loadRows(fileName: String): List[Array[String]] = {
+        val input = new InputStreamReader(SampleData.getStream(fileName))
+        val reader = new CSVReader(input, ',', '"', '\\', 1)
+        reader.readAll().asScala.toList
+    }
+}
 }

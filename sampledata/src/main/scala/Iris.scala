@@ -2,7 +2,7 @@ package io.continuum.bokeh
 package sampledata
 package iris
 
-object Flowers extends SampleData {
+object Flowers extends CSVSampleData {
     def load(): FlowersData = {
         val List(sepal_length, sepal_width, petal_length, petal_width, species) = loadRows("iris.csv").transpose
         FlowersData(petal_length.map(_.toDouble),

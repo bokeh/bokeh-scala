@@ -1,7 +1,7 @@
 package io.continuum.bokeh
 package sampledata
 
-object USStates extends SampleData {
+object USStates extends CSVSampleData {
     type Value = Map[USState, USStateData]
 
     def load(): Value = {

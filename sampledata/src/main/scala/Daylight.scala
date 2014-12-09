@@ -4,7 +4,7 @@ package daylight
 
 import org.joda.time.{LocalDate,LocalTime}
 
-object Daylight extends SampleData {
+object Daylight extends CSVSampleData {
     def load(fileName: String): DaylightData = {
         val List(date, sunrise, sunset, summer) = loadRows(fileName).transpose
         DaylightData(date.map(LocalDate.parse),

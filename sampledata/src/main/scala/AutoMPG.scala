@@ -1,7 +1,7 @@
 package io.continuum.bokeh
 package sampledata
 
-object AutoMPG extends SampleData {
+object AutoMPG extends CSVSampleData {
     def load(): AutoMPGData = {
         val List(index, manufacturer, model, displ, year, cyl, trans, drv, cty, hwy, _, cls) =
             loadRows("autompg.csv").transpose
