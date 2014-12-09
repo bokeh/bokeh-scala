@@ -13,6 +13,7 @@ package io.continuum.bokeh {
         def autompg = AutoMPG.load()
         def us_states = USStates.load()
         def us_counties = USCounties.load()
+        def us_holidays = USHolidays.load()
         def unemployment = Unemployment.load()
     }
 }

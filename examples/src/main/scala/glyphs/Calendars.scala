@@ -5,8 +5,6 @@ package glyphs
 import org.joda.time.{LocalDate=>Date}
 
 object Calendars extends Example {
-    val us_holidays = List[(Date, String)]() // TODO
-
     implicit class DateOps(date: Date) {
         def weekday: Int = date.getDayOfWeek - 1
         def month: Int = date.getMonthOfYear
@@ -71,15 +69,15 @@ object Calendars extends Example {
             .addColumn('month_days,      month_days)
             .addColumn('day_backgrounds, (List(week_days)*month_weeks).flatten)
 
-        val holidays = us_holidays.collect {
-            case (date, summary) if date.year == year && date.month == month && summary.contains("(US-OPM)") =>
-                (date, summary.replace("(US-OPM)", "").trim())
+        val holidays = sampledata.us_holidays.collect {
+            case sampledata.Holiday(date, summary) if date.year == year && date.month == month && summary.contains("(US-OPM)") =>
+                sampledata.Holiday(date, summary.replace("(US-OPM)", "").trim())
         }
 
         val holidays_source = new ColumnDataSource()
-            .addColumn('holidays_days,  holidays.map { case (date, _) => day_names(weekday(date)) })
-            .addColumn('holidays_weeks, holidays.map { case (date, _) => ((weekday(date.withDayOfMonth(1)) + date.day) / 7).toString })
-            .addColumn('month_holidays, holidays.map { case (_, summary) => summary })
+            .addColumn('holidays_days,  holidays.map(holiday => day_names(weekday(holiday.date))))
+            .addColumn('holidays_weeks, holidays.map(holiday => ((weekday(holiday.date.withDayOfMonth(1)) + holiday.date.day) / 7).toString))
+            .addColumn('month_holidays, holidays.map(holiday => holiday.summary))
 
         val xdr = new FactorRange().factors(day_names)
         val ydr = new FactorRange().factors((0 until month_weeks).map( _.toString).reverse.toList)
