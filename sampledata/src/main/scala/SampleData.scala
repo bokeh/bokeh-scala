@@ -73,7 +73,7 @@ trait CSVSampleData extends SampleData {
     protected def loadRows(fileName: String): List[Array[String]] = {
         val input = new InputStreamReader(SampleData.getStream(fileName))
         val reader = new CSVReader(input, ',', '"', '\\', 1)
-        reader.readAll().asScala.toList
+        reader.readAll().asScala.map(_.map(_.trim)).toList
     }
 }
 
