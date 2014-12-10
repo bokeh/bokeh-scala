@@ -26,7 +26,7 @@ object Dependencies {
 
     val breeze = "org.scalanlp" %% "breeze" % "0.10"
 
-    val saddle = "org.scala-saddle" %% "saddle" % "1.3.3"
+    val saddle = "org.scala-saddle" %% "saddle-core" % "1.3.3"
 
     val play_json = "com.typesafe.play" %% "play-json" % "2.4.0-M2"
 
@@ -171,7 +171,7 @@ object BokehBuild extends Build {
     lazy val sampledataSettings = commonSettings ++ scoverageSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ xml.value ++ Seq(opencsv, ical4j, specs2)
+            scalaio ++ xml.value ++ Seq(opencsv, ical4j, saddle, specs2)
         }
     )
 
