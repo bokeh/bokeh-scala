@@ -11,6 +11,10 @@ trait LowerCase { self: EnumType =>
     override val name = toString.toLowerCase
 }
 
+trait UpperCase { self: EnumType =>
+    override val name = toString.toUpperCase
+}
+
 trait SnakeCase { self: EnumType =>
     override val name = Utils.snakify(toString)
 }
