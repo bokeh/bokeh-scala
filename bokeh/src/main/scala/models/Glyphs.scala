@@ -154,6 +154,8 @@ package io.continuum.bokeh
     object y extends Spatial[Double]
     object text extends Vectorized[String]
     object angle extends Angular[Double](0)
+    object x_offset extends Spatial[Double](0, SpatialUnits.Screen)
+    object y_offset extends Spatial[Double](0, SpatialUnits.Screen)
 }
 
 @model class Wedge extends Glyph with FillProps with LineProps {

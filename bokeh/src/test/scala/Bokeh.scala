@@ -216,7 +216,7 @@ class BokehSpec extends Specification {
                 .text('text)
                 .angle('angle)
 
-            obj1.fields.length shouldEqual 19
+            obj1.fields.length shouldEqual 21
         }
 
         "support Wedge" in {
