@@ -86,6 +86,10 @@ class ExamplesSpec extends Specification with TerminationMatchers {
             glyphs.Prim.main(argv) must not(throwA[Throwable])
         }
 
+        "run Sprint" in {
+            glyphs.Sprint.main(argv) must not(throwA[Throwable])
+        }
+
         "run TwinAxis" in {
             glyphs.TwinAxis.main(argv) must not(throwA[Throwable])
         }

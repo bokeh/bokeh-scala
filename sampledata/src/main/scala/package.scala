@@ -10,6 +10,7 @@ package io.continuum.bokeh {
     }
 
     package object sampledata {
+        val sprint = Sprint.load()
         def autompg = AutoMPG.load()
         def us_states = USStates.load()
         def us_counties = USCounties.load()
