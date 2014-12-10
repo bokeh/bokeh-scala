@@ -29,6 +29,9 @@ package io.continuum.bokeh
     object plot_width extends Field[Int](600)
     object plot_height extends Field[Int](600)
 
+    def width = plot_width
+    def height = plot_height
+
     object background_fill extends Field[Color](Color.White)
     object border_fill extends Field[Color](Color.White)
 
