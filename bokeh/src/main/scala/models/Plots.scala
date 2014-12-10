@@ -18,10 +18,10 @@ package io.continuum.bokeh
     object renderers extends Field[List[Renderer]]
     object tools extends Field[List[Tool]] with ToolsField
 
-    object left extends Field[List[PlotObject]]
-    object right extends Field[List[PlotObject]]
-    object above extends Field[List[PlotObject]]
-    object below extends Field[List[PlotObject]]
+    object left extends Field[List[Renderer]]
+    object right extends Field[List[Renderer]]
+    object above extends Field[List[Renderer]]
+    object below extends Field[List[Renderer]]
 
     object toolbar_location extends Field[Location](Location.Above)
     object logo extends Field[Logo](Logo.Normal)
