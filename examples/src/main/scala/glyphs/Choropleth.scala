@@ -66,8 +66,8 @@ object Choropleth extends Example {
         .y_range(ydr)
         .border_fill(Color.White)
         .title("2009 Unemployment Data")
-        .plot_width(1300)
-        .plot_height(800)
+        .width(1300)
+        .height(800)
 
     val resizetool = new ResizeTool().plot(plot)
 

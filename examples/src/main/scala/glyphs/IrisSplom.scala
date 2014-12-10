@@ -35,8 +35,8 @@ object IrisSplom extends Example {
             .min_border(2)
             .h_symmetry(false)
             .v_symmetry(false)
-            .plot_width(250)
-            .plot_height(250)
+            .width(250)
+            .height(250)
 
         val xaxis = new LinearAxis().plot(plot)
         val yaxis = new LinearAxis().plot(plot)

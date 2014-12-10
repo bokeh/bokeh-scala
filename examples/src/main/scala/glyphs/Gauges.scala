@@ -19,7 +19,7 @@ object Gauges extends Example {
 
     val ds = new ColumnDataSource().data(Map('dummy -> Array(0)))
 
-    val plot = new Plot().title("Speedometer").x_range(xdr).y_range(ydr).plot_width(600).plot_height(600)
+    val plot = new Plot().title("Speedometer").x_range(xdr).y_range(ydr).width(600).height(600)
 
     def add_glyph(source: DataSource, glyph: Glyph) {
         plot.renderers <<= (_ :+ new GlyphRenderer().data_source(source).glyph(glyph))

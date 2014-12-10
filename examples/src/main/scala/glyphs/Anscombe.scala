@@ -45,8 +45,8 @@ object Anscombe extends Example {
             .x_range(xdr)
             .y_range(ydr)
             .title(title)
-            .plot_width(400)
-            .plot_height(400)
+            .width(400)
+            .height(400)
             .border_fill(Color.White)
             .background_fill("#e9e0db")
         val xaxis = new LinearAxis().plot(plot).axis_line_color()
@@ -71,7 +71,7 @@ object Anscombe extends Example {
     val IV  = make_plot("IV",  'xiv,  'yiv)
 
     val children = List(List(I, II), List(III, IV))
-    val grid = new GridPlot().children(children).plot_width(800)
+    val grid = new GridPlot().children(children).width(800)
 
     val document = new Document(grid)
     val html = document.save("anscombe.html", config.resources)

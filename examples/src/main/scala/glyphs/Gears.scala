@@ -20,7 +20,7 @@ object Gears extends Example with Tools {
 
         val source = new ColumnDataSource().addColumn('dummy, Seq(0))
         val plot = new Plot().x_range(xdr).y_range(ydr)
-            .plot_width(800).plot_height(800).tools(Pan|WheelZoom|Reset)
+            .width(800).height(800).tools(Pan|WheelZoom|Reset)
 
         val glyph = new Gear().x(0).y(0).module(5).teeth(8).angle(0).shaft_size(0.2).fill_color(fill_color._3).line_color(line_color)
         val renderer = new GlyphRenderer().data_source(source).glyph(glyph)
@@ -35,7 +35,7 @@ object Gears extends Example with Tools {
 
         val source = new ColumnDataSource().addColumn('dummy, Seq(0))
         val plot = new Plot().x_range(xdr).y_range(ydr)
-            .plot_width(800).plot_height(800).tools(Pan|WheelZoom|Reset)
+            .width(800).height(800).tools(Pan|WheelZoom|Reset)
 
         def large_gear() = {
             val radius = pitch_radius(module, large_teeth)
@@ -61,7 +61,7 @@ object Gears extends Example with Tools {
 
         val source = new ColumnDataSource().addColumn('dummy, Seq(0))
         val plot = new Plot().x_range(xdr).y_range(ydr)
-            .plot_width(800).plot_height(800).tools(Pan|WheelZoom|Reset)
+            .width(800).height(800).tools(Pan|WheelZoom|Reset)
 
         val annulus_teeth = sun_teeth + 2*planet_teeth
 

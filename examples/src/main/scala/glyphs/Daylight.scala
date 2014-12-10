@@ -49,7 +49,7 @@ object Daylight extends Example {
 
     val title = "Daylight Hours - Warsaw, Poland"
     val sources = List(source, patch1_source, patch2_source, text_source)
-    val plot = new Plot().title(title).x_range(xdr).y_range(ydr).plot_width(800).plot_height(400)
+    val plot = new Plot().title(title).x_range(xdr).y_range(ydr).width(800).height(400)
 
     val patch1 = new Patch().x('dates).y('times).fill_color(Color.SkyBlue).fill_alpha(0.8)
     val patch1_glyph = new GlyphRenderer().data_source(patch1_source).glyph(patch1)

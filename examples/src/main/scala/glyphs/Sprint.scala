@@ -73,7 +73,7 @@ object Sprint extends Example {
     val xdr = new Range1d().start(data.meters_back.max+2).end(0)                         // XXX: +2 is poor-man's padding (otherwise misses last tick)
     val ydr = new DataRange1d().sources(source.columns('Year) :: Nil).rangepadding(0.05) // XXX: should be 2 years (both sides)
 
-    val plot = new Plot().title(title).x_range(xdr).y_range(ydr).plot_width(1000).plot_height(600).toolbar_location().outline_line_color()
+    val plot = new Plot().title(title).x_range(xdr).y_range(ydr).width(1000).height(600).toolbar_location().outline_line_color()
 
     val xticker = new SingleIntervalTicker().interval(5).num_minor_ticks(0)
     val xaxis = new LinearAxis().plot(plot).ticker(xticker).axis_line_color().major_tick_line_color()

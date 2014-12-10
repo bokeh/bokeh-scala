@@ -154,7 +154,7 @@ object Colors extends Example {
     val xdr = new FactorRange().factors(groups.distinct)
     val ydr = new FactorRange().factors(names.reverse)
 
-    val plot = new Plot().title("CSS3 Color Names").x_range(xdr).y_range(ydr).plot_width(600).plot_height(2000)
+    val plot = new Plot().title("CSS3 Color Names").x_range(xdr).y_range(ydr).width(600).height(2000)
 
     val rect_glyph = new Rect().x('groups).y('names).width(1).height(1).fill_color('colors).line_color()
     val rect = new GlyphRenderer().data_source(source).glyph(rect_glyph)

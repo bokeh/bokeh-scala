@@ -89,8 +89,8 @@ object Calendars extends Example {
             .title_text_color(Color.DarkOliveGreen)
             .x_range(xdr)
             .y_range(ydr)
-            .plot_width(300)
-            .plot_height(300)
+            .width(300)
+            .height(300)
             .outline_line_color()
 
         val days_glyph = new Rect().x('days).y('weeks).width(0.9).height(0.9).fill_color('day_backgrounds).line_color(Color.Silver)
