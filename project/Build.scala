@@ -150,6 +150,11 @@ object BokehBuild extends Build {
             import Dependencies._
             scalaio ++ xml.value ++ Seq(breeze, joda_time, play_json, specs2)
         },
+        upload := {
+            val local = target in doc value
+            val remote = s"s3://bokeh-scala/docs/${scalaBinaryVersion.value}/${version.value}"
+            s"aws s3 sync $local $remote --delete --acl public-read" !
+        },
         initialCommands in Compile := """
             import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
             import scalax.io.JavaConverters._
@@ -189,14 +194,7 @@ object BokehBuild extends Build {
 
     lazy val allSettings = unidocSettings ++ Seq(
         publishLocal := {},
-        publish := {},
-        upload := {
-            import UnidocPlugin.{ScalaUnidoc,UnidocKeys}
-            (UnidocKeys.unidoc in Compile).value
-            val local = target in (ScalaUnidoc, UnidocKeys.unidoc) value
-            val remote = s"s3://bokeh-scala/docs/${scalaBinaryVersion.value}/${version.value}"
-            s"aws s3 sync $local $remote --delete --acl public-read" !
-        }
+        publish := {}
     )
 
     lazy val bokeh = project in file("bokeh") settings(bokehSettings: _*) dependsOn(core, bokehjs)
