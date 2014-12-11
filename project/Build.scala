@@ -151,7 +151,7 @@ object BokehBuild extends Build {
             scalaio ++ xml.value ++ Seq(breeze, joda_time, play_json, specs2)
         },
         upload := {
-            val local = target in doc value
+            val local = target in (Compile, doc) value
             val remote = s"s3://bokeh-scala/docs/${scalaBinaryVersion.value}/${version.value}"
             s"aws s3 sync $local $remote --delete --acl public-read" !
         },
