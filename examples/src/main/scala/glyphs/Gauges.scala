@@ -17,20 +17,14 @@ object Gauges extends Example {
     val xdr = new Range1d().start(-1.25).end(1.25)
     val ydr = new Range1d().start(-1.25).end(1.25)
 
-    val ds = new ColumnDataSource().data(Map('dummy -> Array(0)))
-
     val plot = new Plot().title("Speedometer").x_range(xdr).y_range(ydr).width(600).height(600)
 
-    def add_glyph(source: DataSource, glyph: Glyph) {
-        plot.renderers <<= (_ :+ new GlyphRenderer().data_source(source).glyph(glyph))
-    }
+    plot.addGlyph(new Circle().x(0).y(0).radius(1.00).fill_color(Color.White).line_color(Color.Black))
+    plot.addGlyph(new Circle().x(0).y(0).radius(0.05).fill_color(Color.Gray).line_color(Color.Black))
 
-    add_glyph(ds, new Circle().x(0).y(0).radius(1.00).fill_color(Color.White).line_color(Color.Black))
-    add_glyph(ds, new Circle().x(0).y(0).radius(0.05).fill_color(Color.Gray).line_color(Color.Black))
-
-    add_glyph(ds, new Text().x(0).y(+0.15).angle(0).text("km/h").text_color(Color.Red)
+    plot.addGlyph(new Text().x(0).y(+0.15).angle(0).text("km/h").text_color(Color.Red)
         .text_align(TextAlign.Center).text_baseline(TextBaseline.Bottom).text_font_style(FontStyle.Bold))
-    add_glyph(ds, new Text().x(0).y(-0.15).angle(0).text("mph").text_color(Color.Blue)
+    plot.addGlyph(new Text().x(0).y(-0.15).angle(0).text("mph").text_color(Color.Blue)
         .text_align(TextAlign.Center).text_baseline(TextBaseline.Top).text_font_style(FontStyle.Bold))
 
     def speed_to_angle(speed: Double, kmh_units: Boolean): Double = {
@@ -43,8 +37,8 @@ object Gauges extends Example {
 
     def add_needle(speed: Double, kmh_units: Boolean) {
         val angle = speed_to_angle(speed, kmh_units)
-        add_glyph(ds, new Ray().x(0).y(0).length(0.75, SpatialUnits.Data).angle(angle)   .line_color(Color.Black).line_width(3))
-        add_glyph(ds, new Ray().x(0).y(0).length(0.10, SpatialUnits.Data).angle(angle-pi).line_color(Color.Black).line_width(3))
+        plot.addGlyph(new Ray().x(0).y(0).length(0.75, SpatialUnits.Data).angle(angle)   .line_color(Color.Black).line_width(3))
+        plot.addGlyph(new Ray().x(0).y(0).length(0.10, SpatialUnits.Data).angle(angle-pi).line_color(Color.Black).line_width(3))
     }
 
     def polar_to_cartesian(r: Double, alpha: Double) = (r*cos(alpha), r*sin(alpha))
@@ -80,7 +74,7 @@ object Gauges extends Example {
         minor_angles = minor_angles.zipWithIndex.collect { case (x, i) if i % n != 0 => x }
         minor_labels = minor_labels.zipWithIndex.collect { case (x, i) if i % n != 0 => x }
 
-        add_glyph(ds, new Arc().x(0).y(0).radius(radius).start_angle(start_angle).end_angle(end_angle).direction(Direction.Clock).line_color(color).line_width(2))
+        plot.addGlyph(new Arc().x(0).y(0).radius(radius).start_angle(start_angle).end_angle(end_angle).direction(Direction.Clock).line_color(color).line_width(2))
 
         val rotation = if (direction == 1) 0 else -pi
 
@@ -89,7 +83,7 @@ object Gauges extends Example {
             val angles = major_angles.map(_ + rotation)
             val source = new ColumnDataSource().data(Map('x -> x, 'y -> y, 'angle -> angles))
             val glyph = new Ray().x('x).y('y).length(length, SpatialUnits.Data).angle('angle).line_color(color).line_width(2)
-            add_glyph(source, glyph)
+            plot.addGlyph(source, glyph)
         }
 
         {
@@ -97,7 +91,7 @@ object Gauges extends Example {
             val angles = minor_angles.map(_ + rotation)
             val source = new ColumnDataSource().data(Map('x -> x, 'y -> y, 'angle -> angles))
             val glyph = new Ray().x('x).y('y).length(length/2, SpatialUnits.Data).angle('angle).line_color(color).line_width(1)
-            add_glyph(source, glyph)
+            plot.addGlyph(source, glyph)
         }
 
         {
@@ -105,7 +99,7 @@ object Gauges extends Example {
             val angles = major_angles.map(_ - pi/2)
             val source = new ColumnDataSource().data(Map('x -> x, 'y -> y, 'angle -> angles, 'text -> major_labels))
             val glyph = new Text().x('x).y('y).angle('angle).text('text).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
-            add_glyph(source, glyph)
+            plot.addGlyph(source, glyph)
         }
     }
 
