@@ -77,7 +77,7 @@ object Sprint extends Example {
 
     val xticker = new SingleIntervalTicker().interval(5).num_minor_ticks(0)
     val xaxis = new LinearAxis().plot(plot).ticker(xticker).axis_line_color().major_tick_line_color()
-        .axis_label("Meters behind 2012 Bolt").axis_label_text_font_size("10pt").axis_label_text_font_style(FontStyle.Bold)
+        .axis_label("Meters behind 2012 Bolt").axis_label_text_font_size(10 pt).axis_label_text_font_style(FontStyle.Bold)
     plot.below := xaxis :: Nil
     val xgrid = new Grid().plot(plot).dimension(0).ticker(xaxis.ticker.value)/*.grid_line_dash(LineDash.Dashed)*/
     val yticker = new SingleIntervalTicker().interval(12).num_minor_ticks(0)
@@ -88,11 +88,11 @@ object Sprint extends Example {
     val medal = new GlyphRenderer().data_source(source).glyph(medal_glyph)
 
     val athlete_glyph = new Text().x('MetersBack).y('Year).x_offset(10).text('SelectedName)
-        .text_align(TextAlign.Left).text_baseline(TextBaseline.Middle).text_font_size("9pt")
+        .text_align(TextAlign.Left).text_baseline(TextBaseline.Middle).text_font_size(9 pt)
     val athlete = new GlyphRenderer().data_source(source).glyph(athlete_glyph)
 
     val no_olympics_glyph = new Text().x(7.5).y(1942).text("No Olympics in 1940 or 1944")
-        .text_align(TextAlign.Center).text_baseline(TextBaseline.Middle).text_font_size("9pt").text_font_style(FontStyle.Italic).text_color(Color.Silver)
+        .text_align(TextAlign.Center).text_baseline(TextBaseline.Middle).text_font_size(9 pt).text_font_style(FontStyle.Italic).text_color(Color.Silver)
     val no_olympics = new GlyphRenderer().data_source(source).glyph(no_olympics_glyph)
 
     plot.renderers := xaxis :: yaxis :: xgrid :: medal :: athlete :: no_olympics :: Nil

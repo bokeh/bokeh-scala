@@ -17,7 +17,7 @@ trait LineProps { self: HasFields =>
 
 trait TextProps { self: HasFields =>
     object text_font extends Field[String]
-    object text_font_size extends Field[String]("10pt")
+    object text_font_size extends Field[FontSize](10 pt)
     object text_font_style extends Field[FontStyle]
     object text_color extends Field[Color](Color.Black)
     object text_alpha extends Field[Percent]

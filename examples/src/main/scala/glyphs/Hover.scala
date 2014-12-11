@@ -53,7 +53,7 @@ object Hover extends Example with LinAlg with Tools {
         .text('inds)
         .angle(0.0)
         .text_alpha(0.5)
-        .text_font_size("5pt")
+        .text_font_size(5 pt)
         .text_baseline(TextBaseline.Middle)
         .text_align(TextAlign.Center)
 

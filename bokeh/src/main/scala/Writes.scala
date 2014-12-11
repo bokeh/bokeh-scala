@@ -52,6 +52,10 @@ trait BokehWrites {
             implicitly[Writes[Array[T]]].writes(vec.toArray)
     }
 
+    implicit val SymbolWrites = new Writes[Symbol] {
+        def writes(symbol: Symbol) = JsString(symbol.name)
+    }
+
     implicit val PercentWrites = new Writes[Percent] {
         def writes(percent: Percent) =
             implicitly[Writes[Double]].writes(percent.value)
@@ -61,8 +65,8 @@ trait BokehWrites {
         def writes(color: Color) = JsString(color.toCSS)
     }
 
-    implicit val SymbolWrites = new Writes[Symbol] {
-        def writes(symbol: Symbol) = JsString(symbol.name)
+    implicit val FontSizeWrites = new Writes[FontSize] {
+        def writes(size: FontSize) = JsString(size.toCSS)
     }
 
     implicit def EnumWrites[T <: EnumType] = new Writes[T] {

@@ -30,6 +30,17 @@ sealed trait FontStyle extends EnumType with SnakeCase
     case object Bold extends FontStyle
 }
 
+sealed trait FontUnits extends EnumType with SnakeCase
+@enum object FontUnits extends Enumerated[FontUnits] {
+    case object EX extends FontUnits
+    case object PX extends FontUnits
+    case object CM extends FontUnits
+    case object MM extends FontUnits
+    case object IN extends FontUnits
+    case object PT extends FontUnits
+    case object PC extends FontUnits
+}
+
 sealed trait TextAlign extends EnumType with SnakeCase
 @enum object TextAlign extends Enumerated[TextAlign] {
     case object Left extends TextAlign

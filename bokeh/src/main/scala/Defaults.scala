@@ -30,6 +30,8 @@ trait TypeDefaults {
         new DefaultValue[(T1, T2, T3)]((implicitly[DefaultValue[T1]].default,
                                         implicitly[DefaultValue[T2]].default,
                                         implicitly[DefaultValue[T3]].default))
+
+    implicit object FontSizeDefault extends DefaultValue[FontSize](10 pt)
 }
 
 trait EnumDefaults {
@@ -37,6 +39,7 @@ trait EnumDefaults {
     implicit object LineDashDefault extends DefaultValue[LineDash](LineDash.Solid)
     implicit object LineCapDefault extends DefaultValue[LineCap](LineCap.Butt)
     implicit object FontStyleDefault extends DefaultValue[FontStyle](FontStyle.Normal)
+    implicit object FontUnitsDefault extends DefaultValue[FontUnits](FontUnits.PT)
     implicit object TextAlignDefault extends DefaultValue[TextAlign](TextAlign.Left)
     implicit object TextBaselineDefault extends DefaultValue[TextBaseline](TextBaseline.Top)
     implicit object DirectionDefault extends DefaultValue[Direction](Direction.Clock)

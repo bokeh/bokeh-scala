@@ -78,7 +78,7 @@ object IrisSplom extends Example {
                 .text_color("#ffaaaa")
                 .text_alpha(0.5)
                 .text_align(TextAlign.Center)
-                .text_font_size("28pt")
+                .text_font_size(28 pt)
             val text_renderer = new GlyphRenderer()
                 .data_source(text_source)
                 .glyph(text_glyph)

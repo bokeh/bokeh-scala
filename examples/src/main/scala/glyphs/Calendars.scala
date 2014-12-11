@@ -104,7 +104,7 @@ object Calendars extends Example {
 
         val xaxis = new CategoricalAxis()
             .plot(plot)
-            .major_label_text_font_size("8pt")
+            .major_label_text_font_size(8 pt)
             .major_label_standoff(0)
             .major_tick_line_color()
             .axis_line_color()
