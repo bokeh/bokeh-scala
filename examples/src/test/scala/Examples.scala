@@ -42,6 +42,10 @@ class ExamplesSpec extends Specification with TerminationMatchers {
             glyphs.Daylight.main(argv) must not(throwA[Throwable])
         }
 
+        "run Donut" in {
+            glyphs.Donut.main(argv) must not(throwA[Throwable])
+        }
+
         "run Gauges" in {
             glyphs.Gauges.main(argv) must not(throwA[Throwable])
         }

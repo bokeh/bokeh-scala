@@ -7,6 +7,10 @@ package io.continuum.bokeh {
         package object daylight {
             val Warsaw2013 = Daylight.load("daylight_warsaw_2013.csv")
         }
+
+        package object webbrowsers {
+            val webbrowsers_nov_2013 = WebBrowsers.load("browsers_nov_2013.csv")
+        }
     }
 
     package object sampledata {
