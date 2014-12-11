@@ -4,7 +4,7 @@ package io.continuum.bokeh
 
 @model class GlyphRenderer extends Renderer {
     // TODO: object server_data_source extends Field[ServerDataSource]
-    object data_source extends Field[DataSource]
+    object data_source extends Field[DataSource](new ColumnDataSource())
 
     object glyph extends Field[Glyph]
     object selection_glyph extends Field[Glyph]

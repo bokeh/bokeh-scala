@@ -93,7 +93,7 @@ object Sprint extends Example {
 
     val no_olympics_glyph = new Text().x(7.5).y(1942).text("No Olympics in 1940 or 1944")
         .text_align(TextAlign.Center).text_baseline(TextBaseline.Middle).text_font_size(9 pt).text_font_style(FontStyle.Italic).text_color(Color.Silver)
-    val no_olympics = new GlyphRenderer().data_source(source).glyph(no_olympics_glyph)
+    val no_olympics = new GlyphRenderer().glyph(no_olympics_glyph)
 
     plot.renderers := xaxis :: yaxis :: xgrid :: medal :: athlete :: no_olympics :: Nil
 
