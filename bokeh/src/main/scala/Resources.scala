@@ -73,13 +73,13 @@ object Resources {
         def includeCSS(path: String): xml.Node
     }
 
-    trait DevelopmentResources extends ExternalResources {
+    trait ExternalFileResources extends ExternalResources {
         def resolveFile(file: File): File
 
         def getFile(path: String): File = {
             val resource = getResource(path)
             resource.getProtocol match {
-                case "file" => resolveFile(new File(resource.getPath))
+                case "file"   => resolveFile(new File(resource.getPath))
                 case protocol => sys.error(s"unable to load $path due to invalid protocol: $protocol")
             }
         }
@@ -89,7 +89,38 @@ object Resources {
 
         def includeJS(path: String): xml.Node = new File(baseJSDir, path).asScript
         def includeCSS(path: String): xml.Node = new File(baseCSSDir, path).asStyle
+    }
 
+    trait RelativeResources { self: ExternalFileResources =>
+        private val rootDir = new File(System.getProperty("user.dir"))
+        def resolveFile(file: File): File = new File(rootDir.toURI.relativize(file.toURI).getPath)
+    }
+
+    trait AbsoluteResources { self: ExternalFileResources =>
+        def resolveFile(file: File): File = file
+    }
+
+    case object Relative extends ExternalFileResources with RelativeResources {
+        def scripts = includeJS(jsUnMin) :: Nil
+        def styles = includeCSS(cssUnMin) :: Nil
+    }
+
+    case object RelativeMin extends ExternalFileResources with RelativeResources {
+        def scripts = includeJS(jsMin) :: Nil
+        def styles = includeCSS(cssMin) :: Nil
+    }
+
+    case object Absolute extends ExternalFileResources with AbsoluteResources {
+        def scripts = includeJS(jsUnMin) :: Nil
+        def styles = includeCSS(cssUnMin) :: Nil
+    }
+
+    case object AbsoluteMin extends ExternalFileResources with AbsoluteResources {
+        def scripts = includeJS(jsMin) :: Nil
+        def styles = includeCSS(cssMin) :: Nil
+    }
+
+    trait DevelopmentResources extends ExternalFileResources {
         def requireConfig: xml.Node = {
             s"require.config({ baseUrl: 'file://$baseJSDir' });".asScript
         }
@@ -116,16 +147,8 @@ object Resources {
         }
     }
 
-    /*
-    case object RelativeDev extends DevelopmentResources {
-        val rootDir = System.getProperty("user.dir")
-        def resolveFile(file: File): File = file.relativize(rootDir)
-    }
-    */
-
-    case object AbsoluteDev extends DevelopmentResources {
-        def resolveFile(file: File): File = file
-    }
+    case object RelativeDev extends DevelopmentResources with RelativeResources
+    case object AbsoluteDev extends DevelopmentResources with AbsoluteResources
 
     abstract class Remote(url: URL) extends ExternalResources {
         def includeJS(path: String): xml.Node = new URL(url, "/" + path).asScript
@@ -138,14 +161,14 @@ object Resources {
     case object CDN extends Remote(new URL("http://cdn.pydata.org"))
 
     private val fromStringPF: PartialFunction[String, Resources] = {
-        case "cdn" => CDN
-        case "inline" => Inline
-        case "inline-min" => InlineMin
-        // case "relative" => Relative
-        // case "relative-min" => RelativeMin
-        // case "relative-dev" => RelativeDev
-        // case "absolute" => Absolute
-        // case "absolute-min" => AbsoluteMin
+        case "cdn"          => CDN
+        case "inline"       => Inline
+        case "inline-min"   => InlineMin
+        case "relative"     => Relative
+        case "relative-min" => RelativeMin
+        case "relative-dev" => RelativeDev
+        case "absolute"     => Absolute
+        case "absolute-min" => AbsoluteMin
         case "absolute-dev" => AbsoluteDev
     }
 
