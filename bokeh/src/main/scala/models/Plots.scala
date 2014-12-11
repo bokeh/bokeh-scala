@@ -43,4 +43,14 @@ package io.continuum.bokeh
 
     object h_symmetry extends Field[Boolean](true)
     object v_symmetry extends Field[Boolean](false)
+
+    def addGlyph(glyph: Glyph): GlyphRenderer = {
+        addGlyph(new ColumnDataSource(), glyph)
+    }
+
+    def addGlyph(source: DataSource, glyph: Glyph): GlyphRenderer = {
+        val renderer = new GlyphRenderer().data_source(source).glyph(glyph)
+        renderers <<= (_ :+ renderer)
+        renderer
+    }
 }
