@@ -2,9 +2,6 @@ package io.continuum.bokeh
 
 @model abstract class Glyph extends PlotObject {
     object visible extends Field[Boolean](true)
-    // TODO: object margin extends Field[Size]
-    // TODO: object halign extends Field[Align]
-    // TODO: object valign extends Field[Align]
 
     object size_units extends Field[SpatialUnits](SpatialUnits.Screen)
     object radius_units extends Field[SpatialUnits](SpatialUnits.Data)
