@@ -74,6 +74,10 @@ class ExamplesSpec extends Specification with TerminationMatchers {
             glyphs.Image.main(argv) must not(throwA[Throwable])
         }
 
+        "run ImageURL" in {
+            glyphs.ImageURL.main(argv) must not(throwA[Throwable])
+        }
+
         "run Iris" in {
             glyphs.Iris.main(argv) must not(throwA[Throwable])
         }
