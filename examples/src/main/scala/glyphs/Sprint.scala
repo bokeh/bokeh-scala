@@ -79,7 +79,7 @@ object Sprint extends Example {
     val xaxis = new LinearAxis().plot(plot).ticker(xticker).axis_line_color().major_tick_line_color()
         .axis_label("Meters behind 2012 Bolt").axis_label_text_font_size(10 pt).axis_label_text_font_style(FontStyle.Bold)
     plot.below := xaxis :: Nil
-    val xgrid = new Grid().plot(plot).dimension(0).ticker(xaxis.ticker.value)/*.grid_line_dash(LineDash.Dashed)*/
+    val xgrid = new Grid().plot(plot).dimension(0).ticker(xaxis.ticker.value).grid_line_dash(DashPattern.Dashed)
     val yticker = new SingleIntervalTicker().interval(12).num_minor_ticks(0)
     val yaxis = new LinearAxis().plot(plot).ticker(yticker).major_tick_in(-5).major_tick_out(10)
     plot.right := yaxis :: Nil

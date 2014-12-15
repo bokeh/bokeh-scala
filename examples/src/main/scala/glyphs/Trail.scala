@@ -32,7 +32,7 @@ object Trail extends Example with Tools {
 
     val dist = dists.scanLeft(0.0)(_ + _)
 
-    // TODO: val slopes = abs(100*diff(alt)/(1000*dist))
+    // TODO: val slopes = abs(100*diff(alt)/(1000*dists))
     val slopes = mtb.alt
        .sliding(2).toList
        .map { case List(a1, a2) => a2 - a1 }
