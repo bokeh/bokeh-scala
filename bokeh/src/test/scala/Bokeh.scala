@@ -59,18 +59,35 @@ class BokehSpec extends Specification {
             obj1.fields.length shouldEqual 23
         }
 
-        "support Image" in {
-            val obj1 = new Image()
+        "support ImageRGBA" in {
+            val obj1 = new ImageRGBA()
             val obj2 = obj1
                 .image('image)
+                .cols('cols)
+                .rows('rows)
                 .x('x)
                 .y('y)
                 .dw('dw)
                 .dh('dh)
-                .palette('palette)
                 .dilate(false)
 
             obj1.fields.length shouldEqual 16
+        }
+
+        "support Image" in {
+            val obj1 = new Image()
+            val obj2 = obj1
+                .image('image)
+                .cols('cols)
+                .rows('rows)
+                .x('x)
+                .y('y)
+                .dw('dw)
+                .dh('dh)
+                .dilate(false)
+                .color_mapper(new LinearColorMapper().palette(Palette.Spectral11))
+
+            obj1.fields.length shouldEqual 17
         }
 
         "support ImageURL" in {
@@ -86,19 +103,6 @@ class BokehSpec extends Specification {
                 .anchor(Anchor.TopRight)
 
             obj1.fields.length shouldEqual 16
-        }
-
-        "support ImageRGBA" in {
-            val obj1 = new ImageRGBA()
-            val obj2 = obj1
-                .image('image)
-                .x('x)
-                .y('y)
-                .dw('dw)
-                .dh('dh)
-                .dilate(false)
-
-            obj1.fields.length shouldEqual 14
         }
 
         "support Line" in {

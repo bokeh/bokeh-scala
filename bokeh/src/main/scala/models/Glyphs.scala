@@ -48,14 +48,28 @@ package io.continuum.bokeh
     object cy1 extends Spatial[Double]
 }
 
-@model class Image extends Glyph {
-    object image extends Vectorized[Seq[Seq[Int]]]
+@model class ImageRGBA extends Glyph {
+    object image extends Vectorized[Seq[Double]]
+    object rows extends Vectorized[Int]
+    object cols extends Vectorized[Int]
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object dw extends Spatial[Double] with NonNegative
     object dh extends Spatial[Double] with NonNegative
-    object palette extends Vectorized[Double]
     object dilate extends Field[Boolean]
+
+    def image[T[_]: MatrixLike](value: T[Double]): SelfType = {
+        val (image, rows, cols) = implicitly[MatrixLike[T]].data(value)
+
+        this.image := image
+        this.rows  := rows
+        this.cols  := cols
+
+        this
+    }
+}
+
+@model class Image extends ImageRGBA {
     object color_mapper extends Field[ColorMapper]
 }
 
@@ -68,15 +82,6 @@ package io.continuum.bokeh
     object angle extends Angular[Double]
     object dilate extends Field[Boolean]
     object anchor extends Field[Anchor]
-}
-
-@model class ImageRGBA extends Glyph {
-    object image extends Vectorized[Seq[Seq[Double]]]
-    object x extends Spatial[Double]
-    object y extends Spatial[Double]
-    object dw extends Spatial[Double] with NonNegative
-    object dh extends Spatial[Double] with NonNegative
-    object dilate extends Field[Boolean]
 }
 
 @model class Line extends Glyph with LineProps {

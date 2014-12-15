@@ -59,7 +59,7 @@ object BokehBuild extends Build {
         scalaVersion := "2.11.4",
         crossScalaVersions := Seq("2.10.4", "2.11.4"),
         scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature"),
-        scalacOptions += "-language:postfixOps,implicitConversions,experimental.macros",
+        scalacOptions += "-language:postfixOps,implicitConversions,higherKinds,experimental.macros",
         scalacOptions in (Compile, doc) := Seq("-groups", "-implicits"),
         addCompilerPlugin(Dependencies.paradise),
         shellPrompt := { state =>
