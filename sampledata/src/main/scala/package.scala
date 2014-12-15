@@ -4,6 +4,10 @@ package io.continuum.bokeh {
             val flowers = Flowers.load()
         }
 
+        package object mtb {
+            val obiszow_mtb_xcm = MTB.load("obiszow_mtb_xcm.csv")
+        }
+
         package object daylight {
             val Warsaw2013 = Daylight.load("daylight_warsaw_2013.csv")
         }
