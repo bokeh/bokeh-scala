@@ -233,3 +233,12 @@ sealed trait Logo extends EnumType with SnakeCase
     case object Normal extends Logo
     case object Grey extends Logo
 }
+
+sealed trait Layout extends EnumType with SnakeCase
+@enum object Layout extends Enumerated[Layout] {
+    case object Left extends Layout
+    case object Right extends Layout
+    case object Above extends Layout
+    case object Below extends Layout
+    case object Center extends Layout
+}

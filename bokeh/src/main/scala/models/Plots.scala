@@ -53,4 +53,16 @@ package io.continuum.bokeh
         renderers <<= (_ :+ renderer)
         renderer
     }
+
+    def addLayout(renderer: Renderer, layout: Layout): Renderer = {
+        layout match {
+            case Layout.Left   => left  <<= (renderer +: _)
+            case Layout.Right  => right <<= (renderer +: _)
+            case Layout.Above  => above <<= (renderer +: _)
+            case Layout.Below  => below <<= (renderer +: _)
+            case Layout.Center =>
+        }
+        renderers <<= (_ :+ renderer)
+        renderer
+    }
 }
