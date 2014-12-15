@@ -7,15 +7,6 @@ sealed trait LineJoin extends EnumType with SnakeCase
     case object Bevel extends LineJoin
 }
 
-sealed trait LineDash extends EnumType with SnakeCase
-@enum object LineDash extends Enumerated[LineDash] {
-    case object Solid extends LineDash
-    case object Dashed extends LineDash
-    case object Dotted extends LineDash
-    case object Dotdash extends LineDash
-    case object Dashdot extends LineDash
-}
-
 sealed trait LineCap extends EnumType with SnakeCase
 @enum object LineCap extends Enumerated[LineCap] {
     case object Butt extends LineCap
@@ -128,15 +119,6 @@ sealed trait BorderSymmetry extends EnumType with SnakeCase
     case object Vertical extends BorderSymmetry
     case object HorizontalVertical extends BorderSymmetry
     case object VerticalHorizontal extends BorderSymmetry
-}
-
-sealed trait DashPattern extends EnumType with SnakeCase
-@enum object DashPattern extends Enumerated[DashPattern] {
-    case object Solid extends DashPattern
-    case object Dashed extends DashPattern
-    case object Dotted extends DashPattern
-    case object DotDash extends DashPattern
-    case object DashDot extends DashPattern
 }
 
 sealed trait Anchor extends EnumType with SnakeCase

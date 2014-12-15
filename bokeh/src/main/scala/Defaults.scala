@@ -36,7 +36,6 @@ trait TypeDefaults {
 
 trait EnumDefaults {
     implicit object LineJoinDefault extends DefaultValue[LineJoin](LineJoin.Miter)
-    implicit object LineDashDefault extends DefaultValue[LineDash](LineDash.Solid)
     implicit object LineCapDefault extends DefaultValue[LineCap](LineCap.Butt)
     implicit object FontStyleDefault extends DefaultValue[FontStyle](FontStyle.Normal)
     implicit object FontUnitsDefault extends DefaultValue[FontUnits](FontUnits.PT)
@@ -51,7 +50,6 @@ trait EnumDefaults {
     implicit object OrientationDefault extends DefaultValue[Orientation](Orientation.Horizontal)
     implicit object LegendOrientationDefault extends DefaultValue[LegendOrientation](LegendOrientation.TopRight)
     implicit object BorderSymmetryDefault extends DefaultValue[BorderSymmetry](BorderSymmetry.Horizontal)
-    implicit object DashPatternDefault extends DefaultValue[DashPattern](DashPattern.Solid)
     implicit object AnchorDefault extends DefaultValue[Anchor](Anchor.TopLeft)
     implicit object ColumnTypeDefault extends DefaultValue[ColumnType](ColumnType.String)
     implicit object ButtonTypeDefault extends DefaultValue[ButtonType](ButtonType.Default)

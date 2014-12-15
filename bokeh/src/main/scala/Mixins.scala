@@ -11,7 +11,7 @@ trait LineProps { self: HasFields =>
     object line_alpha extends Field[Percent]
     object line_join extends Field[LineJoin]
     object line_cap extends Field[LineCap]
-    object line_dash extends Field[LineDash]
+    object line_dash extends Field[List[Int]]
     object line_dash_offset extends Field[Int]
 }
 
