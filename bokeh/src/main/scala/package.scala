@@ -20,4 +20,8 @@ package object bokeh extends Formats with NodeUtils {
     implicit class BooleanOps(val bool: Boolean) extends AnyVal {
         final def option[A](value: => A): Option[A] = if (bool) Some(value) else None
     }
+
+    implicit class ListOps[T](list: List[T]) {
+        def *(n: Int): List[T] = (0 until n).flatMap(_ => list).toList
+    }
 }

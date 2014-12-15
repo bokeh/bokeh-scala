@@ -11,12 +11,7 @@ object Calendars extends Example {
         def day: Int = date.getDayOfMonth
     }
 
-    implicit class ListOps[T](list: List[T]) {
-        def *(n: Int): List[T] = (0 until n).flatMap(_ => list).toList
-    }
-
     class Calendar(firstweekday: Int) {
-
         def itermonthdates(year: Int, month: Int): List[Date] = {
             val date = new Date(year, month, 1)
             val days = (date.weekday - firstweekday) % 7
