@@ -41,8 +41,6 @@ object Trail extends Example with Tools {
        .map { case (alt, dist) => alt/dist }
        .map(abs)
 
-       println(slopes)
-
     val grads = slopes map { slope =>
         if      (               slope <  4) 0
         else if (slope >=  4 && slope <  6) 1
