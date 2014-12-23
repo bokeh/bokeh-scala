@@ -2,13 +2,6 @@ package io.continuum.bokeh
 
 @model abstract class Glyph extends PlotObject {
     object visible extends Field[Boolean](true)
-
-    object size_units extends Field[SpatialUnits](SpatialUnits.Screen)
-    object radius_units extends Field[SpatialUnits](SpatialUnits.Data)
-    object length_units extends Field[SpatialUnits](SpatialUnits.Screen)
-    object angle_units extends Field[AngularUnits](AngularUnits.Deg)
-    object start_angle_units extends Field[AngularUnits](AngularUnits.Deg)
-    object end_angle_units extends Field[AngularUnits](AngularUnits.Deg)
 }
 
 @model class AnnularWedge extends Glyph with FillProps with LineProps {
