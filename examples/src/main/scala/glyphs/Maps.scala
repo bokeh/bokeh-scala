@@ -39,7 +39,6 @@ object Maps extends Example {
         .y('lat)
         .fill_color('fill)
         .size(15)
-        .radius_units(SpatialUnits.Screen)
         .line_color(Color.Black)
 
     val renderer = new GlyphRenderer()
