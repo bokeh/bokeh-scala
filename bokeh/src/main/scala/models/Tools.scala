@@ -48,8 +48,3 @@ package io.continuum.bokeh
     object always_active extends Field[Boolean](true)
     object snap_to_data extends Field[Boolean](true)
 }
-
-@model class DataRangeBoxSelectTool extends Tool {
-    object xselect extends Field[List[Range]]
-    object yselect extends Field[List[Range]]
-}
