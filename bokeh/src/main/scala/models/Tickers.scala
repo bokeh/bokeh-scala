@@ -19,19 +19,19 @@ package io.continuum.bokeh
     object interval extends Field[Double]
 }
 
-@model class DaysTicker extends Ticker {
+@model class DaysTicker extends SingleIntervalTicker {
     object days extends Field[List[Int]]
 }
 
-@model class MonthsTicker extends Ticker {
+@model class MonthsTicker extends SingleIntervalTicker {
     object months extends Field[List[Int]]
 }
 
-@model class YearsTicker extends Ticker
+@model class YearsTicker extends SingleIntervalTicker
 
 @model class BasicTicker extends Ticker
 
-@model class LogTicker extends Ticker
+@model class LogTicker extends AdaptiveTicker
 
 @model class CategoricalTicker extends Ticker
 
