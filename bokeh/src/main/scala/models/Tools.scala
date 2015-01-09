@@ -39,7 +39,9 @@ package io.continuum.bokeh
     object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
 }
 
-@model class LassoSelectTool extends SelectTool
+@model class LassoSelectTool extends SelectTool {
+    object select_every_mousemove extends Field[Boolean](true)
+}
 
 @model class PolySelectTool extends SelectTool
 

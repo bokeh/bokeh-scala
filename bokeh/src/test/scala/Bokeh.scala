@@ -438,7 +438,7 @@ class BokehSpec extends Specification {
         "support LassoSelectTool" in {
             val obj = new LassoSelectTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 4
+            obj.fields.length shouldEqual 5
         }
 
         "support PolySelectTool" in {

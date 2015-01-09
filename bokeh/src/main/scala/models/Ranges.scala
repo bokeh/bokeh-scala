@@ -19,6 +19,5 @@ package io.continuum.bokeh
 }
 
 @model class FactorRange extends Range {
-    // XXX: technically List[Any] but only List[String] is really supported
-    object factors extends Field[List[String]]
+    object factors extends Field[List[String]] // TODO: also List[Int]
 }
