@@ -273,7 +273,7 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 14
         }
 
-        "support Xmarker" in {
+        "support X" in {
             val obj = new X()
             obj.fields.length shouldEqual 14
         }
@@ -325,6 +325,18 @@ class BokehSpec extends Specification {
             obj.id.value shouldEqual "xyz"
             obj.fields.length shouldEqual 7
         }
+
+        "support Legend" in {
+            val obj = new Legend().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 25
+        }
+
+        "support BoxSelectionOverlay" in {
+            val obj = new BoxSelectionOverlay().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
+        }
     }
 
     "ranges" should {
@@ -334,15 +346,16 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 3
         }
 
-        "support ColumnsRef" in {
-            val obj = new ColumnsRef()
-            obj.fields.length shouldEqual 2
-        }
-
         "support DataRange1d" in {
             val obj = new DataRange1d().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fields.length shouldEqual 5
+        }
+
+        "support FactorRange" in {
+            val obj = new FactorRange().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
         }
     }
 
@@ -351,6 +364,11 @@ class BokehSpec extends Specification {
             val obj = new ColumnDataSource().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fields.length shouldEqual 4
+        }
+
+        "support ColumnsRef" in {
+            val obj = new ColumnsRef()
+            obj.fields.length shouldEqual 2
         }
     }
 
@@ -371,6 +389,12 @@ class BokehSpec extends Specification {
             val obj = new DatetimeAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fields.length shouldEqual 55
+        }
+
+        "support LogAxis" in {
+            val obj = new LogAxis().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 51
         }
 
         "support Grid" in {
@@ -461,8 +485,24 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 42
         }
 
+        "support GMapOptions" in {
+            val obj = new GMapOptions()
+            obj.fields.length shouldEqual 4
+        }
+
         "support GMapPlot" in {
             val obj = new GMapPlot().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 43
+        }
+
+        "support GeoJSOptions" in {
+            val obj = new GeoJSOptions()
+            obj.fields.length shouldEqual 3
+        }
+
+        "support GeoJSPlot" in {
+            val obj = new GeoJSPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fields.length shouldEqual 43
         }
@@ -479,6 +519,314 @@ class BokehSpec extends Specification {
             val obj = new PlotContext().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fields.length shouldEqual 2
+        }
+    }
+
+    "mappers" should {
+        "support LinearColorMapper" in {
+            val obj = new LinearColorMapper().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 6
+        }
+    }
+
+    "tickers" should {
+        "support AdaptiveTicker" in {
+            val obj = new AdaptiveTicker().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 6
+        }
+
+        "support CompositeTicker" in {
+            val obj = new CompositeTicker().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 3
+        }
+
+        "support SingleIntervalTicker" in {
+            val obj = new SingleIntervalTicker().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 3
+        }
+
+        "support DaysTicker" in {
+            val obj = new DaysTicker().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 4
+        }
+
+        "support MonthsTicker" in {
+            val obj = new MonthsTicker().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 4
+        }
+
+        "support YearsTicker" in {
+            val obj = new YearsTicker().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 3
+        }
+
+        "support BasicTicker" in {
+            val obj = new BasicTicker().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
+        }
+
+        "support LogTicker" in {
+            val obj = new LogTicker().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 6
+        }
+
+        "support CategoricalTicker" in {
+            val obj = new CategoricalTicker().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
+        }
+
+        "support DatetimeTicker" in {
+            val obj = new DatetimeTicker().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
+        }
+    }
+
+    "tick formatters" should {
+        "support BasicTickFormatter" in {
+            val obj = new BasicTickFormatter().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 4
+        }
+
+        "support LogTickFormatter" in {
+            val obj = new LogTickFormatter().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 1
+        }
+
+        "support CategoricalTickFormatter" in {
+            val obj = new CategoricalTickFormatter().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 1
+        }
+
+        "support DatetimeTickFormatter" in {
+            val obj = new DatetimeTickFormatter().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
+        }
+    }
+
+    "widgets" should {
+        "support Button" in {
+            val obj = new widgets.Button().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 6
+        }
+
+        "support Toggle" in {
+            val obj = new widgets.Toggle().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 6
+        }
+
+        "support Dropdown" in {
+            val obj = new widgets.Dropdown().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 8
+        }
+
+        "support Dialog" in {
+            val obj = new widgets.Dialog().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 7
+        }
+
+        "support CheckboxGroup" in {
+            val obj = new widgets.CheckboxGroup().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 5
+        }
+
+        "support RadioGroup" in {
+            val obj = new widgets.RadioGroup().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 5
+        }
+
+        "support CheckboxButtonGroup" in {
+            val obj = new widgets.CheckboxButtonGroup().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 5
+        }
+
+        "support RadioButtonGroup" in {
+            val obj = new widgets.RadioButtonGroup().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 5
+        }
+
+        "support Icon" in {
+            val obj = new widgets.Icon().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 6
+        }
+
+        "support TextInput" in {
+            val obj = new widgets.TextInput().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 5
+        }
+
+        "support Select" in {
+            val obj = new widgets.Select().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 6
+        }
+
+        "support Slider" in {
+            val obj = new widgets.Slider().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 9
+        }
+
+        "support DateRangeSlider" in {
+            val obj = new widgets.DateRangeSlider().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 8
+        }
+
+        "support DatePicker" in {
+            val obj = new widgets.DatePicker().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 5
+        }
+
+        "support HBox" in {
+            val obj = new widgets.HBox().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 5
+        }
+
+        "support VBox" in {
+            val obj = new widgets.VBox().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 5
+        }
+
+        "support Paragraph" in {
+            val obj = new widgets.Paragraph().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 3
+        }
+
+        "support PreText" in {
+            val obj = new widgets.PreText().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 3
+        }
+
+        "support Panel" in {
+            val obj = new widgets.Panel().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 5
+        }
+
+        "support Tabs" in {
+            val obj = new widgets.Tabs().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 4
+        }
+
+        "support StringFormatter" in {
+            val obj = new widgets.StringFormatter().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 4
+        }
+
+        "support NumberFormatter" in {
+            val obj = new widgets.NumberFormatter().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 6
+        }
+
+        "support BooleanFormatter" in {
+            val obj = new widgets.BooleanFormatter().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
+        }
+
+        "support DateFormatter" in {
+            val obj = new widgets.DateFormatter().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
+        }
+
+        "support StringEditor" in {
+            val obj = new widgets.StringEditor().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
+        }
+
+        "support TextEditor" in {
+            val obj = new widgets.TextEditor().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 1
+        }
+
+        "support SelectEditor" in {
+            val obj = new widgets.SelectEditor().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
+        }
+
+        "support PercentEditor" in {
+            val obj = new widgets.PercentEditor().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 1
+        }
+
+        "support CheckboxEditor" in {
+            val obj = new widgets.CheckboxEditor().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 1
+        }
+
+        "support IntEditor" in {
+            val obj = new widgets.IntEditor().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
+        }
+
+        "support NumberEditor" in {
+            val obj = new widgets.NumberEditor().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 2
+        }
+
+        "support TimeEditor" in {
+            val obj = new widgets.TimeEditor().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 1
+        }
+
+        "support DateEditor" in {
+            val obj = new widgets.DateEditor().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 1
+        }
+
+        "support TableColumn" in {
+            val obj = new widgets.TableColumn().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 8
+        }
+
+        "support DataTable" in {
+            val obj = new widgets.DataTable().id("xyz")
+            obj.id.value shouldEqual "xyz"
+            obj.fields.length shouldEqual 11
         }
     }
 }
