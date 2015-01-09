@@ -242,3 +242,19 @@ sealed trait Layout extends EnumType with SnakeCase
     case object Below extends Layout
     case object Center extends Layout
 }
+
+sealed trait DateFormat extends EnumType
+@enum object DateFormat extends Enumerated[DateFormat] {
+    case object ATOM extends DateFormat
+    case object W3C extends DateFormat
+    case object `RFC-3339` extends DateFormat
+    case object `ISO-8601` extends DateFormat
+    case object COOKIE extends DateFormat
+    case object `RFC-822` extends DateFormat
+    case object `RFC-850` extends DateFormat
+    case object `RFC-1036` extends DateFormat
+    case object `RFC-1123` extends DateFormat
+    case object `RFC-2822` extends DateFormat
+    case object RSS extends DateFormat
+    case object TIMESTAMP extends DateFormat
+}

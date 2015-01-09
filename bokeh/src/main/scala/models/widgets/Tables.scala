@@ -20,6 +20,29 @@ package widgets
     object icon extends Field[Checkmark]
 }
 
+@model class DateFormatter extends CellFormatter {
+    /** The format can be combinations of the following:
+
+       `d`     - day of month (no leading zero)
+       `dd`    - day of month (two digit)
+       `o`     - day of year (no leading zeros)
+       `oo`    - day of year (three digit)
+       `D`     - day name short
+       `DD`    - day name long
+       `m`     - month of year (no leading zero)
+       `mm`    - month of year (two digit)
+       `M`     - month name short
+       `MM`    - month name long
+       `y`     - year (two digit)
+       `yy`    - year (four digit)
+       `@`     - Unix timestamp (ms since 01/01/1970)
+       `!`     - Windows ticks (100ns since 01/01/0001)
+       `"..."` - literal text
+       `''`    - single quote
+     */
+    object format extends Field[String]("yy M d") // TODO: Enum(DateFormat)
+}
+
 @model class StringEditor extends CellEditor {
     object completions extends Field[List[String]]
 }
