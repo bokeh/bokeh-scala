@@ -1,4 +1,5 @@
 package io.continuum.bokeh
+package tests
 
 import org.specs2.mutable._
 
