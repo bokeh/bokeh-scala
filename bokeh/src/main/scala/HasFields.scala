@@ -13,7 +13,7 @@ trait HasFields { self =>
 
     def toJson: JsObject = JsObject(values.collect { case (name, Some(value)) => (name, value) })
 
-    class Field[FieldType:DefaultValue:Writes] extends AbstractField with ValidableField {
+    class Field[FieldType:Default:Writes] extends AbstractField with ValidableField {
         type ValueType = FieldType
 
         def owner: SelfType = self
@@ -23,10 +23,10 @@ trait HasFields { self =>
             set(Some(value))
         }
 
-        def defaultValue: Option[FieldType] =
-            Option(implicitly[DefaultValue[FieldType]].default)
+        def Default: Option[FieldType] =
+            Option(implicitly[Default[FieldType]].default)
 
-        protected var _value: Option[FieldType] = defaultValue
+        protected var _value: Option[FieldType] = Default
         protected var _dirty: Boolean = false
 
         final def isDirty: Boolean = _dirty
@@ -74,7 +74,7 @@ trait HasFields { self =>
         }
     }
 
-    class Vectorized[FieldType:DefaultValue:Writes] extends Field[FieldType] {
+    class Vectorized[FieldType:Default:Writes] extends Field[FieldType] {
         def this(value: FieldType) = {
             this()
             set(Some(value))
@@ -108,9 +108,9 @@ trait HasFields { self =>
         }
     }
 
-    abstract class VectorizedWithUnits[FieldType:DefaultValue:Writes, UnitsType <: Units with EnumType: DefaultValue] extends Vectorized[FieldType] {
+    abstract class VectorizedWithUnits[FieldType:Default:Writes, UnitsType <: Units with EnumType: Default] extends Vectorized[FieldType] {
         def defaultUnits: Option[UnitsType] =
-            Option(implicitly[DefaultValue[UnitsType]].default)
+            Option(implicitly[Default[UnitsType]].default)
 
         protected var _units: Option[UnitsType] = defaultUnits
         def unitsOpt: Option[UnitsType] = _units
@@ -150,7 +150,7 @@ trait HasFields { self =>
         }
     }
 
-    class Spatial[FieldType:DefaultValue:Writes] extends VectorizedWithUnits[FieldType, SpatialUnits] {
+    class Spatial[FieldType:Default:Writes] extends VectorizedWithUnits[FieldType, SpatialUnits] {
         def this(value: FieldType) = {
             this()
             set(Some(value))
@@ -168,7 +168,7 @@ trait HasFields { self =>
         }
     }
 
-    class Angular[FieldType:DefaultValue:Writes] extends VectorizedWithUnits[FieldType, AngularUnits] {
+    class Angular[FieldType:Default:Writes] extends VectorizedWithUnits[FieldType, AngularUnits] {
         def this(value: FieldType) = {
             this()
             set(Some(value))

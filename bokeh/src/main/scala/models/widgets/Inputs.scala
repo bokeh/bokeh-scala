@@ -4,7 +4,7 @@ package widgets
 import org.joda.time.{LocalDate=>Date}
 import play.api.libs.json.Writes
 
-@model abstract class InputWidget[T:DefaultValue:Writes] extends Widget {
+@model abstract class InputWidget[T:Default:Writes] extends Widget {
     object title extends Field[String]
     object name extends Field[String]
     object value extends Field[T]
