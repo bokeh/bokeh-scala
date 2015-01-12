@@ -73,7 +73,9 @@ trait HasFields { self =>
             valueOpt.map(implicitly[Writes[ValueType]].writes _) getOrElse JsNull
         }
     }
+}
 
+trait Vectorization { self: HasFields =>
     class Vectorized[FieldType:Default:Writes] extends Field[FieldType] {
         def this(value: FieldType) = {
             this()

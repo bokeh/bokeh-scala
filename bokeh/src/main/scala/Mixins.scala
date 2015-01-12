@@ -1,11 +1,11 @@
 package io.continuum.bokeh
 
-trait FillProps { self: HasFields =>
+trait FillProps { self: HasFields with Vectorization =>
     object fill_color extends Vectorized[Color](Color.Gray)
     object fill_alpha extends Field[Percent]
 }
 
-trait LineProps { self: HasFields =>
+trait LineProps { self: HasFields with Vectorization =>
     object line_color extends Vectorized[Color](Color.Black)
     object line_width extends Field[Double](1.0)
     object line_alpha extends Field[Percent]
@@ -15,7 +15,7 @@ trait LineProps { self: HasFields =>
     object line_dash_offset extends Field[Int]
 }
 
-trait TextProps { self: HasFields =>
+trait TextProps { self: HasFields with Vectorization =>
     object text_font extends Field[String]
     object text_font_size extends Field[FontSize](10 pt)
     object text_font_style extends Field[FontStyle]

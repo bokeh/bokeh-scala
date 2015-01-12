@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@model abstract class Glyph extends PlotObject {
+@model abstract class Glyph extends PlotObject with Vectorization {
     object visible extends Field[Boolean](true)
 }
 
