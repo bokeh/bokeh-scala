@@ -19,7 +19,7 @@ import play.api.libs.json.Writes
 @model class Slider extends InputWidget[Double] {
     object start extends Field[Double]
     object end extends Field[Double]
-    object step extends Field[Int]
+    object step extends Field[Double]
     object orientation extends Field[Orientation]
 }
 
