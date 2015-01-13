@@ -92,6 +92,11 @@ trait Vectorization { self: HasFields =>
             owner
         }
 
+        def apply[M[_]](column: Column[M, FieldType]): SelfType = {
+            setField(Some(column.field))
+            owner
+        }
+
         def toMap: Map[String, Any] = {
             Map(fieldOpt.map("field" -> _).getOrElse("value" -> valueOpt))
         }
@@ -134,6 +139,11 @@ trait Vectorization { self: HasFields =>
             setField(Some(field))
             setUnits(Some(units))
             owner
+        }
+
+        def apply[M[_]](column: Column[M, FieldType], units: UnitsType): SelfType = {
+            setUnits(Some(units))
+            apply(column)
         }
 
         override def toMap: Map[String, Any] = {

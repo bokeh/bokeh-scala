@@ -58,7 +58,7 @@ object BokehBuild extends Build {
         licenses := Seq("MIT-style" -> url("http://www.opensource.org/licenses/mit-license.php")),
         scalaVersion := "2.11.4",
         crossScalaVersions := Seq("2.10.4", "2.11.4"),
-        scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature"),
+        scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature", "-Xlog-free-types"),
         scalacOptions += "-language:postfixOps,implicitConversions,higherKinds,experimental.macros",
         scalacOptions in (Compile, doc) := Seq("-groups", "-implicits"),
         addCompilerPlugin(Dependencies.paradise),

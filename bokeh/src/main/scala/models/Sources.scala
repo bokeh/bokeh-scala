@@ -16,7 +16,11 @@ import play.api.libs.json.Writes
 }
 
 @model class ColumnDataSource extends DataSource {
+    final override val typeName = "ColumnDataSource"
+
     object data extends Field[Map[Symbol, Any]]
+
+    def column[M[_], T](value: M[T]): Column[M, T] = macro ColumnMacro.columnImpl[M, T]
 
     def addColumn[A:ArrayLike:Writes](name: Symbol, array: A): SelfType = {
         data := data.value + (name -> array)
