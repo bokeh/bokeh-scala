@@ -2,7 +2,7 @@ package io.continuum.bokeh
 
 import scala.reflect.macros.Context
 
-import play.api.libs.json.{Writes,JsValue}
+import play.api.libs.json.JsValue
 
 trait AbstractField {
     type ValueType
@@ -13,11 +13,6 @@ trait AbstractField {
     def set(value: Option[ValueType])
 
     def toJson: Option[JsValue]
-}
-
-trait Refs[Ref] {
-    def getRef: Ref
-    def id: AbstractField { type ValueType = String }
 }
 
 case class FieldRef(name: String, field: AbstractField)
