@@ -7,11 +7,7 @@ trait HasFields { self =>
     type SelfType = self.type
 
     def typeName: String = getClass.getSimpleName
-
-    def values: List[(String, Option[JsValue])]
-    def fields: List[AbstractField]
-
-    def toJson: JsObject = JsObject(values.collect { case (name, Some(value)) => (name, value) })
+    def fields: List[FieldRef]
 
     class Field[FieldType:Default:Writes] extends AbstractField with ValidableField {
         type ValueType = FieldType
@@ -65,11 +61,11 @@ trait HasFields { self =>
 
         def toSerializable: Option[Any] = valueOpt
 
-        def toJson: Option[JsValue] = {
+        final def toJson: Option[JsValue] = {
             if (isDirty) Some(_toJson) else None
         }
 
-        def _toJson: JsValue = {
+        protected def _toJson: JsValue = {
             valueOpt.map(implicitly[Writes[ValueType]].writes _) getOrElse JsNull
         }
     }
@@ -102,7 +98,7 @@ trait Vectorization { self: HasFields =>
 
         override def toSerializable: Option[Any] = Some(toMap)
 
-        override def _toJson: JsObject = {
+        override protected def _toJson: JsObject = {
             val value = fieldOpt
                 .map { field => "field" -> implicitly[Writes[Symbol]].writes(field) }
                 .getOrElse { "value" -> super._toJson }
@@ -144,7 +140,7 @@ trait Vectorization { self: HasFields =>
             super.toMap ++ unitsOpt.map("units" -> _).toList
         }
 
-        override def _toJson: JsObject = {
+        override protected def _toJson: JsObject = {
             val json = super._toJson
             unitsOpt.map {
                 units => json + ("units" -> implicitly[Writes[UnitsType]].writes(units))

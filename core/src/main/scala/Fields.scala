@@ -11,6 +11,8 @@ trait AbstractField {
     def value: ValueType
 
     def set(value: Option[ValueType])
+
+    def toJson: Option[JsValue]
 }
 
 trait Refs[Ref] {
@@ -18,37 +20,22 @@ trait Refs[Ref] {
     def id: AbstractField { type ValueType = String }
 }
 
+case class FieldRef(name: String, field: AbstractField)
+
 object Fields {
-    def values[T](obj: T): List[(String, Option[JsValue])] = macro valuesImpl[T]
+    def fields[T](obj: T): List[FieldRef] = macro fieldsImpl[T]
 
-    def valuesImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[List[(String, Option[JsValue])]] = {
+    def fieldsImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[List[FieldRef]] = {
         import c.universe._
 
-        val values = weakTypeOf[T].members
+        val refs = weakTypeOf[T].members
             .filter(_.isModule)
             .map(_.asModule)
             .filter(_.typeSignature <:< typeOf[AbstractField])
             .map { member =>
-                val field = q"$obj.${member.name.toTermName}"
-                q"(${member.name.decoded}, $field.toJson)"
+                q"FieldRef(${member.name.decoded}, $obj.${member.name.toTermName})"
             }
 
-        c.Expr[List[(String, Option[JsValue])]](q"List(..$values)")
-    }
-
-    def fields[T](obj: T): List[AbstractField] = macro fieldsImpl[T]
-
-    def fieldsImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[List[AbstractField]] = {
-        import c.universe._
-
-        val fields = weakTypeOf[T].members
-            .filter(_.isModule)
-            .map(_.asModule)
-            .filter(_.typeSignature <:< typeOf[AbstractField])
-            .map { member =>
-                q"$obj.${member.name.toTermName}"
-            }
-
-        c.Expr[List[AbstractField]](q"List(..$fields)")
+        c.Expr[List[FieldRef]](q"List(..$refs)")
     }
 }

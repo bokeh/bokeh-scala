@@ -80,10 +80,17 @@ trait BokehWrites {
             implicitly[Writes[Option[T]]].writes(obj.valueOpt)
     }
 
-    implicit val HasFieldsWrites = new Writes[HasFields] {
+    implicit object HasFieldsWrites extends Writes[HasFields] {
+        def writeFields(obj: HasFields): JsObject = {
+            val fields = obj.fields
+               .map { case FieldRef(name, field) => (name, field.toJson) }
+               .collect { case (name, Some(jsValue)) => (name, jsValue) }
+            JsObject(fields) + ("type" -> JsString(obj.typeName))
+        }
+
         def writes(obj: HasFields) = obj match {
-            case (obj: PlotObject) => implicitly[Writes[Ref]].writes(obj.getRef)
-            case _                 => obj.toJson + ("type" -> JsString(obj.typeName))
+            case obj: PlotObject => implicitly[Writes[Ref]].writes(obj.getRef)
+            case _               => writeFields(obj)
         }
     }
 

@@ -9,7 +9,7 @@ class JSONSerializer(val stringifyFn: JsValue => String) {
 
     def getModel(obj: PlotObject): Model = {
         val Ref(id, tp) = obj.getRef
-        Model(id, tp, obj.toJson)
+        Model(id, tp, HasFieldsWrites.writeFields(obj))
     }
 
     def stringify(obj: PlotObject): String = {
@@ -35,7 +35,7 @@ class JSONSerializer(val stringifyFn: JsValue => String) {
         val ids = collection.mutable.HashSet[String]()
 
         def descendFields(obj: HasFields) {
-            obj.fields.map(_.valueOpt).foreach(_.foreach(descend _))
+            obj.fields.map(_.field.valueOpt).foreach(_.foreach(descend _))
         }
 
         def descend(obj: Any) {
