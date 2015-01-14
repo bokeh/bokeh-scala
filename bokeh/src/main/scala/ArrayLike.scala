@@ -4,12 +4,12 @@ import annotation.implicitNotFound
 import breeze.linalg.{DenseVector,DenseMatrix}
 
 @implicitNotFound(msg="Can't find ArrayLike type class for type ${T}.")
-class ArrayLike[T]
+class ArrayLike[T[_]]
 
 object ArrayLike {
-    implicit def TraversableToArrayLike[T <: Traversable[_]] = new ArrayLike[T]
-    implicit def DenseVectorToArrayLike[T] = new ArrayLike[DenseVector[T]]
-    implicit def ArrayToArrayLike[T] = new ArrayLike[Array[T]]
+    implicit def TraversableArrayLike[T[_] <: Traversable[_]] = new ArrayLike[T]
+    implicit val DenseVectorArrayLike = new ArrayLike[DenseVector]
+    implicit val ArrayArrayLike = new ArrayLike[Array]
 }
 
 @implicitNotFound(msg="Can't find MatrixLike type class for type ${T}.")

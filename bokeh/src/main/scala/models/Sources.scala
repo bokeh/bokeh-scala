@@ -15,15 +15,51 @@ import play.api.libs.json.Writes
         new ColumnsRef().source(this).columns(columns.toList)
 }
 
-@model class ColumnDataSource extends DataSource {
+@model class ColumnDataSource extends DataSource { source =>
     final override val typeName = "ColumnDataSource"
 
     object data extends Field[Map[Symbol, Any]]
 
-    def column[M[_], T](value: M[T]): Column[M, T] = macro ColumnMacro.columnImpl[M, T]
+    class Column[M[_]: ArrayLike, T](val name: Symbol, _value: M[T]) {
+        this := _value
 
-    def addColumn[A:ArrayLike:Writes](name: Symbol, array: A): SelfType = {
-        data := data.value + (name -> array)
+        def value: M[T] = source.data.value(name).asInstanceOf[M[T]]
+        def :=(value: M[T]): Unit = source.addColumn(name, value)
+
+        def ref: ColumnsRef = new ColumnsRef().source(source).columns(name :: Nil)
+    }
+
+    def column[M[_], T](value: M[T]): ColumnDataSource#Column[M, T] = macro ColumnMacro.columnImpl[M, T]
+
+    def addColumn[M[_]: ArrayLike, T](name: Symbol, value: M[T]): SelfType = {
+        data <<= (_ + (name -> value))
         this
+    }
+}
+
+trait SourceUtils {
+    implicit def ColumnToColumnsRef[M[_]](column: ColumnDataSource#Column[M, _]): ColumnsRef = column.ref
+}
+
+private[bokeh] object ColumnMacro {
+    import scala.reflect.macros.Context
+
+    def columnImpl[M[_], T](c: Context)(value: c.Expr[M[T]])
+            (implicit ev1: c.WeakTypeTag[M[_]], ev2: c.WeakTypeTag[T]): c.Expr[ColumnDataSource#Column[M, T]] = {
+        import c.universe._
+
+        val name = definingValName(c).map(name => c.Expr[String](Literal(Constant(name)))) getOrElse {
+            c.abort(c.enclosingPosition, "column must be directly assigned to a val, such as `val x1 = column(List(1.0, 2.0, 3.0))`")
+        }
+
+        c.Expr[ColumnDataSource#Column[M, T]](q"new Column(Symbol($name), $value)")
+    }
+
+    def definingValName(c: Context): Option[String] = {
+        import c.universe._
+
+        c.enclosingClass.collect {
+            case ValDef(_, name, _, rhs) if rhs.pos == c.macroApplication.pos => name.encoded
+        }.headOption
     }
 }

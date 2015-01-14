@@ -1,6 +1,6 @@
 package io.continuum
 
-package object bokeh extends Formats with NodeUtils {
+package object bokeh extends Formats with NodeUtils with SourceUtils {
     implicit class NumbericOps[T:Numeric](value: T) {
         def %% : Percent = Percent(implicitly[Numeric[T]].toDouble(value)/100)
 
