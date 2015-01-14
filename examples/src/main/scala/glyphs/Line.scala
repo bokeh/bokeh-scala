@@ -7,17 +7,17 @@ import breeze.numerics.sin
 import math.{Pi=>pi}
 
 object Line extends Example {
-    val x = linspace(-2*pi, 2*pi, 1000)
-    val y = sin(x)
+    val source = new ColumnDataSource {
+        val x = column(linspace(-2*pi, 2*pi, 1000))
+        val y = column(sin(x.value))
+    }
 
-    val source = new ColumnDataSource()
-        .addColumn('x, x)
-        .addColumn('y, y)
+    import source.{x,y}
 
-    val xdr = new DataRange1d().sources(source.columns('x) :: Nil)
-    val ydr = new DataRange1d().sources(source.columns('y) :: Nil)
+    val xdr = new DataRange1d().sources(x :: Nil)
+    val ydr = new DataRange1d().sources(y :: Nil)
 
-    val line = new Line().x('x).y('y).line_color(Color.Blue)
+    val line = new Line().x(x).y(y).line_color(Color.Blue)
 
     val renderer = new GlyphRenderer()
         .data_source(source)
