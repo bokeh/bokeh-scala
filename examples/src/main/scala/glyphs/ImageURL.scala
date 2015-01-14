@@ -18,7 +18,7 @@ object ImageURL extends Example {
         val y2   = column(linspace(  0, 200, N))
     }
 
-    import source._
+    import source.{urls,x1,y1,w1,h1,x2,y2}
 
     val xdr = new Range1d().start(-100).end(200)
     val ydr = new Range1d().start(-100).end(200)
