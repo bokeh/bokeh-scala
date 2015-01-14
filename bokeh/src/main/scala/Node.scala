@@ -3,7 +3,7 @@ package io.continuum.bokeh
 import java.io.File
 import java.net.URL
 
-trait NodeUtils {
+trait NodeImplicits {
     implicit class StringNode(script: String) {
         def asScript: xml.Node = {
             <script type="text/javascript">{xml.Unparsed(s"""

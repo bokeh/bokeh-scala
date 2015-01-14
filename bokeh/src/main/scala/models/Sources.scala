@@ -37,7 +37,7 @@ import play.api.libs.json.Writes
     }
 }
 
-trait SourceUtils {
+trait SourceImplicits {
     implicit def ColumnToColumnsRef[M[_]](column: ColumnDataSource#Column[M, _]): ColumnsRef = column.ref
 }
 
