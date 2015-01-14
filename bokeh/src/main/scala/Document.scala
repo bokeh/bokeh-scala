@@ -38,13 +38,19 @@ class HTMLFragment(val html: NodeSeq, val styles: NodeSeq, val scripts: NodeSeq)
 }
 
 object HTMLFragmentWriter {
-    def apply(objs: List[Widget], resources: Resources = Resources.default): HTMLFragmentWriter = {
+    def apply(obj: Widget): HTMLFragmentWriter = apply(obj, Resources.default)
+
+    def apply(obj: Widget, resources: Resources): HTMLFragmentWriter = apply(obj :: Nil, resources)
+
+    def apply(objs: List[Widget]): HTMLFragmentWriter = apply(objs, Resources.default)
+
+    def apply(objs: List[Widget], resources: Resources): HTMLFragmentWriter = {
         val contexts = objs.map(obj => new PlotContext().children(obj :: Nil))
         new HTMLFragmentWriter(contexts, resources)
     }
 }
 
-class HTMLFragmentWriter(contexts: List[PlotContext], resources: Resources = Resources.default) {
+class HTMLFragmentWriter(contexts: List[PlotContext], resources: Resources) {
     protected val serializer = new JSONSerializer(resources.stringify _)
 
     def write(): HTMLFragment = {
@@ -104,13 +110,19 @@ class HTMLFile(val file: File) {
 }
 
 object HTMLFileWriter {
-    def apply(objs: List[Widget], resources: Resources = Resources.default): HTMLFileWriter = {
+    def apply(obj: Widget): HTMLFileWriter = apply(obj, Resources.default)
+
+    def apply(obj: Widget, resources: Resources): HTMLFileWriter = apply(obj :: Nil, resources)
+
+    def apply(objs: List[Widget]): HTMLFileWriter = apply(objs, Resources.default)
+
+    def apply(objs: List[Widget], resources: Resources): HTMLFileWriter = {
         val contexts = objs.map(obj => new PlotContext().children(obj :: Nil))
         new HTMLFileWriter(contexts, resources)
     }
 }
 
-class HTMLFileWriter(contexts: List[PlotContext], resources: Resources = Resources.default) extends HTMLFragmentWriter(contexts, resources) {
+class HTMLFileWriter(contexts: List[PlotContext], resources: Resources) extends HTMLFragmentWriter(contexts, resources) {
     def write(file: File): HTMLFile = {
         val html = stringify(renderFile(write()))
         Path(file).write(html)
