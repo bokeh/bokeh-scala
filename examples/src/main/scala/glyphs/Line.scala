@@ -7,7 +7,7 @@ import breeze.numerics.sin
 import math.{Pi=>pi}
 
 object Line extends Example {
-    val source = new ColumnDataSource {
+    object source extends ColumnDataSource {
         val x = column(linspace(-2*pi, 2*pi, 1000))
         val y = column(sin(x.value))
     }

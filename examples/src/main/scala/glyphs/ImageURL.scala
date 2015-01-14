@@ -8,7 +8,7 @@ object ImageURL extends Example {
     val url = "http://bokeh.pydata.org/en/latest/_static/bokeh-transparent.png"
     val N = 5
 
-    val source = new ColumnDataSource {
+    object source extends ColumnDataSource {
         val urls = column(List(url)*N)
         val x1   = column(linspace(  0, 150, N))
         val y1   = column(linspace(  0, 150, N))
