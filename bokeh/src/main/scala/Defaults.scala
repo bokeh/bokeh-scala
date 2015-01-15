@@ -1,5 +1,6 @@
 package io.continuum.bokeh
 
+import scala.reflect.ClassTag
 import scala.annotation.implicitNotFound
 import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 
@@ -20,6 +21,7 @@ trait TypeDefaults {
 
     implicit def SeqDefault[T]: Default[Seq[T]] = new Default[Seq[T]](Seq())
     implicit def ListDefault[T]: Default[List[T]] = new Default[List[T]](Nil)
+    implicit def ArrayDefault[T:ClassTag]: Default[Array[T]] = new Default[Array[T]](Array[T]())
     implicit def MapDefault[U, V]: Default[Map[U, V]] = new Default[Map[U, V]](Map.empty)
     implicit def HasFieldsDefault[T <: HasFields]: Default[T] = new Default[T](null.asInstanceOf[T])
 
