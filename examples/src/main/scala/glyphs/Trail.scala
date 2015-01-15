@@ -49,7 +49,7 @@ object Trail extends Example with Tools {
         else                                4
     }
 
-    val colors = grads map {
+    val colors: Seq[Color] = grads map {
         case 0 => Color.Green
         case 1 => Color.Yellow
         case 2 => Color.Pink
@@ -80,16 +80,18 @@ object Trail extends Example with Tools {
         plot.tools := Pan|WheelZoom|Reset|BoxSelect
         plot.tools <<= (hover +: _)
 
-        val line_source = new ColumnDataSource()
-            .addColumn('x, mtb.lon)
-            .addColumn('y, mtb.lat)
-            .addColumn('dist, dist)
+        object line_source extends ColumnDataSource {
+            val x    = column(mtb.lon)
+            val y    = column(mtb.lat)
+        }
 
-        val line = new Line().x('x).y('y).line_color(Color.Blue).line_width(2)
+        import line_source.{x,y}
+
+        val line = new Line().x(x).y(y).line_color(Color.Blue).line_width(2)
         plot.addGlyph(line_source, line)
 
-        plot.x_range := new DataRange1d().sources(line_source.columns('x) :: Nil)
-        plot.y_range := new DataRange1d().sources(line_source.columns('y) :: Nil)
+        plot.x_range := new DataRange1d().sources(x :: Nil)
+        plot.y_range := new DataRange1d().sources(y :: Nil)
 
         plot
     }
@@ -109,26 +111,32 @@ object Trail extends Example with Tools {
 
         plot.tools := Pan|WheelZoom|Reset|BoxSelect
 
-        val (xs, ys) = (dist, mtb.alt)
-        val y0 = ys.min
+        val (_xs, _ys) = (dist, mtb.alt)
+        val y0 = _ys.min
 
-        val patches_source = new ColumnDataSource()
-            .addColumn('xs,    xs.sliding(2).map { case List(xi, xj) => List(xi, xj, xj, xi) } toList)
-            .addColumn('ys,    ys.sliding(2).map { case List(yi, yj) => List(y0, y0, yj, yi) } toList)
-            .addColumn('color, colors)
+        object patches_source extends ColumnDataSource {
+            val xs    = column(_xs.sliding(2).map { case List(xi, xj) => List(xi, xj, xj, xi) } toList)
+            val ys    = column(_ys.sliding(2).map { case List(yi, yj) => List(y0, y0, yj, yi) } toList)
+            val color = column(colors)
+        }
 
-        val patches = new Patches().xs('xs).ys('ys).fill_color('color).line_color('color)
+        import patches_source.{xs,ys,color}
+
+        val patches = new Patches().xs(xs).ys(ys).fill_color(color).line_color(color)
         plot.addGlyph(patches_source, patches)
 
-        val line_source = new ColumnDataSource()
-            .addColumn('x, dist)
-            .addColumn('y, mtb.alt)
+        object line_source extends ColumnDataSource {
+            val x = column(dist)
+            val y = column(mtb.alt)
+        }
 
-        val line = new Line().x('x).y('y).line_color(Color.Black).line_width(1)
+        import line_source.{x,y}
+
+        val line = new Line().x(x).y(y).line_color(Color.Black).line_width(1)
         plot.addGlyph(line_source, line)
 
-        plot.x_range := new DataRange1d().sources(line_source.columns('x) :: Nil)
-        plot.y_range := new DataRange1d().sources(line_source.columns('y) :: Nil)
+        plot.x_range := new DataRange1d().sources(x :: Nil)
+        plot.y_range := new DataRange1d().sources(y :: Nil)
 
         plot
     }

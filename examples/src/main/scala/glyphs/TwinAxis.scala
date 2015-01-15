@@ -7,11 +7,13 @@ import breeze.numerics.sin
 import math.{Pi=>pi}
 
 object TwinAxis extends Example with Tools {
-    val x  = -2*pi to 2*pi by 0.1 toArray
-    val y1 = sin(x)
-    val y2 = linspace(0, 100, x.length)
+    object source extends ColumnDataSource {
+        val x  = column(-2*pi to 2*pi by 0.1 toArray)
+        val y1 = column(sin(x.value))
+        val y2 = column(linspace(0, 100, x.value.length))
+    }
 
-    val source = new ColumnDataSource().data(Map('x -> x, 'y1 -> y1, 'y2 ->y2))
+    import source.{x,y1,y2}
 
     val xdr = new Range1d().start(-6.5).end(6.5)
     val ydr = new Range1d().start(-1.1).end(1.1)
@@ -31,10 +33,10 @@ object TwinAxis extends Example with Tools {
     plot.below := xaxis :: Nil
     plot.left  := y1axis :: y2axis :: Nil
 
-    val circle1_glyph = new Circle().x('x).y('y1).fill_color(Color.Red).size(5).line_color(Color.Black)
+    val circle1_glyph = new Circle().x(x).y(y1).fill_color(Color.Red).size(5).line_color(Color.Black)
     val circle1 = new GlyphRenderer().data_source(source).glyph(circle1_glyph)
 
-    val circle2_glyph = new Circle().x('x).y('y2).fill_color(Color.Blue).size(5).line_color(Color.Black)
+    val circle2_glyph = new Circle().x(x).y(y2).fill_color(Color.Blue).size(5).line_color(Color.Black)
     val circle2 = new GlyphRenderer().data_source(source).glyph(circle2_glyph).y_range_name("foo")
 
     plot.renderers := xaxis :: y1axis :: y2axis :: circle1 :: circle2 :: Nil

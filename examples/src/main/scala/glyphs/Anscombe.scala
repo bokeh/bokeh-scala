@@ -30,12 +30,12 @@ object Anscombe extends Example {
         circles_source.addColumn(name, array)
     }
 
-    val x = linspace(-0.5, 20.5, 10)
-    val y = x*0.5 + 3.0
+    object lines_source extends ColumnDataSource {
+        val x = column(linspace(-0.5, 20.5, 10))
+        val y = column(x.value*0.5 + 3.0)
+    }
 
-    val lines_source = new ColumnDataSource()
-        .addColumn('x, x)
-        .addColumn('y, y)
+    import lines_source.{x,y}
 
     val xdr = new Range1d().start(-0.5).end(20.5)
     val ydr = new Range1d().start(-0.5).end(20.5)
@@ -57,7 +57,7 @@ object Anscombe extends Example {
         val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
         val line_renderer = new GlyphRenderer()
             .data_source(lines_source)
-            .glyph(new Line().x('x).y('y).line_color("#666699").line_width(2))
+            .glyph(new Line().x(x).y(y).line_color("#666699").line_width(2))
         val circle_renderer = new GlyphRenderer()
             .data_source(circles_source)
             .glyph(new Circle().x(xname).y(yname).size(12).fill_color("#cc6633").line_color("#cc6633").fill_alpha(50%%))

@@ -43,7 +43,7 @@ object Sprint extends Example {
 
     val t0 = sprint.time(0)
 
-    object data {
+    object df {
         val abbrev        = sprint.country
         val country       = sprint.country.map(abbrev_to_country)
         val medal         = sprint.medal.map(_.name.toLowerCase)
@@ -57,21 +57,24 @@ object Sprint extends Example {
         }
     }
 
-    val source = new ColumnDataSource().data(Map(
-        'Abbrev       -> data.abbrev,
-        'Country      -> data.country,
-        'Medal        -> data.medal,
-        'Year         -> data.year,
-        'Speed        -> data.speed,
-        'MetersBack   -> data.meters_back,
-        'MedalFill    -> data.medal_fill,
-        'MedalLine    -> data.medal_line,
-        'SelectedName -> data.selected_name))
+    object source extends ColumnDataSource {
+        val Abbrev       = column(df.abbrev)
+        val Country      = column(df.country)
+        val Medal        = column(df.medal)
+        val Year         = column(df.year)
+        val Speed        = column(df.speed)
+        val MetersBack   = column(df.meters_back)
+        val MedalFill    = column(df.medal_fill)
+        val MedalLine    = column(df.medal_line)
+        val SelectedName = column(df.selected_name)
+    }
+
+    import source.{Abbrev,Country,Medal,Year,Speed,MetersBack,MedalFill,MedalLine,SelectedName}
 
     val title = "Usain Bolt vs. 116 years of Olympic sprinters"
 
-    val xdr = new Range1d().start(data.meters_back.max+2).end(0)                         // XXX: +2 is poor-man's padding (otherwise misses last tick)
-    val ydr = new DataRange1d().sources(source.columns('Year) :: Nil).rangepadding(0.05) // XXX: should be 2 years (both sides)
+    val xdr = new Range1d().start(df.meters_back.max+2).end(0)          // XXX: +2 is poor-man's padding (otherwise misses last tick)
+    val ydr = new DataRange1d().sources(Year :: Nil).rangepadding(0.05) // XXX: should be 2 years (both sides)
 
     val plot = new Plot().title(title).x_range(xdr).y_range(ydr).width(1000).height(600).toolbar_location().outline_line_color()
 
@@ -84,10 +87,10 @@ object Sprint extends Example {
     val yaxis = new LinearAxis().plot(plot).ticker(yticker).major_tick_in(-5).major_tick_out(10)
     plot.right := yaxis :: Nil
 
-    val medal_glyph = new Circle().x('MetersBack).y('Year).radius(5, SpatialUnits.Screen).fill_color('MedalFill).line_color('MedalLine).fill_alpha(0.5)
+    val medal_glyph = new Circle().x(MetersBack).y('Year).radius(5, SpatialUnits.Screen).fill_color(MedalFill).line_color(MedalLine).fill_alpha(0.5)
     val medal = new GlyphRenderer().data_source(source).glyph(medal_glyph)
 
-    val athlete_glyph = new Text().x('MetersBack).y('Year).x_offset(10).text('SelectedName)
+    val athlete_glyph = new Text().x(MetersBack).y('Year).x_offset(10).text('SelectedName)
         .text_align(TextAlign.Left).text_baseline(TextBaseline.Middle).text_font_size(9 pt)
     val athlete = new GlyphRenderer().data_source(source).glyph(athlete_glyph)
 

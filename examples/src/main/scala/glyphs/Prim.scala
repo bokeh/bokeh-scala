@@ -3,12 +3,12 @@ package examples
 package glyphs
 
 object Prim extends Example {
-    val x = 1.0 to 6.0 by 1.0
-    val y = 5.0 to 0.0 by -1.0
+    object source extends ColumnDataSource {
+        val x = column(1.0 to 6.0 by  1.0)
+        val y = column(5.0 to 0.0 by -1.0)
+    }
 
-    val source = new ColumnDataSource()
-        .addColumn('x, x.toArray)
-        .addColumn('y, y.toArray)
+    import source.{x,y}
 
     val xdr = new Range1d().start(0).end(10)
     val ydr = new Range1d().start(0).end(10)
@@ -35,17 +35,16 @@ object Prim extends Example {
         plot
     }
 
-    val plots =
-        make_plot("annular_wedge", new AnnularWedge().x('x).y('y).inner_radius(0.2).outer_radius(0.5).start_angle(0.8).end_angle(3.8)) ::
-        make_plot("annulus", new Annulus().x('x).y('y).inner_radius(0.2).outer_radius(0.5)) ::
-        make_plot("arc", new Arc().x('x).y('y).radius(0.4).start_angle(0.8).end_angle(3.8)) ::
-        make_plot("circle", new Circle().x('x).y('y).radius(1)) ::
-        make_plot("oval", new Oval().x('x).y('y).width(0.5).height(0.8).angle(-0.6)) ::
-        make_plot("ray", new Ray().x('x).y('y).length(25).angle(0.6)) ::
-        make_plot("rect", new Rect().x('x).y('y).width(0.5).height(0.8).angle(-0.6)) ::
-        make_plot("text", new Text().x('x).y('y).text("foo").angle(0.6)) ::
-        make_plot("wedge", new Wedge().x('x).y('y).radius(0.5).start_angle(0.9).end_angle(3.2)) ::
-        Nil
+    val plots = List(
+        make_plot("annular_wedge", new AnnularWedge().x(x).y(y).inner_radius(0.2).outer_radius(0.5).start_angle(0.8).end_angle(3.8)),
+        make_plot("annulus",       new Annulus().x(x).y(y).inner_radius(0.2).outer_radius(0.5)),
+        make_plot("arc",           new Arc().x(x).y(y).radius(0.4).start_angle(0.8).end_angle(3.8)),
+        make_plot("circle",        new Circle().x(x).y(y).radius(1)),
+        make_plot("oval",          new Oval().x(x).y(y).width(0.5).height(0.8).angle(-0.6)),
+        make_plot("ray",           new Ray().x(x).y(y).length(25).angle(0.6)),
+        make_plot("rect",          new Rect().x(x).y(y).width(0.5).height(0.8).angle(-0.6)),
+        make_plot("text",          new Text().x(x).y(y).text("foo").angle(0.6)),
+        make_plot("wedge",         new Wedge().x(x).y(y).radius(0.5).start_angle(0.9).end_angle(3.2)))
 
     val document = new Document(plots: _*)
     val html = document.save("prim.html", config.resources)

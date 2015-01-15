@@ -7,19 +7,21 @@ import breeze.numerics.{sin,cos}
 import math.{Pi=>pi}
 
 object Glyph2 extends Example {
-    val x = DenseVector(-2*pi to 2*pi by 0.1 toArray)
-    val y = sin(x)
-    val r = (cos(x) + 1.0)*6.0 + 6.0
+    object source extends ColumnDataSource {
+        val x = column(DenseVector(-2*pi to 2*pi by 0.1 toArray))
+        val y = column(sin(x.value))
+        val r = column((cos(x.value) + 1.0)*6.0 + 6.0)
+    }
 
-    val source = new ColumnDataSource().data(Map('x -> x, 'y -> y, 'r -> r))
+    import source.{x,y,r}
 
-    val xdr = new DataRange1d().sources(source.columns('x) :: Nil)
-    val ydr = new DataRange1d().sources(source.columns('y) :: Nil)
+    val xdr = new DataRange1d().sources(x :: Nil)
+    val ydr = new DataRange1d().sources(y :: Nil)
 
     val circle = new Circle()
-        .x('x)
-        .y('y)
-        .radius('r, SpatialUnits.Screen)
+        .x(x)
+        .y(y)
+        .radius(r, SpatialUnits.Screen)
         .fill_color(Color.Red)
         .line_color(Color.Black)
 

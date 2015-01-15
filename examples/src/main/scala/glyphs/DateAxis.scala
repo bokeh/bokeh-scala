@@ -2,23 +2,23 @@ package io.continuum.bokeh
 package examples
 package glyphs
 
-import breeze.linalg.{linspace,DenseVector}
-import breeze.numerics.sin
-import math.{Pi=>pi}
+import math.{Pi=>pi,sin}
 
 object DateAxis extends Example {
-    val x = -2*pi to 2*pi by 0.1 toArray
-    val y = sin(x)
-
     val now = System.currentTimeMillis.toDouble/1000
-    val times = DenseVector(0.0 until x.length by 1.0 toArray)*3600000.0 + now
+    val x   = -2*pi to 2*pi by 0.1
 
-    val source = new ColumnDataSource().addColumn('times, times).addColumn('y, y)
+    object source extends ColumnDataSource {
+        val times = column(x.indices.map(3600000.0*_ + now))
+        val y     = column(x.map(sin))
+    }
 
-    val xdr = new DataRange1d().sources(source.columns('times) :: Nil)
-    val ydr = new DataRange1d().sources(source.columns('y) :: Nil)
+    import source.{times,y}
 
-    val circle = new Circle().x('times).y('y).fill_color(Color.Red).size(5).line_color(Color.Black)
+    val xdr = new DataRange1d().sources(times :: Nil)
+    val ydr = new DataRange1d().sources(y :: Nil)
+
+    val circle = new Circle().x(times).y(y).fill_color(Color.Red).size(5).line_color(Color.Black)
 
     val renderer = new GlyphRenderer()
         .data_source(source)

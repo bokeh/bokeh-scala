@@ -29,15 +29,18 @@ object Maps extends Example {
 
     plot.tools <<= (pantool :: wheelzoomtool :: _)
 
-    val source = new ColumnDataSource()
-        .addColumn('lat, Array(30.2861, 30.2855, 30.2869))
-        .addColumn('lon, Array(-97.7394, -97.7390, -97.7405))
-        .addColumn('fill, Array(Color.Orange, Color.Blue, Color.Green))
+    object source extends ColumnDataSource {
+        val lat  = column(Array(30.2861, 30.2855, 30.2869))
+        val lon  = column(Array(-97.7394, -97.7390, -97.7405))
+        val fill = column(Array[Color](Color.Orange, Color.Blue, Color.Green))
+    }
+
+    import source.{lat,lon,fill}
 
     val circle = new Circle()
-        .x('lon)
-        .y('lat)
-        .fill_color('fill)
+        .x(lon)
+        .y(lat)
+        .fill_color(fill)
         .size(15)
         .line_color(Color.Black)
 

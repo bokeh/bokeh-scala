@@ -3,17 +3,20 @@ package examples
 package glyphs
 
 object ColorSpec extends Example {
-    val color: List[Color] = List(RGB(0, 100, 120), Color.Green, Color.Blue, "#2c7fb8", RGBA(120, 230, 150, 0.5))
+    val colors: List[Color] = List(RGB(0, 100, 120), Color.Green, Color.Blue, "#2c7fb8", RGBA(120, 230, 150, 0.5))
 
-    val source = new ColumnDataSource()
-        .addColumn('x, Array(1, 2, 3, 4, 5))
-        .addColumn('y, Array(5, 4, 3, 2, 1))
-        .addColumn('color, color)
+    object source extends ColumnDataSource {
+        val x     = column(Array[Double](1, 2, 3, 4, 5))
+        val y     = column(Array[Double](5, 4, 3, 2, 1))
+        val color = column(colors)
+    }
 
-    val xdr = new DataRange1d().sources(source.columns('x) :: Nil)
-    val ydr = new DataRange1d().sources(source.columns('y) :: Nil)
+    import source.{x,y,color}
 
-    val circle = new Circle().x('x).y('y).size(15).fill_color('color).line_color(Color.Black)
+    val xdr = new DataRange1d().sources(x :: Nil)
+    val ydr = new DataRange1d().sources(y :: Nil)
+
+    val circle = new Circle().x(x).y(y).size(15).fill_color(color).line_color(Color.Black)
 
     val renderer = new GlyphRenderer()
         .data_source(source)

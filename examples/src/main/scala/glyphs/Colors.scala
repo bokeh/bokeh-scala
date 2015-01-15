@@ -5,7 +5,7 @@ package glyphs
 import math.{Pi=>pi}
 
 object Colors extends Example {
-    val css3_colors = List(
+    val css3_colors = List[(String, Color, String)](
         ("Pink",                 Color.Pink,                 /* #FFC0CB */ "Pink"),
         ("LightPink",            Color.LightPink,            /* #FFB6C1 */ "Pink"),
         ("HotPink",              Color.HotPink,              /* #FF69B4 */ "Pink"),
@@ -147,16 +147,21 @@ object Colors extends Example {
         ("DarkSlateGray",        Color.DarkSlateGray,        /* #2F4F4F */ "Gray/Black"),
         ("Black",                Color.Black,                /* #000000 */ "Gray/Black"))
 
-    val (names, colors, groups) = css3_colors.unzip3
+    object source extends ColumnDataSource {
+        val names  = column(css3_colors.map(_._1))
+        val colors = column(css3_colors.map(_._2))
+        val groups = column(css3_colors.map(_._3))
+    }
 
-    val source = new ColumnDataSource().data(Map('names -> names, 'groups -> groups, 'colors -> colors))
+    import source.{names,colors,groups}
 
-    val xdr = new FactorRange().factors(groups.distinct)
-    val ydr = new FactorRange().factors(names.reverse)
+    val xdr = new FactorRange().factors(groups.value.distinct)
+    val ydr = new FactorRange().factors(names.value.reverse)
 
     val plot = new Plot().title("CSS3 Color Names").x_range(xdr).y_range(ydr).width(600).height(2000)
 
-    val rect_glyph = new Rect().x('groups).y('names).width(1).height(1).fill_color('colors).line_color()
+    // TODO: categorical dimensions; using Column would cause type error
+    val rect_glyph = new Rect().x('groups).y('names).width(1).height(1).fill_color(colors).line_color()
     val rect = new GlyphRenderer().data_source(source).glyph(rect_glyph)
 
     val x1axis = new CategoricalAxis().plot(plot)/*.major_label_orientation(pi/4)*/

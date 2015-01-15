@@ -8,26 +8,22 @@ object Hover extends Example with LinAlg with Tools {
     val (xx, yy) = meshgrid(0.0 to 100.0 by 4.0,
                             0.0 to 100.0 by 4.0)
 
-    val x = xx.flatten()
-    val y = yy.flatten()
+    object source extends ColumnDataSource {
+        val x      = column(xx.flatten())
+        val y      = column(yy.flatten())
+        val inds   = column(x.value.mapPairs { (k, _) => k.toString } toArray)
+        val radii  = column(DenseVector.rand(x.value.length)*0.4 + 1.7)
+        val colors = column {
+            val reds = (x.value*2.0 + 50.0).map(_.toInt).toArray
+            val greens = (y.value*2.0 + 30.0).map(_.toInt).toArray
+            reds.zip(greens).map { case (r, g) => RGB(r, g, 150): Color }
+        }
+    }
 
-    val inds = x.mapPairs((k, _) => k.toString) toArray
-    val radii = DenseVector.rand(x.length)*0.4 + 1.7
+    import source.{x,y,inds,radii,colors}
 
-    val reds = (x*2.0 + 50.0).map(_.toInt).toArray
-    val greens = (y*2.0 + 30.0).map(_.toInt).toArray
-
-    val colors = reds.zip(greens).map { case (r, g) => RGB(r, g, 150) }
-
-    val source = new ColumnDataSource()
-        .addColumn('x, x)
-        .addColumn('y, y)
-        .addColumn('radii, radii)
-        .addColumn('inds, inds)
-        .addColumn('colors, colors)
-
-    val xdr = new DataRange1d().sources(source.columns('x) :: Nil)
-    val ydr = new DataRange1d().sources(source.columns('y) :: Nil)
+    val xdr = new DataRange1d().sources(x :: Nil)
+    val ydr = new DataRange1d().sources(y :: Nil)
 
     val plot = new Plot()
         .title("Color Scatter Example")
@@ -36,10 +32,10 @@ object Hover extends Example with LinAlg with Tools {
         .tools(Pan|WheelZoom|BoxZoom|Reset|PreviewSave)
 
     val circle = new Circle()
-        .x('x)
-        .y('y)
-        .radius('radii)
-        .fill_color('colors)
+        .x(x)
+        .y(y)
+        .radius(radii)
+        .fill_color(colors)
         .fill_alpha(0.6)
         .line_color()
 
@@ -48,9 +44,9 @@ object Hover extends Example with LinAlg with Tools {
         .glyph(circle)
 
     val text = new Text()
-        .x('x)
-        .y('y)
-        .text('inds)
+        .x(x)
+        .y(y)
+        .text(inds)
         .angle(0.0)
         .text_alpha(0.5)
         .text_font_size(5 pt)

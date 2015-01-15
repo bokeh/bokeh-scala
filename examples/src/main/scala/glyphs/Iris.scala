@@ -5,25 +5,28 @@ package glyphs
 import sampledata.iris.flowers
 
 object Iris extends Example {
-    val colormap = Map("setosa" -> Color.Red, "versicolor" -> Color.Green, "virginica" -> Color.Blue)
+    val colormap = Map[String, Color]("setosa" -> Color.Red, "versicolor" -> Color.Green, "virginica" -> Color.Blue)
 
-    val source = new ColumnDataSource()
-        .addColumn('petal_length, flowers.petal_length)
-        .addColumn('petal_width, flowers.petal_width)
-        .addColumn('sepal_length, flowers.sepal_length)
-        .addColumn('sepal_width, flowers.sepal_width)
-        .addColumn('color, flowers.species.map(colormap))
+    object source extends ColumnDataSource {
+        val petal_length = column(flowers.petal_length)
+        val petal_width  = column(flowers.petal_width)
+        val sepal_length = column(flowers.sepal_length)
+        val sepal_width  = column(flowers.sepal_width)
+        val color        = column(flowers.species.map(colormap))
+    }
 
-    val xdr = new DataRange1d().sources(source.columns('petal_length) :: Nil)
-    val ydr = new DataRange1d().sources(source.columns('petal_width) :: Nil)
+    import source.{petal_length,petal_width,sepal_length,sepal_width,color}
+
+    val xdr = new DataRange1d().sources(petal_length :: Nil)
+    val ydr = new DataRange1d().sources(petal_width :: Nil)
 
     val circle = new Circle()
-        .x('petal_length)
-        .y('petal_width)
-        .fill_color('color)
+        .x(petal_length)
+        .y(petal_width)
+        .fill_color(color)
         .fill_alpha(0.2)
         .size(10)
-        .line_color('color)
+        .line_color(color)
 
     val renderer = new GlyphRenderer()
         .data_source(source)

@@ -17,38 +17,44 @@ object Choropleth extends Example {
 
     val colors: List[Color] = List("#F1EEF6", "#D4B9DA", "#C994C7", "#DF65B0", "#DD1C77", "#980043")
 
-    val county_colors = us_counties
-        .keys
-        .toList
-        .map(unemployment.get)
-        .map {
-            case Some(rate) => colors(math.min(rate/2 toInt, 5))
-            case None => Color.Black
+    object state_source extends ColumnDataSource {
+        val state_xs = column(us_states.values.map(_.lons))
+        val state_ys = column(us_states.values.map(_.lats))
+    }
+
+    object county_source extends ColumnDataSource {
+        val county_xs = column(us_counties.values.map(_.lons))
+        val county_ys = column(us_counties.values.map(_.lats))
+
+        val county_colors = column {
+            us_counties
+                .keys
+                .toList
+                .map(unemployment.get)
+                .map {
+                    case Some(rate) => colors(math.min(rate/2 toInt, 5))
+                    case None => Color.Black
+                }
         }
+    }
 
-    val state_source = new ColumnDataSource()
-        .addColumn('state_xs, us_states.values.map(_.lons).toArray)
-        .addColumn('state_ys, us_states.values.map(_.lats).toArray)
+    import state_source.{state_xs,state_ys}
+    import county_source.{county_xs,county_ys,county_colors}
 
-    val county_source = new ColumnDataSource()
-        .addColumn('county_xs, us_counties.values.map(_.lons).toArray)
-        .addColumn('county_ys, us_counties.values.map(_.lats).toArray)
-        .addColumn('county_colors, county_colors)
-
-    val xdr = new DataRange1d().sources(state_source.columns('state_xs) :: Nil)
-    val ydr = new DataRange1d().sources(state_source.columns('state_ys) :: Nil)
+    val xdr = new DataRange1d().sources(state_xs :: Nil)
+    val ydr = new DataRange1d().sources(state_ys :: Nil)
 
     val county_patches = new Patches()
-        .xs('county_xs)
-        .ys('county_ys)
-        .fill_color('county_colors)
+        .xs(county_xs)
+        .ys(county_ys)
+        .fill_color(county_colors)
         .fill_alpha(0.7)
         .line_color(Color.White)
         .line_width(0.5)
 
     val state_patches = new Patches()
-        .xs('state_xs)
-        .ys('state_ys)
+        .xs(state_xs)
+        .ys(state_ys)
         .fill_alpha(0.0)
         .line_color("#884444")
         .line_width(2)
