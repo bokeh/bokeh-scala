@@ -42,7 +42,7 @@ package io.continuum.bokeh
 }
 
 @model class ImageRGBA extends Glyph {
-    object image extends Vectorized[Seq[Double]]
+    object image extends Vectorized[Array[Double]]
     object rows extends Vectorized[Int]
     object cols extends Vectorized[Int]
     object x extends Spatial[Double]
@@ -83,8 +83,8 @@ package io.continuum.bokeh
 }
 
 @model class MultiLine extends Glyph with LineProps {
-    object xs extends Spatial[Seq[Double]]
-    object ys extends Spatial[Seq[Double]]
+    object xs extends Spatial[List[Double]]
+    object ys extends Spatial[List[Double]]
 }
 
 @model class Oval extends Glyph with FillProps with LineProps {
@@ -101,8 +101,8 @@ package io.continuum.bokeh
 }
 
 @model class Patches extends Glyph with LineProps with FillProps {
-    object xs extends Spatial[Seq[Double]]
-    object ys extends Spatial[Seq[Double]]
+    object xs extends Spatial[List[Double]]
+    object ys extends Spatial[List[Double]]
 }
 
 @model class Quad extends Glyph with FillProps with LineProps {
