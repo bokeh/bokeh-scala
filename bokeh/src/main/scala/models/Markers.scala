@@ -34,4 +34,6 @@ package io.continuum.bokeh
 
 @model class Triangle extends Marker
 
-@model class X extends Marker
+@model class PlainX extends Marker {
+    override val typeName = "X"
+}

@@ -274,8 +274,8 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 14
         }
 
-        "support X" in {
-            val obj = new X()
+        "support PlainX" in {
+            val obj = new PlainX()
             obj.fields.length shouldEqual 14
         }
 
