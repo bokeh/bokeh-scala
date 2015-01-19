@@ -17,6 +17,10 @@ package object bokeh extends Formats with NodeImplicits with SourceImplicits {
         Percent(implicitly[Numeric[T]].toDouble(value))
     }
 
+    implicit def NumbericToOrientation[T:Numeric](value: T): Orientation.Angle = {
+        Orientation.Angle(implicitly[Numeric[T]].toDouble(value))
+    }
+
     implicit class BooleanOps(val bool: Boolean) extends AnyVal {
         final def option[A](value: => A): Option[A] = if (bool) Some(value) else None
     }

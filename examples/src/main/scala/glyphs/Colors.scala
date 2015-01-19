@@ -164,9 +164,9 @@ object Colors extends Example {
     val rect_glyph = new Rect().x('groups).y('names).width(1).height(1).fill_color(colors).line_color()
     val rect = new GlyphRenderer().data_source(source).glyph(rect_glyph)
 
-    val x1axis = new CategoricalAxis().plot(plot).major_label_orientation(Orientation.Angle(pi/4))
+    val x1axis = new CategoricalAxis().plot(plot).major_label_orientation(pi/4)
     plot.above := x1axis :: Nil
-    val x2axis = new CategoricalAxis().plot(plot).major_label_orientation(Orientation.Angle(pi/4))
+    val x2axis = new CategoricalAxis().plot(plot).major_label_orientation(pi/4)
     plot.below := x2axis :: Nil
     val yaxis = new CategoricalAxis().plot(plot)
     plot.left  := yaxis :: Nil
