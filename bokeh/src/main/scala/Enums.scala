@@ -101,6 +101,7 @@ sealed trait Location extends EnumType with SnakeCase
 
 sealed trait Orientation extends EnumType with SnakeCase
 @enum object Orientation extends Enumerated[Orientation] {
+    case class Angle(value: Double) extends Orientation
     case object Horizontal extends Orientation
     case object Vertical extends Orientation
 }

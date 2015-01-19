@@ -64,7 +64,7 @@ private object EnumImpl {
         val cls = tpe.typeSymbol.asClass
 
         if (!cls.isSealed) c.error(c.enclosingPosition, "must be a sealed trait or class")
-        val children = tpe.typeSymbol.asClass.knownDirectSubclasses
+        val children = tpe.typeSymbol.asClass.knownDirectSubclasses.filter(_.isModuleClass)
         if (children.isEmpty) c.error(c.enclosingPosition, "no enumerations found")
 
         children

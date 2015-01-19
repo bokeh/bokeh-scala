@@ -79,6 +79,13 @@ trait BokehWrites {
         def writes(value: T) = implicitly[Writes[String]].writes(value.name)
     }
 
+    implicit object OrientationWrites extends Writes[Orientation] {
+        def writes(value: Orientation) = value match {
+            case Orientation.Angle(value) => Json.toJson(value)
+            case _                        => implicitly[Writes[EnumType]].writes(value)
+        }
+    }
+
     implicit val RefWrites = Json.writes[Ref]
 
     implicit def FieldWrites[T:Writes] = new Writes[AbstractField { type ValueType = T }] {
