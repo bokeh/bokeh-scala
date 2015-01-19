@@ -109,7 +109,7 @@ trait BokehWrites {
 
     implicit object SymbolAnyMapWrites extends Writes[Map[Symbol, Any]] {
         private def seqToJson(obj: TraversableOnce[_]): JsValue = {
-            JsArray(obj.map(anyToJson).toSeq)
+            JsArray(obj.toIterator.map(anyToJson).toSeq)
         }
 
         private def anyToJson(obj: Any): JsValue = obj match {
