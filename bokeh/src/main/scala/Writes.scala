@@ -6,6 +6,12 @@ import play.api.libs.json.{Json,Writes,JsValue,JsString,JsNumber,JsArray,JsObjec
 import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 import breeze.linalg.DenseVector
 
+trait PrimitiveWrites {
+    implicit object CharWrites extends Writes[Char] {
+        def writes(c: Char) = JsString(c.toString)
+    }
+}
+
 trait MapWrites {
     implicit def StringMapWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
         def writes(obj: Map[String, V]) =
@@ -94,29 +100,39 @@ trait BokehWrites {
         }
     }
 
-    implicit val SymbolAnyMapWrites: Writes[Map[Symbol, Any]] = new Writes[Map[Symbol, Any]] {
+    implicit object SymbolAnyMapWrites extends Writes[Map[Symbol, Any]] {
+        private def seqToJson(obj: TraversableOnce[_]): JsValue = {
+            JsArray(obj.map(anyToJson).toSeq)
+        }
+
         private def anyToJson(obj: Any): JsValue = obj match {
-            case obj: Boolean        => Json.toJson(obj)
-            case obj: Int            => Json.toJson(obj)
-            case obj: Double         => Json.toJson(obj)
-            case obj: String         => Json.toJson(obj)
-            case obj: Color          => Json.toJson(obj)
-            case obj: Percent        => Json.toJson(obj)
-            case obj: EnumType       => Json.toJson(obj)
-            case obj: DateTime       => Json.toJson(obj)
-            case obj: Time           => Json.toJson(obj)
-            case obj: Date           => Json.toJson(obj)
-            case obj: Option[_]      => obj.map(anyToJson).getOrElse(JsNull)
-            case obj: Array[_]       => JsArray(obj.map(anyToJson).toSeq)
-            case obj: Traversable[_] => JsArray(obj.map(anyToJson).toSeq)
-            case obj: DenseVector[_] => JsArray(obj.iterator.map(_._2).map(anyToJson).toSeq)
+            case obj: Boolean            => Json.toJson(obj)
+            case obj: Byte               => Json.toJson(obj)
+            case obj: Short              => Json.toJson(obj)
+            case obj: Int                => Json.toJson(obj)
+            case obj: Long               => Json.toJson(obj)
+            case obj: Float              => Json.toJson(obj)
+            case obj: Double             => Json.toJson(obj)
+            case obj: Char               => Json.toJson(obj)
+            case obj: String             => Json.toJson(obj)
+            case obj: Color              => Json.toJson(obj)
+            case obj: Percent            => Json.toJson(obj)
+            case obj: EnumType           => Json.toJson(obj)
+            case obj: DateTime           => Json.toJson(obj)
+            case obj: Time               => Json.toJson(obj)
+            case obj: Date               => Json.toJson(obj)
+            case obj: Option[_]          => obj.map(anyToJson) getOrElse JsNull
+            case obj: Array[_]           => seqToJson(obj)
+            case obj: TraversableOnce[_] => seqToJson(obj)
+            case obj: DenseVector[_]     => seqToJson(obj.valuesIterator)
             case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
         }
 
-        def writes(obj: Map[Symbol, Any]) =
+        def writes(obj: Map[Symbol, Any]) = {
             JsObject(obj.map { case (k, v) => (k.name, anyToJson(v)) } toList)
+        }
     }
 }
 
-trait Formats extends MapWrites with TupleWrites with DateTimeWrites with BokehWrites
+trait Formats extends PrimitiveWrites with MapWrites with TupleWrites with DateTimeWrites with BokehWrites
 object Formats extends Formats

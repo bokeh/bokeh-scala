@@ -7,7 +7,7 @@ import breeze.linalg.{DenseVector,DenseMatrix}
 class ArrayLike[T[_]]
 
 object ArrayLike {
-    implicit def TraversableArrayLike[T[_] <: Traversable[_]] = new ArrayLike[T]
+    implicit def TraversableOnceArrayLike[T[_] <: TraversableOnce[_]] = new ArrayLike[T]
     implicit val DenseVectorArrayLike = new ArrayLike[DenseVector]
     implicit val ArrayArrayLike = new ArrayLike[Array]
 }
