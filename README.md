@@ -54,7 +54,7 @@ Submit any questions and suggestions to Bokeh's [mailing list][group].
 
 ## License
 
-Copyright &copy; 2014 by Mateusz Paprocki and contributors.
+Copyright &copy; 2014-2015 by Mateusz Paprocki and contributors.
 
 Published under [The MIT License][license], see LICENSE.
 
