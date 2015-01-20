@@ -10,8 +10,9 @@ Scala bindings for [Bokeh][bokeh] plotting library.
 
 ## Usage
 
-Binary release artifacts are published to Sonatype OSS and synced to Maven
-Central. To include latest stable version of bokeh in your project, use:
+Binary release artifacts are published to Sonatype OSS and synced to [Maven
+Central][central]. To include latest stable version of bokeh in your project,
+use:
 
 ```scala
 libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.3"
@@ -29,8 +30,8 @@ See [this][sample] sample project for detailed integration example.
 
 ## Documentation
 
-API docs are available for [stable][api-stable] and [development][api-devel]
-versions.
+API documentation (scaladoc) is available for [stable][api-stable] and
+[development][api-devel] versions.
 
 ## Development
 
@@ -50,7 +51,9 @@ or
 
 ## Support
 
-Submit any questions and suggestions to Bokeh's [mailing list][group].
+Submit any questions and suggestions to Bokeh's [mailing list][group] and report
+any Scala-specific issues in the [issue tracker][issues]. Issues directly related
+bokeh or bokehjs, please report in the [bokeh's issue tracker][bokeh-issues].
 
 ## License
 
@@ -59,9 +62,12 @@ Copyright &copy; 2014-2015 by Mateusz Paprocki and contributors.
 Published under [The MIT License][license], see LICENSE.
 
 [bokeh]: http://bokeh.pydata.org
+[central]: http://search.maven.org/#search%7Cga%7C1%7Cbokeh
 [sample]: https://github.com/bokeh/bokeh-scala-sample
 [api-stable]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.3/index.html
 [api-devel]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.4-SNAPSHOT/index.html
 [group]: https://groups.google.com/a/continuum.io/forum/#!forum/bokeh
+[issues]: https://github.com/bokeh/bokeh-scala/issues
+[bokeh-issues]: https://github.com/bokeh/bokeh/issues
 [travis]: https://api.travis-ci.org/bokeh/bokeh-scala.png?branch=master
 [license]: http://www.opensource.org/licenses/mit-license.php
