@@ -14,7 +14,7 @@ Binary release artifacts are published to Sonatype OSS and synced to Maven
 Central. To include latest stable version of bokeh in your project, use:
 
 ```scala
-libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.2"
+libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.3"
 ```
 
 Development snapshots are available as well. To use this you have to add
@@ -22,7 +22,7 @@ Sonatype's snapshots repository to your build:
 
 ```scala
 resolvers += Opts.resolver.sonatypeSnapshots
-libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.3-SNAPSHOT"
+libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.4-SNAPSHOT"
 ```
 
 See [this][sample] sample project for detailed integration example.
@@ -60,8 +60,8 @@ Published under [The MIT License][license], see LICENSE.
 
 [bokeh]: http://bokeh.pydata.org
 [sample]: https://github.com/bokeh/bokeh-scala-sample
-[api-stable]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.2/index.html
-[api-devel]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.3-SNAPSHOT/index.html
+[api-stable]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.3/index.html
+[api-devel]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.4-SNAPSHOT/index.html
 [group]: https://groups.google.com/a/continuum.io/forum/#!forum/bokeh
 [travis]: https://api.travis-ci.org/bokeh/bokeh-scala.png?branch=master
 [license]: http://www.opensource.org/licenses/mit-license.php
