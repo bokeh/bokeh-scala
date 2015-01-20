@@ -132,8 +132,6 @@ object BokehBuild extends Build {
         }
     )
 
-    lazy val pgpSettings = SbtPgp.settings
-
     lazy val ideaSettings = SbtIdeaPlugin.settings
 
     lazy val unidocSettings = UnidocPlugin.unidocSettings
@@ -143,7 +141,7 @@ object BokehBuild extends Build {
         Seq(parallelExecution in ScoverageTest := (parallelExecution in Test).value)
     }
 
-    lazy val bokehPlugins = pgpSettings ++ ideaSettings ++ scoverageSettings
+    lazy val bokehPlugins = ideaSettings ++ scoverageSettings
 
     lazy val bokehSettings = commonSettings ++ bokehPlugins ++ Seq(
         libraryDependencies ++= {
@@ -202,7 +200,7 @@ object BokehBuild extends Build {
     lazy val core = project in file("core") settings(coreSettings: _*)
     lazy val sampledata = project in file("sampledata") settings(sampledataSettings: _*) dependsOn(core)
     lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh, sampledata)
-    lazy val all = project in file(".") settings(allSettings: _*) aggregate(bokeh, bokehjs, core, sampledata, examples)
+    lazy val all = project in file(".") disablePlugins(SbtPgp) settings(allSettings: _*) aggregate(bokeh, bokehjs, core, sampledata, examples)
 
     override def projects = Seq(bokeh, bokehjs, core, sampledata, examples, all)
 }
