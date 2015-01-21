@@ -1,8 +1,4 @@
-addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "0.99.5.1")
-
-addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.5.2")
-
-addSbtPlugin("com.eed3si9n" % "sbt-unidoc" % "0.3.1")
+addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.6.0")
 
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
 
