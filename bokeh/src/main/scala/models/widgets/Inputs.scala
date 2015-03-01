@@ -12,6 +12,10 @@ import play.api.libs.json.Writes
 
 @model class TextInput extends InputWidget[String]
 
+@model class AutocompleteInput extends TextInput {
+    object completions extends Field[List[String]]
+}
+
 @model class Select extends InputWidget[String] {
     object options extends Field[List[String]]
 }

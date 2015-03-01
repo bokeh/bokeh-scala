@@ -9,6 +9,7 @@ package io.continuum.bokeh
 }
 
 @model abstract class Axis extends GuideRenderer {
+    object visible extends Field[Boolean](true)
     object location extends Field[Location]
 
     def defaultTicker: Ticker

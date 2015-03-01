@@ -53,7 +53,7 @@ object DataTables extends Example {
         )
         val cty_hover_tool = new HoverTool().plot(plot).renderers(cty_renderer :: Nil).tooltips(tooltips :+ ("City MPG"    -> "@cty"))
         val hwy_hover_tool = new HoverTool().plot(plot).renderers(hwy_renderer :: Nil).tooltips(tooltips :+ ("Highway MPG" -> "@hwy"))
-        val select_tool = new BoxSelectTool().plot(plot).renderers(cty_renderer :: hwy_renderer :: Nil).dimensions(Dimension.Width :: Nil)
+        val select_tool = new BoxSelectTool().plot(plot).renderers(cty_renderer :: hwy_renderer :: Nil).dimensions(Dimension.X :: Nil)
         plot.tools := List(cty_hover_tool, hwy_hover_tool, select_tool)
         plot
     }

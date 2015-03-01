@@ -53,3 +53,13 @@ package io.continuum.bokeh
 @model class DatetimeTickFormatter extends TickFormatter {
     object formats extends Field[Map[DatetimeUnits, List[String]]]
 }
+
+@model class NumeralTickFormatter extends TickFormatter {
+    object format extends Field[String]("0,0")
+    object language extends Field[NumeralLanguage]
+    object rounding extends Field[RoundingFunction]
+}
+
+@model class PrintfTickFormatter extends TickFormatter {
+    object format extends Field[String]("%s")
+}

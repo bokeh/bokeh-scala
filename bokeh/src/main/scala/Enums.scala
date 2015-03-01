@@ -84,8 +84,6 @@ sealed trait DatetimeUnits extends EnumType with SnakeCase
 
 sealed trait Dimension extends EnumType with SnakeCase
 @enum object Dimension extends Enumerated[Dimension] {
-    case object Width extends Dimension
-    case object Height extends Dimension
     case object X extends Dimension
     case object Y extends Dimension
 }
@@ -197,38 +195,6 @@ sealed trait Sort extends EnumType with SnakeCase
     case object Descending extends Sort
 }
 
-sealed trait Language extends EnumType
-@enum object Language extends Enumerated[Language] {
-    case object `be-nl` extends Language
-    case object `chs` extends Language
-    case object `cs` extends Language
-    case object `da-dk` extends Language
-    case object `de-ch` extends Language
-    case object `de` extends Language
-    case object `en` extends Language
-    case object `en-gb` extends Language
-    case object `es-ES` extends Language
-    case object `es` extends Language
-    case object `et` extends Language
-    case object `fi` extends Language
-    case object `fr-CA` extends Language
-    case object `fr-ch` extends Language
-    case object `fr` extends Language
-    case object `hu` extends Language
-    case object `it` extends Language
-    case object `ja` extends Language
-    case object `nl-nl` extends Language
-    case object `pl` extends Language
-    case object `pt-br` extends Language
-    case object `pt-pt` extends Language
-    case object `ru` extends Language
-    case object `ru-UA` extends Language
-    case object `sk` extends Language
-    case object `th` extends Language
-    case object `tr` extends Language
-    case object `uk-UA` extends Language
-}
-
 sealed trait Logo extends EnumType with SnakeCase
 @enum object Logo extends Enumerated[Logo] {
     case object Normal extends Logo
@@ -258,4 +224,52 @@ sealed trait DateFormat extends EnumType
     case object `RFC-2822` extends DateFormat
     case object RSS extends DateFormat
     case object TIMESTAMP extends DateFormat
+}
+
+sealed trait RoundingFunction extends EnumType with LowerCase
+@enum object RoundingFunction extends Enumerated[RoundingFunction] {
+    case object Round extends RoundingFunction
+    case object Nearest extends RoundingFunction
+    case object Floor extends RoundingFunction
+    case object RoundDown extends RoundingFunction
+    case object Ceil extends RoundingFunction
+    case object RoundUp extends RoundingFunction
+}
+
+sealed trait NumeralLanguage extends EnumType
+@enum object NumeralLanguage extends Enumerated[NumeralLanguage] {
+    case object `be-nl` extends NumeralLanguage
+    case object `chs` extends NumeralLanguage
+    case object `cs` extends NumeralLanguage
+    case object `da-dk` extends NumeralLanguage
+    case object `de-ch` extends NumeralLanguage
+    case object `de` extends NumeralLanguage
+    case object `en` extends NumeralLanguage
+    case object `en-gb` extends NumeralLanguage
+    case object `es-ES` extends NumeralLanguage
+    case object `es` extends NumeralLanguage
+    case object `et` extends NumeralLanguage
+    case object `fi` extends NumeralLanguage
+    case object `fr-CA` extends NumeralLanguage
+    case object `fr-ch` extends NumeralLanguage
+    case object `fr` extends NumeralLanguage
+    case object `hu` extends NumeralLanguage
+    case object `it` extends NumeralLanguage
+    case object `ja` extends NumeralLanguage
+    case object `nl-nl` extends NumeralLanguage
+    case object `pl` extends NumeralLanguage
+    case object `pt-br` extends NumeralLanguage
+    case object `pt-pt` extends NumeralLanguage
+    case object `ru` extends NumeralLanguage
+    case object `ru-UA` extends NumeralLanguage
+    case object `sk` extends NumeralLanguage
+    case object `th` extends NumeralLanguage
+    case object `tr` extends NumeralLanguage
+    case object `uk-UA` extends NumeralLanguage
+}
+
+sealed trait HTTPMethod extends EnumType
+@enum object HTTPMethod extends Enumerated[HTTPMethod] {
+    case object POST extends HTTPMethod
+    case object GET extends HTTPMethod
 }

@@ -3,7 +3,7 @@ package io.continuum.bokeh
 @model abstract class ColorMapper extends PlotObject
 
 @model class LinearColorMapper extends ColorMapper {
-    object palette extends Field[Seq[Color]]
+    object palette extends Field[Seq[Color]](Palette.Greys9)
 
     object low extends Field[Double]
     object high extends Field[Double]

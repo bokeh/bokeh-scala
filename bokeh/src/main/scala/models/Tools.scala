@@ -5,11 +5,11 @@ package io.continuum.bokeh
 }
 
 @model class PanTool extends Tool {
-    object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
+    object dimensions extends Field[List[Dimension]](List(Dimension.X, Dimension.Y))
 }
 
 @model class WheelZoomTool extends Tool {
-    object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
+    object dimensions extends Field[List[Dimension]](List(Dimension.X, Dimension.Y))
 }
 
 @model class PreviewSaveTool extends Tool
@@ -19,6 +19,7 @@ package io.continuum.bokeh
 @model class ResizeTool extends Tool
 
 @model class TapTool extends Tool {
+    object action extends Field[Action]
     object names extends Field[List[String]]
     object always_active extends Field[Boolean](true)
 }
@@ -36,7 +37,7 @@ package io.continuum.bokeh
 
 @model class BoxSelectTool extends SelectTool {
     object select_every_mousemove extends Field[Boolean](true)
-    object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
+    object dimensions extends Field[List[Dimension]](List(Dimension.X, Dimension.Y))
 }
 
 @model class LassoSelectTool extends SelectTool {
@@ -46,7 +47,7 @@ package io.continuum.bokeh
 @model class PolySelectTool extends SelectTool
 
 @model class HoverTool extends TransientSelectTool {
-    object tooltips extends Field[List[(String, String)]]
+    object tooltips extends Field[List[(String, String)]] // TODO: HTML
     object always_active extends Field[Boolean](true)
     object snap_to_data extends Field[Boolean](true)
 }

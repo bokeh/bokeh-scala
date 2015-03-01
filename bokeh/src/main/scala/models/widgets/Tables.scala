@@ -13,7 +13,8 @@ package widgets
 
 @model class NumberFormatter extends StringFormatter {
     object format extends Field[String]("0,0")
-    object language extends Field[Language]
+    object language extends Field[NumeralLanguage]
+    object rounding extends Field[RoundingFunction]
 }
 
 @model class BooleanFormatter extends CellFormatter {

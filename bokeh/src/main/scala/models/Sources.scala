@@ -7,7 +7,7 @@ import play.api.libs.json.Writes
     object columns extends Field[List[Symbol]]
 }
 
-@model sealed abstract class DataSource extends PlotObject {
+@model abstract class DataSource extends PlotObject {
     object column_names extends Field[List[String]]
     object selected extends Field[List[Int]]
 
@@ -62,4 +62,13 @@ private[bokeh] object ColumnMacro {
             case ValDef(_, name, _, rhs) if rhs.pos == c.macroApplication.pos => name.encoded
         }.headOption
     }
+}
+
+@model abstract class RemoteSource extends DataSource {
+    object data_url extends Field[String]
+    object polling_interval extends Field[Int]
+}
+
+@model class AjaxDataSource extends RemoteSource {
+    object method extends Field[HTTPMethod](HTTPMethod.POST)
 }

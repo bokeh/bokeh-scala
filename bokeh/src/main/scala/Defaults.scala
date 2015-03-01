@@ -47,7 +47,7 @@ trait EnumDefaults {
     implicit object SpatialUnitsDefault extends Default[SpatialUnits](SpatialUnits.Data)
     implicit object AngularUnitsDefault extends Default[AngularUnits](AngularUnits.Rad)
     implicit object DatetimeUnitsDefault extends Default[DatetimeUnits](DatetimeUnits.Seconds)
-    implicit object DimensionDefault extends Default[Dimension](Dimension.Width)
+    implicit object DimensionDefault extends Default[Dimension](Dimension.X)
     implicit object LocationDefault extends Default[Location](Location.Auto)
     implicit object OrientationDefault extends Default[Orientation](Orientation.Horizontal)
     implicit object LegendOrientationDefault extends Default[LegendOrientation](LegendOrientation.TopRight)
@@ -62,8 +62,10 @@ trait EnumDefaults {
     implicit object NamedIconDefault extends Default[NamedIcon](NamedIcon.Adjust)
     implicit object CheckmarkDefault extends Default[Checkmark](Checkmark.Check)
     implicit object SortDefault extends Default[Sort](Sort.Ascending)
-    implicit object LanguageDefault extends Default[Language](Language.`en`)
     implicit object LogoDefault extends Default[Logo](Logo.Normal)
+    implicit object RoundingFunctionDefault extends Default[RoundingFunction](RoundingFunction.Round)
+    implicit object NumeralLanguageDefault extends Default[NumeralLanguage](NumeralLanguage.`en`)
+    implicit object HTTPMethodDefault extends Default[HTTPMethod](HTTPMethod.POST)
 }
 
 trait DefaultImplicits extends TypeDefaults with EnumDefaults

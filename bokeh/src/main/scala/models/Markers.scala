@@ -10,6 +10,7 @@ package io.continuum.bokeh
 
 @model class Circle extends Marker {
     object radius extends Spatial[Double](SpatialUnits.Data) with NonNegative
+    object radius_dimension extends Field[Dimension]
 }
 
 @model class CircleCross extends Marker
