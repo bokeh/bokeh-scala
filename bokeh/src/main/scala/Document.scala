@@ -72,7 +72,7 @@ class HTMLFragmentWriter(contexts: List[PlotContext], resources: Resources) {
     protected def renderPlots(specs: List[PlotSpec]): NodeSeq = {
         specs.flatMap { spec =>
             <div>
-                <div class="plotdiv" id={ spec.elementId }>Plots</div>
+                <div class="plotdiv" id={ spec.elementId }></div>
                 { renderPlot(spec) }
             </div>
         }
