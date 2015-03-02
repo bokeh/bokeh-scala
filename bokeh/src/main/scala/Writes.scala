@@ -75,6 +75,14 @@ trait BokehWrites {
         def writes(size: FontSize) = JsString(size.toCSS)
     }
 
+    implicit val TooltipWrites = new Writes[Tooltip] {
+        def writes(tooltip: Tooltip) = tooltip match {
+            case StringTooltip(string) => Json.toJson(string)
+            case HTMLTooltip(html)     => Json.toJson(html.toString)
+            case TabularTooltip(rows)  => Json.toJson(rows)
+        }
+    }
+
     implicit def EnumWrites[T <: EnumType] = new Writes[T] {
         def writes(value: T) = implicitly[Writes[String]].writes(value.name)
     }

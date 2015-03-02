@@ -6,7 +6,6 @@ import math.{Pi=>pi,sin,cos}
 import sampledata.webbrowsers.{webbrowsers_nov_2013,WebBrowserIcons}
 
 object Donut extends Example {
-
     val xdr = new Range1d().start(-2).end(2)
     val ydr = new Range1d().start(-2).end(2)
 

@@ -18,6 +18,12 @@ object Maps extends Example {
         .map_options(map_options)
         .title("Austin")
 
+    val xaxis = new LinearAxis().axis_label("lat").major_tick_in(0).formatter(new NumeralTickFormatter().format("0.000"))
+    plot.addLayout(xaxis, Layout.Below)
+
+    val yaxis = new LinearAxis().axis_label("lon").major_tick_in(0).formatter(new PrintfTickFormatter().format("%.3f"))
+    plot.addLayout(yaxis, Layout.Left)
+
     val select_tool = new BoxSelectTool()
     val overlay = new BoxSelectionOverlay().tool(select_tool)
 

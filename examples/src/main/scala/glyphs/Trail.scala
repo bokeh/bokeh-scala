@@ -66,23 +66,23 @@ object Trail extends Example with Tools {
         val map_options = new GMapOptions().lng(lon).lat(lat).zoom(13)
         val plot = new GMapPlot().title(s"$title - Trail Map").map_options(map_options).width(800).height(800)
 
-        val xaxis = new LinearAxis().plot(plot)
+        val xaxis = new LinearAxis().plot(plot).formatter(new NumeralTickFormatter().format("0.000"))
         plot.addLayout(xaxis, Layout.Below)
 
-        val yaxis = new LinearAxis().plot(plot)
+        val yaxis = new LinearAxis().plot(plot).formatter(new PrintfTickFormatter().format("%.3f"))
         plot.addLayout(yaxis, Layout.Left)
 
         val xgrid = new Grid().plot(plot).dimension(0).ticker(xaxis.ticker.value).grid_line_dash(DashPattern.Dashed).grid_line_color(Color.Gray)
         val ygrid = new Grid().plot(plot).dimension(1).ticker(yaxis.ticker.value).grid_line_dash(DashPattern.Dashed).grid_line_color(Color.Gray)
         plot.renderers <<= (xgrid :: ygrid :: _)
 
-        val hover = new HoverTool().tooltips(("distance", "@dist") :: Nil)
+        val hover = new HoverTool().tooltips(Tooltip("distance" -> "@dist"))
         plot.tools := Pan|WheelZoom|Reset|BoxSelect
         plot.tools <<= (hover +: _)
 
         object line_source extends ColumnDataSource {
-            val x    = column(mtb.lon)
-            val y    = column(mtb.lat)
+            val x = column(mtb.lon)
+            val y = column(mtb.lat)
         }
 
         import line_source.{x,y}

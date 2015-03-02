@@ -100,14 +100,19 @@ object Sprint extends Example {
 
     plot.renderers := xaxis :: yaxis :: xgrid :: medal :: athlete :: no_olympics :: Nil
 
-    val tooltips = List(
-        ("Name",          "@Name"),
-        ("Country",       "@Abbrev"),
-        ("Year",          "@Year"),
-        ("Time",          "@Time{0.00} s"),
-        ("Meters behind", "@{MetersBack}{0.00} m"))
+    val tooltip = Tooltip("""
+    <div>
+        <span style="font-size: 15px;">@Name</span>&nbsp;
+        <span style="font-size: 10px; color: #666;">(@Abbrev)</span>
+    </div>
+    <div>
+        <span style="font-size: 17px; font-weight: bold;">@Time{0.00}</span>&nbsp;
+        <span style="font-size: 10px; color: #666;">@Year</span>
+    </div>
+    <div style="font-size: 11px; color: #666;">@{MetersBack}{0.00} meters behind</div>
+    """)
 
-    val hover = new HoverTool().plot(plot).tooltips(tooltips).renderers(medal :: Nil)
+    val hover = new HoverTool().plot(plot).tooltips(tooltip).renderers(medal :: Nil)
     plot.tools := hover :: Nil
 
     val document = new Document(plot)

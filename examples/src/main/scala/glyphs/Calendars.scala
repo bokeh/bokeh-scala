@@ -105,7 +105,7 @@ object Calendars extends Example {
             .axis_line_color()
         plot.above <<= (xaxis :: _)
 
-        val hover_tool = new HoverTool().plot(plot).renderers(holidays_renderer :: Nil).tooltips(("Holiday", "@month_holidays") :: Nil)
+        val hover_tool = new HoverTool().plot(plot).renderers(holidays_renderer :: Nil).tooltips(Tooltip("Holiday" -> "@month_holidays"))
         plot.tools := hover_tool :: Nil
 
         plot.renderers := xaxis :: days_renderer :: holidays_renderer :: text_renderer :: Nil

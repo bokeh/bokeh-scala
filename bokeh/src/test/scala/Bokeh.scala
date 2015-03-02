@@ -256,7 +256,7 @@ class BokehSpec extends Specification {
     "markers" should {
         "support Circle" in {
             val obj = new Circle()
-            obj.fields.length shouldEqual 15
+            obj.fields.length shouldEqual 16
         }
 
         "support Square" in {
@@ -377,25 +377,25 @@ class BokehSpec extends Specification {
         "support LinearAxis" in {
             val obj = new LinearAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 51
+            obj.fields.length shouldEqual 52
         }
 
         "support CategoricalAxis" in {
             val obj = new CategoricalAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 51
+            obj.fields.length shouldEqual 52
         }
 
         "support DatetimeAxis" in {
             val obj = new DatetimeAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 55
+            obj.fields.length shouldEqual 56
         }
 
         "support LogAxis" in {
             val obj = new LogAxis().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 51
+            obj.fields.length shouldEqual 52
         }
 
         "support Grid" in {
@@ -439,7 +439,7 @@ class BokehSpec extends Specification {
         "support TapTool" in {
             val obj = new TapTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 4
+            obj.fields.length shouldEqual 6
         }
 
         "support CrosshairTool" in {
@@ -749,7 +749,7 @@ class BokehSpec extends Specification {
         "support NumberFormatter" in {
             val obj = new widgets.NumberFormatter().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 6
+            obj.fields.length shouldEqual 7
         }
 
         "support BooleanFormatter" in {

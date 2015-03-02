@@ -34,6 +34,7 @@ trait TypeDefaults {
                                         implicitly[Default[T3]].default))
 
     implicit object FontSizeDefault extends Default[FontSize](10 pt)
+    implicit object TooltipDefault extends Default[Tooltip](TabularTooltip(Nil))
 }
 
 trait EnumDefaults {

@@ -42,17 +42,16 @@ object DataTables extends Example {
         val hwy_renderer = new GlyphRenderer().data_source(source).glyph(hwy_glyph)
         plot.renderers := List(cty_renderer, hwy_renderer, xaxis, yaxis, ygrid)
         val tooltips = List(
-            ("Manufacturer", "@manufacturer"),
-            ("Model",        "@model"),
-            ("Displacement", "@displ"),
-            ("Year",         "@year"),
-            ("Cylinders",    "@cyl"),
-            ("Transmission", "@trans"),
-            ("Drive",        "@drv"),
-            ("Class",        "@cls")
-        )
-        val cty_hover_tool = new HoverTool().plot(plot).renderers(cty_renderer :: Nil).tooltips(tooltips :+ ("City MPG"    -> "@cty"))
-        val hwy_hover_tool = new HoverTool().plot(plot).renderers(hwy_renderer :: Nil).tooltips(tooltips :+ ("Highway MPG" -> "@hwy"))
+            "Manufacturer" -> "@manufacturer",
+            "Model"        -> "@model",
+            "Displacement" -> "@displ",
+            "Year"         -> "@year",
+            "Cylinders"    -> "@cyl",
+            "Transmission" -> "@trans",
+            "Drive"        -> "@drv",
+            "Class"        -> "@cls")
+        val cty_hover_tool = new HoverTool().plot(plot).renderers(cty_renderer :: Nil).tooltips(Tooltip(tooltips :+ ("City MPG"    -> "@cty")))
+        val hwy_hover_tool = new HoverTool().plot(plot).renderers(hwy_renderer :: Nil).tooltips(Tooltip(tooltips :+ ("Highway MPG" -> "@hwy")))
         val select_tool = new BoxSelectTool().plot(plot).renderers(cty_renderer :: hwy_renderer :: Nil).dimensions(Dimension.X :: Nil)
         plot.tools := List(cty_hover_tool, hwy_hover_tool, select_tool)
         plot

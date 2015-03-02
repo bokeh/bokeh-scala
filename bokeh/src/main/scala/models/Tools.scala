@@ -18,12 +18,6 @@ package io.continuum.bokeh
 
 @model class ResizeTool extends Tool
 
-@model class TapTool extends Tool {
-    object action extends Field[Action]
-    object names extends Field[List[String]]
-    object always_active extends Field[Boolean](true)
-}
-
 @model class CrosshairTool extends Tool
 
 @model class BoxZoomTool extends Tool
@@ -46,8 +40,24 @@ package io.continuum.bokeh
 
 @model class PolySelectTool extends SelectTool
 
+@model class TapTool extends SelectTool {
+    object action extends Field[Action]
+    object always_active extends Field[Boolean](true)
+}
+
+sealed trait Tooltip
+case class StringTooltip(string: String) extends Tooltip
+case class HTMLTooltip(html: xml.NodeSeq) extends Tooltip
+case class TabularTooltip(rows: List[(String, String)]) extends Tooltip
+object Tooltip {
+    def apply(string: String) = StringTooltip(string)
+    def apply(html: xml.NodeSeq) = HTMLTooltip(html)
+    def apply(rows: (String, String)*) = TabularTooltip(rows.toList)
+    def apply(rows: List[(String, String)]) = TabularTooltip(rows)
+}
+
 @model class HoverTool extends TransientSelectTool {
-    object tooltips extends Field[List[(String, String)]] // TODO: HTML
+    object tooltips extends Field[Tooltip]
     object always_active extends Field[Boolean](true)
     object snap_to_data extends Field[Boolean](true)
 }
