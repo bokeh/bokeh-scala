@@ -483,7 +483,7 @@ class BokehSpec extends Specification {
         "support Plot" in {
             val obj = new Plot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 42
+            obj.fields.length shouldEqual 43
         }
 
         "support GMapOptions" in {
@@ -494,7 +494,7 @@ class BokehSpec extends Specification {
         "support GMapPlot" in {
             val obj = new GMapPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 43
+            obj.fields.length shouldEqual 44
         }
 
         "support GeoJSOptions" in {
@@ -505,13 +505,13 @@ class BokehSpec extends Specification {
         "support GeoJSPlot" in {
             val obj = new GeoJSPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 43
+            obj.fields.length shouldEqual 44
         }
 
         "support GridPlot" in {
             val obj = new GridPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 44
+            obj.fields.length shouldEqual 45
         }
     }
 

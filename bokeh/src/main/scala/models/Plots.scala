@@ -18,6 +18,8 @@ package io.continuum.bokeh
     object renderers extends Field[List[Renderer]]
     object tools extends Field[List[Tool]] with ToolsField
 
+    object tool_events extends Field[ToolEvents](new ToolEvents())
+
     object left extends Field[List[Renderer]]
     object right extends Field[List[Renderer]]
     object above extends Field[List[Renderer]]
