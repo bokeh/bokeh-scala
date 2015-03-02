@@ -44,10 +44,12 @@ object Sprint extends Example {
     val t0 = sprint.time(0)
 
     object df {
+        val name          = sprint.name
         val abbrev        = sprint.country
         val country       = sprint.country.map(abbrev_to_country)
         val medal         = sprint.medal.map(_.name.toLowerCase)
         val year          = sprint.year
+        val time          = sprint.time
         val speed         = sprint.time.map(t => 100.0/t)
         val meters_back   = sprint.time.map(t => 100.0*(1.0 - t0/t))
         val medal_fill    = sprint.medal.map(fill_color)
@@ -58,10 +60,12 @@ object Sprint extends Example {
     }
 
     object source extends ColumnDataSource {
+        val Name         = column(df.name)
         val Abbrev       = column(df.abbrev)
         val Country      = column(df.country)
         val Medal        = column(df.medal)
         val Year         = column(df.year)
+        val Time         = column(df.time)
         val Speed        = column(df.speed)
         val MetersBack   = column(df.meters_back)
         val MedalFill    = column(df.medal_fill)
