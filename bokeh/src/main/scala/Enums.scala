@@ -84,8 +84,8 @@ sealed trait DatetimeUnits extends EnumType with SnakeCase
 
 sealed trait Dimension extends EnumType with SnakeCase
 @enum object Dimension extends Enumerated[Dimension] {
-    case object X extends Dimension
-    case object Y extends Dimension
+    case object Width extends Dimension
+    case object Height extends Dimension
 }
 
 sealed trait Location extends EnumType with SnakeCase

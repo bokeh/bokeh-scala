@@ -48,7 +48,7 @@ trait EnumDefaults {
     implicit object SpatialUnitsDefault extends Default[SpatialUnits](SpatialUnits.Data)
     implicit object AngularUnitsDefault extends Default[AngularUnits](AngularUnits.Rad)
     implicit object DatetimeUnitsDefault extends Default[DatetimeUnits](DatetimeUnits.Seconds)
-    implicit object DimensionDefault extends Default[Dimension](Dimension.X)
+    implicit object DimensionDefault extends Default[Dimension](Dimension.Width)
     implicit object LocationDefault extends Default[Location](Location.Auto)
     implicit object OrientationDefault extends Default[Orientation](Orientation.Horizontal)
     implicit object LegendOrientationDefault extends Default[LegendOrientation](LegendOrientation.TopRight)

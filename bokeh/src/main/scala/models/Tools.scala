@@ -5,11 +5,11 @@ package io.continuum.bokeh
 }
 
 @model class PanTool extends Tool {
-    object dimensions extends Field[List[Dimension]](List(Dimension.X, Dimension.Y))
+    object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
 }
 
 @model class WheelZoomTool extends Tool {
-    object dimensions extends Field[List[Dimension]](List(Dimension.X, Dimension.Y))
+    object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
 }
 
 @model class PreviewSaveTool extends Tool
@@ -31,7 +31,7 @@ package io.continuum.bokeh
 
 @model class BoxSelectTool extends SelectTool {
     object select_every_mousemove extends Field[Boolean](true)
-    object dimensions extends Field[List[Dimension]](List(Dimension.X, Dimension.Y))
+    object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
 }
 
 @model class LassoSelectTool extends SelectTool {
