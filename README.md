@@ -15,7 +15,7 @@ Central][central]. To include latest stable version of bokeh in your project,
 use:
 
 ```scala
-libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.3"
+libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.4"
 ```
 
 Development snapshots are available as well. To use this you have to add
@@ -23,7 +23,7 @@ Sonatype's snapshots repository to your build:
 
 ```scala
 resolvers += Opts.resolver.sonatypeSnapshots
-libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.4-SNAPSHOT"
+libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.5-SNAPSHOT"
 ```
 
 See [this][sample] sample project for detailed integration example.
@@ -64,8 +64,8 @@ Published under [The MIT License][license], see LICENSE.
 [bokeh]: http://bokeh.pydata.org
 [central]: http://search.maven.org/#search%7Cga%7C1%7Cbokeh
 [sample]: https://github.com/bokeh/bokeh-scala-sample
-[api-stable]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.3/index.html
-[api-devel]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.4-SNAPSHOT/index.html
+[api-stable]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.4/index.html
+[api-devel]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.5-SNAPSHOT/index.html
 [group]: https://groups.google.com/a/continuum.io/forum/#!forum/bokeh
 [issues]: https://github.com/bokeh/bokeh-scala/issues
 [bokeh-issues]: https://github.com/bokeh/bokeh/issues
