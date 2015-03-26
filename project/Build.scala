@@ -55,7 +55,7 @@ object BokehBuild extends Build {
         homepage := Some(url("http://bokeh.pydata.org")),
         licenses := Seq("MIT-style" -> url("http://www.opensource.org/licenses/mit-license.php")),
         scalaVersion := "2.11.6",
-        crossScalaVersions := Seq("2.10.4", "2.11.6"),
+        crossScalaVersions := Seq("2.10.5", "2.11.6"),
         scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature", "-Xlog-free-types"),
         scalacOptions += "-language:postfixOps,implicitConversions,higherKinds,experimental.macros",
         scalacOptions in (Compile, doc) := Seq("-groups", "-implicits"),
