@@ -151,14 +151,14 @@ object Resources {
     case object AbsoluteDev extends DevelopmentResources with AbsoluteResources
 
     abstract class Remote(url: URL) extends ExternalResources {
-        def includeJS(path: String): xml.Node = new URL(url, "/" + path).asScript
-        def includeCSS(path: String): xml.Node = new URL(url, "/" + path).asStyle
+        def includeJS(path: String): xml.Node = new URL(url, "./" + path).asScript
+        def includeCSS(path: String): xml.Node = new URL(url, "./" + path).asStyle
 
         def scripts = includeJS(resource("js", true, true)) :: Nil
         def styles = includeCSS(resource("css", true, true)) :: Nil
     }
 
-    case object CDN extends Remote(new URL("http://cdn.pydata.org"))
+    case object CDN extends Remote(new URL("http://cdn.pydata.org/bokeh/release/"))
 
     private val fromStringPF: PartialFunction[String, Resources] = {
         case "cdn"          => CDN
