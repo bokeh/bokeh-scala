@@ -26,7 +26,7 @@ object Dependencies {
 
     val saddle = "org.scala-saddle" %% "saddle-core" % "1.3.3"
 
-    val play_json = "com.typesafe.play" %% "play-json" % "2.4.0-M2"
+    val play_json = "com.typesafe.play" %% "play-json" % "2.4.0"
 
     val specs2 = "org.specs2" %% "specs2" % "2.3.11" % Test
 
