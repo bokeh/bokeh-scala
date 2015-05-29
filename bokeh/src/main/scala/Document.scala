@@ -16,10 +16,10 @@ class Document(objs: Widget*) {
         objects ++= objs
     }
 
-    def fragment(resources: Resources): HTMLFragment = HTMLFragmentWriter(objs.toList, resources).write()
+    def fragment(resources: Resources): HTMLFragment = HTMLFragmentWriter(objects.toList, resources).write()
     def fragment(): HTMLFragment = fragment(Resources.default)
 
-    def save(file: File, resources: Resources): HTMLFile = HTMLFileWriter(objs.toList, resources).write(file)
+    def save(file: File, resources: Resources): HTMLFile = HTMLFileWriter(objects.toList, resources).write(file)
     def save(file: File): HTMLFile = save(file, Resources.default)
 
     def save(path: String, resources: Resources): HTMLFile = save(new File(path), resources)
