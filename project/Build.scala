@@ -22,15 +22,15 @@ object Dependencies {
             namespace %% "scala-io-file" % version)
     }
 
-    val breeze = "org.scalanlp" %% "breeze" % "0.10"
+    val breeze = "org.scalanlp" %% "breeze" % "0.11.2"
 
-    val saddle = "org.scala-saddle" %% "saddle-core" % "1.3.3"
+    val saddle = "org.scala-saddle" %% "saddle-core" % "1.3.4"
 
     val play_json = "com.typesafe.play" %% "play-json" % "2.4.0"
 
     val specs2 = "org.specs2" %% "specs2" % "2.3.11" % Test
 
-    val scopt = "com.github.scopt" %% "scopt" % "3.2.0"
+    val scopt = "com.github.scopt" %% "scopt" % "3.3.0"
 
     val joda_time = "joda-time" % "joda-time" % "2.6"
 
