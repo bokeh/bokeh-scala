@@ -153,7 +153,7 @@ object BokehBuild extends Build {
             """
     )
 
-    lazy val bokehjsSettings = commonSettings ++ BokehJS.bokehjsSettings
+    lazy val bokehjsSettings = commonSettings // ++ BokehJS.bokehjsSettings
 
     lazy val coreSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
