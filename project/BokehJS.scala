@@ -11,6 +11,7 @@ object BokehJS {
 
     lazy val bokehjsSettings = Seq(
         sourceDirectory in Compile := baseDirectory.value / "src",
+        unmanagedResourceDirectories in Compile += baseDirectory.value / "build",
         bokehjsVersion <<= Def.task {
             val srcDir = sourceDirectory in Compile value
             val jsMain = srcDir / "coffee" / "main.coffee"
