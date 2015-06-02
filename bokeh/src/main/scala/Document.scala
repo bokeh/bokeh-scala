@@ -92,6 +92,7 @@ class HTMLFragmentWriter(contexts: List[PlotContext], resources: Resources) {
             |Bokeh.load_models(models);
             |var model = Bokeh.Collections(modeltype).get(modelid);
             |var view = new model.default_view({model: model, el: elementid});
+            |Bokeh.index[modelid] = view;
             """
         resources.wrap(code.stripMargin.trim).asScript
     }
