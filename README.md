@@ -6,7 +6,7 @@ Scala bindings for [Bokeh][bokeh] plotting library.
 
 ## Requirements
 
-* [Java](http://wwww.java.com) JRE 1.6+
+* [Java](http://wwww.java.com) JRE 1.7+
 
 ## Usage
 
