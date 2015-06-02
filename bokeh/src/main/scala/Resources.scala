@@ -121,24 +121,8 @@ object Resources {
     }
 
     trait DevelopmentResources extends ExternalFileResources {
-        def requireConfig: xml.Node = {
-            s"require.config({ baseUrl: 'file://$baseJSDir' });".asScript
-        }
-
-        def scripts =
-            includeJS("vendor/requirejs/require.js") ::
-            includeJS("config.js") ::
-            requireConfig ::
-            Nil
-
-        def styles =
-            includeCSS(cssUnMin) ::
-            Nil
-
-        override def wrap(code: String): String = {
-            val wrapped = super.wrap(code)
-            s"require(['jquery', 'main'], function($$, Bokeh) {\n$wrapped\n});"
-        }
+        def scripts = includeJS(jsUnMin) :: Nil
+        def styles = includeCSS(cssUnMin) :: Nil
 
         override def logLevel: LogLevel = LogLevel.Debug
 
