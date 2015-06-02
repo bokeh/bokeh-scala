@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-import java.io.File
+import java.io.{File,IOException}
 import java.net.URL
 import java.util.Properties
 
@@ -24,7 +24,8 @@ sealed trait Resources {
     def logLevel: LogLevel = LogLevel.Info
 
     protected def getResource(path: String): URL = {
-        getClass.getClassLoader.getResource(path)
+        val res = getClass.getClassLoader.getResource(path)
+        if (res != null) res else throw new IOException(s"resource '$path' not found")
     }
 
     protected def loadResource(path: String): String = {
