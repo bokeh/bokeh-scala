@@ -1,7 +1,6 @@
 import sbt._
 import Keys._
 
-import org.sbtidea.SbtIdeaPlugin
 import com.typesafe.sbt.SbtPgp
 
 object Dependencies {
@@ -130,11 +129,7 @@ object BokehBuild extends Build {
         }
     )
 
-    lazy val ideaSettings = SbtIdeaPlugin.settings
-
-    lazy val bokehPlugins = ideaSettings
-
-    lazy val bokehSettings = commonSettings ++ bokehPlugins ++ Seq(
+    lazy val bokehSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
             scalaio ++ xml.value ++ Seq(breeze, joda_time, play_json, specs2)
