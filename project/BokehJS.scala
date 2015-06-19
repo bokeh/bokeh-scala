@@ -63,7 +63,8 @@ object BokehJS {
         bokehjsUpdate <<= Def.task {
             val prefix = baseDirectory.value
             val log = streams.value.log
-            s"npm install --prefix=$prefix --spin=false" ! log
+            val ret = s"npm install --prefix=$prefix --spin=false" ! log
+            if (ret != 0) sys.error("npm install failed")
         },
         update <<= update.dependsOn(bokehjsUpdate),
         bokehjsVersion <<= Def.task {
