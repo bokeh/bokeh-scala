@@ -39,6 +39,7 @@ bokeh uses submodules, so either clone with `--recursive` or use
 `git submodule update`.
 
 ```bash
+$ sudo apt-get install nodejs-legacy
 $ git clone --recursive https://github.com/bokeh/bokeh-scala.git
 $ cd bokeh-scala
 $ ./sbt

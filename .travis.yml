@@ -8,6 +8,8 @@ jdk:
     - oraclejdk8
     - oraclejdk7
 
+before_install: sudo apt-get install -qq nodejs-legacy
+
 script: ./sbt ++$TRAVIS_SCALA_VERSION compile test doc
 
 after_success: project/travis/upload
