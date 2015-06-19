@@ -8,7 +8,9 @@ jdk:
     - oraclejdk8
     - oraclejdk7
 
-before_install: sudo apt-get install -qq nodejs-legacy
+before_install:
+    - curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
+    - sudo apt-get install -qq -y nodejs
 
 script: ./sbt ++$TRAVIS_SCALA_VERSION compile test doc
 
