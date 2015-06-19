@@ -60,13 +60,12 @@ object BokehJS {
     lazy val bokehjsSettings = Seq(
         sourceDirectory in Compile := baseDirectory.value / "src",
         unmanagedResourceDirectories in Compile += baseDirectory.value / "build",
-        bokehjsUpdate <<= Def.task {
+        bokehjsUpdate in Compile <<= Def.task {
             val prefix = baseDirectory.value
             val log = streams.value.log
             val ret = s"npm install --prefix=$prefix --spin=false" ! log
             if (ret != 0) sys.error("npm install failed")
         },
-        update <<= update.dependsOn(bokehjsUpdate),
         bokehjsVersion <<= Def.task {
             val srcDir = sourceDirectory in Compile value
             val jsMain = srcDir / "coffee" / "main.coffee"
@@ -112,7 +111,7 @@ object BokehJS {
                     gulp("scripts:build", "styles:build")
                 }
             }
-        },
+        } dependsOn(bokehjsUpdate in Compile),
         watchSources <++= Def.task { (bokehjsSources in Compile).value.get },
         compile in Compile <<= (compile in Compile).dependsOn(bokehjsBuild in Compile))
 }
