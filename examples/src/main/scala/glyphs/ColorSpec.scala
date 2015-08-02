@@ -13,8 +13,8 @@ object ColorSpec extends Example {
 
     import source.{x,y,color}
 
-    val xdr = new DataRange1d().sources(x :: Nil)
-    val ydr = new DataRange1d().sources(y :: Nil)
+    val xdr = new DataRange1d()
+    val ydr = new DataRange1d()
 
     val circle = new Circle().x(x).y(y).size(15).fill_color(color).line_color(Color.Black)
 

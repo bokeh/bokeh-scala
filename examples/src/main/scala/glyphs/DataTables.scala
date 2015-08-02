@@ -28,8 +28,8 @@ object DataTables extends Example {
     import source.{index,manufacturer,model,displ,year,cyl,trans,drv,cls,cty,hwy}
 
     val plot = {
-        val xdr = new DataRange1d().sources(index :: Nil)
-        val ydr = new DataRange1d().sources(List(cty, hwy))
+        val xdr = new DataRange1d()
+        val ydr = new DataRange1d()
         val plot = new Plot().title().x_range(xdr).y_range(ydr).width(1000).height(300)
         val xaxis = new LinearAxis().plot(plot)
         plot.below <<= (xaxis :: _)

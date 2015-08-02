@@ -15,8 +15,8 @@ object Glyph2 extends Example {
 
     import source.{x,y,r}
 
-    val xdr = new DataRange1d().sources(x :: Nil)
-    val ydr = new DataRange1d().sources(y :: Nil)
+    val xdr = new DataRange1d()
+    val ydr = new DataRange1d()
 
     val circle = new Circle()
         .x(x)

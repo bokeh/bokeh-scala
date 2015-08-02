@@ -17,8 +17,8 @@ object Iris extends Example {
 
     import source.{petal_length,petal_width,sepal_length,sepal_width,color}
 
-    val xdr = new DataRange1d().sources(petal_length :: Nil)
-    val ydr = new DataRange1d().sources(petal_width :: Nil)
+    val xdr = new DataRange1d()
+    val ydr = new DataRange1d()
 
     val circle = new Circle()
         .x(petal_length)

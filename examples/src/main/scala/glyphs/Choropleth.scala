@@ -41,8 +41,8 @@ object Choropleth extends Example {
     import state_source.{state_xs,state_ys}
     import county_source.{county_xs,county_ys,county_colors}
 
-    val xdr = new DataRange1d().sources(state_xs :: Nil)
-    val ydr = new DataRange1d().sources(state_ys :: Nil)
+    val xdr = new DataRange1d()
+    val ydr = new DataRange1d()
 
     val county_patches = new Patches()
         .xs(county_xs)

@@ -22,8 +22,8 @@ object Hover extends Example with LinAlg with Tools {
 
     import source.{x,y,inds,radii,colors}
 
-    val xdr = new DataRange1d().sources(x :: Nil)
-    val ydr = new DataRange1d().sources(y :: Nil)
+    val xdr = new DataRange1d()
+    val ydr = new DataRange1d()
 
     val plot = new Plot()
         .title("Color Scatter Example")

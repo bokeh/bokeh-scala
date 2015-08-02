@@ -22,8 +22,8 @@ object IrisSplom extends Example {
 
     val columns = List('petal_length, 'petal_width, 'sepal_width, 'sepal_length)
 
-    val xdr = new DataRange1d().sources(source.columns(columns: _*) :: Nil)
-    val ydr = new DataRange1d().sources(source.columns(columns: _*) :: Nil)
+    val xdr = new DataRange1d()
+    val ydr = new DataRange1d()
 
     def make_plot(xname: Symbol, yname: Symbol, xax: Boolean=false, yax: Boolean=false, text: Option[String]=None) = {
         val plot = new Plot()

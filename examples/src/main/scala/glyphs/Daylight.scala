@@ -44,8 +44,8 @@ object Daylight extends Example {
         .addColumn('times, List(_11_30, _11_30, _11_30))
         .addColumn('texts, List("CST (UTC+1)", "CEST (UTC+2)", "CST (UTC+1)"))
 
-    val xdr = new DataRange1d().sources(List(source.columns('dates)))
-    val ydr = new DataRange1d().sources(List(source.columns('sunrises, 'sunsets)))
+    val xdr = new DataRange1d()
+    val ydr = new DataRange1d()
 
     val title = "Daylight Hours - Warsaw, Poland"
     val sources = List(source, patch1_source, patch2_source, text_source)

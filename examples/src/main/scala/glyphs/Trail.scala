@@ -90,8 +90,8 @@ object Trail extends Example with Tools {
         val line = new Line().x(x).y(y).line_color(Color.Blue).line_width(2)
         plot.addGlyph(line_source, line)
 
-        plot.x_range := new DataRange1d().sources(x :: Nil)
-        plot.y_range := new DataRange1d().sources(y :: Nil)
+        plot.x_range := new DataRange1d()
+        plot.y_range := new DataRange1d()
 
         plot
     }
@@ -135,8 +135,8 @@ object Trail extends Example with Tools {
         val line = new Line().x(x).y(y).line_color(Color.Black).line_width(1)
         plot.addGlyph(line_source, line)
 
-        plot.x_range := new DataRange1d().sources(x :: Nil)
-        plot.y_range := new DataRange1d().sources(y :: Nil)
+        plot.x_range := new DataRange1d()
+        plot.y_range := new DataRange1d()
 
         plot
     }

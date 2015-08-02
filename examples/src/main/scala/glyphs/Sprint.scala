@@ -77,8 +77,8 @@ object Sprint extends Example {
 
     val title = "Usain Bolt vs. 116 years of Olympic sprinters"
 
-    val xdr = new Range1d().start(df.meters_back.max+2).end(0)          // XXX: +2 is poor-man's padding (otherwise misses last tick)
-    val ydr = new DataRange1d().sources(Year :: Nil).rangepadding(0.05) // XXX: should be 2 years (both sides)
+    val xdr = new Range1d().start(df.meters_back.max+2).end(0) // XXX: +2 is poor-man's padding (otherwise misses last tick)
+    val ydr = new DataRange1d().range_padding(0.05)            // XXX: should be 2 years (both sides)
 
     val plot = new Plot().title(title).x_range(xdr).y_range(ydr).width(1000).height(600).toolbar_location().outline_line_color()
 

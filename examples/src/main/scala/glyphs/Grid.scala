@@ -20,8 +20,8 @@ object Grid extends Example {
             line_color: Color,
             _xdr: Option[Range]=None, _ydr: Option[Range]=None) = {
 
-        val xdr = _xdr getOrElse new DataRange1d().sources(x :: Nil)
-        val ydr = _ydr getOrElse new DataRange1d().sources(y :: Nil)
+        val xdr = _xdr getOrElse new DataRange1d()
+        val ydr = _ydr getOrElse new DataRange1d()
 
         val plot = new Plot().x_range(xdr).y_range(ydr)
 

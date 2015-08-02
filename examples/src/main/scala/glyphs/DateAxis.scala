@@ -15,8 +15,8 @@ object DateAxis extends Example {
 
     import source.{times,y}
 
-    val xdr = new DataRange1d().sources(times :: Nil)
-    val ydr = new DataRange1d().sources(y :: Nil)
+    val xdr = new DataRange1d()
+    val ydr = new DataRange1d()
 
     val circle = new Circle().x(times).y(y).fill_color(Color.Red).size(5).line_color(Color.Black)
 
