@@ -7,9 +7,18 @@ import play.api.libs.json.Writes
     object columns extends Field[List[Symbol]]
 }
 
+case class Selected0d(indices: List[Int] = Nil, flag: Boolean = false)
+case class Selected1d(indices: List[Int] = Nil)
+case class Selected2d(indices: List[List[Int]] = Nil)
+
+case class Selected(`0d`: Selected0d = Selected0d(),
+                    `1d`: Selected1d = Selected1d(),
+                    `2d`: Selected2d = Selected2d())
+
 @model abstract class DataSource extends PlotObject {
     object column_names extends Field[List[String]]
-    object selected extends Field[List[Int]]
+    object selected extends Field[Selected]
+    object callback extends Field[Callback]
 
     def columns(columns: Symbol*): ColumnsRef =
         new ColumnsRef().source(this).columns(columns.toList)

@@ -22,7 +22,9 @@ package io.continuum.bokeh
 
 @model class ResizeTool extends Tool
 
-@model class CrosshairTool extends Tool
+@model class CrosshairTool extends Tool {
+    object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
+}
 
 @model class BoxZoomTool extends Tool
 
@@ -51,6 +53,14 @@ package io.continuum.bokeh
 
 @model class HoverTool extends TransientSelectTool {
     object tooltips extends Field[Tooltip]
+    object callback extends Field[Callback]
     object always_active extends Field[Boolean](true)
-    object snap_to_data extends Field[Boolean](true)
+    object mode extends Field[HoverMode]
+    object point_policy extends Field[PointPolicy]
+    object line_policy extends Field[LinePolicy]
+}
+
+@model class HelpTool extends Tool {
+    object help_tooltip extends Field[String]
+    object redirect extends Field[String]
 }

@@ -46,6 +46,11 @@ package io.continuum.bokeh
     object h_symmetry extends Field[Boolean](true)
     object v_symmetry extends Field[Boolean](false)
 
+    object lod_factor extends Field[Int](10)
+    object lod_threshold extends Field[Int](2000)
+    object lod_interval extends Field[Int](300)
+    object lod_timeout extends Field[Int](500)
+
     def addGlyph(glyph: Glyph): GlyphRenderer = {
         addGlyph(new ColumnDataSource(), glyph)
     }

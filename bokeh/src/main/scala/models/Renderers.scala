@@ -12,6 +12,8 @@ package io.continuum.bokeh
 
     object x_range_name extends Field[String]("default")
     object y_range_name extends Field[String]("default")
+
+    object level extends Field[RenderLevel](RenderLevel.Glyph)
 }
 
 @model class Legend extends Renderer {

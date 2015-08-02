@@ -5,6 +5,7 @@ package widgets
     object label extends Field[String]("Button")
     object icon extends Field[AbstractIcon]
     object `type` extends Field[ButtonType]
+    object callback extends Field[Callback]
 }
 
 @model class Button extends AbstractButton {

@@ -94,6 +94,12 @@ trait BokehWrites {
         }
     }
 
+    implicit val Selected0dWrites = Json.writes[Selected0d]
+    implicit val Selected1dWrites = Json.writes[Selected1d]
+    implicit val Selected2dWrites = Json.writes[Selected2d]
+
+    implicit val SelectedWrites = Json.writes[Selected]
+
     implicit val RefWrites = Json.writes[Ref]
 
     implicit def FieldWrites[T:Writes] = new Writes[AbstractField { type ValueType = T }] {

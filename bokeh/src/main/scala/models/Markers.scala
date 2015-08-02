@@ -4,6 +4,7 @@ package io.continuum.bokeh
     object x extends Spatial[Double]
     object y extends Spatial[Double]
     object size extends Spatial[Double](SpatialUnits.Screen) with NonNegative
+    object angle extends Angular[Double]
 }
 
 @model class Asterisk extends Marker
@@ -25,9 +26,7 @@ package io.continuum.bokeh
 
 @model class InvertedTriangle extends Marker
 
-@model class Square extends Marker {
-    object angle extends Angular[Double]
-}
+@model class Square extends Marker
 
 @model class SquareCross extends Marker
 

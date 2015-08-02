@@ -3,6 +3,7 @@ package io.continuum.bokeh
 import scala.reflect.ClassTag
 import scala.annotation.implicitNotFound
 import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
+import play.api.libs.json.JsArray
 
 @implicitNotFound(msg="Can't find Default type class for type ${T}.")
 class Default[T](val default: T)
@@ -27,14 +28,17 @@ trait TypeDefaults {
 
     implicit def Tuple2Default[T1:Default, T2:Default]: Default[(T1, T2)] =
         new Default[(T1, T2)]((implicitly[Default[T1]].default,
-                                    implicitly[Default[T2]].default))
+                               implicitly[Default[T2]].default))
     implicit def Tuple3Default[T1:Default, T2:Default, T3:Default]: Default[(T1, T2, T3)] =
         new Default[(T1, T2, T3)]((implicitly[Default[T1]].default,
-                                        implicitly[Default[T2]].default,
-                                        implicitly[Default[T3]].default))
+                                   implicitly[Default[T2]].default,
+                                   implicitly[Default[T3]].default))
 
     implicit object FontSizeDefault extends Default[FontSize](10 pt)
     implicit object TooltipDefault extends Default[Tooltip](TabularTooltip(Nil))
+    implicit object SelectedDefault extends Default[Selected](Selected())
+
+    implicit object JsArrayDefault extends Default[JsArray](JsArray(Nil))
 }
 
 trait EnumDefaults {
@@ -67,6 +71,10 @@ trait EnumDefaults {
     implicit object RoundingFunctionDefault extends Default[RoundingFunction](RoundingFunction.Round)
     implicit object NumeralLanguageDefault extends Default[NumeralLanguage](NumeralLanguage.`en`)
     implicit object HTTPMethodDefault extends Default[HTTPMethod](HTTPMethod.POST)
+    implicit object RenderLevelDefault extends Default[RenderLevel](RenderLevel.Glyph)
+    implicit object HoverModeDefault extends Default[HoverMode](HoverMode.Mouse)
+    implicit object PointPolicyDefault extends Default[PointPolicy](PointPolicy.SnapToData)
+    implicit object LinePolicyDefault extends Default[LinePolicy](LinePolicy.Prev)
 }
 
 trait DefaultImplicits extends TypeDefaults with EnumDefaults

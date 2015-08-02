@@ -74,4 +74,6 @@ package io.continuum.bokeh
     }
 
     grid = include[LineProps]
+    minor_grid = include[LineProps]
+    band = include[FillProps]
 }

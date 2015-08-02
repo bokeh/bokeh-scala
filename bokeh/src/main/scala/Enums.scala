@@ -273,3 +273,36 @@ sealed trait HTTPMethod extends EnumType
     case object POST extends HTTPMethod
     case object GET extends HTTPMethod
 }
+
+sealed trait RenderLevel extends EnumType with SnakeCase
+@enum object RenderLevel extends Enumerated[RenderLevel] {
+    case object Image extends RenderLevel
+    case object Underlay extends RenderLevel
+    case object Glyph extends RenderLevel
+    case object Overlay extends RenderLevel
+    case object Annotation extends RenderLevel
+    case object Tool extends RenderLevel
+}
+
+sealed trait HoverMode extends EnumType with LowerCase
+@enum object HoverMode extends Enumerated[HoverMode] {
+    case object Mouse extends HoverMode
+    case object HLine extends HoverMode
+    case object VLine extends HoverMode
+}
+
+sealed trait PointPolicy extends EnumType with SnakeCase
+@enum object PointPolicy extends Enumerated[PointPolicy] {
+    case object SnapToData extends PointPolicy
+    case object FollowMouse extends PointPolicy
+    case object None extends PointPolicy
+}
+
+sealed trait LinePolicy extends EnumType with SnakeCase
+@enum object LinePolicy extends Enumerated[LinePolicy] {
+    case object Prev extends LinePolicy
+    case object Next extends LinePolicy
+    case object Nearest extends LinePolicy
+    case object Interp extends LinePolicy
+    case object None extends LinePolicy
+}

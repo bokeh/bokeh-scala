@@ -2,6 +2,11 @@ package io.continuum.bokeh
 
 @model abstract class Ticker extends PlotObject {
     object num_minor_ticks extends Field[Int](5)
+    object desired_num_ticks extends Field[Int](6)
+}
+
+@model class FixedTicker extends Ticker {
+    object ticks extends Field[List[Double]]
 }
 
 @model class AdaptiveTicker extends Ticker {
