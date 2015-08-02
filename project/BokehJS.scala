@@ -108,7 +108,9 @@ object BokehJS {
                 if (modified.length > 0) {
                     val plural = if (modified.length != 1) "s" else ""
                     streams.value.log.info(s"Running gulp build for ${modified.length} file$plural")
-                    gulp("scripts:build", "styles:build")
+                    val buildDir = (resourceManaged in Compile).value
+                    gulp("scripts:build", "styles:build", "--build-dir", buildDir.getPath)
+
                 }
             }
         } dependsOn(bokehjsUpdate in Compile),
