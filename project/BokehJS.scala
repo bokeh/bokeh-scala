@@ -52,6 +52,7 @@ object BokehJS {
         val bokehjsVersion = taskKey[String]("BokehJS version as obtained from src/coffee/main.coffe")
         val bokehjsProps = taskKey[Seq[File]]("Write BokehJS configuration to bokehjs.properties")
         val bokehjsSources = settingKey[PathFinder]("BokehJS source file filter")
+        val bokehjsBuildDir = settingKey[File]("BokehJS target build directory")
         val bokehjsBuild = taskKey[Unit]("Build BokehJS using gulp build system")
     }
 
@@ -89,6 +90,7 @@ object BokehJS {
             val all = (sourceDirectory in Compile).value.***
             all.filter(_.isFile).filter(!_.isHidden)
         },
+        bokehjsBuildDir in Compile := (classDirectory in Compile).value,
         bokehjsBuild in Compile <<= Def.task {
             def gulp(args: String*) = {
                 val prefix = baseDirectory.value
@@ -108,8 +110,8 @@ object BokehJS {
                 if (modified.length > 0) {
                     val plural = if (modified.length != 1) "s" else ""
                     streams.value.log.info(s"Running gulp build for ${modified.length} file$plural")
-                    val buildDir = (resourceManaged in Compile).value
-                    gulp("scripts:build", "styles:build", "--build-dir", buildDir.getPath)
+                    val buildDir = (bokehjsBuildDir in Compile).value.getPath
+                    gulp("scripts", "styles", "--build-dir", buildDir)
 
                 }
             }
