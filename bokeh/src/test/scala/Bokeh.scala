@@ -256,7 +256,7 @@ class BokehSpec extends Specification {
     "markers" should {
         "support Circle" in {
             val obj = new Circle()
-            obj.fields.length shouldEqual 16
+            obj.fields.length shouldEqual 17
         }
 
         "support Square" in {
@@ -266,57 +266,57 @@ class BokehSpec extends Specification {
 
         "support Triangle" in {
             val obj = new Triangle()
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 15
         }
 
         "support Cross" in {
             val obj = new Cross()
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 15
         }
 
         "support PlainX" in {
             val obj = new PlainX()
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 15
         }
 
         "support Diamond" in {
             val obj = new Diamond()
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 15
         }
 
         "support InvertedTriangle" in {
             val obj = new InvertedTriangle()
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 15
         }
 
         "support SquareX" in {
             val obj = new SquareX()
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 15
         }
 
         "support Asterisk" in {
             val obj = new Asterisk()
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 15
         }
 
         "support DiamondCross" in {
             val obj = new DiamondCross()
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 15
         }
 
         "support CircleCross" in {
             val obj = new CircleCross()
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 15
         }
 
         "support SquareCross" in {
             val obj = new SquareCross()
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 15
         }
 
         "support CircleX" in {
             val obj = new CircleX()
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 15
         }
     }
 
@@ -324,7 +324,7 @@ class BokehSpec extends Specification {
         "support GlyphRenderer" in {
             val obj = new GlyphRenderer().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 7
+            obj.fields.length shouldEqual 8
         }
 
         "support Legend" in {
@@ -344,19 +344,19 @@ class BokehSpec extends Specification {
         "support Range1d" in {
             val obj = new Range1d().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 3
+            obj.fields.length shouldEqual 4
         }
 
         "support DataRange1d" in {
             val obj = new DataRange1d().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 5
+            obj.fields.length shouldEqual 7
         }
 
         "support FactorRange" in {
             val obj = new FactorRange().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 2
+            obj.fields.length shouldEqual 4
         }
     }
 
@@ -364,7 +364,7 @@ class BokehSpec extends Specification {
         "support ColumnDataSource" in {
             val obj = new ColumnDataSource().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 4
+            obj.fields.length shouldEqual 5
         }
 
         "support ColumnsRef" in {
@@ -401,7 +401,7 @@ class BokehSpec extends Specification {
         "support Grid" in {
             val obj = new Grid().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 14
+            obj.fields.length shouldEqual 23
         }
     }
 
@@ -445,7 +445,7 @@ class BokehSpec extends Specification {
         "support CrosshairTool" in {
             val obj = new CrosshairTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 2
+            obj.fields.length shouldEqual 3
         }
 
         "support BoxZoomTool" in {
@@ -475,7 +475,7 @@ class BokehSpec extends Specification {
         "support HoverTool" in {
             val obj = new HoverTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 7
+            obj.fields.length shouldEqual 10
         }
     }
 
@@ -483,18 +483,18 @@ class BokehSpec extends Specification {
         "support Plot" in {
             val obj = new Plot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 43
+            obj.fields.length shouldEqual 47
         }
 
         "support GMapOptions" in {
             val obj = new GMapOptions()
-            obj.fields.length shouldEqual 4
+            obj.fields.length shouldEqual 5
         }
 
         "support GMapPlot" in {
             val obj = new GMapPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 44
+            obj.fields.length shouldEqual 48
         }
 
         "support GeoJSOptions" in {
@@ -505,13 +505,13 @@ class BokehSpec extends Specification {
         "support GeoJSPlot" in {
             val obj = new GeoJSPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 44
+            obj.fields.length shouldEqual 48
         }
 
         "support GridPlot" in {
             val obj = new GridPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 45
+            obj.fields.length shouldEqual 49
         }
     }
 
@@ -535,61 +535,61 @@ class BokehSpec extends Specification {
         "support AdaptiveTicker" in {
             val obj = new AdaptiveTicker().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 6
+            obj.fields.length shouldEqual 7
         }
 
         "support CompositeTicker" in {
             val obj = new CompositeTicker().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 3
+            obj.fields.length shouldEqual 4
         }
 
         "support SingleIntervalTicker" in {
             val obj = new SingleIntervalTicker().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 3
+            obj.fields.length shouldEqual 4
         }
 
         "support DaysTicker" in {
             val obj = new DaysTicker().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 4
+            obj.fields.length shouldEqual 5
         }
 
         "support MonthsTicker" in {
             val obj = new MonthsTicker().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 4
+            obj.fields.length shouldEqual 5
         }
 
         "support YearsTicker" in {
             val obj = new YearsTicker().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 3
+            obj.fields.length shouldEqual 4
         }
 
         "support BasicTicker" in {
             val obj = new BasicTicker().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 2
+            obj.fields.length shouldEqual 3
         }
 
         "support LogTicker" in {
             val obj = new LogTicker().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 6
+            obj.fields.length shouldEqual 7
         }
 
         "support CategoricalTicker" in {
             val obj = new CategoricalTicker().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 2
+            obj.fields.length shouldEqual 3
         }
 
         "support DatetimeTicker" in {
             val obj = new DatetimeTicker().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 2
+            obj.fields.length shouldEqual 3
         }
     }
 
@@ -623,19 +623,19 @@ class BokehSpec extends Specification {
         "support Button" in {
             val obj = new widgets.Button().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 6
+            obj.fields.length shouldEqual 7
         }
 
         "support Toggle" in {
             val obj = new widgets.Toggle().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 6
+            obj.fields.length shouldEqual 7
         }
 
         "support Dropdown" in {
             val obj = new widgets.Dropdown().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 8
+            obj.fields.length shouldEqual 9
         }
 
         "support Dialog" in {
