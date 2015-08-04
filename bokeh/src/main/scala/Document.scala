@@ -80,7 +80,7 @@ class HTMLFragmentWriter(contexts: List[PlotContext], resources: Resources) {
 
     protected def renderPlot(spec: PlotSpec): xml.Node = {
         val code = s"""
-            |Bokeh.set_log_level("${resources.logLevel.name}")
+            |Bokeh.set_log_level("${resources.logLevel.name}");
             |var models = ${spec.models};
             |var modelid = "${spec.modelId}";
             |var modeltype = "${spec.modelType}";
