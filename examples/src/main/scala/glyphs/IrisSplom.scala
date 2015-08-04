@@ -18,7 +18,7 @@ object IrisSplom extends Example {
 
     val text_source = new ColumnDataSource()
         .addColumn('xcenter, Array(125))
-        .addColumn('ycenter, Array(145))
+        .addColumn('ycenter, Array(135))
 
     val columns = List('petal_length, 'petal_width, 'sepal_width, 'sepal_length)
 
@@ -61,6 +61,9 @@ object IrisSplom extends Example {
             .data_source(source)
             .glyph(circle)
 
+        xdr.renderers <<= (renderer :: _)
+        ydr.renderers <<= (renderer :: _)
+
         val pantool = new PanTool().plot(plot)
         val wheelzoomtool = new WheelZoomTool().plot(plot)
 
@@ -76,7 +79,7 @@ object IrisSplom extends Example {
                 .text_font_style(FontStyle.Bold)
                 .text_baseline(TextBaseline.Top)
                 .text_color("#ffaaaa")
-                .text_alpha(0.5)
+                .text_alpha(0.7)
                 .text_align(TextAlign.Center)
                 .text_font_size(28 pt)
             val text_renderer = new GlyphRenderer()
