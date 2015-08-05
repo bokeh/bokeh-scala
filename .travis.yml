@@ -8,9 +8,17 @@ jdk:
   - oraclejdk8
   - oraclejdk7
 
-before_install:
-  - curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
-  - sudo apt-get install -qq -y nodejs
+sudo: false
+
+addons:
+  apt:
+    packages:
+      - python-pip
+      - nodejs
+
+install:
+  - export PATH="$HOME/.local/bin:$PATH"
+  - pip install --user -q awscli
 
 script: ./sbt ++$TRAVIS_SCALA_VERSION compile test doc
 
