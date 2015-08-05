@@ -76,9 +76,7 @@ object Trail extends Example with Tools {
         val ygrid = new Grid().plot(plot).dimension(1).ticker(yaxis.ticker.value).grid_line_dash(DashPattern.Dashed).grid_line_color(Color.Gray)
         plot.renderers <<= (xgrid :: ygrid :: _)
 
-        val hover = new HoverTool().tooltips(Tooltip("distance" -> "@dist"))
         plot.tools := Pan|WheelZoom|Reset|BoxSelect
-        plot.tools <<= (hover +: _)
 
         object line_source extends ColumnDataSource {
             val x = column(mtb.lon)
