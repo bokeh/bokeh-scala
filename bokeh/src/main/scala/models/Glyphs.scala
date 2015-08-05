@@ -125,7 +125,7 @@ package io.continuum.bokeh
     object x extends Vectorized[Double]
     object y extends Vectorized[Double]
     object angle extends Angular[Double]
-    object length extends Spatial[Double](SpatialUnits.Screen) with NonNegative
+    object length extends Spatial[Double] with NonNegative
 }
 
 @model class Rect extends Glyph with FillProps with LineProps {
@@ -149,8 +149,8 @@ package io.continuum.bokeh
     object y extends Vectorized[Double]
     object text extends Vectorized[String]
     object angle extends Angular[Double]
-    object x_offset extends Spatial[Double](0, SpatialUnits.Screen)
-    object y_offset extends Spatial[Double](0, SpatialUnits.Screen)
+    object x_offset extends Spatial[Double]
+    object y_offset extends Spatial[Double]
 }
 
 @model class Wedge extends Glyph with FillProps with LineProps {
@@ -167,7 +167,7 @@ package io.continuum.bokeh
     object y extends Vectorized[Double]
     object angle extends Angular[Double]
     object module extends Vectorized[Double] with NonNegative
-    object teeth extends Vectorized[Int] // TODO: with NonNegative
+    object teeth extends Vectorized[Int]                                // TODO: with NonNegative
     object pressure_angle extends Angular[Double](20, AngularUnits.Deg)
     object shaft_size extends Vectorized[Double](0.3) with NonNegative
     object internal extends Vectorized[Boolean](false)
