@@ -7,6 +7,10 @@ import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 import breeze.linalg.DenseVector
 
 trait PrimitiveWrites {
+    implicit object ByteWrites extends Writes[Byte] {
+        def writes(b: Byte) = JsNumber(b)
+    }
+
     implicit object CharWrites extends Writes[Char] {
         def writes(c: Char) = JsString(c.toString)
     }
