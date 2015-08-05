@@ -16,10 +16,6 @@ object IrisSplom extends Example {
         .addColumn('sepal_width, flowers.sepal_width)
         .addColumn('color, flowers.species.map(colormap))
 
-    val text_source = new ColumnDataSource()
-        .addColumn('xcenter, Array(125))
-        .addColumn('ycenter, Array(135))
-
     val columns = List('petal_length, 'petal_width, 'sepal_width, 'sepal_length)
 
     val xdr = new DataRange1d()
@@ -72,18 +68,14 @@ object IrisSplom extends Example {
 
         text.foreach { text =>
             val text_glyph = new Text()
-                .x('xcenter, SpatialUnits.Screen)
-                .y('ycenter, SpatialUnits.Screen)
+                .x(0).x_offset( 125)
+                .y(0).y_offset(-125)
                 .text(text.replaceAll("_", " "))
                 .angle(pi/4)
-                .text_font_style(FontStyle.Bold)
-                .text_baseline(TextBaseline.Top)
-                .text_color("#ffaaaa")
-                .text_alpha(0.7)
-                .text_align(TextAlign.Center)
-                .text_font_size(28 pt)
+                .text_color("#ffaaaa").text_alpha(0.7)
+                .text_font_size(28 pt).text_font_style(FontStyle.Bold)
+                .text_baseline(TextBaseline.Top).text_align(TextAlign.Center)
             val text_renderer = new GlyphRenderer()
-                .data_source(text_source)
                 .glyph(text_glyph)
 
             plot.renderers := text_renderer :: plot.renderers.value
