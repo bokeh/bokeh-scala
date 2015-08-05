@@ -53,11 +53,15 @@ SBT_LAUNCHER="$(dirname $0)/project/sbt-launch-$SBT_VERSION.jar"
 if [ ! -e "$SBT_LAUNCHER" ];
 then
     URL="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/$SBT_VERSION/sbt-launch.jar"
-    if [ $(which wget) ];
+    if [ $(which curl) ];
     then
-        wget -O $SBT_LAUNCHER $URL
+        curl -Lo $SBT_LAUNCHER $URL || exit
+    elif [ $(which wget) ];
+    then
+        wget -O  $SBT_LAUNCHER $URL || exit
     else
-        curl -o $SBT_LAUNCHER $URL
+        echo "Neither curl not wget found. Could not download sbt-launcher-${SBT_VERSION}.jar"
+        exit 1
     fi
 fi
 
