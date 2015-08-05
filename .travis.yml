@@ -1,22 +1,22 @@
 language: scala
 
 scala:
-    - 2.11.7
-    - 2.10.5
+  - 2.11.7
+  - 2.10.5
 
 jdk:
-    - oraclejdk8
-    - oraclejdk7
+  - oraclejdk8
+  - oraclejdk7
 
 before_install:
-    - curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
-    - sudo apt-get install -qq -y nodejs
+  - curl -sL https://deb.nodesource.com/setup_0.12 | sudo bash -
+  - sudo apt-get install -qq -y nodejs
 
 script: ./sbt ++$TRAVIS_SCALA_VERSION compile test doc
 
 after_success: project/travis/upload
 
 env:
-    global:
-        - secure: "Xbx1OWKZh161gTgU+qxeR1rL8ujMDA6la3Qs4sOMyxKv2G4nWcM1ekMMn00EpQQqjs7CUhq9NMVufSDmq31D8jYPRkHI7qpgn+H2h5h4ekYfL5K94oBVyoTmUMxvzRCObBnoJnStj3Dv9V6F7edKP1sdRW2kUWqQqABS/jMlnkY="
-        - secure: "DocRPLY2/zE4kG1mlJNrSJ5RqmSO3cOM3WJZN/7C9SAh5yYWpcguRR2aB+fJ1nljOF1R7yu+zngWUKYB59dWF034Z9XNdy9AOmxtY/5NI73xLi5W8etKIK+QDXr8tVHxRAd/ba67rcXG3Mg28tUvw+hZmYy/UJ7HJnLpHG5taM4="
+  global:
+    - secure: "Xbx1OWKZh161gTgU+qxeR1rL8ujMDA6la3Qs4sOMyxKv2G4nWcM1ekMMn00EpQQqjs7CUhq9NMVufSDmq31D8jYPRkHI7qpgn+H2h5h4ekYfL5K94oBVyoTmUMxvzRCObBnoJnStj3Dv9V6F7edKP1sdRW2kUWqQqABS/jMlnkY="
+    - secure: "DocRPLY2/zE4kG1mlJNrSJ5RqmSO3cOM3WJZN/7C9SAh5yYWpcguRR2aB+fJ1nljOF1R7yu+zngWUKYB59dWF034Z9XNdy9AOmxtY/5NI73xLi5W8etKIK+QDXr8tVHxRAd/ba67rcXG3Mg28tUvw+hZmYy/UJ7HJnLpHG5taM4="
