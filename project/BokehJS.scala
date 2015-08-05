@@ -1,6 +1,8 @@
 import sbt._
 import Keys._
 
+import scala.util.Try
+
 object FilePickle {
     import upickle._
 
@@ -48,6 +50,7 @@ class Cache(cacheFile: File, fileFilter: PathFinder) {
 
 object BokehJS {
     object BokehJSKeys {
+        val nodeBinary = taskKey[String]("Detected node.js binary, either node or nodejs")
         val bokehjsUpdate = taskKey[Unit]("Resolve BokehJS dependencies (i.e. run `npm install`)")
         val bokehjsVersion = taskKey[String]("BokehJS version as obtained from src/coffee/main.coffe")
         val bokehjsProps = taskKey[Seq[File]]("Write BokehJS configuration to bokehjs.properties")
@@ -59,6 +62,12 @@ object BokehJS {
     import BokehJSKeys._
 
     lazy val bokehjsSettings = Seq(
+        nodeBinary <<= Def.task {
+            val nodes = "node" :: "nodejs" :: Nil
+            nodes.view.find(node => Try { s"$node --version" !! }.isSuccess) getOrElse {
+                sys.error("could not detect node.js on this system")
+            }
+        },
         sourceDirectory in Compile := baseDirectory.value / "src",
         unmanagedResourceDirectories in Compile += baseDirectory.value / "build",
         bokehjsUpdate in Compile <<= Def.task {
@@ -93,11 +102,12 @@ object BokehJS {
         bokehjsBuildDir in Compile := (classDirectory in Compile).value,
         bokehjsBuild in Compile <<= Def.task {
             def gulp(args: String*) = {
+                val node = nodeBinary.value
                 val prefix = baseDirectory.value
                 val gulp = prefix / "node_modules" / "gulp" / "bin" / "gulp.js"
                 val gulpfile = prefix / "gulpfile.js"
                 val log = streams.value.log
-                val ret = s"node $gulp --gulpfile $gulpfile ${args.mkString(" ")}" ! log
+                val ret = s"$node $gulp --gulpfile $gulpfile ${args.mkString(" ")}" ! log
                 if (ret != 0) sys.error("gulp build failed")
             }
 
