@@ -58,11 +58,12 @@ object Calendars extends Example {
         val day_names = pick_weekdays(day_abbrs)
         val week_days = pick_weekdays(List(workday)*5 ++ List(weekend)*2)
 
-        val source = new ColumnDataSource()
-            .addColumn('days,            day_names*month_weeks)
-            .addColumn('weeks,           (0 until month_weeks).flatMap(week => List(week.toString)*7))
-            .addColumn('month_days,      month_days)
-            .addColumn('day_backgrounds, (List(week_days)*month_weeks).flatten)
+        object source extends ColumnDataSource {
+            val days            = column { day_names*month_weeks }
+            val weeks           = column { (0 until month_weeks).flatMap(week => List(week.toString)*7) }
+            val day_labels      = column { month_days.map(_.map(_.toString)) }
+            val day_backgrounds = column { (List(week_days)*month_weeks).flatten }
+        }
 
         import sampledata.{us_holidays,Holiday}
 
@@ -71,10 +72,17 @@ object Calendars extends Example {
                 Holiday(date, summary.replace("(US-OPM)", "").trim())
         }
 
-        val holidays_source = new ColumnDataSource()
-            .addColumn('holidays_days,  holidays.map(holiday => day_names(weekday(holiday.date))))
-            .addColumn('holidays_weeks, holidays.map(holiday => ((weekday(holiday.date.withDayOfMonth(1)) + holiday.date.day) / 7).toString))
-            .addColumn('month_holidays, holidays.map(holiday => holiday.summary))
+        object holidays_source extends ColumnDataSource {
+            val holidays_days  = column {
+                holidays.map(holiday => day_names(weekday(holiday.date)))
+            }
+            val holidays_weeks = column {
+                holidays.map(holiday => ((weekday(holiday.date.withDayOfMonth(1)) + holiday.date.day) / 7).toString)
+            }
+            val month_holidays = column {
+                holidays.map(holiday => holiday.summary)
+            }
+        }
 
         val xdr = new FactorRange().factors(day_names)
         val ydr = new FactorRange().factors((0 until month_weeks).map( _.toString).reverse.toList)
@@ -94,7 +102,7 @@ object Calendars extends Example {
         val holidays_glyph = new Rect().x('holidays_days).y('holidays_weeks).width(0.9).height(0.9).fill_color(Color.Pink).line_color(Color.IndianRed)
         val holidays_renderer = new GlyphRenderer().data_source(holidays_source).glyph(holidays_glyph)
 
-        val text_glyph = new Text().x('days).y('weeks).text('month_days).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
+        val text_glyph = new Text().x('days).y('weeks).text('day_labels).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
         val text_renderer = new GlyphRenderer().data_source(source).glyph(text_glyph)
 
         val xaxis = new CategoricalAxis()

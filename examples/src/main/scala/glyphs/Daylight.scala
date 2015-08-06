@@ -7,20 +7,23 @@ import org.joda.time.{LocalTime=>Time,LocalDate=>Date}
 object Daylight extends Example {
     val daylight = sampledata.daylight.Warsaw2013
 
-    val source = new ColumnDataSource()
-        .addColumn('dates, daylight.date)
-        .addColumn('sunrises, daylight.sunrise)
-        .addColumn('sunsets, daylight.sunset)
+    object source extends ColumnDataSource {
+        val dates    = column(daylight.date)
+        val sunrises = column(daylight.sunrise)
+        val sunsets  = column(daylight.sunset)
+    }
 
-    val patch1_source = new ColumnDataSource()
-        .addColumn('dates, daylight.date ++ daylight.date.reverse)
-        .addColumn('times, daylight.sunrise ++ daylight.sunset.reverse)
+    object patch1_source extends ColumnDataSource {
+        val dates = column(daylight.date ++ daylight.date.reverse)
+        val times = column(daylight.sunrise ++ daylight.sunset.reverse)
+    }
 
     val summer = daylight.summerOnly
 
-    val patch2_source = new ColumnDataSource()
-        .addColumn('dates, summer.date ++ summer.date.reverse)
-        .addColumn('times, summer.sunrise ++ summer.sunset.reverse)
+    object patch2_source extends ColumnDataSource {
+        val dates = column(summer.date ++ summer.date.reverse)
+        val times = column(summer.sunrise ++ summer.sunset.reverse)
+    }
 
     val summerStartIndex = daylight.summer.indexOf(true)
     val summerEndIndex   = daylight.summer.indexOf(false, summerStartIndex)
@@ -39,10 +42,11 @@ object Daylight extends Example {
 
     val _11_30 = new Time(11, 30)
 
-    val text_source = new ColumnDataSource()
-        .addColumn('dates, List(springMiddle, summerMiddle, autumnMiddle))
-        .addColumn('times, List(_11_30, _11_30, _11_30))
-        .addColumn('texts, List("CST (UTC+1)", "CEST (UTC+2)", "CST (UTC+1)"))
+    object text_source extends ColumnDataSource {
+        val dates = column(List(springMiddle, summerMiddle, autumnMiddle))
+        val times = column(List(_11_30, _11_30, _11_30))
+        val texts = column(List("CST (UTC+1)", "CEST (UTC+2)", "CST (UTC+1)"))
+    }
 
     val xdr = new DataRange1d()
     val ydr = new DataRange1d()

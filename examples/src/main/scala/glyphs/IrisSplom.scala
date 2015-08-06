@@ -9,12 +9,13 @@ import math.{Pi=>pi}
 object IrisSplom extends Example {
     val colormap = Map("setosa" -> Color.Red, "versicolor" -> Color.Green, "virginica" -> Color.Blue)
 
-    val source = new ColumnDataSource()
-        .addColumn('petal_length, flowers.petal_length)
-        .addColumn('petal_width, flowers.petal_width)
-        .addColumn('sepal_length, flowers.sepal_length)
-        .addColumn('sepal_width, flowers.sepal_width)
-        .addColumn('color, flowers.species.map(colormap))
+    object source extends ColumnDataSource {
+        val petal_length = column(flowers.petal_length)
+        val petal_width = column(flowers.petal_width)
+        val sepal_length = column(flowers.sepal_length)
+        val sepal_width = column(flowers.sepal_width)
+        val color = column(flowers.species.map(colormap))
+    }
 
     val columns = List('petal_length, 'petal_width, 'sepal_width, 'sepal_length)
 
