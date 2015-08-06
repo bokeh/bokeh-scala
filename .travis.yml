@@ -15,6 +15,8 @@ addons:
     packages:
       - python-pip
       - nodejs
+    sources:
+      - deb-src https://deb.nodesource.com/node_0.12 precise main
 
 install:
   - export PATH="$HOME/.local/bin:$PATH"
