@@ -14,13 +14,12 @@ addons:
   apt:
     packages:
       - python-pip
-      - nodejs
-    sources:
-      - deb-src https://deb.nodesource.com/node_0.12 precise main
 
 install:
-  - export PATH="$HOME/.local/bin:$PATH"
+  - ( cd $HOME; curl https://nodejs.org/dist/v0.12.7/node-v0.12.7-linux-x64.tar.gz | tar xz )
   - pip install --user -q awscli
+
+before_script: export PATH="$HOME/.local/bin:$HOME/node-v0.12.7-linux-x64/bin:$PATH"
 
 script: ./sbt ++$TRAVIS_SCALA_VERSION compile test doc
 
