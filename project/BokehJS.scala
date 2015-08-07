@@ -111,7 +111,7 @@ object BokehJS {
                 if (ret != 0) sys.error("gulp build failed")
             }
 
-            val cacheFile = target.value / "gulp.cache"
+            val cacheFile = streams.value.cacheDirectory / scalaBinaryVersion.value / "gulp.cache"
             val fileFilter = (bokehjsSources in Compile).value
 
             val cache = new Cache(cacheFile, fileFilter)
