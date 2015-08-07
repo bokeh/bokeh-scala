@@ -49,7 +49,6 @@ object Dependencies {
 object BokehBuild extends Build {
     override lazy val settings = super.settings ++ Seq(
         organization := "io.continuum.bokeh",
-        version := "0.6-SNAPSHOT",
         description := "Scala bindings for Bokeh plotting library",
         homepage := Some(url("http://bokeh.pydata.org")),
         licenses := Seq("MIT-style" -> url("http://www.opensource.org/licenses/mit-license.php")),
