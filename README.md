@@ -35,7 +35,7 @@ API documentation (scaladoc) is available for [stable][api-stable] and
 
 ## Development
 
-Install nodejs. This is required to build bokehjs. Then:
+Install [nodejs][nodejs]. This is required to build bokehjs. Then:
 
 ```bash
 $ git clone --recursive https://github.com/bokeh/bokeh-scala.git
@@ -65,6 +65,7 @@ Published under [The MIT License][license], see LICENSE.
 [sample]: https://github.com/bokeh/bokeh-scala-sample
 [api-stable]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.5/index.html
 [api-devel]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.6-SNAPSHOT/index.html
+[nodejs]: https://nodejs.org/download/
 [group]: https://groups.google.com/a/continuum.io/forum/#!forum/bokeh
 [issues]: https://github.com/bokeh/bokeh-scala/issues
 [bokeh-issues]: https://github.com/bokeh/bokeh/issues
