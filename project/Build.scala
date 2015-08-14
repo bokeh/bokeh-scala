@@ -2,6 +2,7 @@ import sbt._
 import Keys._
 
 import com.typesafe.sbt.SbtPgp
+import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
 
 object Dependencies {
     val isScala_2_10 = Def.setting {
@@ -101,7 +102,8 @@ object BokehBuild extends Build {
                 val path = Path.userHome / ".sonatype" / "credentials"
                 if (path.exists) Some(Credentials(path)) else None
             } toList
-        }
+        },
+        javaVersionPrefix in javaVersionCheck := Some("1.7")
     )
 
     lazy val commonSettings = Defaults.coreDefaultSettings ++ publishSettings ++ Seq(
