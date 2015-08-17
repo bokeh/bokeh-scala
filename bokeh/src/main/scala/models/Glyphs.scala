@@ -1,12 +1,15 @@
 package io.continuum.bokeh
 
-@model abstract class Glyph extends PlotObject with Vectorization {
+@model abstract class Glyph /*[X:Numeric, Y:Numeric]*/ extends PlotObject with Vectorization {
+    type X = Double
+    type Y = Double
+
     object visible extends Field[Boolean](true)
 }
 
-@model class AnnularWedge extends Glyph with FillProps with LineProps {
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+@model class AnnularWedge /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
     object inner_radius extends Spatial[Double] with NonNegative
     object outer_radius extends Spatial[Double] with NonNegative
     object start_angle extends Angular[Double]
@@ -14,39 +17,39 @@ package io.continuum.bokeh
     object direction extends Field[Direction]
 }
 
-@model class Annulus extends Glyph with FillProps with LineProps {
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+@model class Annulus /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
     object inner_radius extends Spatial[Double] with NonNegative
     object outer_radius extends Spatial[Double] with NonNegative
 }
 
-@model class Arc extends Glyph with LineProps {
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+@model class Arc /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
     object radius extends Spatial[Double] with NonNegative
     object start_angle extends Angular[Double]
     object end_angle extends Angular[Double]
     object direction extends Field[Direction]
 }
 
-@model class Bezier extends Glyph with LineProps {
-    object x0 extends Vectorized[Double]
-    object y0 extends Vectorized[Double]
-    object x1 extends Vectorized[Double]
-    object y1 extends Vectorized[Double]
-    object cx0 extends Vectorized[Double]
-    object cy0 extends Vectorized[Double]
-    object cx1 extends Vectorized[Double]
-    object cy1 extends Vectorized[Double]
+@model class Bezier /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+    object x0 extends Vectorized[X]
+    object y0 extends Vectorized[Y]
+    object x1 extends Vectorized[X]
+    object y1 extends Vectorized[Y]
+    object cx0 extends Vectorized[X]
+    object cy0 extends Vectorized[Y]
+    object cx1 extends Vectorized[X]
+    object cy1 extends Vectorized[Y]
 }
 
-@model class ImageRGBA extends Glyph {
+@model class ImageRGBA /*[X:Numeric, Y:Numeric]*/ extends Glyph {
     object image extends Vectorized[Array[Double]]
     object rows extends Vectorized[Int]
     object cols extends Vectorized[Int]
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
     object dw extends Spatial[Double] with NonNegative
     object dh extends Spatial[Double] with NonNegative
     object dilate extends Field[Boolean]
@@ -62,14 +65,14 @@ package io.continuum.bokeh
     }
 }
 
-@model class Image extends ImageRGBA {
+@model class Image /*[X:Numeric, Y:Numeric]*/ extends ImageRGBA {
     object color_mapper extends Field[ColorMapper]
 }
 
-@model class ImageURL extends Glyph {
+@model class ImageURL /*[X:Numeric, Y:Numeric]*/ extends Glyph {
     object url extends Vectorized[String]
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
     object w extends Spatial[Double] with NonNegative
     object h extends Spatial[Double] with NonNegative
     object angle extends Angular[Double]
@@ -77,94 +80,94 @@ package io.continuum.bokeh
     object anchor extends Field[Anchor]
 }
 
-@model class Line extends Glyph with LineProps {
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+@model class Line /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
 }
 
-@model class MultiLine extends Glyph with LineProps {
-    object xs extends Vectorized[List[Double]]
-    object ys extends Vectorized[List[Double]]
+@model class MultiLine /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+    object xs extends Vectorized[List[X]]
+    object ys extends Vectorized[List[Y]]
 }
 
-@model class Oval extends Glyph with FillProps with LineProps {
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+@model class Oval /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
     object width extends Spatial[Double] with NonNegative
     object height extends Spatial[Double] with NonNegative
     object angle extends Angular[Double]
 }
 
-@model class Patch extends Glyph with FillProps with LineProps {
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+@model class Patch /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
 }
 
-@model class Patches extends Glyph with LineProps with FillProps {
-    object xs extends Vectorized[List[Double]]
-    object ys extends Vectorized[List[Double]]
+@model class Patches /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps with FillProps {
+    object xs extends Vectorized[List[X]]
+    object ys extends Vectorized[List[Y]]
 }
 
-@model class Quad extends Glyph with FillProps with LineProps {
-    object left extends Vectorized[Double]
-    object right extends Vectorized[Double]
-    object bottom extends Vectorized[Double]
-    object top extends Vectorized[Double]
+@model class Quad /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+    object left extends Vectorized[X]
+    object right extends Vectorized[X]
+    object bottom extends Vectorized[Y]
+    object top extends Vectorized[Y]
 }
 
-@model class Quadratic extends Glyph with LineProps {
-    object x0 extends Vectorized[Double]
-    object y0 extends Vectorized[Double]
-    object x1 extends Vectorized[Double]
-    object y1 extends Vectorized[Double]
-    object cx extends Vectorized[Double]
-    object cy extends Vectorized[Double]
+@model class Quadratic /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+    object x0 extends Vectorized[X]
+    object y0 extends Vectorized[Y]
+    object x1 extends Vectorized[X]
+    object y1 extends Vectorized[Y]
+    object cx extends Vectorized[X]
+    object cy extends Vectorized[Y]
 }
 
-@model class Ray extends Glyph with LineProps {
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
-    object angle extends Angular[Double]
+@model class Ray /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
     object length extends Spatial[Double] with NonNegative
+    object angle extends Angular[Double]
 }
 
-@model class Rect extends Glyph with FillProps with LineProps {
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+@model class Rect /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
     object width extends Spatial[Double] with NonNegative
     object height extends Spatial[Double] with NonNegative
     object angle extends Angular[Double]
     object dilate extends Field[Boolean]
 }
 
-@model class Segment extends Glyph with LineProps {
-    object x0 extends Vectorized[Double]
-    object y0 extends Vectorized[Double]
-    object x1 extends Vectorized[Double]
-    object y1 extends Vectorized[Double]
+@model class Segment /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+    object x0 extends Vectorized[X]
+    object y0 extends Vectorized[Y]
+    object x1 extends Vectorized[X]
+    object y1 extends Vectorized[Y]
 }
 
-@model class Text extends Glyph with TextProps {
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+@model class Text /*[X: Numeric, Y: Numeric]*/ extends Glyph with TextProps {
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
     object text extends Vectorized[String]
     object angle extends Angular[Double]
     object x_offset extends Spatial[Double]
     object y_offset extends Spatial[Double]
 }
 
-@model class Wedge extends Glyph with FillProps with LineProps {
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+@model class Wedge /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
     object radius extends Spatial[Double] with NonNegative
     object start_angle extends Angular[Double]
     object end_angle extends Angular[Double]
     object direction extends Field[Direction]
 }
 
-@model class Gear extends Glyph with LineProps with FillProps {
-    object x extends Vectorized[Double]
-    object y extends Vectorized[Double]
+@model class Gear /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps with FillProps {
+    object x extends Vectorized[X]
+    object y extends Vectorized[Y]
     object angle extends Angular[Double]
     object module extends Vectorized[Double] with NonNegative
     object teeth extends Vectorized[Int]                                // TODO: with NonNegative
