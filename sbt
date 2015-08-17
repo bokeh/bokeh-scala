@@ -52,7 +52,7 @@ SBT_LAUNCHER="$(dirname $0)/project/sbt-launch-$SBT_VERSION.jar"
 
 if [ ! -e "$SBT_LAUNCHER" ];
 then
-    URL="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/$SBT_VERSION/sbt-launch.jar"
+    URL="http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/$SBT_VERSION/jars/sbt-launch.jar"
     if [ $(which curl) ];
     then
         curl -Lo $SBT_LAUNCHER $URL || exit
