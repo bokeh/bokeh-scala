@@ -6,10 +6,10 @@ package widgets
     object height extends Field[Int]
 }
 
-@model class HBox extends Layout {
+@model abstract class BaseBox extends Layout {
     object children extends Field[List[Widget]]
 }
 
-@model class VBox extends Layout {
-    object children extends Field[List[Widget]]
-}
+@model class HBox extends BaseBox
+
+@model class VBox extends BaseBox
