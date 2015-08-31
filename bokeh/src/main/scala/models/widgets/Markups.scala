@@ -1,7 +1,9 @@
 package io.continuum.bokeh
 package widgets
 
-@model class Paragraph extends Widget {
+@model abstract class Markup extends Widget
+
+@model class Paragraph extends Markup {
     object text extends Field[String]
 }
 
