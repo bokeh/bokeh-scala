@@ -8,7 +8,10 @@ import play.api.libs.json.JsArray
     object zoom extends Field[Int](12)
 }
 
-@model abstract class MapPlot extends Plot
+@model abstract class MapPlot extends Plot {
+    // TODO: object map_options extends Field[MapOptions]
+    // and later override this in subclasses
+}
 
 @model class GMapOptions extends MapOptions {
     object map_type extends Field[MapType]
