@@ -47,7 +47,7 @@ package io.continuum.bokeh
 @model class PolySelectTool extends SelectTool
 
 @model class TapTool extends SelectTool {
-    object action extends Field[Action]
+    object callback extends Field[Callback]
     object always_active extends Field[Boolean](true)
 }
 

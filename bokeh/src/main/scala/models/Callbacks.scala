@@ -1,12 +1,12 @@
 package io.continuum.bokeh
 
-@model abstract class Action extends PlotObject
+@model abstract class Callback extends PlotObject
 
-@model class OpenURL extends Action {
+@model class OpenURL extends Callback {
     object url extends Field[String]("http://")
 }
 
-@model class Callback extends Action {
+@model class CustomJS extends Callback {
     object args extends Field[Map[String, PlotObject]]
     object code extends Field[String]
 }

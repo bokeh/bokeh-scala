@@ -176,7 +176,7 @@ object Colors extends Example {
     val url = "http://www.colors.commutercreative.com/@names/"
     val tooltips = Tooltip(s"""Click the color to go to:<br /><a href="$url">$url</a>""")
 
-    val tap = new TapTool().plot(plot).renderers(rect :: Nil).action(new OpenURL().url(url))
+    val tap = new TapTool().plot(plot).renderers(rect :: Nil).callback(new OpenURL().url(url))
     val hover = new HoverTool().plot(plot).renderers(rect :: Nil).tooltips(tooltips)
     plot.tools := List(tap, hover)
 
