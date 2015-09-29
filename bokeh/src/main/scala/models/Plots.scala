@@ -51,6 +51,10 @@ package io.continuum.bokeh
     object lod_interval extends Field[Int](300)
     object lod_timeout extends Field[Int](500)
 
+    object webgl extends Field[Boolean](false)
+
+    object responsive extends Field[Boolean](false)
+
     def addGlyph(glyph: Glyph): GlyphRenderer = {
         addGlyph(new ColumnDataSource(), glyph)
     }

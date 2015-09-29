@@ -76,6 +76,7 @@ package io.continuum.bokeh
     object w extends Spatial[Double] with NonNegative
     object h extends Spatial[Double] with NonNegative
     object angle extends Angular[Double]
+    object global_alpha extends Field[Percent](1.0)
     object dilate extends Field[Boolean]
     object anchor extends Field[Anchor]
 }
