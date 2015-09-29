@@ -103,7 +103,7 @@ class BokehSpec extends Specification {
                 .dilate(false)
                 .anchor(Anchor.TopRight)
 
-            obj1.fields.length shouldEqual 10
+            obj1.fields.length shouldEqual 11
         }
 
         "support Line" in {
@@ -330,7 +330,7 @@ class BokehSpec extends Specification {
         "support Legend" in {
             val obj = new Legend().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 25
+            obj.fields.length shouldEqual 32
         }
 
         "support BoxSelectionOverlay" in {
@@ -483,7 +483,7 @@ class BokehSpec extends Specification {
         "support Plot" in {
             val obj = new Plot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 47
+            obj.fields.length shouldEqual 49
         }
 
         "support GMapOptions" in {
@@ -494,7 +494,7 @@ class BokehSpec extends Specification {
         "support GMapPlot" in {
             val obj = new GMapPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 48
+            obj.fields.length shouldEqual 50
         }
 
         "support GeoJSOptions" in {
@@ -505,13 +505,13 @@ class BokehSpec extends Specification {
         "support GeoJSPlot" in {
             val obj = new GeoJSPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 48
+            obj.fields.length shouldEqual 50
         }
 
         "support GridPlot" in {
             val obj = new GridPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 49
+            obj.fields.length shouldEqual 51
         }
     }
 
