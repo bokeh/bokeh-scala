@@ -1,5 +1,7 @@
 package io.continuum
 
+import io.continuum.bokeh.FontSize
+import io.continuum.bokeh.SourceImplicits
 package object bokeh extends Formats with NodeImplicits with SourceImplicits {
     implicit class NumbericOps[T:Numeric](value: T) {
         def %% : Percent = Percent(implicitly[Numeric[T]].toDouble(value)/100)
