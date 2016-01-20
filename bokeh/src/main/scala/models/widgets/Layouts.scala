@@ -7,7 +7,7 @@ package widgets
 }
 
 @model abstract class BaseBox extends Layout {
-    object children extends Field[List[Widget]]
+    object children extends Field[List[Component]]
 }
 
 @model class HBox extends BaseBox

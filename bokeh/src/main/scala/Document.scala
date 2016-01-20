@@ -9,10 +9,10 @@ import scalax.file.Path
 import scala.collection.mutable.ListBuffer
 import scala.xml.{Node,NodeSeq,XML}
 
-class Document(objs: Widget*) {
-    private val objects = ListBuffer[Widget](objs: _*)
+class Document(objs: Component*) {
+    private val objects = ListBuffer[Component](objs: _*)
 
-    def add(objs: Widget*) {
+    def add(objs: Component*) {
         objects ++= objs
     }
 
@@ -38,13 +38,13 @@ class HTMLFragment(val html: NodeSeq, val styles: NodeSeq, val scripts: NodeSeq)
 }
 
 object HTMLFragmentWriter {
-    def apply(obj: Widget): HTMLFragmentWriter = apply(obj, Resources.default)
+    def apply(obj: Component): HTMLFragmentWriter = apply(obj, Resources.default)
 
-    def apply(obj: Widget, resources: Resources): HTMLFragmentWriter = apply(obj :: Nil, resources)
+    def apply(obj: Component, resources: Resources): HTMLFragmentWriter = apply(obj :: Nil, resources)
 
-    def apply(objs: List[Widget]): HTMLFragmentWriter = apply(objs, Resources.default)
+    def apply(objs: List[Component]): HTMLFragmentWriter = apply(objs, Resources.default)
 
-    def apply(objs: List[Widget], resources: Resources): HTMLFragmentWriter = {
+    def apply(objs: List[Component], resources: Resources): HTMLFragmentWriter = {
         val contexts = objs.map(obj => new PlotContext().children(obj :: Nil))
         new HTMLFragmentWriter(contexts, resources)
     }
@@ -111,13 +111,13 @@ class HTMLFile(val file: File) {
 }
 
 object HTMLFileWriter {
-    def apply(obj: Widget): HTMLFileWriter = apply(obj, Resources.default)
+    def apply(obj: Component): HTMLFileWriter = apply(obj, Resources.default)
 
-    def apply(obj: Widget, resources: Resources): HTMLFileWriter = apply(obj :: Nil, resources)
+    def apply(obj: Component, resources: Resources): HTMLFileWriter = apply(obj :: Nil, resources)
 
-    def apply(objs: List[Widget]): HTMLFileWriter = apply(objs, Resources.default)
+    def apply(objs: List[Component]): HTMLFileWriter = apply(objs, Resources.default)
 
-    def apply(objs: List[Widget], resources: Resources): HTMLFileWriter = {
+    def apply(objs: List[Component], resources: Resources): HTMLFileWriter = {
         val contexts = objs.map(obj => new PlotContext().children(obj :: Nil))
         new HTMLFileWriter(contexts, resources)
     }

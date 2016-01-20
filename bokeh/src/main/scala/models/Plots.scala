@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@model class Plot extends Widget {
+@model class Plot extends Component {
     object title extends Field[String]("")
 
     title = include[TextProps]
