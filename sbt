@@ -60,7 +60,7 @@ then
     then
         wget -O  $SBT_LAUNCHER $URL || exit
     else
-        echo "Neither curl not wget found. Could not download sbt-launcher-${SBT_VERSION}.jar"
+        echo "Neither curl nor wget found. Could not download sbt-launcher-${SBT_VERSION}.jar"
         exit 1
     fi
 fi
