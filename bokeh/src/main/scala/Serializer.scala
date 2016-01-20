@@ -3,13 +3,13 @@ package io.continuum.bokeh
 import play.api.libs.json.{Json,JsValue,JsArray,JsObject,JsString}
 
 class JSONSerializer(val stringifyFn: JsValue => String) {
-    case class Model(id: String, `type`: String, attributes: JsObject, doc: Option[String] = None)
+    case class ModelRepr(id: String, `type`: String, attributes: JsObject, doc: Option[String] = None)
 
-    implicit val ModelFormat = Json.format[Model]
+    implicit val ModelFormat = Json.format[ModelRepr]
 
-    def getModel(obj: PlotObject): Model = {
+    def getModelRepr(obj: PlotObject): ModelRepr = {
         val Ref(id, tp) = obj.getRef
-        Model(id, tp, HasFieldsWrites.writeFields(obj))
+        ModelRepr(id, tp, HasFieldsWrites.writeFields(obj))
     }
 
     def stringify(obj: PlotObject): String = {
@@ -17,7 +17,7 @@ class JSONSerializer(val stringifyFn: JsValue => String) {
     }
 
     def serializeObjs(objs: List[PlotObject]): String = {
-        stringifyFn(Json.toJson(objs.map(getModel)))
+        stringifyFn(Json.toJson(objs.map(getModelRepr)))
     }
 
     def collectObjs(obj: HasFields): List[PlotObject] = {
