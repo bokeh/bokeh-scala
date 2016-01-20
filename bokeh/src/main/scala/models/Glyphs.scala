@@ -79,6 +79,8 @@ package io.continuum.bokeh
     object global_alpha extends Field[Percent](1.0)
     object dilate extends Field[Boolean]
     object anchor extends Field[Anchor]
+    object retry_attempts extends Field[Int](0)
+    object retry_timeout extends Field[Int](0)
 }
 
 @model class Line /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {

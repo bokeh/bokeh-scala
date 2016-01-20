@@ -104,20 +104,25 @@ sealed trait Orientation extends EnumType with SnakeCase
     case object Vertical extends Orientation
 }
 
-sealed trait LegendOrientation extends EnumType with SnakeCase
-@enum object LegendOrientation extends Enumerated[LegendOrientation] {
-    case object TopRight extends LegendOrientation
-    case object TopLeft extends LegendOrientation
-    case object BottomLeft extends LegendOrientation
-    case object BottomRight extends LegendOrientation
-}
-
 sealed trait BorderSymmetry extends EnumType with SnakeCase
 @enum object BorderSymmetry extends Enumerated[BorderSymmetry] {
     case object Horizontal extends BorderSymmetry
     case object Vertical extends BorderSymmetry
     case object HorizontalVertical extends BorderSymmetry
     case object VerticalHorizontal extends BorderSymmetry
+}
+
+sealed trait LegendLocation extends EnumType with SnakeCase
+@enum object LegendLocation extends Enumerated[LegendLocation] {
+    case object TopLeft extends LegendLocation
+    case object TopCenter extends LegendLocation
+    case object TopRight extends LegendLocation
+    case object RightCenter extends LegendLocation
+    case object BottomRight extends LegendLocation
+    case object BottomCenter extends LegendLocation
+    case object BottomLeft extends LegendLocation
+    case object LeftCenter extends LegendLocation
+    case object Center extends LegendLocation
 }
 
 sealed trait Anchor extends EnumType with SnakeCase
@@ -284,6 +289,12 @@ sealed trait RenderLevel extends EnumType with SnakeCase
     case object Tool extends RenderLevel
 }
 
+sealed trait RenderMode extends EnumType with SnakeCase
+@enum object RenderMode extends Enumerated[RenderMode] {
+    case object Canvas extends RenderMode
+    case object CSS extends RenderMode
+}
+
 sealed trait HoverMode extends EnumType with LowerCase
 @enum object HoverMode extends Enumerated[HoverMode] {
     case object Mouse extends HoverMode
@@ -305,4 +316,10 @@ sealed trait LinePolicy extends EnumType with SnakeCase
     case object Nearest extends LinePolicy
     case object Interp extends LinePolicy
     case object None extends LinePolicy
+}
+
+sealed trait ScriptingLanguage extends EnumType with LowerCase
+@enum object ScriptingLanguage extends Enumerated[ScriptingLanguage] {
+    case object JavaScript extends ScriptingLanguage
+    case object CoffeeScript extends ScriptingLanguage
 }

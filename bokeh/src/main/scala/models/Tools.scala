@@ -24,6 +24,10 @@ package io.continuum.bokeh
 
 @model class CrosshairTool extends Tool {
     object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
+
+    object line_color extends Field[Color](Color.Black)
+    object line_width extends Field[Double](1)
+    object line_alpha extends Field[Double](1.0)
 }
 
 @model class BoxZoomTool extends Tool

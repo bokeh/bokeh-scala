@@ -9,4 +9,5 @@ package io.continuum.bokeh
 @model class CustomJS extends Callback {
     object args extends Field[Map[String, PlotObject]]
     object code extends Field[String]
+    object lang extends Field[ScriptingLanguage](ScriptingLanguage.JavaScript)
 }

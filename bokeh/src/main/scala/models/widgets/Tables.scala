@@ -93,4 +93,5 @@ package widgets
     object editable extends Field[Boolean](false)
     object selectable extends Field[Boolean](true)      // TODO: Enum("checkbox"))
     object row_headers extends Field[Boolean](true)
+    object scroll_to_selction extends Field[Boolean](true)
 }

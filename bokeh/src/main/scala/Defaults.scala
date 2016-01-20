@@ -55,8 +55,8 @@ trait EnumDefaults {
     implicit object DimensionDefault extends Default[Dimension](Dimension.Width)
     implicit object LocationDefault extends Default[Location](Location.Auto)
     implicit object OrientationDefault extends Default[Orientation](Orientation.Horizontal)
-    implicit object LegendOrientationDefault extends Default[LegendOrientation](LegendOrientation.TopRight)
     implicit object BorderSymmetryDefault extends Default[BorderSymmetry](BorderSymmetry.Horizontal)
+    implicit object LegendLocationDefault extends Default[LegendLocation](LegendLocation.TopRight)
     implicit object AnchorDefault extends Default[Anchor](Anchor.TopLeft)
     implicit object ColumnTypeDefault extends Default[ColumnType](ColumnType.String)
     implicit object ButtonTypeDefault extends Default[ButtonType](ButtonType.Default)
@@ -72,9 +72,11 @@ trait EnumDefaults {
     implicit object NumeralLanguageDefault extends Default[NumeralLanguage](NumeralLanguage.`en`)
     implicit object HTTPMethodDefault extends Default[HTTPMethod](HTTPMethod.POST)
     implicit object RenderLevelDefault extends Default[RenderLevel](RenderLevel.Glyph)
+    implicit object RenderModeDefault extends Default[RenderMode](RenderMode.Canvas)
     implicit object HoverModeDefault extends Default[HoverMode](HoverMode.Mouse)
     implicit object PointPolicyDefault extends Default[PointPolicy](PointPolicy.SnapToData)
     implicit object LinePolicyDefault extends Default[LinePolicy](LinePolicy.Prev)
+    implicit object ScriptingLanguageDefault extends Default[ScriptingLanguage](ScriptingLanguage.JavaScript)
 }
 
 trait DefaultImplicits extends TypeDefaults with EnumDefaults
