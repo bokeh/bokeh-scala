@@ -3,51 +3,6 @@ import Keys._
 
 import scala.util.Try
 
-object FilePickle {
-    import upickle._
-
-    implicit val fileWriter = Writer[File] {
-        case file => Js.Str(file.getPath)
-    }
-    implicit val fileReader = Reader[File] {
-        case Js.Str(path) => new File(path)
-    }
-}
-
-class Cache(cacheFile: File, fileFilter: PathFinder) {
-    def sync(fn: Seq[File] => Unit) {
-        val files = fileFilter.get
-
-        val cache = readCache().toMap
-        val newCache = files.map { file => file -> file.lastModified }
-
-        val removed = cache.keySet -- files.toSet toSeq
-        val modified = files.filter { file =>
-            cache.get(file) match {
-                case Some(lastModified) => file.lastModified > lastModified
-                case None               => true // this is a new file
-            }
-        }
-
-        fn(removed ++ modified)
-        writeCache(newCache)
-    }
-
-    import FilePickle._
-
-    protected def readCache(): Seq[(File, Long)] = {
-        if (cacheFile.exists) {
-            upickle.read[Seq[(File, Long)]](IO.read(cacheFile))
-        } else {
-            Seq.empty
-        }
-    }
-
-    protected def writeCache(cache: Seq[(File, Long)]) {
-        IO.write(cacheFile, upickle.write(cache))
-    }
-}
-
 object BokehJS {
     object BokehJSKeys {
         val nodeBinary = taskKey[String]("Detected node.js binary, either node or nodejs")
@@ -111,19 +66,36 @@ object BokehJS {
                 if (ret != 0) sys.error("gulp build failed")
             }
 
-            val cacheFile = streams.value.cacheDirectory / scalaBinaryVersion.value / "gulp.cache"
-            val fileFilter = (bokehjsSources in Compile).value
+            val sources = (bokehjsSources in Compile).value
+            val base = (baseDirectory in Compile).value
 
-            val cache = new Cache(cacheFile, fileFilter)
+            val all =
+                sources +++
+                (base / "gulp" ***) +++
+                (base / "gulpfile.js") +++
+                (base / "package.json")
 
-            cache.sync { modified =>
-                if (modified.length > 0) {
-                    val plural = if (modified.length != 1) "s" else ""
-                    streams.value.log.info(s"Running gulp build for ${modified.length} file$plural")
-                    val buildDir = (bokehjsBuildDir in Compile).value.getPath
-                    gulp("scripts", "styles", "--build-dir", buildDir)
+            val watched = all.filter(_.isFile).filter(!_.isHidden).get
+            val lastModified = watched.map(_.lastModified).max
 
+            val buildDir = (bokehjsBuildDir in Compile).value
+
+            var jsComps = List("bokeh", "bokeh-widgets", "bokeh-compiler")
+            var cssComps = List("bokeh", "bokeh-widgets")
+            var targets =
+                (jsComps.map(_ + ".js")   ++ jsComps.map(_ + ".js.map")).map(buildDir / "js" / _)    ++
+                (cssComps.map(_ + ".css") ++ cssComps.map(_ + ".css.map")).map(buildDir / "css" / _)
+
+            val prevBuild = targets.map(_.lastModified).min
+            val numModified = watched.count(_.lastModified > prevBuild)
+
+            if (!targets.forall(_.exists) || numModified > 0) {
+                val suffix = numModified match {
+                    case 0 => ""
+                    case _ => s" for ${numModified} file${if (numModified > 1) "s" else ""}"
                 }
+                streams.value.log.info(s"Running gulp build$suffix")
+                gulp("build", "--build-dir", buildDir.getPath)
             }
         } dependsOn(bokehjsUpdate in Compile),
         watchSources <++= Def.task { (bokehjsSources in Compile).value.get },
