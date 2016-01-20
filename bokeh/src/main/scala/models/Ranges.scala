@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@model abstract class Range extends PlotObject {
+@model abstract class Range extends Model {
     object callback extends Field[Callback]
 }
 

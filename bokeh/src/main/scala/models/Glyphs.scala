@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@model abstract class Glyph /*[X:Numeric, Y:Numeric]*/ extends PlotObject with Vectorization {
+@model abstract class Glyph /*[X:Numeric, Y:Numeric]*/ extends Model with Vectorization {
     type X = Double
     type Y = Double
 

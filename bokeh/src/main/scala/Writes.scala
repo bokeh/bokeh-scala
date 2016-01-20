@@ -120,8 +120,8 @@ trait BokehWrites {
         }
 
         def writes(obj: HasFields) = obj match {
-            case obj: PlotObject => implicitly[Writes[Ref]].writes(obj.getRef)
-            case _               => writeFields(obj)
+            case obj: Model => implicitly[Writes[Ref]].writes(obj.getRef)
+            case _          => writeFields(obj)
         }
     }
 

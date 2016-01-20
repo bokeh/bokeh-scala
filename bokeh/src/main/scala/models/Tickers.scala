@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@model abstract class Ticker extends PlotObject {
+@model abstract class Ticker extends Model {
     object num_minor_ticks extends Field[Int](5)
     object desired_num_ticks extends Field[Int](6)
 }
@@ -42,7 +42,7 @@ package io.continuum.bokeh
 
 @model class DatetimeTicker extends Ticker
 
-@model abstract class TickFormatter extends PlotObject
+@model abstract class TickFormatter extends Model
 
 @model class BasicTickFormatter extends TickFormatter {
     // TODO: object precision extends Field[Either[Auto, Int]]

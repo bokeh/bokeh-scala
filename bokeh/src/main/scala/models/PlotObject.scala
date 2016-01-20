@@ -9,7 +9,7 @@ trait ByReference { self: HasFields =>
 
 case class Ref(id: String, `type`: String)
 
-@model abstract class PlotObject extends HasFields with ByReference {
+@model abstract class Model extends HasFields with ByReference {
     type RefType = Ref
 
     def getRef = Ref(id.value, typeName)

@@ -15,7 +15,7 @@ case class Selected(`0d`: Selected0d = Selected0d(),
                     `1d`: Selected1d = Selected1d(),
                     `2d`: Selected2d = Selected2d())
 
-@model abstract class DataSource extends PlotObject {
+@model abstract class DataSource extends Model {
     object column_names extends Field[List[String]]
     object selected extends Field[Selected]
     object callback extends Field[Callback]

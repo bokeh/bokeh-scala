@@ -1,10 +1,10 @@
 package io.continuum.bokeh
 
-@model class ToolEvents extends PlotObject {
+@model class ToolEvents extends Model {
     object geometries extends Field[List[Map[Symbol, Any]]]
 }
 
-@model sealed abstract class Tool extends PlotObject {
+@model sealed abstract class Tool extends Model {
     object plot extends Field[Plot]
 }
 

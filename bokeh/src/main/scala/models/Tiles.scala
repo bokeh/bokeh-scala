@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@model abstract class TileSource extends PlotObject {
+@model abstract class TileSource extends Model {
     object url extends Field[String]
     object tile_size extends Field[Int](256)
 

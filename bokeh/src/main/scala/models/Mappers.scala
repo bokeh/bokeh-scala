@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@model abstract class ColorMapper extends PlotObject
+@model abstract class ColorMapper extends Model
 
 @model class LinearColorMapper extends ColorMapper {
     object palette extends Field[Seq[Color]](Palette.Greys9)

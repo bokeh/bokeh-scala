@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-@model abstract class Renderer extends PlotObject
+@model abstract class Renderer extends Model
 
 @model class GlyphRenderer extends Renderer {
     // TODO: object server_data_source extends Field[ServerDataSource]

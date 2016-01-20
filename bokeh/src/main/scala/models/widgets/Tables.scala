@@ -1,9 +1,9 @@
 package io.continuum.bokeh
 package widgets
 
-@model abstract class CellFormatter extends PlotObject
+@model abstract class CellFormatter extends Model
 
-@model abstract class CellEditor extends PlotObject
+@model abstract class CellEditor extends Model
 
 @model class StringFormatter extends CellFormatter {
     object font_style extends Field[FontStyle]
@@ -70,7 +70,7 @@ package widgets
 
 @model class DateEditor extends CellEditor
 
-@model class TableColumn extends PlotObject {
+@model class TableColumn extends Model {
     object field extends Field[Symbol]
     object title extends Field[String]
     object width extends Field[Int](300)          // px

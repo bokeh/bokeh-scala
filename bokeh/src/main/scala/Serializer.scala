@@ -7,31 +7,31 @@ class JSONSerializer(val stringifyFn: JsValue => String) {
 
     implicit val ModelFormat = Json.format[ModelRepr]
 
-    def getModelRepr(obj: PlotObject): ModelRepr = {
+    def getModelRepr(obj: Model): ModelRepr = {
         val Ref(id, tp) = obj.getRef
         ModelRepr(id, tp, HasFieldsWrites.writeFields(obj))
     }
 
-    def stringify(obj: PlotObject): String = {
+    def stringify(obj: Model): String = {
         serializeObjs(collectObjs(obj))
     }
 
-    def serializeObjs(objs: List[PlotObject]): String = {
+    def serializeObjs(objs: List[Model]): String = {
         stringifyFn(Json.toJson(objs.map(getModelRepr)))
     }
 
-    def collectObjs(obj: HasFields): List[PlotObject] = {
-        val objs = collection.mutable.ListBuffer[PlotObject]()
+    def collectObjs(obj: HasFields): List[Model] = {
+        val objs = collection.mutable.ListBuffer[Model]()
 
         traverse(obj, obj => obj match {
-            case _: PlotObject => objs += obj
+            case _: Model => objs += obj
             case _ =>
         })
 
         objs.toList
     }
 
-    def traverse(obj: HasFields, fn: PlotObject => Unit) {
+    def traverse(obj: HasFields, fn: Model => Unit) {
         val ids = collection.mutable.HashSet[String]()
 
         def descendFields(obj: HasFields) {
@@ -40,7 +40,7 @@ class JSONSerializer(val stringifyFn: JsValue => String) {
 
         def descend(obj: Any) {
             obj match {
-                case obj: PlotObject =>
+                case obj: Model =>
                     if (!ids.contains(obj.id.value)) {
                         ids += obj.id.value
                         descendFields(obj)
