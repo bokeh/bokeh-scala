@@ -36,6 +36,8 @@ object Dependencies {
 
     val ical4j = "org.mnode.ical4j" % "ical4j" % "1.0.2"
 
+    val repl = "com.lihaoyi" % "ammonite-repl" % "0.5.2" % Test cross CrossVersion.full
+
     val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
     val paradise = "org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full
@@ -131,20 +133,15 @@ object BokehBuild extends Build {
     lazy val bokehSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ xml.value ++ Seq(breeze, joda_time, play_json, specs2)
+            scalaio ++ xml.value ++ Seq(breeze, joda_time, play_json, specs2, repl)
         },
         upload := {
             val local = target in (Compile, doc) value
             val remote = s"s3://bokeh-scala/docs/${scalaBinaryVersion.value}/${version.value}"
             s"aws s3 sync $local $remote --delete --acl public-read" !
         },
-        initialCommands in Compile := """
-            import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
-            import scalax.io.JavaConverters._
-            import scalax.file.Path
-            import play.api.libs.json.Json
-            import io.continuum.bokeh._
-            """
+        initialCommands in Compile := """import io.continuum.bokeh._""",
+        initialCommands in (Test, console) := """ammonite.repl.Main.run()"""
     )
 
     lazy val bokehjsSettings = commonSettings ++ BokehJS.bokehjsSettings
