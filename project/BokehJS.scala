@@ -80,11 +80,14 @@ object BokehJS {
 
             val buildDir = (bokehjsBuildDir in Compile).value
 
-            var jsComps = List("bokeh", "bokeh-widgets", "bokeh-compiler")
-            var cssComps = List("bokeh", "bokeh-widgets")
-            var targets =
-                (jsComps.map(_ + ".js")   ++ jsComps.map(_ + ".js.map")).map(buildDir / "js" / _)    ++
-                (cssComps.map(_ + ".css") ++ cssComps.map(_ + ".css.map")).map(buildDir / "css" / _)
+            def mkTargets(ext: String, comps: List[String]) = {
+                val exts = List(s".$ext", s".$ext.map", s".min.$ext", s".min.$ext.map")
+                exts.flatMap(ext => comps.map(_ + ext)).map(buildDir / ext / _)
+            }
+
+            val targets =
+                mkTargets("js",  "bokeh" :: "bokeh-widgets" :: "bokeh-compiler" :: Nil) ++
+                mkTargets("css", "bokeh" :: "bokeh-widgets" :: Nil)
 
             val prevBuild = targets.map(_.lastModified).min
             val numModified = watched.count(_.lastModified > prevBuild)
