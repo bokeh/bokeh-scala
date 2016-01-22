@@ -1,13 +1,5 @@
 package io.continuum.bokeh
 
-@model abstract class GuideRenderer extends Renderer {
-    object plot extends Field[Plot]
-    object bounds extends Field[(Double, Double)] // TODO: Either[Auto, (Float, Float)]]
-
-    object x_range_name extends Field[String]("default")
-    object y_range_name extends Field[String]("default")
-}
-
 @model abstract class Axis extends GuideRenderer {
     object visible extends Field[Boolean](true)
     object location extends Field[Location]
@@ -62,18 +54,4 @@ package io.continuum.bokeh
     object num_labels extends Field[Int](8)
     object char_width extends Field[Int](10)
     object fill_ratio extends Field[Double](0.3)
-}
-
-@model class Grid extends GuideRenderer {
-    object dimension extends Field[Int](0)
-    object ticker extends Field[Ticker]
-
-    def axis(axis: Axis): SelfType = {
-        axis.ticker.valueOpt.foreach(this.ticker := _)
-        this
-    }
-
-    grid = include[LineProps]
-    minor_grid = include[LineProps]
-    band = include[FillProps]
 }

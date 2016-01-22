@@ -77,3 +77,8 @@ package io.continuum.bokeh
         renderer
     }
 }
+
+@model class GridPlot extends Plot {
+    object children extends Field[List[List[Plot]]]
+    object border_space extends Field[Int](0)
+}

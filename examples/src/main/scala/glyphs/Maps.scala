@@ -24,16 +24,11 @@ object Maps extends Example {
     val yaxis = new LinearAxis().plot(plot).axis_label("lon").major_tick_in(0).formatter(new PrintfTickFormatter().format("%.3f"))
     plot.addLayout(yaxis, Layout.Left)
 
-    val select_tool = new BoxSelectTool()
-    val overlay = new BoxSelectionOverlay().tool(select_tool)
+    val pan = new PanTool().plot(plot)
+    val zoom = new WheelZoomTool().plot(plot)
+    val select = new BoxSelectTool().plot(plot)
 
-    plot.renderers <<= (overlay :: _)
-    plot.tools <<= (select_tool :: _)
-
-    val pantool = new PanTool().plot(plot)
-    val wheelzoomtool = new WheelZoomTool().plot(plot)
-
-    plot.tools <<= (pantool :: wheelzoomtool :: _)
+    plot.tools <<= (pan :: zoom :: select :: _)
 
     object source extends ColumnDataSource {
         val lat  = column(Array(30.2861, 30.2855, 30.2869))

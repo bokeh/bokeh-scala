@@ -20,11 +20,5 @@ import play.api.libs.json.JsArray
 
 @model class GMapPlot extends MapPlot {
     object map_options extends Field[GMapOptions]
+    // TODO: border_fill_color = Override(default="#ffffff")
 }
-
-@model class GeoJSOptions extends MapOptions
-
-@model class GeoJSPlot extends MapPlot {
-    object map_options extends Field[GeoJSOptions]
-}
-
