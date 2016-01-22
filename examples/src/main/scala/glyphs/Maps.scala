@@ -2,6 +2,8 @@ package io.continuum.bokeh
 package examples
 package glyphs
 
+import play.api.libs.json.Json.{arr,obj}
+
 object Maps extends Example {
     val x_range = new Range1d()
     val y_range = new Range1d()
@@ -9,8 +11,45 @@ object Maps extends Example {
     val map_options = new GMapOptions()
         .lat(30.2861)
         .lng(-97.7394)
-        .zoom(15)
-        .map_type(MapType.Satellite)
+        .zoom(13)
+        .map_type(MapType.Roadmap)
+        .styles(arr(
+            obj(
+                "featureType" -> "administrative",
+                "elementType" -> "all",
+                "stylers"     -> arr(obj("visibility" -> "on"), obj("lightness" -> 33))),
+            obj(
+                "featureType" -> "landscape",
+                "elementType" -> "all",
+                "stylers"     -> arr(obj("color" -> "#f2e5d4"))),
+            obj(
+                "featureType" -> "poi.park",
+                "elementType" -> "geometry",
+                "stylers"     -> arr(obj("color" -> "#c5dac6"))),
+            obj(
+                "featureType" -> "poi.park",
+                "elementType" -> "labels",
+                "stylers"     -> arr(obj("visibility" -> "on"), obj("lightness" -> 20))),
+            obj(
+                "featureType" -> "road",
+                "elementType" -> "all",
+                "stylers"     -> arr(obj("lightness" -> 20))),
+            obj(
+                "featureType" -> "road.highway",
+                "elementType" -> "geometry",
+                "stylers"     -> arr(obj("color" -> "#c5c6c6"))),
+            obj(
+                "featureType" -> "road.arterial",
+                "elementType" -> "geometry",
+                "stylers"     -> arr(obj("color" -> "#e4d7c6"))),
+            obj(
+                "featureType" -> "road.local",
+                "elementType" -> "geometry",
+                "stylers"     -> arr(obj("color" -> "#fbfaf7"))),
+            obj(
+                "featureType" -> "water",
+                "elementType" -> "all",
+                "stylers"     -> arr(obj("visibility" -> "on"), obj("color" -> "#acbcc9")))))
 
     val plot = new GMapPlot()
         .x_range(x_range)
