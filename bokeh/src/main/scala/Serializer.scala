@@ -1,38 +1,27 @@
 package io.continuum.bokeh
 
-import play.api.libs.json.{Json,JsValue,JsArray,JsObject,JsString}
+import play.api.libs.json.JsObject
 
-class JSONSerializer(val stringifyFn: JsValue => String) {
-    case class ModelRepr(id: String, `type`: String, attributes: JsObject, doc: Option[String] = None)
+case class ModelRepr(id: String, `type`: String, attributes: JsObject)
 
-    implicit val ModelFormat = Json.format[ModelRepr]
+object JSONSerializer {
+    def serialize(obj: Model): List[ModelRepr] = serialize(obj :: Nil)
 
-    def getModelRepr(obj: Model): ModelRepr = {
+    def serialize(objs: List[Model]): List[ModelRepr] = collect(objs).map(modelRepr)
+
+    protected def modelRepr(obj: Model): ModelRepr = {
         val Ref(id, tp) = obj.getRef
         ModelRepr(id, tp, HasFieldsWrites.writeFields(obj))
     }
 
-    def stringify(obj: Model): String = {
-        serializeObjs(collectObjs(obj))
+    protected def collect(objs: List[Model]): List[Model] = {
+        val refs = collection.mutable.ListBuffer[Model]()
+        traverse(objs, { case ref: Model => refs += ref })
+        refs.toList
     }
 
-    def serializeObjs(objs: List[Model]): String = {
-        stringifyFn(Json.toJson(objs.map(getModelRepr)))
-    }
-
-    def collectObjs(obj: HasFields): List[Model] = {
-        val objs = collection.mutable.ListBuffer[Model]()
-
-        traverse(obj, obj => obj match {
-            case _: Model => objs += obj
-            case _ =>
-        })
-
-        objs.toList
-    }
-
-    def traverse(obj: HasFields, fn: Model => Unit) {
-        val ids = collection.mutable.HashSet[String]()
+    protected def traverse(objs: List[Model], fn: PartialFunction[Model, Unit]) {
+        val visited = collection.mutable.HashSet[String]()
 
         def descendFields(obj: HasFields) {
             obj.fields.map(_.field.valueOpt).foreach(_.foreach(descend _))
@@ -41,8 +30,8 @@ class JSONSerializer(val stringifyFn: JsValue => String) {
         def descend(obj: Any) {
             obj match {
                 case obj: Model =>
-                    if (!ids.contains(obj.id.value)) {
-                        ids += obj.id.value
+                    if (!visited.contains(obj.id.value)) {
+                        visited += obj.id.value
                         descendFields(obj)
                         fn(obj)
                     }
@@ -58,6 +47,6 @@ class JSONSerializer(val stringifyFn: JsValue => String) {
             }
         }
 
-        descend(obj)
+        descend(objs)
     }
 }

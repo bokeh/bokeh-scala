@@ -9,6 +9,8 @@ import scalax.file.Path
 import scala.collection.mutable.ListBuffer
 import scala.xml.{Node,NodeSeq,XML}
 
+import play.api.libs.json.{Json,Writes}
+
 class Document(objs: Component*) {
     private val objects = ListBuffer[Component](objs: _*)
 
@@ -44,55 +46,51 @@ object HTMLFragmentWriter {
 
     def apply(objs: List[Component]): HTMLFragmentWriter = apply(objs, Resources.default)
 
-    def apply(objs: List[Component], resources: Resources): HTMLFragmentWriter = {
-        val contexts = objs.map(obj => new PlotContext().children(obj :: Nil))
-        new HTMLFragmentWriter(contexts, resources)
-    }
+    def apply(objs: List[Component], resources: Resources): HTMLFragmentWriter = new HTMLFragmentWriter(objs, resources)
 }
 
-class HTMLFragmentWriter(contexts: List[PlotContext], resources: Resources) {
-    protected val serializer = new JSONSerializer(resources.stringify _)
-
+class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
     def write(): HTMLFragment = {
-        new HTMLFragment(renderPlots(plotSpecs), resources.styles, resources.scripts)
+        new HTMLFragment(divs ++ scripts, resources.styles, resources.scripts)
     }
 
-    protected case class PlotSpec(models: String, modelRef: Ref, elementId: String) {
-        def modelId = modelRef.id
-        def modelType = modelRef.`type`
+    implicit val ModelReprFormat = Json.format[ModelRepr]
+
+    case class Root(root_ids: List[String], references: List[ModelRepr])
+    case class Doc(roots: List[Root], title: String, version: String)
+    case class RenderItem(docid: String, elementid: String, modelid: Option[String])
+
+    implicit val RootFormat = Json.format[Root]
+    implicit val DocFormat = Json.format[Doc]
+    implicit val RenderItemFormat = Json.format[RenderItem]
+
+    case class Spec(docs_json: Map[String, Doc], render_items: List[RenderItem])
+
+    protected def title: String = "Bokeh Application"
+
+    protected lazy val spec: Spec = {
+        val root = Root(objs.map(_.id.value), JSONSerializer.serialize(objs))
+        var doc = Doc(root :: Nil, title, Resources.bokehjsVersion)
+        val docid = IdGenerator.next()
+        val elementid = IdGenerator.next()
+        val render_item = RenderItem(docid, elementid, None)
+        Spec(Map(docid -> doc), render_item :: Nil)
     }
 
-    protected def plotSpecs: List[PlotSpec] = {
-        contexts.map { context =>
-            val models = serializer.stringify(context)
-            PlotSpec(models, context.getRef, IdGenerator.next())
+    protected def divs: NodeSeq = {
+        spec.render_items.flatMap { item => <div class="plotdiv" id={ item.elementid }></div> }
+    }
+
+    protected def scripts: NodeSeq = {
+        def stringify[T:Writes](obj: T): String = {
+            resources.stringify(Json.toJson(obj))
         }
-    }
 
-    protected def renderPlots(specs: List[PlotSpec]): NodeSeq = {
-        specs.flatMap { spec =>
-            <div>
-                <div class="plotdiv" id={ spec.elementId }></div>
-                { renderPlot(spec) }
-            </div>
-        }
-    }
-
-    protected def renderPlot(spec: PlotSpec): xml.Node = {
         val code = s"""
-            |Bokeh.set_log_level("${resources.logLevel.name}");
-            |var models = ${spec.models};
-            |var modelid = "${spec.modelId}";
-            |var modeltype = "${spec.modelType}";
-            |var elementid = "#${spec.elementId}";
-            |Bokeh.logger.info("Realizing plot:")
-            |Bokeh.logger.info(" - modeltype: " + modeltype);
-            |Bokeh.logger.info(" - modelid:   " + modelid);
-            |Bokeh.logger.info(" - elementid: " + elementid);
-            |Bokeh.load_models(models);
-            |var model = Bokeh.Collections(modeltype).get(modelid);
-            |var view = new model.default_view({model: model, el: elementid});
-            |Bokeh.index[modelid] = view;
+            |var docs_json = ${stringify(spec.docs_json)};
+            |var render_items = ${stringify(spec.render_items)};
+            |
+            |Bokeh.embed.embed_items(docs_json, render_items);
             """
         resources.wrap(code.stripMargin.trim).asScript
     }
@@ -117,13 +115,10 @@ object HTMLFileWriter {
 
     def apply(objs: List[Component]): HTMLFileWriter = apply(objs, Resources.default)
 
-    def apply(objs: List[Component], resources: Resources): HTMLFileWriter = {
-        val contexts = objs.map(obj => new PlotContext().children(obj :: Nil))
-        new HTMLFileWriter(contexts, resources)
-    }
+    def apply(objs: List[Component], resources: Resources): HTMLFileWriter = new HTMLFileWriter(objs, resources)
 }
 
-class HTMLFileWriter(contexts: List[PlotContext], resources: Resources) extends HTMLFragmentWriter(contexts, resources) {
+class HTMLFileWriter(objs: List[Component], resources: Resources) extends HTMLFragmentWriter(objs, resources) {
     def write(file: File): HTMLFile = {
         val html = stringify(renderFile(write()))
         Path(file).write(html)
@@ -138,9 +133,10 @@ class HTMLFileWriter(contexts: List[PlotContext], resources: Resources) extends 
     }
 
     protected def renderTitle: Option[Node] = {
-        contexts.flatMap(_.children.value)
-                .collectFirst { case plot: Plot => plot.title.value }
-                .map { title => <title>{title}</title> }
+        spec.render_items
+            .headOption
+            .flatMap { item => spec.docs_json.get(item.docid) }
+            .map { doc => <title>{doc.title}</title> }
     }
 
     protected def renderFile(fragment: HTMLFragment): Node = {
@@ -148,8 +144,7 @@ class HTMLFileWriter(contexts: List[PlotContext], resources: Resources) extends 
             <head>
                 <meta charset="utf-8" />
                 { renderTitle orNull }
-                { fragment.styles }
-                { fragment.scripts }
+                { fragment.head }
             </head>
             <body>
                 { fragment.html }

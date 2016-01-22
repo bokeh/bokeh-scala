@@ -14,7 +14,7 @@ sealed trait Resources {
     def styles: List[xml.Node]
 
     def wrap(code: String): String = {
-        s"(function() {\n$code\n})();"
+        s"Bokeh.$$(function() {\n$code\n});"
     }
 
     def stringify(value: JsValue): String = {
