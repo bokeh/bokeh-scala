@@ -5,7 +5,7 @@ package glyphs
 import breeze.linalg.linspace
 
 object ImageURL extends Example {
-    val url = "http://bokeh.pydata.org/en/latest/_static/bokeh-transparent.png"
+    val url = "http://bokeh.pydata.org/en/latest/_static/images/logo.png"
     val N = 5
 
     object source extends ColumnDataSource {
