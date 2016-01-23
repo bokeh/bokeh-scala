@@ -20,6 +20,7 @@ trait TypeDefaults {
     implicit object TimeDefault extends Default[Time](new Time)
     implicit object DateDefault extends Default[Date](new Date)
 
+    implicit def OptionDefault[T]: Default[Option[T]] = new Default[Option[T]](None)
     implicit def SeqDefault[T]: Default[Seq[T]] = new Default[Seq[T]](Seq())
     implicit def ListDefault[T]: Default[List[T]] = new Default[List[T]](Nil)
     implicit def ArrayDefault[T:ClassTag]: Default[Array[T]] = new Default[Array[T]](Array[T]())
