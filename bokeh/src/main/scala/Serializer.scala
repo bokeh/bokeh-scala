@@ -14,7 +14,7 @@ object JSONSerializer {
         ModelRepr(id, tp, HasFieldsWrites.writeFields(obj))
     }
 
-    protected def collect(objs: List[Model]): List[Model] = {
+    def collect(objs: List[Model]): List[Model] = {
         val refs = collection.mutable.ListBuffer[Model]()
         traverse(objs, { case ref: Model => refs += ref })
         refs.toList

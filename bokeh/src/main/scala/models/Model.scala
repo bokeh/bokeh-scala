@@ -15,3 +15,16 @@ case class Ref(id: String, `type`: String)
     def getRef = Ref(id.value, typeName)
     object id extends Field[String](IdGenerator.next())
 }
+
+@model abstract class CustomModel extends Model {
+    val implementation: ModelImplementation
+}
+
+trait ModelImplementation {
+    val source: String
+}
+
+case class JavaScript(source: String) extends ModelImplementation
+case class CoffeeScript(source: String) extends ModelImplementation
+
+// TODO: source: File

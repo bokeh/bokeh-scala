@@ -51,7 +51,8 @@ object HTMLFragmentWriter {
 
 class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
     def write(): HTMLFragment = {
-        new HTMLFragment(divs ++ scripts, resources.styles, resources.scripts)
+        var bundle = resources.bundle(JSONSerializer.collect(objs))
+        new HTMLFragment(divs ++ scripts, bundle.styles, bundle.scripts)
     }
 
     implicit val ModelReprFormat = Json.format[ModelRepr]
@@ -70,7 +71,7 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
 
     protected lazy val spec: Spec = {
         val root = Root(objs.map(_.id.value), JSONSerializer.serialize(objs))
-        var doc = Doc(root :: Nil, title, Resources.bokehjsVersion)
+        var doc = Doc(root :: Nil, title, Resources.version)
         val docid = IdGenerator.next()
         val elementid = IdGenerator.next()
         val render_item = RenderItem(docid, elementid, None)
