@@ -6,6 +6,99 @@ import org.specs2.mutable._
 class BokehSpec extends Specification {
     sequential
 
+    "annotations" should {
+        "support Legend" in {
+            val obj = new Legend()
+            obj.fields.length shouldEqual 33
+        }
+
+        "support BoxAnnotation" in {
+            val obj = new BoxAnnotation()
+            obj.fields.length shouldEqual 10
+        }
+
+        "support PolyAnnotation" in {
+            val obj = new PolyAnnotation()
+            obj.fields.length shouldEqual 9
+        }
+
+        "support Span" in {
+            val obj = new Span()
+            obj.fields.length shouldEqual 9
+        }
+
+        //"support Tooltip" in {
+        //    val obj = new Tooltip()
+        //    obj.fields.length shouldEqual 0
+        //}
+    }
+
+    "axes" should {
+        "support LinearAxis" in {
+            val obj = new LinearAxis()
+            obj.fields.length shouldEqual 52
+        }
+
+        "support LogAxis" in {
+            val obj = new LogAxis()
+            obj.fields.length shouldEqual 52
+        }
+
+        "support CategoricalAxis" in {
+            val obj = new CategoricalAxis()
+            obj.fields.length shouldEqual 52
+        }
+
+        "support DatetimeAxis" in {
+            val obj = new DatetimeAxis()
+            obj.fields.length shouldEqual 56
+        }
+    }
+
+    "callbacks" should {
+        "support OpenURL" in {
+            val obj = new OpenURL()
+            obj.fields.length shouldEqual 2
+        }
+
+        "support CustomJS" in {
+            val obj = new CustomJS()
+            obj.fields.length shouldEqual 4
+        }
+    }
+
+    "formatters" should {
+        "support BasicTickFormatter" in {
+            val obj = new BasicTickFormatter()
+            obj.fields.length shouldEqual 4
+        }
+
+        "support LogTickFormatter" in {
+            val obj = new LogTickFormatter()
+            obj.fields.length shouldEqual 1
+        }
+
+        "support CategoricalTickFormatter" in {
+            val obj = new CategoricalTickFormatter()
+            obj.fields.length shouldEqual 1
+        }
+
+        "support DatetimeTickFormatter" in {
+            val obj = new DatetimeTickFormatter()
+            obj.fields.length shouldEqual 2
+        }
+
+        "support NumeralTickFormatter" in {
+            val obj = new NumeralTickFormatter()
+            obj.fields.length shouldEqual 4
+        }
+
+        "support PrintfTickFormatter" in {
+            val obj = new PrintfTickFormatter()
+            obj.fields.length shouldEqual 2
+        }
+    }
+
     "glyphs" should {
         "support AnnularWedge" in {
             val obj = new AnnularWedge()
@@ -108,19 +201,57 @@ class BokehSpec extends Specification {
         }
     }
 
+    "grids" should {
+        "support Grid" in {
+            val obj = new Grid()
+            obj.fields.length shouldEqual 23
+        }
+    }
+
+    "images" should {
+        "support ImageSource" in {
+            val obj = new ImageSource()
+            obj.fields.length shouldEqual 3
+        }
+    }
+
+    "map_plots" should {
+        "support GMapOptions" in {
+            val obj = new GMapOptions()
+            obj.fields.length shouldEqual 5
+        }
+
+        "support GMapPlot" in {
+            val obj = new GMapPlot()
+            obj.fields.length shouldEqual 50
+        }
+    }
+
+    "mappers" should {
+        "support LinearColorMapper" in {
+            val obj = new LinearColorMapper()
+            obj.fields.length shouldEqual 6
+        }
+    }
+
     "markers" should {
+        "support Asterisk" in {
+            val obj = new Asterisk()
+            obj.fields.length shouldEqual 15
+        }
+
         "support Circle" in {
             val obj = new Circle()
             obj.fields.length shouldEqual 17
         }
 
-        "support Square" in {
-            val obj = new Square()
+        "support CircleCross" in {
+            val obj = new CircleCross()
             obj.fields.length shouldEqual 15
         }
 
-        "support Triangle" in {
-            val obj = new Triangle()
+        "support CircleX" in {
+            val obj = new CircleX()
             obj.fields.length shouldEqual 15
         }
 
@@ -129,28 +260,8 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 15
         }
 
-        "support PlainX" in {
-            val obj = new PlainX()
-            obj.fields.length shouldEqual 15
-        }
-
         "support Diamond" in {
             val obj = new Diamond()
-            obj.fields.length shouldEqual 15
-        }
-
-        "support InvertedTriangle" in {
-            val obj = new InvertedTriangle()
-            obj.fields.length shouldEqual 15
-        }
-
-        "support SquareX" in {
-            val obj = new SquareX()
-            obj.fields.length shouldEqual 15
-        }
-
-        "support Asterisk" in {
-            val obj = new Asterisk()
             obj.fields.length shouldEqual 15
         }
 
@@ -159,8 +270,13 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 15
         }
 
-        "support CircleCross" in {
-            val obj = new CircleCross()
+        "support InvertedTriangle" in {
+            val obj = new InvertedTriangle()
+            obj.fields.length shouldEqual 15
+        }
+
+        "support Square" in {
+            val obj = new Square()
             obj.fields.length shouldEqual 15
         }
 
@@ -169,21 +285,31 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 15
         }
 
-        "support CircleX" in {
-            val obj = new CircleX()
+        "support SquareX" in {
+            val obj = new SquareX()
+            obj.fields.length shouldEqual 15
+        }
+
+        "support Triangle" in {
+            val obj = new Triangle()
+            obj.fields.length shouldEqual 15
+        }
+
+        "support PlainX" in {
+            val obj = new PlainX()
             obj.fields.length shouldEqual 15
         }
     }
 
-    "renderers" should {
-        "support GlyphRenderer" in {
-            val obj = new GlyphRenderer()
-            obj.fields.length shouldEqual 9
+    "plots" should {
+        "support Plot" in {
+            val obj = new Plot()
+            obj.fields.length shouldEqual 49
         }
 
-        "support Legend" in {
-            val obj = new Legend()
-            obj.fields.length shouldEqual 33
+        "support GridPlot" in {
+            val obj = new GridPlot()
+            obj.fields.length shouldEqual 51
         }
     }
 
@@ -204,6 +330,23 @@ class BokehSpec extends Specification {
         }
     }
 
+    "renderers" should {
+        "support TileRenderer" in {
+            val obj = new TileRenderer()
+            obj.fields.length shouldEqual 7
+        }
+
+        "support DynamicImageRenderer" in {
+            val obj = new DynamicImageRenderer()
+            obj.fields.length shouldEqual 5
+        }
+
+        "support GlyphRenderer" in {
+            val obj = new GlyphRenderer()
+            obj.fields.length shouldEqual 9
+        }
+    }
+
     "sources" should {
         "support ColumnDataSource" in {
             val obj = new ColumnDataSource()
@@ -214,36 +357,98 @@ class BokehSpec extends Specification {
             val obj = new ColumnsRef()
             obj.fields.length shouldEqual 2
         }
+
+        "support AjaxDataSource" in {
+            val obj = new AjaxDataSource()
+            obj.fields.length shouldEqual 7
+        }
     }
 
-    "guides" should {
-        "support LinearAxis" in {
-            val obj = new LinearAxis()
-            obj.fields.length shouldEqual 52
+    "tickers" should {
+        "support FixedTicker" in {
+            val obj = new FixedTicker()
+            obj.fields.length shouldEqual 4
         }
 
-        "support CategoricalAxis" in {
-            val obj = new CategoricalAxis()
-            obj.fields.length shouldEqual 52
+        "support AdaptiveTicker" in {
+            val obj = new AdaptiveTicker()
+            obj.fields.length shouldEqual 7
         }
 
-        "support DatetimeAxis" in {
-            val obj = new DatetimeAxis()
-            obj.fields.length shouldEqual 56
+        "support CompositeTicker" in {
+            val obj = new CompositeTicker()
+            obj.fields.length shouldEqual 4
         }
 
-        "support LogAxis" in {
-            val obj = new LogAxis()
-            obj.fields.length shouldEqual 52
+        "support SingleIntervalTicker" in {
+            val obj = new SingleIntervalTicker()
+            obj.fields.length shouldEqual 4
         }
 
-        "support Grid" in {
-            val obj = new Grid()
-            obj.fields.length shouldEqual 23
+        "support DaysTicker" in {
+            val obj = new DaysTicker()
+            obj.fields.length shouldEqual 5
+        }
+
+        "support MonthsTicker" in {
+            val obj = new MonthsTicker()
+            obj.fields.length shouldEqual 5
+        }
+
+        "support YearsTicker" in {
+            val obj = new YearsTicker()
+            obj.fields.length shouldEqual 4
+        }
+
+        "support BasicTicker" in {
+            val obj = new BasicTicker()
+            obj.fields.length shouldEqual 3
+        }
+
+        "support LogTicker" in {
+            val obj = new LogTicker()
+            obj.fields.length shouldEqual 7
+        }
+
+        "support CategoricalTicker" in {
+            val obj = new CategoricalTicker()
+            obj.fields.length shouldEqual 3
+        }
+
+        "support DatetimeTicker" in {
+            val obj = new DatetimeTicker()
+            obj.fields.length shouldEqual 3
+        }
+    }
+
+    "tiles" should {
+        "support TMSTileSource" in {
+            val obj = new TMSTileSource()
+            obj.fields.length shouldEqual 11
+        }
+
+        "support WMTSTileSource" in {
+            val obj = new WMTSTileSource()
+            obj.fields.length shouldEqual 11
+        }
+
+        "support QUADKEYTileSource" in {
+            val obj = new QUADKEYTileSource()
+            obj.fields.length shouldEqual 11
+        }
+
+        "support BBoxTileSource" in {
+            val obj = new BBoxTileSource()
+            obj.fields.length shouldEqual 12
         }
     }
 
     "tools" should {
+        "support ToolEvents" in {
+            val obj = new ToolEvents()
+            obj.fields.length shouldEqual 2
+        }
+
         "support PanTool" in {
             val obj = new PanTool()
             obj.fields.length shouldEqual 3
@@ -299,114 +504,22 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 4
         }
 
+        "support TapTool" in {
+            val obj = new TapTool()
+            obj.fields.length shouldEqual 6
+        }
+
         "support HoverTool" in {
             val obj = new HoverTool()
             obj.fields.length shouldEqual 10
         }
-    }
 
-    "plots" should {
-        "support Plot" in {
-            val obj = new Plot()
-            obj.fields.length shouldEqual 49
-        }
-
-        "support GMapOptions" in {
-            val obj = new GMapOptions()
-            obj.fields.length shouldEqual 5
-        }
-
-        "support GMapPlot" in {
-            val obj = new GMapPlot()
-            obj.fields.length shouldEqual 50
-        }
-
-        "support GridPlot" in {
-            val obj = new GridPlot()
-            obj.fields.length shouldEqual 51
-        }
-    }
-
-    "mappers" should {
-        "support LinearColorMapper" in {
-            val obj = new LinearColorMapper()
-            obj.fields.length shouldEqual 6
-        }
-    }
-
-    "tickers" should {
-        "support AdaptiveTicker" in {
-            val obj = new AdaptiveTicker()
-            obj.fields.length shouldEqual 7
-        }
-
-        "support CompositeTicker" in {
-            val obj = new CompositeTicker()
+        "support HelpTool" in {
+            val obj = new HelpTool()
             obj.fields.length shouldEqual 4
         }
-
-        "support SingleIntervalTicker" in {
-            val obj = new SingleIntervalTicker()
-            obj.fields.length shouldEqual 4
-        }
-
-        "support DaysTicker" in {
-            val obj = new DaysTicker()
-            obj.fields.length shouldEqual 5
-        }
-
-        "support MonthsTicker" in {
-            val obj = new MonthsTicker()
-            obj.fields.length shouldEqual 5
-        }
-
-        "support YearsTicker" in {
-            val obj = new YearsTicker()
-            obj.fields.length shouldEqual 4
-        }
-
-        "support BasicTicker" in {
-            val obj = new BasicTicker()
-            obj.fields.length shouldEqual 3
-        }
-
-        "support LogTicker" in {
-            val obj = new LogTicker()
-            obj.fields.length shouldEqual 7
-        }
-
-        "support CategoricalTicker" in {
-            val obj = new CategoricalTicker()
-            obj.fields.length shouldEqual 3
-        }
-
-        "support DatetimeTicker" in {
-            val obj = new DatetimeTicker()
-            obj.fields.length shouldEqual 3
-        }
     }
 
-    "tick formatters" should {
-        "support BasicTickFormatter" in {
-            val obj = new BasicTickFormatter()
-            obj.fields.length shouldEqual 4
-        }
-
-        "support LogTickFormatter" in {
-            val obj = new LogTickFormatter()
-            obj.fields.length shouldEqual 1
-        }
-
-        "support CategoricalTickFormatter" in {
-            val obj = new CategoricalTickFormatter()
-            obj.fields.length shouldEqual 1
-        }
-
-        "support DatetimeTickFormatter" in {
-            val obj = new DatetimeTickFormatter()
-            obj.fields.length shouldEqual 2
-        }
-    }
 
     "widgets" should {
         "support Button" in {
