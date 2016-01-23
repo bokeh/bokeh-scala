@@ -103,7 +103,7 @@ class BokehSpec extends Specification {
                 .dilate(false)
                 .anchor(Anchor.TopRight)
 
-            obj1.fields.length shouldEqual 11
+            obj1.fields.length shouldEqual 13
         }
 
         "support Line" in {
@@ -324,19 +324,13 @@ class BokehSpec extends Specification {
         "support GlyphRenderer" in {
             val obj = new GlyphRenderer().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 8
+            obj.fields.length shouldEqual 9
         }
 
         "support Legend" in {
             val obj = new Legend().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 32
-        }
-
-        "support BoxSelectionOverlay" in {
-            val obj = new BoxSelectionOverlay().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 2
+            obj.fields.length shouldEqual 33
         }
     }
 
@@ -445,7 +439,7 @@ class BokehSpec extends Specification {
         "support CrosshairTool" in {
             val obj = new CrosshairTool().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 3
+            obj.fields.length shouldEqual 6
         }
 
         "support BoxZoomTool" in {
@@ -497,29 +491,10 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 50
         }
 
-        "support GeoJSOptions" in {
-            val obj = new GeoJSOptions()
-            obj.fields.length shouldEqual 3
-        }
-
-        "support GeoJSPlot" in {
-            val obj = new GeoJSPlot().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 50
-        }
-
         "support GridPlot" in {
             val obj = new GridPlot().id("xyz")
             obj.id.value shouldEqual "xyz"
             obj.fields.length shouldEqual 51
-        }
-    }
-
-    "objects" should {
-        "support PlotContext" in {
-            val obj = new PlotContext().id("xyz")
-            obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 2
         }
     }
 
@@ -827,7 +802,7 @@ class BokehSpec extends Specification {
         "support DataTable" in {
             val obj = new widgets.DataTable().id("xyz")
             obj.id.value shouldEqual "xyz"
-            obj.fields.length shouldEqual 11
+            obj.fields.length shouldEqual 12
         }
     }
 }
