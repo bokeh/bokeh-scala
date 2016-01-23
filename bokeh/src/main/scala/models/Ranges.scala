@@ -7,6 +7,8 @@ package io.continuum.bokeh
 @model class Range1d extends Range {
     object start extends Field[Double]
     object end extends Field[Double]
+
+    // TODO: bounds = MinMaxBounds(accept_datetime=True, default=None)
 }
 
 @model abstract class DataRange extends Range {
@@ -19,9 +21,18 @@ package io.continuum.bokeh
 
     object start extends Field[Double]
     object end extends Field[Double]
+
+    // TODO: bounds = MinMaxBounds(accept_datetime=False, default=None)
+
+    object flipped extends Field[Boolean](false)
+    object follow extends Field[Option[StartEnd]]
+    object follow_interval extends Field[Option[Double]]
+    object default_span extends Field[Double](2.0)
 }
 
 @model class FactorRange extends Range {
     object offset extends Field[Double](0)
     object factors extends Field[List[String]] // TODO: also List[Int]
+
+    // TODO: bounds = Either(Auto, List(String), List(Int), default=None)
 }

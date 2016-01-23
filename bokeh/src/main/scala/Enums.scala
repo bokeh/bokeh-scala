@@ -323,3 +323,9 @@ sealed trait ScriptingLanguage extends EnumType with LowerCase
     case object JavaScript extends ScriptingLanguage
     case object CoffeeScript extends ScriptingLanguage
 }
+
+sealed trait StartEnd extends EnumType with LowerCase
+@enum object StartEnd extends Enumerated[StartEnd] {
+    case object Start extends StartEnd
+    case object End extends StartEnd
+}
