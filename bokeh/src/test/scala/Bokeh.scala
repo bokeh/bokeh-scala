@@ -353,11 +353,6 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 5
         }
 
-        "support ColumnsRef" in {
-            val obj = new ColumnsRef()
-            obj.fields.length shouldEqual 2
-        }
-
         "support AjaxDataSource" in {
             val obj = new AjaxDataSource()
             obj.fields.length shouldEqual 7

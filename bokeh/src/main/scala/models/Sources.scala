@@ -2,11 +2,6 @@ package io.continuum.bokeh
 
 import play.api.libs.json.Writes
 
-@model class ColumnsRef extends HasFields {
-    object source extends Field[DataSource]
-    object columns extends Field[List[Symbol]]
-}
-
 case class Selected0d(indices: List[Int] = Nil, flag: Boolean = false)
 case class Selected1d(indices: List[Int] = Nil)
 case class Selected2d(indices: List[List[Int]] = Nil)
@@ -19,9 +14,6 @@ case class Selected(`0d`: Selected0d = Selected0d(),
     object column_names extends Field[List[String]]
     object selected extends Field[Selected]
     object callback extends Field[Callback]
-
-    def columns(columns: Symbol*): ColumnsRef =
-        new ColumnsRef().source(this).columns(columns.toList)
 }
 
 @model class ColumnDataSource extends DataSource { source =>
@@ -34,8 +26,6 @@ case class Selected(`0d`: Selected0d = Selected0d(),
 
         def value: M[T] = source.data.value(name).asInstanceOf[M[T]]
         def :=(value: M[T]): Unit = source.addColumn(name, value)
-
-        def ref: ColumnsRef = new ColumnsRef().source(source).columns(name :: Nil)
     }
 
     def column[M[_], T](value: M[T]): ColumnDataSource#Column[M, T] = macro ColumnMacro.columnImpl[M, T]
@@ -44,10 +34,6 @@ case class Selected(`0d`: Selected0d = Selected0d(),
         data <<= (_ + (name -> value))
         this
     }
-}
-
-trait SourceImplicits {
-    implicit def ColumnToColumnsRef[M[_]](column: ColumnDataSource#Column[M, _]): ColumnsRef = column.ref
 }
 
 private[bokeh] object ColumnMacro {
