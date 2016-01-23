@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 package examples
-package glyphs
+package models
 
 object Prim extends Example {
     object source extends ColumnDataSource {

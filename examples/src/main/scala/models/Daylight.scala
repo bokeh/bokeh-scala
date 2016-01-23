@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 package examples
-package glyphs
+package models
 
 import org.joda.time.{LocalTime=>Time,LocalDate=>Date}
 

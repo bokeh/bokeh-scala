@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 package examples
-package glyphs
+package models
 
 import breeze.linalg.linspace
 

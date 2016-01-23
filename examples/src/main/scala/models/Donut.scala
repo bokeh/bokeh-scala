@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 package examples
-package glyphs
+package models
 
 import math.{Pi=>pi,sin,cos}
 import sampledata.webbrowsers.{webbrowsers_nov_2013,WebBrowserIcons}

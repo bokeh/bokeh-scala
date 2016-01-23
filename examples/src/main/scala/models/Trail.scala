@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 package examples
-package glyphs
+package models
 
 import math.{abs,pow,sin,cos,atan2,sqrt,toRadians,Pi=>pi}
 import breeze.linalg.{diff,DenseVector}

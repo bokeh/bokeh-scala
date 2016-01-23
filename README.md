@@ -41,7 +41,7 @@ Install [nodejs][nodejs]. This is required to build bokehjs. Then:
 $ git clone --recursive https://github.com/bokeh/bokeh-scala.git
 $ cd bokeh-scala
 $ ./sbt
-> examples/runMain io.continuum.bokeh.examples.glyphs.Anscombe
+> examples/runMain io.continuum.bokeh.examples.models.Anscombe
 ```
 or
 ```bash
