@@ -57,11 +57,11 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
 
     implicit val ModelReprFormat = Json.format[ModelRepr]
 
-    case class Root(root_ids: List[String], references: List[ModelRepr])
-    case class Doc(roots: List[Root], title: String, version: String)
+    case class Roots(root_ids: List[String], references: List[ModelRepr])
+    case class Doc(roots: Roots, title: String, version: String)
     case class RenderItem(docid: String, elementid: String, modelid: Option[String])
 
-    implicit val RootFormat = Json.format[Root]
+    implicit val RootsFormat = Json.format[Roots]
     implicit val DocFormat = Json.format[Doc]
     implicit val RenderItemFormat = Json.format[RenderItem]
 
@@ -70,8 +70,8 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
     protected def title: String = "Bokeh Application"
 
     protected lazy val spec: Spec = {
-        val root = Root(objs.map(_.id.value), JSONSerializer.serialize(objs))
-        var doc = Doc(root :: Nil, title, Resources.version)
+        val roots = Roots(objs.map(_.id.value), JSONSerializer.serialize(objs))
+        var doc = Doc(roots, title, Resources.version)
         val docid = IdGenerator.next()
         val elementid = IdGenerator.next()
         val render_item = RenderItem(docid, elementid, None)
