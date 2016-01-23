@@ -30,7 +30,7 @@ sealed trait Resources {
 
     def wrap(code: String): String = s"Bokeh.$$(function() {\n$code\n});"
 
-    protected def logLevelScript: xml.NodeSeq = {
+    protected def logLevelScript: xml.Node = {
         s"Bokeh.set_log_level('$logLevel');".asScript
     }
 
@@ -46,7 +46,7 @@ sealed trait Resources {
     def bundle(refs: List[Model]): Bundle = {
         val components = (Some(BokehCore) :: useWidgets(refs) :: useCompiler(refs) :: Nil).flatten
 
-        val scripts = components.filter(_.js == true).map(resolveScript) // ++ List(logLevelScript)
+        val scripts = components.filter(_.js == true).map(resolveScript) ++ List(logLevelScript)
         val styles = components.filter(_.css == true).map(resolveStyle)
 
         Bundle(scripts, styles)
