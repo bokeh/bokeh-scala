@@ -114,9 +114,10 @@ trait BokehWrites {
     implicit object HasFieldsWrites extends Writes[HasFields] {
         def writeFields(obj: HasFields): JsObject = {
             val fields = obj.fields
+               .filterNot(_.name == "id")
                .map { case FieldRef(name, field) => (name, field.toJson) }
                .collect { case (name, Some(jsValue)) => (name, jsValue) }
-            JsObject(fields) + ("type" -> JsString(obj.typeName))
+            JsObject(fields)
         }
 
         def writes(obj: HasFields) = obj match {
