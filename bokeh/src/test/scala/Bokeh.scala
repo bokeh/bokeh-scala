@@ -333,7 +333,7 @@ class BokehSpec extends Specification {
 
         "support DataRange1d" in {
             val obj = new DataRange1d()
-            obj.fields.length shouldEqual 7
+            obj.fields.length shouldEqual 11
         }
 
         "support FactorRange" in {
