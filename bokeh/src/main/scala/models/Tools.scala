@@ -18,6 +18,10 @@ package io.continuum.bokeh
 
 @model class PreviewSaveTool extends Tool
 
+@model class UndoTool extends Tool
+
+@model class RedoTool extends Tool
+
 @model class ResetTool extends Tool
 
 @model class ResizeTool extends Tool

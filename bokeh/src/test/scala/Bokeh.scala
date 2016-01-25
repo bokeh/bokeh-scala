@@ -471,6 +471,16 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 2
         }
 
+        "support UndoTool" in {
+            val obj = new UndoTool()
+            obj.fields.length shouldEqual 2
+        }
+
+        "support RedoTool" in {
+            val obj = new RedoTool()
+            obj.fields.length shouldEqual 2
+        }
+
         "support ResetTool" in {
             val obj = new ResetTool()
             obj.fields.length shouldEqual 2
