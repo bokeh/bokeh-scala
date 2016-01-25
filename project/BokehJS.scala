@@ -81,7 +81,7 @@ object BokehJS {
             val buildDir = (bokehjsBuildDir in Compile).value
 
             def mkTargets(ext: String, comps: List[String]) = {
-                val exts = List(s".$ext", s".$ext.map", s".min.$ext", s".min.$ext.map")
+                val exts = List(s".$ext", s".$ext.map", s".min.$ext")
                 exts.flatMap(ext => comps.map(_ + ext)).map(buildDir / ext / _)
             }
 
