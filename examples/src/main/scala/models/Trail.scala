@@ -5,7 +5,6 @@ package models
 import math.{abs,pow,sin,cos,atan2,sqrt,toRadians,Pi=>pi}
 import breeze.linalg.{diff,DenseVector}
 
-import widgets.VBox
 import sampledata.mtb.{obiszow_mtb_xcm=>mtb}
 
 object Trail extends Example with Tools {
@@ -67,10 +66,10 @@ object Trail extends Example with Tools {
         val plot = new GMapPlot().title(s"$title - Trail Map").map_options(map_options).width(800).height(800)
 
         val xaxis = new LinearAxis().plot(plot).formatter(new NumeralTickFormatter().format("0.000"))
-        plot.addLayout(xaxis, Layout.Below)
+        plot.addLayout(xaxis, Place.Below)
 
         val yaxis = new LinearAxis().plot(plot).formatter(new PrintfTickFormatter().format("%.3f"))
-        plot.addLayout(yaxis, Layout.Left)
+        plot.addLayout(yaxis, Place.Left)
 
         val xgrid = new Grid().plot(plot).dimension(0).ticker(xaxis.ticker.value).grid_line_dash(DashPattern.Dashed).grid_line_color(Color.Gray)
         val ygrid = new Grid().plot(plot).dimension(1).ticker(yaxis.ticker.value).grid_line_dash(DashPattern.Dashed).grid_line_color(Color.Gray)
@@ -98,10 +97,10 @@ object Trail extends Example with Tools {
         val plot = new Plot().title(s"$title - Altitude Profile").width(800).height(400)
 
         val xaxis = new LinearAxis().plot(plot).axis_label("Distance (km)")
-        plot.addLayout(xaxis, Layout.Below)
+        plot.addLayout(xaxis, Place.Below)
 
         val yaxis = new LinearAxis().plot(plot).axis_label("Altitude (m)")
-        plot.addLayout(yaxis, Layout.Left)
+        plot.addLayout(yaxis, Place.Left)
 
         val xgrid = new Grid().plot(plot).dimension(0).ticker(xaxis.ticker.value)
         val ygrid = new Grid().plot(plot).dimension(1).ticker(yaxis.ticker.value)

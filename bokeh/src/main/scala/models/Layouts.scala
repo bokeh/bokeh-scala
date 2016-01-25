@@ -1,7 +1,6 @@
 package io.continuum.bokeh
-package widgets
 
-@model abstract class Layout extends Widget {
+@model abstract class Layout extends Component {
     object width extends Field[Int]
     object height extends Field[Int]
 }

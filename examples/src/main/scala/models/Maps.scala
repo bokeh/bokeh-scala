@@ -58,10 +58,10 @@ object Maps extends Example {
         .title("Austin")
 
     val xaxis = new LinearAxis().plot(plot).axis_label("lat").major_tick_in(0).formatter(new NumeralTickFormatter().format("0.000"))
-    plot.addLayout(xaxis, Layout.Below)
+    plot.addLayout(xaxis, Place.Below)
 
     val yaxis = new LinearAxis().plot(plot).axis_label("lon").major_tick_in(0).formatter(new PrintfTickFormatter().format("%.3f"))
-    plot.addLayout(yaxis, Layout.Left)
+    plot.addLayout(yaxis, Place.Left)
 
     val pan = new PanTool().plot(plot)
     val zoom = new WheelZoomTool().plot(plot)

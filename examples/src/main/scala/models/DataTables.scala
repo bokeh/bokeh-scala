@@ -3,7 +3,6 @@ package examples
 package models
 
 import widgets.{
-    VBox,
     DataTable,TableColumn,
     NumberFormatter,StringFormatter,
     IntEditor,NumberEditor,StringEditor,SelectEditor}

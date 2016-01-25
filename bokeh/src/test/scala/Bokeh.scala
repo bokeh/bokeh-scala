@@ -215,6 +215,18 @@ class BokehSpec extends Specification {
         }
     }
 
+    "layouts" should {
+        "support HBox" in {
+            val obj = new HBox()
+            obj.fields.length shouldEqual 5
+        }
+
+        "support VBox" in {
+            val obj = new VBox()
+            obj.fields.length shouldEqual 5
+        }
+    }
+
     "map_plots" should {
         "support GMapOptions" in {
             val obj = new GMapOptions()
@@ -515,7 +527,6 @@ class BokehSpec extends Specification {
         }
     }
 
-
     "widgets" should {
         "support Button" in {
             val obj = new widgets.Button()
@@ -584,16 +595,6 @@ class BokehSpec extends Specification {
 
         "support DatePicker" in {
             val obj = new widgets.DatePicker()
-            obj.fields.length shouldEqual 5
-        }
-
-        "support HBox" in {
-            val obj = new widgets.HBox()
-            obj.fields.length shouldEqual 5
-        }
-
-        "support VBox" in {
-            val obj = new widgets.VBox()
             obj.fields.length shouldEqual 5
         }
 

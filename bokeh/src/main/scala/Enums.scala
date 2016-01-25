@@ -206,13 +206,13 @@ sealed trait Logo extends EnumType with SnakeCase
     case object Grey extends Logo
 }
 
-sealed trait Layout extends EnumType with SnakeCase
-@enum object Layout extends Enumerated[Layout] {
-    case object Left extends Layout
-    case object Right extends Layout
-    case object Above extends Layout
-    case object Below extends Layout
-    case object Center extends Layout
+sealed trait Place extends EnumType with SnakeCase
+@enum object Place extends Enumerated[Place] {
+    case object Left extends Place
+    case object Right extends Place
+    case object Above extends Place
+    case object Below extends Place
+    case object Center extends Place
 }
 
 sealed trait DateFormat extends EnumType
