@@ -180,7 +180,7 @@ object BokehBuild extends Build {
     lazy val bokeh = project in file("bokeh") settings(bokehSettings: _*) dependsOn(core, bokehjs)
     lazy val bokehjs = project in file("bokehjs/bokehjs") settings(bokehjsSettings: _*)
     lazy val core = project in file("core") settings(coreSettings: _*)
-    lazy val sampledata = project in file("sampledata") settings(sampledataSettings: _*) dependsOn(core)
+    lazy val sampledata = project in file("sampledata") settings(sampledataSettings: _*) dependsOn(bokeh)
     lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh, sampledata)
     lazy val all = project in file(".") disablePlugins(SbtPgp) settings(allSettings: _*) aggregate(bokeh, bokehjs, core, sampledata, examples)
 

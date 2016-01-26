@@ -28,7 +28,7 @@ sealed abstract class NamedColor(red: Int, green: Int, blue: Int) extends RGBACo
     def toCSS = name
 }
 @enum object Color extends Enumerated[NamedColor] {
-    implicit def StringToColor(color: String): Color = {
+    implicit def from_string(color: String): Color = {
         lazy val HexColor = """^#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})$""".r
         lazy val RGBColor = """^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$""".r
 
