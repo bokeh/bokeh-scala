@@ -26,7 +26,11 @@ package io.continuum.bokeh
 
 @model class ResizeTool extends Tool
 
-@model class CrosshairTool extends Tool {
+trait InspectTool { self: Tool =>
+    object active extends Field[Boolean](true)
+}
+
+@model class CrosshairTool extends Tool with InspectTool {
     object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))
 
     object line_color extends Field[Color](Color.Black)
@@ -56,13 +60,11 @@ package io.continuum.bokeh
 
 @model class TapTool extends SelectTool {
     object callback extends Field[Callback]
-    object always_active extends Field[Boolean](true)
 }
 
-@model class HoverTool extends TransientSelectTool {
+@model class HoverTool extends TransientSelectTool with InspectTool {
     object tooltips extends Field[Tooltip]
     object callback extends Field[Callback]
-    object always_active extends Field[Boolean](true)
     object mode extends Field[HoverMode]
     object point_policy extends Field[PointPolicy]
     object line_policy extends Field[LinePolicy]

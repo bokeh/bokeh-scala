@@ -491,14 +491,9 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 2
         }
 
-        "support TapTool" in {
-            val obj = new TapTool()
-            obj.fields.length shouldEqual 6
-        }
-
         "support CrosshairTool" in {
             val obj = new CrosshairTool()
-            obj.fields.length shouldEqual 6
+            obj.fields.length shouldEqual 7
         }
 
         "support BoxZoomTool" in {
@@ -523,7 +518,7 @@ class BokehSpec extends Specification {
 
         "support TapTool" in {
             val obj = new TapTool()
-            obj.fields.length shouldEqual 6
+            obj.fields.length shouldEqual 5
         }
 
         "support HoverTool" in {
