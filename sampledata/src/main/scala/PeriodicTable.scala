@@ -16,7 +16,7 @@ object PeriodicTable extends CSVSampleData {
             atomic_number = atomic_number.map(_.toInt),
             symbol = symbol,
             name = name,
-            atomic_mass = atomic_mass,
+            atomic_mass = atomic_mass.map(_.replaceAll("\\[|\\]", "").toDouble),
             color = color.map(Color.from_string),
             electronic_configuration = electronic_configuration,
             electronegativity = electronegativity.map(opt(_).map(_.toDouble)),
@@ -44,7 +44,7 @@ case class Elements(
     atomic_number: List[Int],                     // (units: g/cm^3)
     symbol: List[String],
     name: List[String],
-    atomic_mass: List[String],                    // (units: amu)
+    atomic_mass: List[Double],                    // (units: amu)
     color: List[Color],                           // (convention for molecular modeling color)
     electronic_configuration: List[String],
     electronegativity: List[Option[Double]],      // (units: Pauling)
