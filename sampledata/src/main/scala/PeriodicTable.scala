@@ -2,63 +2,64 @@ package io.continuum.bokeh
 package sampledata
 
 object PeriodicTable extends CSVSampleData {
-    def load(): Elements = {
-        val List(_, atomic_number, symbol, name, atomic_mass, color, electronic_configuration,
-                 electronegativity, atomic_radius, ionic_radius, van_der_Waals_radius,
-                 ionization_energy, electron_affinity, standard_state, bonding_type,
-                 melting_point, boiling_point, density, metal, year_discovered, group, period) =
-            loadRows("elements.csv").transpose
-
-        def opt(str: String): Option[String] =
+    def load(): List[Element] = {
+        def nonEmpty(str: String): Option[String] =
             Option(str).filter(_.trim.nonEmpty)
 
-        Elements(
-            atomic_number = atomic_number.map(_.toInt),
-            symbol = symbol,
-            name = name,
-            atomic_mass = atomic_mass.map(_.replaceAll("\\[|\\]", "").toDouble),
-            color = color.map(Color.from_string),
-            electronic_configuration = electronic_configuration,
-            electronegativity = electronegativity.map(opt(_).map(_.toDouble)),
-            atomic_radius = atomic_radius.map(opt(_).map(_.toDouble)),
-            ionic_radius = ionic_radius.map(opt),
-            van_der_Waals_radius = van_der_Waals_radius.map(opt(_).map(_.toDouble)),
-            ionization_energy = ionization_energy.map(opt(_).map(_.toDouble)),
-            electron_affinity = electron_affinity.map(opt(_).map(_.toDouble)),
-            standard_state = standard_state.map(opt),
-            bonding_type = bonding_type.map(opt),
-            melting_point = melting_point.map(opt(_).map(_.toInt)),
-            boiling_point = boiling_point.map(opt(_).map(_.toInt)),
-            density = density.map(opt(_).map(_.toDouble)),
-            metal = metal,
-            year_discovered = year_discovered,
-            group = group.map {
-                case "-"   => None
-                case group => Some(group.toInt)
-            },
-            period = period.map(_.toInt))
+        loadRows("elements.csv").map {
+            case List(_, atomic_number, symbol, name, atomic_mass, color, electronic_configuration,
+                electronegativity, atomic_radius, ionic_radius, van_der_Waals_radius,
+                ionization_energy, electron_affinity, standard_state, bonding_type,
+                melting_point, boiling_point, density, metal, year_discovered, group, period) =>
+
+                Element(
+                    atomic_number = atomic_number.toInt,
+                    symbol = symbol,
+                    name = name,
+                    atomic_mass = atomic_mass.replaceAll("\\[|\\]", "").toDouble,
+                    color = color,
+                    electronic_configuration = electronic_configuration,
+                    electronegativity = nonEmpty(electronegativity).map(_.toDouble),
+                    atomic_radius = nonEmpty(atomic_radius).map(_.toDouble),
+                    ionic_radius = nonEmpty(ionic_radius),
+                    van_der_Waals_radius = nonEmpty(van_der_Waals_radius).map(_.toDouble),
+                    ionization_energy = nonEmpty(ionization_energy).map(_.toDouble),
+                    electron_affinity = nonEmpty(electron_affinity).map(_.toDouble),
+                    standard_state = nonEmpty(standard_state),
+                    bonding_type = nonEmpty(bonding_type),
+                    melting_point = nonEmpty(melting_point).map(_.toInt),
+                    boiling_point = nonEmpty(boiling_point).map(_.toInt),
+                    density = nonEmpty(density).map(_.toDouble),
+                    metal = metal,
+                    year_discovered = year_discovered,
+                    group = group match {
+                        case "-"   => None
+                        case group => Some(group.toInt)
+                    },
+                    period = period.toInt)
+        }
     }
 }
 
-case class Elements(
-    atomic_number: List[Int],                     // (units: g/cm^3)
-    symbol: List[String],
-    name: List[String],
-    atomic_mass: List[Double],                    // (units: amu)
-    color: List[Color],                           // (convention for molecular modeling color)
-    electronic_configuration: List[String],
-    electronegativity: List[Option[Double]],      // (units: Pauling)
-    atomic_radius: List[Option[Double]],          // (units: pm)
-    ionic_radius: List[Option[String]],           // (units: pm)
-    van_der_Waals_radius: List[Option[Double]],   // (units: pm)
-    ionization_energy: List[Option[Double]],      // (units: kJ/mol)
-    electron_affinity: List[Option[Double]],      // (units: kJ/mol)
-    standard_state: List[Option[String]],         // (solid, liquid, gas)
-    bonding_type: List[Option[String]],
-    melting_point: List[Option[Int]],             // (units: K)
-    boiling_point: List[Option[Int]],             // (units: K)
-    density: List[Option[Double]],                // (units: g/cm^3)
-    metal: List[String],
-    year_discovered: List[String],
-    group: List[Option[Int]],
-    period: List[Int])
+case class Element(
+    atomic_number: Int,                     // (units: g/cm^3)
+    symbol: String,
+    name: String,
+    atomic_mass: Double,                    // (units: amu)
+    color: Color,                           // (convention for molecular modeling color)
+    electronic_configuration: String,
+    electronegativity: Option[Double],      // (units: Pauling)
+    atomic_radius: Option[Double],          // (units: pm)
+    ionic_radius: Option[String],           // (units: pm)
+    van_der_Waals_radius: Option[Double],   // (units: pm)
+    ionization_energy: Option[Double],      // (units: kJ/mol)
+    electron_affinity: Option[Double],      // (units: kJ/mol)
+    standard_state: Option[String],         // (solid, liquid, gas)
+    bonding_type: Option[String],
+    melting_point: Option[Int],             // (units: K)
+    boiling_point: Option[Int],             // (units: K)
+    density: Option[Double],                // (units: g/cm^3)
+    metal: String,
+    year_discovered: String,
+    group: Option[Int],
+    period: Int)
