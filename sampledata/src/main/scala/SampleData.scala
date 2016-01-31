@@ -70,10 +70,10 @@ object SampleData {
 trait SampleData
 
 trait CSVSampleData extends SampleData {
-    protected def loadRows(fileName: String): List[Array[String]] = {
+    protected def loadRows(fileName: String): List[List[String]] = {
         val input = new InputStreamReader(SampleData.getStream(fileName))
         val reader = new CSVReader(input, ',', '"', '\\', 1)
-        reader.readAll().asScala.map(_.map(_.trim)).toList
+        reader.readAll().asScala.map(_.map(_.trim).toList).toList
     }
 }
 
