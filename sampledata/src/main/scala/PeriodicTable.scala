@@ -7,7 +7,7 @@ object PeriodicTable extends CSVSampleData {
             Option(str).filter(_.trim.nonEmpty)
 
         loadRows("elements.csv").map {
-            case List(_, atomic_number, symbol, name, atomic_mass, color, electronic_configuration,
+            case List(_, atomic_number, symbol, name, atomic_mass, cpk, electronic_configuration,
                 electronegativity, atomic_radius, ionic_radius, van_der_Waals_radius,
                 ionization_energy, electron_affinity, standard_state, bonding_type,
                 melting_point, boiling_point, density, metal, year_discovered, group, period) =>
@@ -17,7 +17,7 @@ object PeriodicTable extends CSVSampleData {
                     symbol = symbol,
                     name = name,
                     atomic_mass = atomic_mass.replaceAll("\\[|\\]", "").toDouble,
-                    color = color,
+                    cpk = cpk,
                     electronic_configuration = electronic_configuration,
                     electronegativity = nonEmpty(electronegativity).map(_.toDouble),
                     atomic_radius = nonEmpty(atomic_radius).map(_.toDouble),
@@ -46,7 +46,7 @@ case class Element(
     symbol: String,
     name: String,
     atomic_mass: Double,                    // (units: amu)
-    color: Color,                           // (convention for molecular modeling color)
+    cpk: Color,                             // (convention for molecular modeling color)
     electronic_configuration: String,
     electronegativity: Option[Double],      // (units: Pauling)
     atomic_radius: Option[Double],          // (units: pm)
