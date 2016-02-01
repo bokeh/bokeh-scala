@@ -14,6 +14,14 @@ case class Ref(id: String, `type`: String)
 
     def getRef = Ref(id.value, typeName)
     object id extends Field[String](IdGenerator.next())
+
+    def collect(): List[Model] = Model.collect(this :: Nil)
+}
+
+object Model {
+    def collect(objs: List[Model]): List[Model] = {
+        new Traversal().collect(objs)
+    }
 }
 
 @model abstract class CustomModel extends Model {

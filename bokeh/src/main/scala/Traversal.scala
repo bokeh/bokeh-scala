@@ -1,26 +1,13 @@
 package io.continuum.bokeh
 
-import play.api.libs.json.JsObject
-
-case class ModelRepr(id: String, `type`: String, attributes: JsObject)
-
-object JSONSerializer {
-    def serialize(obj: Model): List[ModelRepr] = serialize(obj :: Nil)
-
-    def serialize(objs: List[Model]): List[ModelRepr] = collect(objs).map(modelRepr)
-
-    protected def modelRepr(obj: Model): ModelRepr = {
-        val Ref(id, tp) = obj.getRef
-        ModelRepr(id, tp, HasFieldsWrites.writeFields(obj))
-    }
-
+class Traversal {
     def collect(objs: List[Model]): List[Model] = {
         val refs = collection.mutable.ListBuffer[Model]()
         traverse(objs, { case ref: Model => refs += ref })
         refs.toList
     }
 
-    protected def traverse(objs: List[Model], fn: PartialFunction[Model, Unit]) {
+    def traverse(objs: List[Model], fn: PartialFunction[Model, Unit]) {
         val visited = collection.mutable.HashSet[String]()
 
         def descendFields(obj: HasFields) {

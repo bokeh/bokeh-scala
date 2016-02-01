@@ -9,7 +9,7 @@ import scalax.file.Path
 import scala.collection.mutable.ListBuffer
 import scala.xml.{Node,NodeSeq,XML}
 
-import play.api.libs.json.{Json,Writes}
+import play.api.libs.json.{Json,Writes,JsObject}
 
 class Document(objs: Component*) {
     private val objects = ListBuffer[Component](objs: _*)
@@ -51,16 +51,18 @@ object HTMLFragmentWriter {
 
 class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
     def write(): HTMLFragment = {
-        var bundle = resources.bundle(JSONSerializer.collect(objs))
+        var bundle = resources.bundle(all_objs)
         new HTMLFragment(divs ++ scripts, bundle.styles, bundle.scripts)
     }
 
-    implicit val ModelReprFormat = Json.format[ModelRepr]
+    lazy val all_objs: List[Model] = Model.collect(objs)
 
+    case class ModelRepr(id: String, `type`: String, attributes: JsObject)
     case class Roots(root_ids: List[String], references: List[ModelRepr])
     case class Doc(roots: Roots, title: String, version: String)
     case class RenderItem(docid: String, elementid: String, modelid: Option[String])
 
+    implicit val ModelReprFormat = Json.format[ModelRepr]
     implicit val RootsFormat = Json.format[Roots]
     implicit val DocFormat = Json.format[Doc]
     implicit val RenderItemFormat = Json.format[RenderItem]
@@ -69,8 +71,13 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
 
     protected def title: String = "Bokeh Application"
 
+    protected def modelRepr(obj: Model): ModelRepr = {
+        val Ref(id, tpe) = obj.getRef
+        ModelRepr(id, tpe, HasFieldsWrites.writeFields(obj))
+    }
+
     protected lazy val spec: Spec = {
-        val roots = Roots(objs.map(_.id.value), JSONSerializer.serialize(objs))
+        val roots = Roots(objs.map(_.id.value), all_objs.map(modelRepr))
         var doc = Doc(roots, title, Resources.version)
         val docid = IdGenerator.next()
         val elementid = IdGenerator.next()
