@@ -24,5 +24,6 @@ package io.continuum.bokeh {
         val us_counties = USCounties.load()
         val us_holidays = USHolidays.load()
         val unemployment = Unemployment.load()
+        val periodic_table = PeriodicTable.load()
     }
 }
