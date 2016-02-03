@@ -100,7 +100,7 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
             |
             |Bokeh.embed.embed_items(docs_json, render_items);
             """
-        resources.wrap(code.stripMargin.trim).asScript
+        code.stripMargin.trim.asScript
     }
 }
 
