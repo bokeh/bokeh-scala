@@ -19,12 +19,12 @@ trait PrimitiveWrites {
 trait MapWrites {
     implicit def StringMapWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
         def writes(obj: Map[String, V]) =
-            JsObject(obj.map { case (k, v) => (k, implicitly[Writes[V]].writes(v)) } toSeq)
+            JsObject(obj.map { case (k, v) => (k, Json.toJson(v)) }.toSeq.sortBy(_._1))
     }
 
     implicit def EnumTypeMapWrites[E <: EnumType:Writes, V:Writes]: Writes[Map[E, V]] = new Writes[Map[E, V]] {
         def writes(obj: Map[E, V]) = {
-            JsObject(obj.map { case (k, v) => (k.name, implicitly[Writes[V]].writes(v)) } toSeq)
+            Json.toJson(obj.map { case (k, v) => (k.name, v) })
         }
     }
 }
