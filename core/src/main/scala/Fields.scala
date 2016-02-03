@@ -23,14 +23,16 @@ object Fields {
     def fieldsImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[List[FieldRef]] = {
         import c.universe._
 
+        val bokeh = q"io.continuum.bokeh"
+
         val refs = weakTypeOf[T].members
             .filter(_.isModule)
             .map(_.asModule)
             .filter(_.typeSignature <:< typeOf[AbstractField])
             .map { member =>
-                q"FieldRef(${member.name.decoded}, $obj.${member.name.toTermName})"
+                q"$bokeh.FieldRef(${member.name.decoded}, $obj.${member.name.toTermName})"
             }
 
-        c.Expr[List[FieldRef]](q"List(..$refs)")
+        c.Expr[List[FieldRef]](q"scala.List(..$refs)")
     }
 }

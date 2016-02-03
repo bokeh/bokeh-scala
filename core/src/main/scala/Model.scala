@@ -9,6 +9,8 @@ private object ModelImpl {
 
         annottees.map(_.tree) match {
             case ClassDef(mods, name, tparams, tpl @ Template(parents, sf, body)) :: companion =>
+                val bokeh = q"io.continuum.bokeh"
+
                 val expandedBody = body.flatMap {
                     case q"$prefix = include[$mixin]" =>
                         // XXX: should be c.typecheck(tq"$mixin", c.TYPEMODE)
@@ -24,15 +26,14 @@ private object ModelImpl {
                             val sig = field.typeSignature
                             val tpe = sig.member(newTypeName("ValueType")).typeSignatureIn(sig)
                             // TODO: add support for precise field type (Vectorized, NonNegative, etc.)
-                            q"object $name extends Field[$tpe]"
+                            q"object $name extends this.Field[$tpe]"
                         }
                     case field => field :: Nil
                 }
 
-                val bokeh = q"io.continuum.bokeh"
-                val methods = List(q"""override def fields: List[$bokeh.FieldRef] = $bokeh.Fields.fields(this)""")
+                val newMethods = List(q"""override def fields: scala.List[$bokeh.FieldRef] = $bokeh.Fields.fields(this)""")
+                val decl = ClassDef(mods, name, tparams, Template(parents, sf, expandedBody ++ newMethods))
 
-                val decl = ClassDef(mods, name, tparams, Template(parents, sf, expandedBody ++ methods))
                 c.Expr[Any](Block(decl :: companion, Literal(Constant(()))))
             case _ => c.abort(c.enclosingPosition, "expected a class")
         }
