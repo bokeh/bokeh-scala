@@ -19,10 +19,11 @@ trait HasFields { self =>
             setValue(Some(default))
         }
 
-        def defaulValue: Option[FieldType] =
+        def defaultValue: Option[FieldType] = {
             Option(implicitly[Default[FieldType]].default)
+        }
 
-        protected var _value: Option[FieldType] = defaulValue
+        protected var _value: Option[FieldType] = defaultValue
         protected var _dirty: Boolean = false
 
         final def isDirty: Boolean = _dirty
