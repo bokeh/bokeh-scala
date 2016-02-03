@@ -19,7 +19,7 @@ case object BokehCompiler extends ResourceComponent("bokeh-compiler") {
     override val css = false
 }
 
-case class Bundle(scripts: List[xml.Node], styles: List[xml.Node])
+case class Bundle(scripts: xml.NodeSeq, styles: xml.NodeSeq)
 
 sealed trait Resources {
     def minified: Boolean = true
@@ -49,7 +49,11 @@ sealed trait Resources {
         val scripts = components.filter(_.js == true).map(resolveScript) ++ List(logLevelScript)
         val styles = components.filter(_.css == true).map(resolveStyle)
 
-        Bundle(scripts, styles)
+        def separate(nodes: List[xml.Node]): xml.NodeSeq = {
+            nodes.flatMap(_ ++ xml.Text("\n"))
+        }
+
+        Bundle(separate(scripts), separate(styles))
     }
 
     def useWidgets(refs: List[Model]): Option[ResourceComponent] = {

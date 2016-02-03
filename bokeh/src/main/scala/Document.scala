@@ -52,7 +52,7 @@ object HTMLFragmentWriter {
 class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
     def write(): HTMLFragment = {
         var bundle = resources.bundle(all_objs)
-        new HTMLFragment(divs ++ scripts, bundle.styles, bundle.scripts)
+        new HTMLFragment(divs ++ xml.Text("\n") ++ scripts, bundle.styles, bundle.scripts)
     }
 
     lazy val all_objs: List[Model] = Model.collect(objs)
