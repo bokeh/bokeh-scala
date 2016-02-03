@@ -4,7 +4,7 @@ trait ByReference { self: HasFields =>
     type RefType
 
     def getRef: RefType
-    def id: AbstractField { type ValueType = String }
+    val id: String
 }
 
 case class Ref(id: String, `type`: String)
@@ -12,8 +12,8 @@ case class Ref(id: String, `type`: String)
 @model abstract class Model extends HasFields with ByReference {
     type RefType = Ref
 
-    def getRef = Ref(id.value, typeName)
-    object id extends Field[String](IdGenerator.next())
+    def getRef = Ref(id, typeName)
+    final lazy val id = IdGenerator.next()
 
     def collect(): List[Model] = Model.collect(this :: Nil)
 }

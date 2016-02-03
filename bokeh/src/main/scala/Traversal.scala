@@ -17,8 +17,8 @@ class Traversal {
         def descend(obj: Any) {
             obj match {
                 case obj: Model =>
-                    if (!visited.contains(obj.id.value)) {
-                        visited += obj.id.value
+                    if (!visited.contains(obj.id)) {
+                        visited += obj.id
                         descendFields(obj)
                         fn(obj)
                     }

@@ -77,7 +77,7 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
     }
 
     protected lazy val spec: Spec = {
-        val roots = Roots(objs.map(_.id.value), all_objs.map(modelRepr))
+        val roots = Roots(objs.map(_.id), all_objs.map(modelRepr))
         var doc = Doc(roots, title, Resources.version)
         val docid = IdGenerator.next()
         val elementid = IdGenerator.next()
