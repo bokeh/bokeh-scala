@@ -101,28 +101,14 @@ trait BokehWrites {
     implicit val Selected0dWrites = Json.writes[Selected0d]
     implicit val Selected1dWrites = Json.writes[Selected1d]
     implicit val Selected2dWrites = Json.writes[Selected2d]
-
     implicit val SelectedWrites = Json.writes[Selected]
 
     implicit val RefWrites = Json.writes[Ref]
 
-    implicit def FieldWrites[T:Writes] = new Writes[AbstractField { type ValueType = T }] {
-        def writes(obj: AbstractField { type ValueType = T }) =
-            implicitly[Writes[Option[T]]].writes(obj.valueOpt)
-    }
-
     implicit object HasFieldsWrites extends Writes[HasFields] {
-        def writeFields(obj: HasFields): JsObject = {
-            val fields = obj.fields
-               .filterNot(_.name == "id")
-               .map { case FieldRef(name, field) => (name, field.toJson) }
-               .collect { case (name, Some(jsValue)) => (name, jsValue) }
-            JsObject(fields)
-        }
-
         def writes(obj: HasFields) = obj match {
-            case obj: Model => implicitly[Writes[Ref]].writes(obj.getRef)
-            case _          => writeFields(obj)
+            case obj: Model => Json.toJson(obj.getRef)
+            case _          => obj.fieldsToJson(false)
         }
     }
 

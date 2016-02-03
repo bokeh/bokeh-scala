@@ -11,8 +11,9 @@ trait AbstractField {
     def value: ValueType
 
     def set(value: Option[ValueType])
+    def isDirty: Boolean
 
-    def toJson: Option[JsValue]
+    def toJson: JsValue
 }
 
 case class FieldRef(name: String, field: AbstractField)

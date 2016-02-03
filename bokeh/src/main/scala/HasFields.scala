@@ -1,13 +1,19 @@
 package io.continuum.bokeh
 
-import scala.reflect.runtime.{universe=>u,currentMirror=>cm}
-import play.api.libs.json.{Writes,JsValue,JsObject,JsNull}
+import play.api.libs.json.{Json,JsValue,JsObject,Writes}
 
 trait HasFields { self =>
     type SelfType = self.type
 
     def typeName: String = getClass.getSimpleName
+
     def fields: List[FieldRef]
+
+    def fieldsToJson(all: Boolean = false): JsObject =  {
+        JsObject(fields.collect {
+            case FieldRef(name, field) if all || field.isDirty => (name, field.toJson)
+        })
+    }
 
     class Field[FieldType:Default:Writes] extends AbstractField with ValidableField {
         type ValueType = FieldType
@@ -60,15 +66,7 @@ trait HasFields { self =>
             owner
         }
 
-        def toSerializable: Option[Any] = valueOpt
-
-        final def toJson: Option[JsValue] = {
-            if (isDirty) Some(_toJson) else None
-        }
-
-        protected def _toJson: JsValue = {
-            valueOpt.map(implicitly[Writes[ValueType]].writes _) getOrElse JsNull
-        }
+        override def toJson: JsValue = Json.toJson(valueOpt)
     }
 }
 
@@ -98,18 +96,10 @@ trait Vectorization { self: HasFields =>
             owner
         }
 
-        def toMap: Map[String, Any] = {
-            Map(fieldOpt.map("field" -> _).getOrElse("value" -> valueOpt))
-        }
+        private case class VectorValue(value: Option[ValueType], field: Option[Symbol])
+        private implicit val VectorValueWrites = Json.writes[VectorValue]
 
-        override def toSerializable: Option[Any] = Some(toMap)
-
-        override protected def _toJson: JsObject = {
-            val value = fieldOpt
-                .map { field => "field" -> implicitly[Writes[Symbol]].writes(field) }
-                .getOrElse { "value" -> super._toJson }
-            JsObject(List(value))
-        }
+        override def toJson: JsValue = Json.toJson(VectorValue(valueOpt, fieldOpt))
     }
 
     abstract class VectorizedWithUnits[FieldType:Default:Writes, UnitsType <: Units with EnumType: Default] extends Vectorized[FieldType] {
@@ -147,16 +137,10 @@ trait Vectorization { self: HasFields =>
             apply(column)
         }
 
-        override def toMap: Map[String, Any] = {
-            super.toMap ++ unitsOpt.map("units" -> _).toList
-        }
+        private case class VectorValue(value: Option[ValueType], field: Option[Symbol], units: Option[UnitsType])
+        private implicit val VectorValueWrites = Json.writes[VectorValue]
 
-        override protected def _toJson: JsObject = {
-            val json = super._toJson
-            unitsOpt.map {
-                units => json + ("units" -> implicitly[Writes[UnitsType]].writes(units))
-            } getOrElse json
-        }
+        override def toJson: JsValue = Json.toJson(VectorValue(valueOpt, fieldOpt, unitsOpt))
     }
 
     class Spatial[FieldType:Default:Writes] extends VectorizedWithUnits[FieldType, SpatialUnits] {

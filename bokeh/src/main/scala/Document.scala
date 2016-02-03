@@ -73,7 +73,7 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
 
     protected def modelRepr(obj: Model): ModelRepr = {
         val Ref(id, tpe) = obj.getRef
-        ModelRepr(id, tpe, HasFieldsWrites.writeFields(obj))
+        ModelRepr(id, tpe, obj.fieldsToJson(false))
     }
 
     protected lazy val spec: Spec = {
