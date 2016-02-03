@@ -14,9 +14,9 @@ trait HasFields { self =>
 
         def owner: SelfType = self
 
-        def this(value: FieldType) = {
+        def this(default: FieldType) = {
             this()
-            set(Some(value))
+            setValue(Some(default))
         }
 
         def defaulValue: Option[FieldType] =
