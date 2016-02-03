@@ -167,7 +167,6 @@ trait Vectorization { self: HasFields =>
         def this(units: SpatialUnits) = {
             this()
             setUnits(Some(units))
-            _dirty = false  // XXX: hack, see size vs. radius
         }
 
         def this(value: FieldType, units: SpatialUnits) = {
@@ -185,7 +184,6 @@ trait Vectorization { self: HasFields =>
         def this(units: AngularUnits) = {
             this()
             setUnits(Some(units))
-            _dirty = false  // XXX: hack, see size vs. radius
         }
 
         def this(value: FieldType, units: AngularUnits) = {
