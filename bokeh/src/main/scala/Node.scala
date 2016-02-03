@@ -7,9 +7,7 @@ trait NodeImplicits {
     implicit class StringNode(script: String) {
         def asScript: xml.Node = {
             <script type="text/javascript">{xml.Unparsed(s"""
-            // <![CDATA[
             $script
-            // ]]>
             """)}</script>
         }
 
