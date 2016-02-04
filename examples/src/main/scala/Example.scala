@@ -18,8 +18,8 @@ trait Example extends App {
     private var _config: Config = _
 
     private def parse(): Config = {
-        val example = getClass.getSimpleName.stripSuffix("$")
-        val parser = new scopt.OptionParser[Config](example) {
+        val exampleName = Utils.getClassName(this)
+        val parser = new scopt.OptionParser[Config](exampleName) {
             import CustomReads._
 
             opt[Resources]('r', "resources")

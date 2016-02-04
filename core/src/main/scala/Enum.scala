@@ -4,23 +4,27 @@ import scala.annotation.StaticAnnotation
 import scala.reflect.macros.Context
 
 trait EnumType {
-    val name: String = toString
+    protected def nameFn(name: String): String = name
+
+    val name: String = nameFn(Utils.getClassName(this))
+
+    final override def toString = name
 }
 
 trait LowerCase { self: EnumType =>
-    override val name = toString.toLowerCase
+    override def nameFn(name: String) = name.toLowerCase
 }
 
 trait UpperCase { self: EnumType =>
-    override val name = toString.toUpperCase
+    override def nameFn(name: String) = name.toUpperCase
 }
 
 trait SnakeCase { self: EnumType =>
-    override val name = Utils.snakify(toString)
+    override def nameFn(name: String) = Utils.snakify(name)
 }
 
 trait DashCase { self: EnumType =>
-    override val name = Utils.snakify(toString, '-')
+    override def nameFn(name: String) = Utils.snakify(name, '-')
 }
 
 trait Enumerated[T <: EnumType] {
@@ -32,8 +36,7 @@ trait Enumerated[T <: EnumType] {
     final def unapply(name: String): Option[T] = fromString.lift(name)
 
     override def toString: String = {
-        val name = getClass.getSimpleName.stripSuffix("$")
-        s"$name(${values.map(_.name).mkString(", ")})"
+        s"${Utils.getClassName(this)}(${values.map(_.name).mkString(", ")})"
     }
 }
 

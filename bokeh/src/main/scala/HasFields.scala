@@ -5,7 +5,7 @@ import play.api.libs.json.{Json,JsValue,JsObject,Writes}
 trait HasFields { self =>
     type SelfType = self.type
 
-    def typeName: String = getClass.getSimpleName
+    def typeName: String = Utils.getClassName(this)
 
     def fields: List[FieldRef]
 
