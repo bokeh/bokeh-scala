@@ -99,7 +99,10 @@ trait Vectorization { self: HasFields =>
         private case class VectorValue(value: Option[ValueType], field: Option[Symbol])
         private implicit val VectorValueWrites = Json.writes[VectorValue]
 
-        override def toJson: JsValue = Json.toJson(VectorValue(valueOpt, fieldOpt))
+        override def toJson: JsValue = {
+            val value = if (fieldOpt.isDefined) None else valueOpt
+            Json.toJson(VectorValue(value, fieldOpt))
+        }
     }
 
     abstract class VectorizedWithUnits[FieldType:Default:Writes, UnitsType <: Units with EnumType: Default] extends Vectorized[FieldType] {
@@ -140,7 +143,10 @@ trait Vectorization { self: HasFields =>
         private case class VectorValue(value: Option[ValueType], field: Option[Symbol], units: Option[UnitsType])
         private implicit val VectorValueWrites = Json.writes[VectorValue]
 
-        override def toJson: JsValue = Json.toJson(VectorValue(valueOpt, fieldOpt, unitsOpt))
+        override def toJson: JsValue = {
+            val value = if (fieldOpt.isDefined) None else valueOpt
+            Json.toJson(VectorValue(value, fieldOpt, unitsOpt))
+        }
     }
 
     class Spatial[FieldType:Default:Writes] extends VectorizedWithUnits[FieldType, SpatialUnits] {
