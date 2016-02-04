@@ -18,8 +18,9 @@ trait PrimitiveWrites {
 
 trait MapWrites {
     implicit def StringMapWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
-        def writes(obj: Map[String, V]) =
-            JsObject(obj.map { case (k, v) => (k, Json.toJson(v)) }.toSeq.sortBy(_._1))
+        def writes(obj: Map[String, V]) = {
+            JsObject(obj.map { case (k, v) => (k, Json.toJson(v)) }.toSeq)
+        }
     }
 
     implicit def EnumTypeMapWrites[E <: EnumType:Writes, V:Writes]: Writes[Map[E, V]] = new Writes[Map[E, V]] {

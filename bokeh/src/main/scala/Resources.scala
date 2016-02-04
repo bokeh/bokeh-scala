@@ -7,7 +7,7 @@ import java.util.Properties
 import scalax.io.JavaConverters._
 import scalax.file.Path
 
-import play.api.libs.json.{Json,JsValue}
+import play.api.libs.json.{Json,JsValue,JsObject,JsArray}
 
 sealed abstract class ResourceComponent(val name: String) {
     val js = true
@@ -26,7 +26,13 @@ sealed trait Resources {
 
     def logLevel: LogLevel = LogLevel.Info
 
-    def stringify(value: JsValue): String = Json.stringify(value)
+    protected def sortKeys(value: JsValue): JsValue = value match {
+        case JsObject(pairs) => JsObject(pairs.map { case (k, v) => (k, sortKeys(v)) }.sortBy(_._1))
+        case JsArray(items)  => JsArray(items.map(sortKeys))
+        case _               => value
+    }
+
+    def stringify(value: JsValue): String = Json.stringify(sortKeys(value))
 
     def wrap(code: String): String = s"Bokeh.$$(function() {\n$code\n});"
 
@@ -82,7 +88,7 @@ trait DevResources { self: Resources =>
 
     override val logLevel: LogLevel = LogLevel.Debug
 
-    override def stringify(value: JsValue): String = Json.prettyPrint(value)
+    override def stringify(value: JsValue): String = Json.prettyPrint(sortKeys(value))
 }
 
 trait InlineResources extends Resources {
