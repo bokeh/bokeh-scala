@@ -30,13 +30,6 @@ class Document(objs: Component*) {
 
 class HTMLFragment(val html: NodeSeq, val styles: NodeSeq, val scripts: NodeSeq) {
     def head: NodeSeq = styles ++ scripts
-    def logo: NodeSeq = {
-        <div>
-            <a href="http://bokeh.pydata.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
-            <span>BokehJS successfully loaded.</span>
-        </div>
-    }
-    def preamble: NodeSeq = head ++ logo
 }
 
 object HTMLFragmentWriter {
