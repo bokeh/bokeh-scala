@@ -12,11 +12,11 @@ trait ScalaWrites {
     }
 
     implicit object CharWrites extends Writes[Char] {
-        def writes(c: Char) = JsString(c.toString)
+        def writes(c: Char) = Json.toJson(c.toString)
     }
 
     implicit val SymbolWrites = new Writes[Symbol] {
-        def writes(symbol: Symbol) = JsString(symbol.name)
+        def writes(symbol: Symbol) = Json.toJson(symbol.name)
     }
 
     implicit def DictWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
@@ -26,48 +26,46 @@ trait ScalaWrites {
     }
 
     implicit def Tuple2Writes[T1:Writes, T2:Writes]: Writes[(T1, T2)] = new Writes[(T1, T2)] {
-        def writes(t: (T1, T2)) = JsArray(List(implicitly[Writes[T1]].writes(t._1),
-                                               implicitly[Writes[T2]].writes(t._2)))
+        def writes(t: (T1, T2)) = JsArray(List(Json.toJson(t._1),
+                                               Json.toJson(t._2)))
     }
 
     implicit def Tuple3Writes[T1:Writes, T2:Writes, T3:Writes]: Writes[(T1, T2, T3)] = new Writes[(T1, T2, T3)] {
-        def writes(t: (T1, T2, T3)) = JsArray(List(implicitly[Writes[T1]].writes(t._1),
-                                                   implicitly[Writes[T2]].writes(t._2),
-                                                   implicitly[Writes[T3]].writes(t._3)))
+        def writes(t: (T1, T2, T3)) = JsArray(List(Json.toJson(t._1),
+                                                   Json.toJson(t._2),
+                                                   Json.toJson(t._3)))
     }
 }
 
 trait ThirdpartyWrites {
     implicit def DenseVectorWrites[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
-        def writes(vec: DenseVector[T]) =
-            implicitly[Writes[Array[T]]].writes(vec.toArray)
+        def writes(vec: DenseVector[T]) = Json.toJson(vec.toArray)
     }
 
     implicit val DateTimeJSON = new Writes[DateTime] {
-        def writes(datetime: DateTime) = JsNumber(datetime.getMillis)
+        def writes(datetime: DateTime) = Json.toJson(datetime.getMillis)
     }
 
     implicit val TimeJSON = new Writes[Time] {
-        def writes(time: Time) = JsNumber(time.getMillisOfDay)
+        def writes(time: Time) = Json.toJson(time.getMillisOfDay)
     }
 
     implicit val DateJSON = new Writes[Date] {
-        def writes(date: Date) = implicitly[Writes[DateTime]].writes(date.toDateTimeAtStartOfDay)
+        def writes(date: Date) = Json.toJson(date.toDateTimeAtStartOfDay)
     }
 }
 
 trait BokehWrites {
     implicit val PercentWrites = new Writes[Percent] {
-        def writes(percent: Percent) =
-            implicitly[Writes[Double]].writes(percent.value)
+        def writes(percent: Percent) = Json.toJson(percent.value)
     }
 
     implicit val ColorWrites = new Writes[Color] {
-        def writes(color: Color) = JsString(color.toCSS)
+        def writes(color: Color) = Json.toJson(color.toCSS)
     }
 
     implicit val FontSizeWrites = new Writes[FontSize] {
-        def writes(size: FontSize) = JsString(size.toCSS)
+        def writes(size: FontSize) = Json.toJson(size.toCSS)
     }
 
     implicit val TooltipWrites = new Writes[Tooltip] {
@@ -79,7 +77,7 @@ trait BokehWrites {
     }
 
     implicit def EnumWrites[T <: EnumType] = new Writes[T] {
-        def writes(value: T) = implicitly[Writes[String]].writes(value.name)
+        def writes(value: T) = Json.toJson(value.name)
     }
 
     implicit object OrientationWrites extends Writes[Orientation] {
