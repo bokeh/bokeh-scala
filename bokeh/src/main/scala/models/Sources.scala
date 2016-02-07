@@ -28,7 +28,7 @@ case class Selected(`0d`: Selected0d = Selected0d(),
         def :=(value: M[T]): Unit = source.addColumn(name, value)
     }
 
-    def column[M[_], T](value: M[T]): ColumnDataSource#Column[M, T] = macro ColumnMacro.columnImpl[M, T]
+    def column[M[_], T](value: M[T]): Column[M, T] = macro ColumnMacro.columnImpl[M, T]
 
     def addColumn[M[_]: ArrayLike, T](name: Symbol, value: M[T]): SelfType = {
         data <<= (_ + (name -> value))
@@ -39,15 +39,15 @@ case class Selected(`0d`: Selected0d = Selected0d(),
 private[bokeh] object ColumnMacro {
     import scala.reflect.macros.Context
 
-    def columnImpl[M[_], T](c: Context)(value: c.Expr[M[T]])
-            (implicit ev1: c.WeakTypeTag[M[_]], ev2: c.WeakTypeTag[T]): c.Expr[ColumnDataSource#Column[M, T]] = {
+    def columnImpl[M[_], T](c: Context { type PrefixType = ColumnDataSource })(value: c.Expr[M[T]])
+            (implicit ev1: c.WeakTypeTag[M[_]], ev2: c.WeakTypeTag[T]): c.Expr[c.prefix.value.Column[M, T]] = {
         import c.universe._
 
         val name = definingValName(c).map(name => c.Expr[String](Literal(Constant(name)))) getOrElse {
             c.abort(c.enclosingPosition, "column must be directly assigned to a val, such as `val x1 = column(List(1.0, 2.0, 3.0))`")
         }
 
-        c.Expr[ColumnDataSource#Column[M, T]](q"new Column(Symbol($name), $value)")
+        c.Expr[c.prefix.value.Column[M, T]](q"new Column(Symbol($name), $value)")
     }
 
     def definingValName(c: Context): Option[String] = {
