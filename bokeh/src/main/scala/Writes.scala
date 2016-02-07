@@ -6,7 +6,7 @@ import play.api.libs.json.{Json,Writes,JsValue,JsString,JsNumber,JsArray,JsObjec
 import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 import breeze.linalg.DenseVector
 
-trait PrimitiveWrites {
+trait ScalaWrites {
     implicit object ByteWrites extends Writes[Byte] {
         def writes(b: Byte) = JsNumber(b)
     }
@@ -14,23 +14,17 @@ trait PrimitiveWrites {
     implicit object CharWrites extends Writes[Char] {
         def writes(c: Char) = JsString(c.toString)
     }
-}
 
-trait MapWrites {
-    implicit def StringMapWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
+    implicit val SymbolWrites = new Writes[Symbol] {
+        def writes(symbol: Symbol) = JsString(symbol.name)
+    }
+
+    implicit def DictWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
         def writes(obj: Map[String, V]) = {
             JsObject(obj.map { case (k, v) => (k, Json.toJson(v)) }.toSeq)
         }
     }
 
-    implicit def EnumTypeMapWrites[E <: EnumType:Writes, V:Writes]: Writes[Map[E, V]] = new Writes[Map[E, V]] {
-        def writes(obj: Map[E, V]) = {
-            Json.toJson(obj.map { case (k, v) => (k.name, v) })
-        }
-    }
-}
-
-trait TupleWrites {
     implicit def Tuple2Writes[T1:Writes, T2:Writes]: Writes[(T1, T2)] = new Writes[(T1, T2)] {
         def writes(t: (T1, T2)) = JsArray(List(implicitly[Writes[T1]].writes(t._1),
                                                implicitly[Writes[T2]].writes(t._2)))
@@ -43,7 +37,12 @@ trait TupleWrites {
     }
 }
 
-trait DateTimeWrites {
+trait ThirdpartyWrites {
+    implicit def DenseVectorWrites[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
+        def writes(vec: DenseVector[T]) =
+            implicitly[Writes[Array[T]]].writes(vec.toArray)
+    }
+
     implicit val DateTimeJSON = new Writes[DateTime] {
         def writes(datetime: DateTime) = JsNumber(datetime.getMillis)
     }
@@ -58,15 +57,6 @@ trait DateTimeWrites {
 }
 
 trait BokehWrites {
-    implicit def DenseVectorWrites[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
-        def writes(vec: DenseVector[T]) =
-            implicitly[Writes[Array[T]]].writes(vec.toArray)
-    }
-
-    implicit val SymbolWrites = new Writes[Symbol] {
-        def writes(symbol: Symbol) = JsString(symbol.name)
-    }
-
     implicit val PercentWrites = new Writes[Percent] {
         def writes(percent: Percent) =
             implicitly[Writes[Double]].writes(percent.value)
@@ -147,5 +137,5 @@ trait BokehWrites {
     }
 }
 
-trait Formats extends PrimitiveWrites with MapWrites with TupleWrites with DateTimeWrites with BokehWrites
+trait Formats extends ScalaWrites with ThirdpartyWrites with BokehWrites
 object Formats extends Formats
