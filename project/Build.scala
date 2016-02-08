@@ -5,16 +5,6 @@ import com.typesafe.sbt.SbtPgp
 import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
 
 object Dependencies {
-    val isScala_2_10 = Def.setting {
-        scalaVersion.value.startsWith("2.10")
-    }
-
-    def scala_2_10(moduleID: ModuleID) =
-        Def.setting { if (isScala_2_10.value) Seq(moduleID) else Seq.empty }
-
-    def scala_2_11_+(moduleID: ModuleID) =
-        Def.setting { if (!isScala_2_10.value) Seq(moduleID) else Seq.empty }
-
     val scalaio = {
         val namespace = "com.github.scala-incubator.io"
         val version = "0.4.3"
@@ -42,9 +32,7 @@ object Dependencies {
 
     val paradise = "org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full
 
-    val quasiquotes = scala_2_10("org.scalamacros" %% "quasiquotes" % "2.0.0")
-
-    val xml = scala_2_11_+("org.scala-lang.modules" %% "scala-xml" % "1.0.2")
+    val xml = "org.scala-lang.modules" %% "scala-xml" % "1.0.2"
 }
 
 object BokehBuild extends Build {
@@ -54,7 +42,6 @@ object BokehBuild extends Build {
         homepage := Some(url("http://bokeh.pydata.org")),
         licenses := Seq("MIT-style" -> url("http://www.opensource.org/licenses/mit-license.php")),
         scalaVersion := "2.11.7",
-        crossScalaVersions := Seq("2.10.5", "2.11.7"),
         scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature", "-Xlog-free-types"),
         scalacOptions += "-language:postfixOps,implicitConversions,higherKinds,experimental.macros",
         scalacOptions in (Compile, doc) := Seq("-groups", "-implicits"),
@@ -133,7 +120,7 @@ object BokehBuild extends Build {
     lazy val bokehSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ xml.value ++ Seq(play_json, specs2, repl)
+            scalaio ++ Seq(xml, play_json, specs2, repl)
         },
         upload := {
             val local = target in (Compile, doc) value
@@ -149,21 +136,21 @@ object BokehBuild extends Build {
     lazy val coreSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            quasiquotes.value ++ Seq(reflect.value, play_json, specs2)
+            Seq(reflect.value, play_json, specs2)
         }
     )
 
     lazy val thirdpartySettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            quasiquotes.value ++ Seq(breeze, joda_time, reflect.value, play_json, specs2)
+            Seq(breeze, joda_time, reflect.value, play_json, specs2)
         }
     )
 
     lazy val sampledataSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ xml.value ++ Seq(opencsv, ical4j, specs2)
+            scalaio ++ Seq(xml, opencsv, ical4j, specs2)
         }
     )
 
