@@ -40,19 +40,11 @@ private[bokeh] object ColumnMacro {
             (implicit ev1: c.WeakTypeTag[M[_]], ev2: c.WeakTypeTag[T]): c.Expr[c.prefix.value.Column[M, T]] = {
         import c.universe._
 
-        val name = definingValName(c).map(name => c.Expr[String](Literal(Constant(name)))) getOrElse {
+        val name = Macros.definingValName(c) getOrElse {
             c.abort(c.enclosingPosition, "column must be directly assigned to a val, such as `val x1 = column(List(1.0, 2.0, 3.0))`")
         }
 
         c.Expr[c.prefix.value.Column[M, T]](q"new Column(Symbol($name), $value)")
-    }
-
-    def definingValName(c: Context): Option[String] = {
-        import c.universe._
-
-        c.enclosingClass.collect {
-            case ValDef(_, name, _, rhs) if rhs.pos == c.macroApplication.pos => name.encodedName.toString
-        }.headOption
     }
 }
 
