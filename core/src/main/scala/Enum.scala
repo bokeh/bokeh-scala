@@ -1,7 +1,7 @@
 package io.continuum.bokeh
 
 import scala.annotation.StaticAnnotation
-import scala.reflect.macros.Context
+import scala.reflect.macros.blackbox.Context
 
 trait EnumType {
     protected def nameFn(name: String): String = name

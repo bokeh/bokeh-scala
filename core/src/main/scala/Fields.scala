@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-import scala.reflect.macros.Context
+import scala.reflect.macros.blackbox.Context
 
 import play.api.libs.json.JsValue
 

@@ -34,7 +34,7 @@ case class Selected(`0d`: Selected0d = Selected0d(),
 }
 
 private[bokeh] object ColumnMacro {
-    import scala.reflect.macros.Context
+    import scala.reflect.macros.blackbox.Context
 
     def columnImpl[M[_], T](c: Context { type PrefixType = ColumnDataSource })(value: c.Expr[M[T]])
             (implicit ev1: c.WeakTypeTag[M[_]], ev2: c.WeakTypeTag[T]): c.Expr[c.prefix.value.Column[M, T]] = {

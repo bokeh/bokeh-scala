@@ -1,7 +1,7 @@
 package io.continuum.bokeh
 
 import scala.annotation.StaticAnnotation
-import scala.reflect.macros.Context
+import scala.reflect.macros.blackbox.Context
 
 private object ModelImpl {
     def macroTransformImpl(c: Context)(annottees: c.Expr[Any]*): c.Expr[Any] = {
