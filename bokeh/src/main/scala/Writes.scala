@@ -19,9 +19,15 @@ trait ScalaWrites {
         def writes(symbol: Symbol) = Json.toJson(symbol.name)
     }
 
-    implicit def DictWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
+    implicit def StringMapWrites[V:Writes]: Writes[Map[String, V]] = new Writes[Map[String, V]] {
         def writes(obj: Map[String, V]) = {
             JsObject(obj.map { case (k, v) => (k, Json.toJson(v)) }.toSeq)
+        }
+    }
+
+    implicit def SymbolMapWrites[V:Writes]: Writes[Map[Symbol, V]] = new Writes[Map[Symbol, V]] {
+        def writes(obj: Map[Symbol, V]) = {
+            JsObject(obj.map { case (k, v) => (k.name, Json.toJson(v)) }.toSeq)
         }
     }
 
@@ -98,39 +104,6 @@ trait BokehWrites {
         def writes(obj: HasFields) = obj match {
             case obj: Model => Json.toJson(obj.getRef)
             case _          => obj.fieldsToJson(false)
-        }
-    }
-
-    implicit object SymbolAnyMapWrites extends Writes[Map[Symbol, Any]] {
-        private def seqToJson(obj: TraversableOnce[_]): JsValue = {
-            JsArray(obj.toIterator.map(anyToJson).toSeq)
-        }
-
-        private def anyToJson(obj: Any): JsValue = obj match {
-            case obj: Boolean            => Json.toJson(obj)
-            case obj: Byte               => Json.toJson(obj)
-            case obj: Short              => Json.toJson(obj)
-            case obj: Int                => Json.toJson(obj)
-            case obj: Long               => Json.toJson(obj)
-            case obj: Float              => Json.toJson(obj)
-            case obj: Double             => Json.toJson(obj)
-            case obj: Char               => Json.toJson(obj)
-            case obj: String             => Json.toJson(obj)
-            case obj: Color              => Json.toJson(obj)
-            case obj: Percent            => Json.toJson(obj)
-            case obj: EnumType           => Json.toJson(obj)
-            case obj: DateTime           => Json.toJson(obj)
-            case obj: Time               => Json.toJson(obj)
-            case obj: Date               => Json.toJson(obj)
-            case obj: Option[_]          => obj.map(anyToJson) getOrElse JsNull
-            case obj: Array[_]           => seqToJson(obj)
-            case obj: TraversableOnce[_] => seqToJson(obj)
-            case obj: DenseVector[_]     => seqToJson(obj.valuesIterator)
-            case _ => throw new IllegalArgumentException(s"$obj of type <${obj.getClass}>")
-        }
-
-        def writes(obj: Map[Symbol, Any]) = {
-            JsObject(obj.map { case (k, v) => (k.name, anyToJson(v)) } toList)
         }
     }
 }
