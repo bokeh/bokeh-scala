@@ -31,7 +31,7 @@ object Fields {
             .map(_.asModule)
             .filter(_.typeSignature <:< typeOf[AbstractField])
             .map { member =>
-                q"$bokeh.FieldRef(${member.name.decoded}, $obj.${member.name.toTermName})"
+                q"$bokeh.FieldRef(${member.name.decodedName.toString}, $obj.${member.name.toTermName})"
             }
 
         c.Expr[List[FieldRef]](q"scala.List(..$refs)")

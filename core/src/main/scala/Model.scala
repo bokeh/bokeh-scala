@@ -13,18 +13,18 @@ private object ModelImpl {
 
                 val expandedBody = body.flatMap {
                     case q"$prefix = include[$mixin]" =>
-                        // XXX: should be c.typecheck(tq"$mixin", c.TYPEMODE)
-                        val tpe = c.typeCheck(q"null: $mixin").tpe
-
-                        val fields = tpe.members
+                        val fields =
+                           c.typecheck(tq"$mixin", c.TYPEmode)
+                            .tpe
+                            .members
                             .filter(_.isModule)
                             .map(_.asModule)
                             .filter(_.typeSignature <:< typeOf[AbstractField])
 
                         fields.map { field =>
-                            val name = newTermName(s"${prefix}_${field.name}")
+                            val name = TermName(s"${prefix}_${field.name}")
                             val sig = field.typeSignature
-                            val tpe = sig.member(newTypeName("ValueType")).typeSignatureIn(sig)
+                            val tpe = sig.member(TypeName("ValueType")).typeSignatureIn(sig)
                             // TODO: add support for precise field type (Vectorized, NonNegative, etc.)
                             q"object $name extends this.Field[$tpe]"
                         }

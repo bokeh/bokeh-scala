@@ -51,7 +51,7 @@ private[bokeh] object ColumnMacro {
         import c.universe._
 
         c.enclosingClass.collect {
-            case ValDef(_, name, _, rhs) if rhs.pos == c.macroApplication.pos => name.encoded
+            case ValDef(_, name, _, rhs) if rhs.pos == c.macroApplication.pos => name.encodedName.toString
         }.headOption
     }
 }
