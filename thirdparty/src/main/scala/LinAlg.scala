@@ -1,8 +1,8 @@
 package io.continuum.bokeh
+package thirdparty
 
 import scala.reflect.ClassTag
 
-import scala.collection.immutable.NumericRange
 import breeze.linalg.{DenseVector,DenseMatrix}
 
 object LinAlg extends LinAlg
@@ -18,6 +18,4 @@ trait LinAlg {
         }
         (x1Mesh, x2Mesh)
     }
-
-    implicit def NumericRangeToDenseVector[T:ClassTag](range: NumericRange[T]) = new DenseVector(range.toArray)
 }

@@ -133,7 +133,7 @@ object BokehBuild extends Build {
     lazy val bokehSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ xml.value ++ Seq(breeze, joda_time, play_json, specs2, repl)
+            scalaio ++ xml.value ++ Seq(play_json, specs2, repl)
         },
         upload := {
             val local = target in (Compile, doc) value
@@ -150,6 +150,13 @@ object BokehBuild extends Build {
         libraryDependencies ++= {
             import Dependencies._
             quasiquotes.value ++ Seq(reflect.value, play_json, specs2)
+        }
+    )
+
+    lazy val thirdpartySettings = commonSettings ++ Seq(
+        libraryDependencies ++= {
+            import Dependencies._
+            quasiquotes.value ++ Seq(breeze, joda_time, reflect.value, play_json, specs2)
         }
     )
 
@@ -180,9 +187,10 @@ object BokehBuild extends Build {
     lazy val bokeh = project in file("bokeh") settings(bokehSettings: _*) dependsOn(core, bokehjs)
     lazy val bokehjs = project in file("bokehjs/bokehjs") settings(bokehjsSettings: _*)
     lazy val core = project in file("core") settings(coreSettings: _*)
+    lazy val thirdparty = project in file("thirdparty") settings(thirdpartySettings: _*) dependsOn(bokeh)
     lazy val sampledata = project in file("sampledata") settings(sampledataSettings: _*) dependsOn(bokeh)
-    lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh, sampledata)
-    lazy val all = project in file(".") disablePlugins(SbtPgp) settings(allSettings: _*) aggregate(bokeh, bokehjs, core, sampledata, examples)
+    lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh, thirdparty, sampledata)
+    lazy val all = project in file(".") disablePlugins(SbtPgp) settings(allSettings: _*) aggregate(bokeh, bokehjs, core, thirdparty, sampledata, examples)
 
-    override def projects = Seq(bokeh, bokehjs, core, sampledata, examples, all)
+    override def projects = Seq(bokeh, bokehjs, core, thirdparty, sampledata, examples, all)
 }

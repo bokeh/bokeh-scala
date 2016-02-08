@@ -1,10 +1,6 @@
 package io.continuum.bokeh
 
-import scala.reflect.ClassTag
-
-import play.api.libs.json.{Json,Writes,JsValue,JsString,JsNumber,JsArray,JsObject,JsNull}
-import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
-import breeze.linalg.DenseVector
+import play.api.libs.json.{Json,Writes,JsNumber,JsArray,JsObject}
 
 trait ScalaWrites {
     implicit object ByteWrites extends Writes[Byte] {
@@ -40,24 +36,6 @@ trait ScalaWrites {
         def writes(t: (T1, T2, T3)) = JsArray(List(Json.toJson(t._1),
                                                    Json.toJson(t._2),
                                                    Json.toJson(t._3)))
-    }
-}
-
-trait ThirdpartyWrites {
-    implicit def DenseVectorWrites[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
-        def writes(vec: DenseVector[T]) = Json.toJson(vec.toArray)
-    }
-
-    implicit val DateTimeJSON = new Writes[DateTime] {
-        def writes(datetime: DateTime) = Json.toJson(datetime.getMillis)
-    }
-
-    implicit val TimeJSON = new Writes[Time] {
-        def writes(time: Time) = Json.toJson(time.getMillisOfDay)
-    }
-
-    implicit val DateJSON = new Writes[Date] {
-        def writes(date: Date) = Json.toJson(date.toDateTimeAtStartOfDay)
     }
 }
 
@@ -108,5 +86,5 @@ trait BokehWrites {
     }
 }
 
-trait Formats extends ScalaWrites with ThirdpartyWrites with BokehWrites
+trait Formats extends ScalaWrites with BokehWrites
 object Formats extends Formats
