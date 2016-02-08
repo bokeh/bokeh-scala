@@ -16,6 +16,8 @@ case class Ref(id: String, `type`: String)
     final lazy val id = IdGenerator.next()
 
     def collect(): List[Model] = Model.collect(this :: Nil)
+
+    object tags extends Field[List[String]]
 }
 
 object Model {
