@@ -12,7 +12,7 @@ object Donut extends Example {
     val title = "Web browser market share (November 2013)"
     val plot = new Plot().title(title).x_range(xdr).y_range(ydr).plot_width(800).plot_height(800)
 
-    val colors = Map(
+    val browser_colors = Map(
         "Chrome"  -> Color.SeaGreen,
         "Firefox" -> Color.Tomato,
         "Safari"  -> Color.Orchid,
@@ -20,7 +20,7 @@ object Donut extends Example {
         "IE"      -> Color.SkyBlue,
         "Other"   -> Color.LightGray)
 
-    val icons = Map(
+    val browser_icons = Map(
         "Chrome"  -> WebBrowserIcons.Chrome,
         "Firefox" -> WebBrowserIcons.Firefox,
         "Safari"  -> WebBrowserIcons.Safari,
@@ -38,18 +38,19 @@ object Donut extends Example {
     val aggregated = data.groupBy(_.browser).mapValues(_.map(_.share).sum)
 
     def agg(fn: Double => Boolean) = aggregated.filter { case (_, share) => fn(share) }
-    val selected = agg(_ >= 1) + ("Other" -> agg(_ < 1).values.sum)
+    val chosen = agg(_ >= 1) + ("Other" -> agg(_ < 1).values.sum)
 
-    val browsers = selected.keys
-    val angles = selected.values.map(2*pi*_/100).scanLeft(0.0)(_ + _)
+    val browsers = chosen.keys
+    val angles = chosen.values.map(2*pi*_/100).scanLeft(0.0)(_ + _)
 
     val start_angles = angles.init.toList
     val end_angles = angles.tail.toList
 
-    val browsers_source = new ColumnDataSource().data(Map(
-        'start  -> start_angles,
-        'end    -> end_angles,
-        'colors -> browsers.map(colors)))
+    object browsers_source extends ColumnDataSource {
+        val start  = column(start_angles)
+        val end    = column(end_angles)
+        val colors = column(browsers.map(browser_colors))
+    }
 
     val glyph = new Wedge().x(0).y(0).radius(1).line_color(Color.White).line_width(2).start_angle('start).end_angle('end).fill_color('colors)
     plot.addGlyph(browsers_source, glyph)
@@ -71,7 +72,7 @@ object Donut extends Example {
         val angles = versions.Share.map(radians).cumsum() + start_angle
         val end = angles.tolist() + [end_angle]
         val start = [start_angle] + end[:-1]
-        val base_color = colors[browser]
+        val base_color = browser_colors[browser]
         val fill = [ base_color.lighten(i*0.05) for i in range(len(versions) + 1) ]
         val text = [ number if share >= 1 else "" for number, share in zip(versions.VersionNumber, versions.Share) ]
         val (x, y) = polar_to_cartesian(1.25, start, end)
@@ -94,19 +95,23 @@ object Donut extends Example {
     }
 
     {
-        val urls = browsers.map(icons)
-        val (x, y) = polar_to_cartesian(1.7, start_angles, end_angles)
-
-        val source = new ColumnDataSource().data(Map('urls -> urls, 'x -> x, 'y -> y))
+        val (_x, _y) = polar_to_cartesian(1.7, start_angles, end_angles)
+        val source = new ColumnDataSource {
+            val x    = column(_x)
+            val y    = column(_y)
+            val urls = column(browsers.map(browser_icons))
+        }
         val glyph = new ImageURL().url('urls).x('x).y('y).angle(0.0).anchor(Anchor.Center)
         plot.addGlyph(source, glyph)
     }
 
     {
-        val text = selected.values.map(share => f"$share%.02f%%")
-        val (x, y) = polar_to_cartesian(0.7, start_angles, end_angles)
-
-        val source = new ColumnDataSource().data(Map('text -> text, 'x -> x, 'y -> y))
+        val (_x, _y) = polar_to_cartesian(0.7, start_angles, end_angles)
+        val source = new ColumnDataSource {
+            val x    = column(_x)
+            val y    = column(_y)
+            val text = column(chosen.values.map(share => f"$share%.02f%%"))
+        }
         val glyph = new Text().x('x).y('y).text('text).angle(0).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
         plot.addGlyph(source, glyph)
     }

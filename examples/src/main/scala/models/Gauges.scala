@@ -79,25 +79,35 @@ object Gauges extends Example {
         val rotation = if (direction == 1) 0 else -pi
 
         {
-            val (x, y) = major_angles.map(polar_to_cartesian(radius, _)).unzip
-            val angles = major_angles.map(_ + rotation)
-            val source = new ColumnDataSource().data(Map('x -> x, 'y -> y, 'angle -> angles))
+            val (_x, _y) = major_angles.map(polar_to_cartesian(radius, _)).unzip
+            val source = new ColumnDataSource {
+                val x     = column(_x)
+                val y     = column(_y)
+                val angle = column(major_angles.map(_ + rotation))
+            }
             val glyph = new Ray().x('x).y('y).length(length, SpatialUnits.Data).angle('angle).line_color(color).line_width(2)
             plot.addGlyph(source, glyph)
         }
 
         {
-            val (x, y) = minor_angles.map(polar_to_cartesian(radius, _)).unzip
-            val angles = minor_angles.map(_ + rotation)
-            val source = new ColumnDataSource().data(Map('x -> x, 'y -> y, 'angle -> angles))
+            val (_x, _y) = minor_angles.map(polar_to_cartesian(radius, _)).unzip
+            val source = new ColumnDataSource {
+                val x     = column(_x)
+                val y     = column(_y)
+                val angle = column(minor_angles.map(_ + rotation))
+            }
             val glyph = new Ray().x('x).y('y).length(length/2, SpatialUnits.Data).angle('angle).line_color(color).line_width(1)
             plot.addGlyph(source, glyph)
         }
 
         {
-            val (x, y) = major_angles.map(polar_to_cartesian(radius+2*length*direction, _)).unzip
-            val angles = major_angles.map(_ - pi/2)
-            val source = new ColumnDataSource().data(Map('x -> x, 'y -> y, 'angle -> angles, 'text -> major_labels))
+            val (_x, _y) = major_angles.map(polar_to_cartesian(radius+2*length*direction, _)).unzip
+            val source = new ColumnDataSource {
+                val x     = column(_x)
+                val y     = column(_y)
+                val angle = column(major_angles.map(_ - pi/2))
+                val text  = column(major_labels)
+            }
             val glyph = new Text().x('x).y('y).angle('angle).text('text).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
             plot.addGlyph(source, glyph)
         }
