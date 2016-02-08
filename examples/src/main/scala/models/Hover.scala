@@ -63,8 +63,8 @@ object Hover extends Example with LinAlg with Tools {
             "fill_color"    -> "$color[hex,swatch]:fill_color",
             "radius"        -> "@radii",
             "data (x, y)"   -> "(@x, @y)",
-            "cursor (x, y)" -> "($x, $y)",
-            "canvas (x, y)" -> "($sx, $sy)"))
+            "cursor (x, y)" -> s"($$x, $$y)",
+            "canvas (x, y)" -> s"($$sx, $$sy)"))
 
     val xaxis = new LinearAxis().plot(plot)
     val yaxis = new LinearAxis().plot(plot)
