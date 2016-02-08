@@ -7,7 +7,7 @@ package io.continuum.bokeh
     object min_zoom extends Field[Int](0)
     object max_zoom extends Field[Int](30)
 
-    object extra_url_vars extends Field[Map[String, String]] // XXX: Any?
+    object extra_url_vars extends Field[Map[String, String]]
     object attribution extends Field[String]
 }
 
