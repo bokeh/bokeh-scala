@@ -4,6 +4,8 @@ package models
 
 import org.joda.time.{LocalTime=>Time,LocalDate=>Date}
 
+import thirdparty._
+
 object Daylight extends Example {
     val daylight = sampledata.daylight.Warsaw2013
 

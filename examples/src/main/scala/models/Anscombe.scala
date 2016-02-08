@@ -4,6 +4,8 @@ package models
 
 import breeze.linalg.{DenseMatrix,linspace}
 
+import thirdparty._
+
 object Anscombe extends Example {
     val anscombe_quartet = DenseMatrix(
         (10.0,  8.04, 10.0, 9.14, 10.0,  7.46,  8.0,  6.58),

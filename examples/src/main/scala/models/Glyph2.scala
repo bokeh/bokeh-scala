@@ -6,6 +6,8 @@ import breeze.linalg.DenseVector
 import breeze.numerics.{sin,cos}
 import math.{Pi=>pi}
 
+import thirdparty._
+
 object Glyph2 extends Example {
     object source extends ColumnDataSource {
         val x = column(DenseVector(-2*pi to 2*pi by 0.1 toArray))

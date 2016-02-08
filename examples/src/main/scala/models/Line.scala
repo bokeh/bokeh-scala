@@ -6,6 +6,8 @@ import breeze.linalg.linspace
 import breeze.numerics.sin
 import math.{Pi=>pi}
 
+import thirdparty._
+
 object Line extends Example {
     object source extends ColumnDataSource {
         val x = column(linspace(-2*pi, 2*pi, 1000))

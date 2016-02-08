@@ -5,7 +5,9 @@ package models
 import breeze.linalg.linspace
 import breeze.numerics.{sin,cos}
 
-object Image extends Example with LinAlg {
+import thirdparty._
+
+object Image extends Example {
     val N = 500
 
     val x = linspace(0, 10, N)

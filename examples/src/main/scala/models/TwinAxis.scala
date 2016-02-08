@@ -6,6 +6,8 @@ import breeze.linalg.linspace
 import breeze.numerics.sin
 import math.{Pi=>pi}
 
+import thirdparty._
+
 object TwinAxis extends Example with Tools {
     object source extends ColumnDataSource {
         val x  = column(-2*pi to 2*pi by 0.1 toArray)
