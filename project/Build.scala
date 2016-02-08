@@ -42,7 +42,7 @@ object BokehBuild extends Build {
         homepage := Some(url("http://bokeh.pydata.org")),
         licenses := Seq("MIT-style" -> url("http://www.opensource.org/licenses/mit-license.php")),
         scalaVersion := "2.11.7",
-        scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature", "-Xlog-free-types"),
+        scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature"),
         scalacOptions += "-language:postfixOps,implicitConversions,higherKinds,experimental.macros",
         scalacOptions in (Compile, doc) := Seq("-groups", "-implicits"),
         addCompilerPlugin(Dependencies.paradise),
