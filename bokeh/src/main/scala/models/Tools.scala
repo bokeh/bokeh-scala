@@ -1,7 +1,7 @@
 package io.continuum.bokeh
 
 @model class ToolEvents extends Model {
-    object geometries extends Field[List[Map[Symbol, Any]]]
+    // TODO: object geometries extends Field[List[Map[Symbol, Any]]]
 }
 
 @model sealed abstract class Tool extends Model {
