@@ -1,10 +1,10 @@
 package io.continuum.bokeh
 
 import java.io.File
-import java.awt.Desktop
+import java.nio.file.Files
+import java.nio.charset.StandardCharsets.UTF_8
 
-import scalax.io.JavaConverters._
-import scalax.file.Path
+import java.awt.Desktop
 
 import scala.collection.mutable.ListBuffer
 import scala.xml.{Node,NodeSeq,XML}
@@ -111,7 +111,7 @@ object HTMLFileWriter {
 class HTMLFileWriter(objs: List[Component], resources: Resources) extends HTMLFragmentWriter(objs, resources) {
     def write(file: File): HTMLFile = {
         val html = stringify(renderFile(write()))
-        Path(file).write(html)
+        Files.write(file.toPath, html.getBytes(UTF_8))
         new HTMLFile(file)
     }
 

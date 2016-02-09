@@ -1,11 +1,10 @@
 package io.continuum.bokeh
 
 import java.io.{File,IOException}
+import java.nio.file.{Paths,Files}
+import java.nio.charset.StandardCharsets.UTF_8
 import java.net.URL
 import java.util.Properties
-
-import scalax.io.JavaConverters._
-import scalax.file.Path
 
 sealed abstract class ResourceComponent(val name: String) {
     val js = true
@@ -42,7 +41,7 @@ sealed trait Resources {
     }
 
     protected def loadResource(path: String): String = {
-        getResource(path).asInput.chars.mkString
+        new String(Files.readAllBytes(Paths.get(getResource(path).toURI)), UTF_8)
     }
 
     def bundle(refs: List[Model]): Bundle = {

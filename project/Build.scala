@@ -122,7 +122,7 @@ object BokehBuild extends Build {
     lazy val bokehSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ Seq(xml, upickle, specs2, repl)
+            Seq(upickle, xml, specs2, repl)
         },
         upload := {
             val local = target in (Compile, doc) value
