@@ -1,6 +1,8 @@
 import sbt._
 import Keys._
 
+import scala.util.Try
+
 import com.typesafe.sbt.SbtPgp
 import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
 
@@ -130,7 +132,26 @@ object BokehBuild extends Build {
             s"aws s3 sync $local $remote --delete --acl public-read" !
         },
         initialCommands in Compile := """import io.continuum.bokeh._""",
-        initialCommands in (Test, console) := """ammonite.repl.Main.run()"""
+        initialCommands in (Test, console) := """ammonite.repl.Main.run()""",
+        sourceGenerators in Compile += Def.task {
+            val cmd = "python" :: "-c" :: "import bokeh; print(bokeh.__version__)" :: Nil
+            val proc = Process(cmd, None, "PYTHONPATH" -> "bokehjs/")
+            val version = Try { proc !! }.map(_.trim) getOrElse {
+                sys.error("could not run python to determine bokeh version")
+            }
+            val srcDir = (sourceManaged in Compile).value
+            val outFile = srcDir / "Version.scala"
+            val code = s"""
+                |package io.continuum.bokeh
+                |
+                |object Version {
+                |    final val version = "$version"
+                |    final override def toString = version
+                |}
+                """.stripMargin.trim
+            IO.write(outFile, code)
+            Seq(outFile)
+        }.taskValue
     )
 
     lazy val bokehjsSettings = commonSettings ++ BokehJS.bokehjsSettings

@@ -72,7 +72,7 @@ sealed trait Resources {
     protected def resolveStyle(component: ResourceComponent): xml.Node
 
     protected def resourceName(component: ResourceComponent, ext: String, version: Boolean=false) = {
-        val ver = if (version) s"-${Resources.version}" else ""
+        val ver = if (version) s"-$Version" else ""
         val min = if (minified) ".min" else ""
         s"${component.name}$ver$min.$ext"
     }
@@ -142,17 +142,6 @@ abstract class RemoteResources(url: URL) extends ExternalResources {
 abstract class CDNResources extends RemoteResources(new URL("http://cdn.pydata.org/bokeh/release/"))
 
 object Resources {
-    final val version: String = {
-        val stream = getClass.getClassLoader.getResourceAsStream("bokehjs.properties")
-        try {
-            val props = new java.util.Properties()
-            props.load(stream)
-            props.getProperty("bokehjs.version")
-        } finally {
-            stream.close()
-        }
-    }
-
     case object CDN    extends CDNResources
     case object CDNDev extends CDNResources with DevResources
 
