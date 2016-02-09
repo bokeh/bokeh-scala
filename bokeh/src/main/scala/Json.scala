@@ -20,9 +20,10 @@ trait Json extends upickle.AttributeTagged with JsonSyntax {
     implicit def EnumStringable[T <: EnumType] = Stringable[T](_.name)
 
     implicit def MapW[K:Stringable:Writer, V:Writer]: Writer[Map[K, V]] = Writer[Map[K, V]] {
-        case obj => Js.Obj(obj.toSeq.map {
-            case (k, v) => (implicitly[Stringable[K]].str(k), writeJs(v))
-        }: _*)
+        case obj =>
+            Js.Obj(obj.toSeq.map {
+                case (k, v) => (implicitly[Stringable[K]].str(k), writeJs(v))
+            }.sortBy(_._1): _*)
     }
 
     implicit def EnumWriter[T <: EnumType] = Writer[T] {

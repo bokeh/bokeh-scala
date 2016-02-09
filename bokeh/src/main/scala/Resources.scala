@@ -24,16 +24,10 @@ sealed trait Resources {
 
     def logLevel: LogLevel = LogLevel.Info
 
-    protected def sortKeys(value: Js.Value): Js.Value = value match {
-        case Js.Obj(pairs @ _*) => Js.Obj(pairs.map { case (k, v) => (k, sortKeys(v)) }.sortBy(_._1): _*)
-        case Js.Arr(items @ _*) => Js.Arr(items.map(sortKeys): _*)
-        case _                  => value
-    }
-
     val indent = 0
 
     def stringify[T:Json.Writer](obj: T): String = {
-        upickle.json.write(sortKeys(Json.writeJs(obj)), indent=indent)
+        Json.write(obj, indent=indent)
     }
 
     def wrap(code: String): String = s"Bokeh.$$(function() {\n$code\n});"

@@ -28,6 +28,10 @@ class JsonSpec extends Specification {
             Json.writeJs(Map("x" -> 1, "y" -> 2, "z" -> 3)) shouldEqual result
             Json.writeJs(Map('x  -> 1, 'y  -> 2, 'z  -> 3)) shouldEqual result
             Json.writeJs(Map(X   -> 1, Y   -> 2, Z   -> 3)) shouldEqual result
+
+            Json.writeJs(Map("z" -> 3, "y" -> 2, "x" -> 1)) shouldEqual result
+            Json.writeJs(Map('z  -> 3, 'y  -> 2, 'x  -> 1)) shouldEqual result
+            Json.writeJs(Map(Z   -> 3, Y   -> 2, X   -> 1)) shouldEqual result
         }
     }
 }
