@@ -6,6 +6,25 @@ trait Json extends upickle.AttributeTagged with JsonSyntax {
         case value => value
     }
 
+    override implicit def OptionW[T:Writer] = Writer[Option[T]] {
+        case Some(value) => writeJs(value)
+        case None        => Js.Null
+    }
+
+    override implicit def SomeW[T:Writer] = Writer[Some[T]](OptionW[T].write)
+    override implicit val NoneW: Writer[None.type] = Writer[None.type](OptionW[Int].write)
+
+    case class Stringable[T](str: T => String)
+    implicit val StringStringable = Stringable[String](identity)
+    implicit val SymbolStringable = Stringable[Symbol](_.name)
+    implicit def EnumStringable[T <: EnumType] = Stringable[T](_.name)
+
+    implicit def MapW[K:Stringable:Writer, V:Writer]: Writer[Map[K, V]] = Writer[Map[K, V]] {
+        case obj => Js.Obj(obj.toSeq.map {
+            case (k, v) => (implicitly[Stringable[K]].str(k), writeJs(v))
+        }: _*)
+    }
+
     implicit def EnumWriter[T <: EnumType] = Writer[T] {
         case value => writeJs(value.name)
     }
