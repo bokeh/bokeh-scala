@@ -1,7 +1,5 @@
 package io.continuum.bokeh
 
-import play.api.libs.json.JsArray
-
 @model abstract class MapOptions extends HasFields {
     object lat extends Field[Double]
     object lng extends Field[Double]
@@ -15,7 +13,7 @@ import play.api.libs.json.JsArray
 
 @model class GMapOptions extends MapOptions {
     object map_type extends Field[MapType]
-    object styles extends Field[JsArray]
+    object styles extends Field[Js.Arr]
 }
 
 @model class GMapPlot extends MapPlot {

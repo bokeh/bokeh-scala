@@ -14,7 +14,7 @@ object Dependencies {
 
     val breeze = "org.scalanlp" %% "breeze" % "0.12"
 
-    val play_json = "com.typesafe.play" %% "play-json" % "2.3.10"
+    val upickle = "com.lihaoyi" %% "upickle" % "0.3.8"
 
     val specs2 = "org.specs2" %% "specs2" % "2.3.11" % Test
 
@@ -120,7 +120,7 @@ object BokehBuild extends Build {
     lazy val bokehSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ Seq(xml, play_json, specs2, repl)
+            scalaio ++ Seq(xml, upickle, specs2, repl)
         },
         upload := {
             val local = target in (Compile, doc) value
@@ -136,14 +136,14 @@ object BokehBuild extends Build {
     lazy val coreSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            Seq(reflect.value, play_json, specs2)
+            Seq(reflect.value, upickle, specs2)
         }
     )
 
     lazy val thirdpartySettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            Seq(joda_time, breeze, reflect.value, play_json, specs2)
+            Seq(joda_time, breeze, reflect.value, upickle, specs2)
         }
     )
 

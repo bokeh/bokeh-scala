@@ -1,9 +1,7 @@
 package io.continuum.bokeh
 package widgets
 
-import play.api.libs.json.Writes
-
-@model abstract class InputWidget[T:Default:Writes] extends Widget {
+@model abstract class InputWidget[T:Default:Json.Writer] extends Widget {
     object title extends Field[String]
     object name extends Field[String]
     object value extends Field[T]

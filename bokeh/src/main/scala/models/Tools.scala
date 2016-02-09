@@ -1,9 +1,7 @@
 package io.continuum.bokeh
 
-import play.api.libs.json.JsObject
-
 @model class ToolEvents extends Model {
-    object geometries extends Field[List[JsObject]]
+    object geometries extends Field[List[Js.Obj]]
 }
 
 @model sealed abstract class Tool extends Model {

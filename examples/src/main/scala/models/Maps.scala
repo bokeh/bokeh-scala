@@ -2,7 +2,7 @@ package io.continuum.bokeh
 package examples
 package models
 
-import play.api.libs.json.Json.{arr,obj}
+import Json.{arr,obj}
 
 object Maps extends Example {
     val x_range = new Range1d()

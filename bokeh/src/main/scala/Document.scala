@@ -9,8 +9,6 @@ import scalax.file.Path
 import scala.collection.mutable.ListBuffer
 import scala.xml.{Node,NodeSeq,XML}
 
-import play.api.libs.json.{Json,Writes,JsObject}
-
 class Document(objs: Component*) {
     private val objects = ListBuffer[Component](objs: _*)
 
@@ -50,15 +48,10 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
 
     lazy val all_objs: List[Model] = Model.collect(objs)
 
-    case class ModelRepr(id: String, `type`: String, attributes: JsObject)
+    case class ModelRepr(id: String, `type`: String, attributes: Js.Obj)
     case class Roots(root_ids: List[String], references: List[ModelRepr])
     case class Doc(roots: Roots, title: String, version: String)
     case class RenderItem(docid: String, elementid: String, modelid: Option[String])
-
-    implicit val ModelReprFormat = Json.format[ModelRepr]
-    implicit val RootsFormat = Json.format[Roots]
-    implicit val DocFormat = Json.format[Doc]
-    implicit val RenderItemFormat = Json.format[RenderItem]
 
     case class Spec(docs_json: Map[String, Doc], render_items: List[RenderItem])
 
@@ -83,13 +76,9 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
     }
 
     protected def scripts: NodeSeq = {
-        def stringify[T:Writes](obj: T): String = {
-            resources.stringify(Json.toJson(obj))
-        }
-
         val code = s"""
-            |var docs_json = ${stringify(spec.docs_json)};
-            |var render_items = ${stringify(spec.render_items)};
+            |var docs_json = ${resources.stringify(spec.docs_json)};
+            |var render_items = ${resources.stringify(spec.render_items)};
             |
             |Bokeh.embed.embed_items(docs_json, render_items);
             """

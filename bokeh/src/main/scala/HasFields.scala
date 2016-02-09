@@ -1,7 +1,5 @@
 package io.continuum.bokeh
 
-import play.api.libs.json.{Json,JsValue,JsObject,Writes}
-
 trait HasFields { self =>
     type SelfType = self.type
 
@@ -9,13 +7,13 @@ trait HasFields { self =>
 
     def fields: List[FieldRef]
 
-    def fieldsToJson(all: Boolean = false): JsObject =  {
-        JsObject(fields.collect {
+    def fieldsToJson(all: Boolean = false): Js.Obj =  {
+        Js.Obj(fields.collect {
             case FieldRef(name, field) if all || field.isDirty => (name, field.toJson)
-        })
+        }: _*)
     }
 
-    class Field[FieldType:Default:Writes] extends AbstractField with ValidableField {
+    class Field[FieldType:Default:Json.Writer] extends AbstractField with ValidableField {
         type ValueType = FieldType
 
         def owner: SelfType = self
@@ -66,12 +64,12 @@ trait HasFields { self =>
             owner
         }
 
-        override def toJson: JsValue = Json.toJson(valueOpt)
+        override def toJson: Js.Value = Json.writeJs(valueOpt)
     }
 }
 
 trait Vectorization { self: HasFields =>
-    class Vectorized[FieldType:Default:Writes] extends Field[FieldType] {
+    class Vectorized[FieldType:Default:Json.Writer] extends Field[FieldType] {
         def this(value: FieldType) = {
             this()
             set(Some(value))
@@ -97,15 +95,14 @@ trait Vectorization { self: HasFields =>
         }
 
         private case class VectorValue(value: Option[ValueType], field: Option[Symbol])
-        private implicit val VectorValueWrites = Json.writes[VectorValue]
 
-        override def toJson: JsValue = {
+        override def toJson: Js.Value = {
             val value = if (fieldOpt.isDefined) None else valueOpt
-            Json.toJson(VectorValue(value, fieldOpt))
+            Json.writeJs(VectorValue(value, fieldOpt))
         }
     }
 
-    abstract class VectorizedWithUnits[FieldType:Default:Writes, UnitsType <: Units with EnumType: Default] extends Vectorized[FieldType] {
+    abstract class VectorizedWithUnits[FieldType:Default:Json.Writer, UnitsType <: Units with EnumType: Default] extends Vectorized[FieldType] {
         def defaultUnits: Option[UnitsType] =
             Option(implicitly[Default[UnitsType]].default)
 
@@ -141,15 +138,14 @@ trait Vectorization { self: HasFields =>
         }
 
         private case class VectorValue(value: Option[ValueType], field: Option[Symbol], units: Option[UnitsType])
-        private implicit val VectorValueWrites = Json.writes[VectorValue]
 
-        override def toJson: JsValue = {
+        override def toJson: Js.Value = {
             val value = if (fieldOpt.isDefined) None else valueOpt
-            Json.toJson(VectorValue(value, fieldOpt, unitsOpt))
+            Json.writeJs(VectorValue(value, fieldOpt, unitsOpt))
         }
     }
 
-    class Spatial[FieldType:Default:Writes] extends VectorizedWithUnits[FieldType, SpatialUnits] {
+    class Spatial[FieldType:Default:Json.Writer] extends VectorizedWithUnits[FieldType, SpatialUnits] {
         def this(value: FieldType) = {
             this()
             set(Some(value))
@@ -166,7 +162,7 @@ trait Vectorization { self: HasFields =>
         }
     }
 
-    class Angular[FieldType:Default:Writes] extends VectorizedWithUnits[FieldType, AngularUnits] {
+    class Angular[FieldType:Default:Json.Writer] extends VectorizedWithUnits[FieldType, AngularUnits] {
         def this(value: FieldType) = {
             this()
             set(Some(value))

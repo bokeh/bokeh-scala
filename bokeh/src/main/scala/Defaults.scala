@@ -2,7 +2,6 @@ package io.continuum.bokeh
 
 import scala.reflect.ClassTag
 import scala.annotation.implicitNotFound
-import play.api.libs.json.JsArray
 
 @implicitNotFound(msg="Can't find Default type class for type ${T}.")
 class Default[T](val default: T)
@@ -34,7 +33,7 @@ trait TypeDefaults {
     implicit object TooltipDefault extends Default[Tooltip](TabularTooltip(Nil))
     implicit object SelectedDefault extends Default[Selected](Selected())
 
-    implicit object JsArrayDefault extends Default[JsArray](JsArray(Nil))
+    implicit object JsArrayDefault extends Default[Js.Arr](Js.Arr())
 }
 
 trait EnumDefaults {

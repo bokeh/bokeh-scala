@@ -1,6 +1,8 @@
 package io.continuum
 
-package object bokeh extends Formats with NodeImplicits {
+package object bokeh extends NodeImplicits {
+    final val Js = upickle.Js
+
     implicit class NumbericOps[T:Numeric](value: T) {
         def %% : Percent = Percent(implicitly[Numeric[T]].toDouble(value)/100)
 

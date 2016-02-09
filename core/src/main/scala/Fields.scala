@@ -2,7 +2,7 @@ package io.continuum.bokeh
 
 import scala.reflect.macros.blackbox.Context
 
-import play.api.libs.json.JsValue
+import upickle.Js
 
 trait AbstractField {
     type ValueType
@@ -13,7 +13,7 @@ trait AbstractField {
     def set(value: Option[ValueType])
     def isDirty: Boolean
 
-    def toJson: JsValue
+    def toJson: Js.Value
 }
 
 case class FieldRef(name: String, field: AbstractField)

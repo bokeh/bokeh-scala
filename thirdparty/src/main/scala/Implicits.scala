@@ -7,25 +7,25 @@ import scala.collection.immutable.NumericRange
 import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 import breeze.linalg.{DenseVector,DenseMatrix}
 
-import play.api.libs.json.{Json,Writes}
+trait ThirdpartySerialization {
+    implicit def DenseVectorWriter[T:Json.Writer:ClassTag] = Json.Writer[DenseVector[T]] {
+        case vec => Json.writeJs(vec.toArray)
+    }
+
+    implicit val DateTimeWriter = Json.Writer[DateTime] {
+        case datetime => Json.writeJs(datetime.getMillis)
+    }
+
+    implicit val TimeWriter = Json.Writer[Time] {
+        case time => Json.writeJs(time.getMillisOfDay)
+    }
+
+    implicit val DateWriter = Json.Writer[Date] {
+        case date => Json.writeJs(date.toDateTimeAtStartOfDay)
+    }
+}
 
 trait Implicits {
-    implicit def DenseVectorWrites[T:Writes:ClassTag] = new Writes[DenseVector[T]] {
-        def writes(vec: DenseVector[T]) = Json.toJson(vec.toArray)
-    }
-
-    implicit val DateTimeJSON = new Writes[DateTime] {
-        def writes(datetime: DateTime) = Json.toJson(datetime.getMillis)
-    }
-
-    implicit val TimeJSON = new Writes[Time] {
-        def writes(time: Time) = Json.toJson(time.getMillisOfDay)
-    }
-
-    implicit val DateJSON = new Writes[Date] {
-        def writes(date: Date) = Json.toJson(date.toDateTimeAtStartOfDay)
-    }
-
     implicit object DateTimeDefault extends Default[DateTime](new DateTime)
 
     implicit object TimeDefault extends Default[Time](new Time)

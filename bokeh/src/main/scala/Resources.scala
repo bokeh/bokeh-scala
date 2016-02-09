@@ -7,8 +7,6 @@ import java.util.Properties
 import scalax.io.JavaConverters._
 import scalax.file.Path
 
-import play.api.libs.json.{Json,JsValue,JsObject,JsArray}
-
 sealed abstract class ResourceComponent(val name: String) {
     val js = true
     val css = true
@@ -26,13 +24,17 @@ sealed trait Resources {
 
     def logLevel: LogLevel = LogLevel.Info
 
-    protected def sortKeys(value: JsValue): JsValue = value match {
-        case JsObject(pairs) => JsObject(pairs.map { case (k, v) => (k, sortKeys(v)) }.sortBy(_._1))
-        case JsArray(items)  => JsArray(items.map(sortKeys))
-        case _               => value
+    protected def sortKeys(value: Js.Value): Js.Value = value match {
+        case Js.Obj(pairs @ _*) => Js.Obj(pairs.map { case (k, v) => (k, sortKeys(v)) }.sortBy(_._1): _*)
+        case Js.Arr(items @ _*) => Js.Arr(items.map(sortKeys): _*)
+        case _                  => value
     }
 
-    def stringify(value: JsValue): String = Json.stringify(sortKeys(value))
+    val indent = 0
+
+    def stringify[T:Json.Writer](obj: T): String = {
+        upickle.json.write(sortKeys(Json.writeJs(obj)), indent=indent)
+    }
 
     def wrap(code: String): String = s"Bokeh.$$(function() {\n$code\n});"
 
@@ -86,9 +88,9 @@ sealed trait Resources {
 trait DevResources { self: Resources =>
     override val minified = false
 
-    override val logLevel: LogLevel = LogLevel.Debug
+    override val logLevel = LogLevel.Debug
 
-    override def stringify(value: JsValue): String = Json.prettyPrint(sortKeys(value))
+    override val indent = 2
 }
 
 trait InlineResources extends Resources {

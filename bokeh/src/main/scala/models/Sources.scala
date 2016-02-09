@@ -1,7 +1,5 @@
 package io.continuum.bokeh
 
-import play.api.libs.json.{JsValue,Writes}
-
 case class Selected0d(indices: List[Int] = Nil, glyph: Option[Glyph] = None)
 case class Selected1d(indices: List[Int] = Nil)
 case class Selected2d(indices: List[List[Int]] = Nil)
@@ -19,15 +17,15 @@ case class Selected(`0d`: Selected0d = Selected0d(),
 @model class ColumnDataSource extends DataSource { source =>
     final override val typeName = "ColumnDataSource"
 
-    object data extends Field[Map[Symbol, JsValue]]
+    object data extends Field[Map[Symbol, Js.Value]]
 
-    class Column[M[_]: ArrayLike, T:Writes]
+    class Column[M[_]: ArrayLike, T:Json.Writer]
             (val name: Symbol, private var _value: M[T])
-            (implicit fmt: Writes[M[T]]) {
+            (implicit fmt: Json.Writer[M[T]]) {
         this := _value
 
         def value: M[T] = _value // TODO: fmt.reads(source.data.value(name))
-        def :=(value: M[T]): Unit = data <<= (_ + (name -> fmt.writes(_value)))
+        def :=(value: M[T]): Unit = data <<= (_ + (name -> fmt.write(_value)))
     }
 
     def column[M[_], T](value: M[T]): Column[M, T] = macro ColumnMacro.columnImpl[M, T]
