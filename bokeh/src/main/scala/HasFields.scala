@@ -104,46 +104,44 @@ trait Vectorization { self: HasFields =>
     }
 
     abstract class VectorizedWithUnits[FieldType:Default:Json.Writer, UnitsType <: Units with EnumType: Default] extends Vectorized[FieldType] {
-        def defaultUnits: Option[UnitsType] =
-            Option(implicitly[Default[UnitsType]].default)
+        def defaultUnits: UnitsType = implicitly[Default[UnitsType]].default
 
-        protected var _units: Option[UnitsType] = defaultUnits
-        def unitsOpt: Option[UnitsType] = _units
-        def units: UnitsType = _units.get
+        protected var _units: UnitsType = defaultUnits
+        def units: UnitsType = _units
 
-        def setUnits(units: Option[UnitsType]) {
+        def setUnits(units: UnitsType) {
             _units = units
             _dirty = true
         }
 
         def apply(units: UnitsType): SelfType = {
-            setUnits(Some(units))
+            setUnits(units)
             owner
         }
 
         def apply(value: FieldType, units: UnitsType): SelfType = {
             set(Some(value))
-            setUnits(Some(units))
+            setUnits(units)
             owner
         }
 
         def apply(field: Symbol, units: UnitsType): SelfType = {
             setField(Some(field))
-            setUnits(Some(units))
+            setUnits(units)
             owner
         }
 
         def apply[M[_]](column: ColumnDataSource#Column[M, FieldType], units: UnitsType): SelfType = {
-            setUnits(Some(units))
+            setUnits(units)
             apply(column)
         }
 
-        private case class Value(value: ValueType, units: Option[UnitsType])
-        private case class Field(field: Symbol, units: Option[UnitsType])
+        private case class Value(value: ValueType, units: UnitsType)
+        private case class Field(field: Symbol, units: UnitsType)
 
         override def toJson: Js.Value = {
-            fieldOpt.map(field => Json.writeJs(Field(field, unitsOpt)))
-                    .getOrElse(Json.writeJs(valueOpt.map(value => Value(value, unitsOpt))))
+            fieldOpt.map(field => Json.writeJs(Field(field, units)))
+                    .getOrElse(Json.writeJs(valueOpt.map(value => Value(value, units))))
         }
     }
 
@@ -155,12 +153,12 @@ trait Vectorization { self: HasFields =>
 
         def this(units: SpatialUnits) = {
             this()
-            setUnits(Some(units))
+            setUnits(units)
         }
 
         def this(value: FieldType, units: SpatialUnits) = {
             this(value)
-            setUnits(Some(units))
+            setUnits(units)
         }
     }
 
@@ -172,12 +170,12 @@ trait Vectorization { self: HasFields =>
 
         def this(units: AngularUnits) = {
             this()
-            setUnits(Some(units))
+            setUnits(units)
         }
 
         def this(value: FieldType, units: AngularUnits) = {
             this(value)
-            setUnits(Some(units))
+            setUnits(units)
         }
     }
 }
