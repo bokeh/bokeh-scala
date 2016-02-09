@@ -20,7 +20,9 @@ object Dependencies {
 
     val scopt = "com.github.scopt" %% "scopt" % "3.3.0"
 
-    val joda_time = "joda-time" % "joda-time" % "2.8.1"
+    val joda_time = "joda-time" % "joda-time" % "2.9.2"
+
+    val joda_conv = "org.joda" % "joda-convert" % "1.8.1"
 
     val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
 
@@ -143,14 +145,14 @@ object BokehBuild extends Build {
     lazy val thirdpartySettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            Seq(joda_time, breeze, reflect.value, upickle, specs2)
+            Seq(joda_time, joda_conv, breeze, reflect.value, upickle, specs2)
         }
     )
 
     lazy val sampledataSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ Seq(joda_time, xml, opencsv, ical4j, specs2)
+            scalaio ++ Seq(joda_time, joda_conv, xml, opencsv, ical4j, specs2)
         }
     )
 
