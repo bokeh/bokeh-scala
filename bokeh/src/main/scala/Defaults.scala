@@ -2,7 +2,6 @@ package io.continuum.bokeh
 
 import scala.reflect.ClassTag
 import scala.annotation.implicitNotFound
-import org.joda.time.{DateTime,LocalTime=>Time,LocalDate=>Date}
 import play.api.libs.json.JsArray
 
 @implicitNotFound(msg="Can't find Default type class for type ${T}.")
@@ -15,10 +14,6 @@ trait TypeDefaults {
     implicit object StringDefault extends Default[String]("")
     implicit object SymbolDefault extends Default[Symbol](Symbol(""))
     implicit object PercentDefault extends Default[Percent](100%%)
-
-    implicit object DateTimeDefault extends Default[DateTime](new DateTime)
-    implicit object TimeDefault extends Default[Time](new Time)
-    implicit object DateDefault extends Default[Date](new Date)
 
     implicit def OptionDefault[T]: Default[Option[T]] = new Default[Option[T]](None)
     implicit def SeqDefault[T]: Default[Seq[T]] = new Default[Seq[T]](Seq())

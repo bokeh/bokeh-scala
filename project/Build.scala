@@ -143,14 +143,14 @@ object BokehBuild extends Build {
     lazy val thirdpartySettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            Seq(breeze, joda_time, reflect.value, play_json, specs2)
+            Seq(joda_time, breeze, reflect.value, play_json, specs2)
         }
     )
 
     lazy val sampledataSettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            scalaio ++ Seq(xml, opencsv, ical4j, specs2)
+            scalaio ++ Seq(joda_time, xml, opencsv, ical4j, specs2)
         }
     )
 

@@ -593,16 +593,6 @@ class BokehSpec extends Specification {
             obj.fields.length shouldEqual 9
         }
 
-        "support DateRangeSlider" in {
-            val obj = new widgets.DateRangeSlider()
-            obj.fields.length shouldEqual 8
-        }
-
-        "support DatePicker" in {
-            val obj = new widgets.DatePicker()
-            obj.fields.length shouldEqual 5
-        }
-
         "support Paragraph" in {
             val obj = new widgets.Paragraph()
             obj.fields.length shouldEqual 3

@@ -26,6 +26,12 @@ trait Implicits {
         def writes(date: Date) = Json.toJson(date.toDateTimeAtStartOfDay)
     }
 
+    implicit object DateTimeDefault extends Default[DateTime](new DateTime)
+
+    implicit object TimeDefault extends Default[Time](new Time)
+
+    implicit object DateDefault extends Default[Date](new Date)
+
     implicit val DenseVectorArrayLike = new ArrayLike[DenseVector]
 
     implicit object DenseMatrixToMatrixLike extends MatrixLike[DenseMatrix] {
