@@ -30,7 +30,7 @@ object Dependencies {
 
     val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
-    val paradise = "org.scalamacros" % "paradise" % "2.0.1" cross CrossVersion.full
+    val paradise = "org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full
 
     val xml = "org.scala-lang.modules" %% "scala-xml" % "1.0.2"
 }
