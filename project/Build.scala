@@ -3,6 +3,9 @@ import Keys._
 
 import scala.util.Try
 
+import org.scalajs.sbtplugin.ScalaJSPlugin
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
+
 import com.typesafe.sbt.SbtPgp
 import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
 
@@ -16,7 +19,7 @@ object Dependencies {
 
     val breeze = "org.scalanlp" %% "breeze" % "0.12"
 
-    val upickle = "com.lihaoyi" %% "upickle" % "0.3.8"
+    val upickle = Def.setting { "com.lihaoyi" %%% "upickle" % "0.3.8" }
 
     val specs2 = "org.specs2" %% "specs2" % "2.3.11" % Test
 
@@ -29,8 +32,6 @@ object Dependencies {
     val opencsv = "net.sf.opencsv" % "opencsv" % "2.3"
 
     val ical4j = "org.mnode.ical4j" % "ical4j" % "1.0.2"
-
-    val repl = "com.lihaoyi" % "ammonite-repl" % "0.5.2" % Test cross CrossVersion.full
 
     val reflect = Def.setting { "org.scala-lang" % "scala-reflect" % scalaVersion.value }
 
@@ -121,18 +122,11 @@ object BokehBuild extends Build {
         }
     )
 
-    lazy val bokehSettings = commonSettings ++ Seq(
+    lazy val bokehSettings = Seq(
         libraryDependencies ++= {
             import Dependencies._
-            Seq(upickle, xml, specs2, repl)
+            Seq(upickle.value, xml, specs2)
         },
-        upload := {
-            val local = target in (Compile, doc) value
-            val remote = s"s3://bokeh-scala/docs/${scalaBinaryVersion.value}/${version.value}"
-            s"aws s3 sync $local $remote --delete --acl public-read" !
-        },
-        initialCommands in Compile := """import io.continuum.bokeh._""",
-        initialCommands in (Test, console) := """ammonite.repl.Main.run()""",
         sourceGenerators in Compile += Def.task {
             val cmd = "python" :: "-c" :: "import bokeh; print(bokeh.__version__)" :: Nil
             val proc = Process(cmd, None, "PYTHONPATH" -> "bokehjs/")
@@ -154,19 +148,34 @@ object BokehBuild extends Build {
         }.taskValue
     )
 
-    lazy val bokehjsSettings = commonSettings ++ BokehJS.bokehjsSettings
+    lazy val bokehJVMSettings = commonSettings ++ bokehSettings ++ Seq(
+        upload := {
+            val local = target in (Compile, doc) value
+            val remote = s"s3://bokeh-scala/docs/${scalaBinaryVersion.value}/${version.value}"
+            s"aws s3 sync $local $remote --delete --acl public-read" !
+        },
+        initialCommands in Compile := """import io.continuum.bokeh._"""
+    )
 
-    lazy val coreSettings = commonSettings ++ Seq(
+    lazy val bokehSJSSettings = Defaults.coreDefaultSettings ++ bokehSettings
+
+    lazy val coreSettings = Seq(
         libraryDependencies ++= {
             import Dependencies._
-            Seq(reflect.value, upickle, specs2)
+            Seq(reflect.value, upickle.value, specs2)
         }
     )
+
+    lazy val coreJVMSettings = commonSettings ++ coreSettings
+
+    lazy val coreSJSSettings = Defaults.coreDefaultSettings ++ coreSettings
+
+    lazy val bokehjsSettings = commonSettings ++ BokehJS.bokehjsSettings
 
     lazy val thirdpartySettings = commonSettings ++ Seq(
         libraryDependencies ++= {
             import Dependencies._
-            Seq(joda_time, joda_conv, breeze, reflect.value, upickle, specs2)
+            Seq(joda_time, joda_conv, breeze, reflect.value, upickle.value, specs2)
         }
     )
 
@@ -194,13 +203,26 @@ object BokehBuild extends Build {
         publish := {}
     )
 
-    lazy val bokeh = project in file("bokeh") settings(bokehSettings: _*) dependsOn(core, bokehjs)
-    lazy val bokehjs = project in file("bokehjs/bokehjs") settings(bokehjsSettings: _*)
-    lazy val core = project in file("core") settings(coreSettings: _*)
-    lazy val thirdparty = project in file("thirdparty") settings(thirdpartySettings: _*) dependsOn(bokeh)
-    lazy val sampledata = project in file("sampledata") settings(sampledataSettings: _*) dependsOn(bokeh)
-    lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokeh, thirdparty, sampledata)
-    lazy val all = project in file(".") disablePlugins(SbtPgp) settings(allSettings: _*) aggregate(bokeh, bokehjs, core, thirdparty, sampledata, examples)
+    lazy val bokeh = crossProject.crossType(CrossType.Pure).in(file("bokeh"))
+        .jvmSettings(bokehSettings: _*).jsSettings(bokehSJSSettings: _*).dependsOn(core)
 
-    override def projects = Seq(bokeh, bokehjs, core, thirdparty, sampledata, examples, all)
+    lazy val core = crossProject.crossType(CrossType.Pure).in(file("core"))
+        .jvmSettings(coreSettings: _*).jsSettings(coreSJSSettings: _*)
+
+    lazy val bokehJVM = bokeh.jvm.dependsOn(bokehjs)
+    lazy val bokehSJS = bokeh.js
+
+    lazy val coreJVM = core.jvm
+    lazy val coreSJS = core.js
+
+    lazy val bokehjs = project in file("bokehjs/bokehjs") settings(bokehjsSettings: _*)
+
+    lazy val thirdparty = project in file("thirdparty") settings(thirdpartySettings: _*) dependsOn(bokehJVM)
+    lazy val sampledata = project in file("sampledata") settings(sampledataSettings: _*) dependsOn(bokehJVM)
+    lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokehJVM, thirdparty, sampledata)
+
+    lazy val all = project.in(file(".")).disablePlugins(SbtPgp).settings(allSettings: _*)
+        .aggregate(bokehJVM, bokehSJS, coreJVM, coreSJS, bokehjs, thirdparty, sampledata, examples)
+
+    override def projects = Seq(bokehJVM, bokehSJS, coreJVM, coreSJS, bokehjs, thirdparty, sampledata, examples, all)
 }
