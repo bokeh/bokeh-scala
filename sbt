@@ -32,20 +32,25 @@ else
     JVM_OPTS=""
 fi
 
-function get_property {
-    echo "$(cat project/build.properties | grep $1 | cut -d'=' -f2)"
-}
+JVM_VERSION=$(java -version 2>&1 | head -n 1 | grep -oP "\d+\.\d+" | cut -d. -f2)
 
 JVM_DEFAULTS="                     \
     -Dfile.encoding=UTF-8          \
     -Xss8M                         \
     -Xmx2G                         \
-    -XX:MaxPermSize=1024M          \
-    -XX:ReservedCodeCacheSize=64M  \
-    -XX:+UseConcMarkSweepGC        \
-    -XX:+CMSClassUnloadingEnabled"
+    -XX:+CMSClassUnloadingEnabled  \
+    -XX:+UseConcMarkSweepGC        "
+
+if [ "$JVM_VERSION" = "7" ];
+then
+    JVM_DEFAULTS="$JVM_DEFAULTS -XX:MaxPermSize=1024M"
+fi
 
 JVM_OPTS="$JVM_DEFAULTS $JVM_OPTS"
+
+function get_property {
+    echo "$(cat project/build.properties | grep $1 | cut -d'=' -f2)"
+}
 
 SBT_VERSION="$(get_property sbt.version)"
 SBT_LAUNCHER="$(dirname $0)/project/sbt-launch-$SBT_VERSION.jar"
