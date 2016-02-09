@@ -94,11 +94,12 @@ trait Vectorization { self: HasFields =>
             owner
         }
 
-        private case class VectorValue(value: Option[ValueType], field: Option[Symbol])
+        private case class Value(value: ValueType)
+        private case class Field(field: Symbol)
 
         override def toJson: Js.Value = {
-            val value = if (fieldOpt.isDefined) None else valueOpt
-            Json.writeJs(VectorValue(value, fieldOpt))
+            fieldOpt.map(field => Json.writeJs(Field(field)))
+                    .getOrElse(Json.writeJs(valueOpt.map(Value)))
         }
     }
 
@@ -137,11 +138,12 @@ trait Vectorization { self: HasFields =>
             apply(column)
         }
 
-        private case class VectorValue(value: Option[ValueType], field: Option[Symbol], units: Option[UnitsType])
+        private case class Value(value: ValueType, units: Option[UnitsType])
+        private case class Field(field: Symbol, units: Option[UnitsType])
 
         override def toJson: Js.Value = {
-            val value = if (fieldOpt.isDefined) None else valueOpt
-            Json.writeJs(VectorValue(value, fieldOpt, unitsOpt))
+            fieldOpt.map(field => Json.writeJs(Field(field, unitsOpt)))
+                    .getOrElse(Json.writeJs(valueOpt.map(value => Value(value, unitsOpt))))
         }
     }
 
