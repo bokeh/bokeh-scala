@@ -5,11 +5,9 @@ package models
 import math.Pi
 
 object Gears extends Example with Tools {
-    def pitch_radius(module: Double, teeth: Int) =
-        (module*teeth)/2
+    def pitch_radius(module: Double, teeth: Int) = (module*teeth)/2
 
-    def half_tooth(teeth: Int) =
-        Pi/teeth
+    def half_tooth(teeth: Int) = Pi/teeth
 
     val line_color: Color = "#606060"
     val fill_color: (Color, Color, Color) = ("#ddd0dd", "#d0d0e8", "#ddddd0")

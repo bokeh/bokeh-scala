@@ -19,21 +19,27 @@ object IrisSplom extends Example {
 
     val columns = List('petal_length, 'petal_width, 'sepal_width, 'sepal_length)
 
-    val xdr = new DataRange1d()
-    val ydr = new DataRange1d()
+    val xdr = new DataRange1d()/*.bounds(None)*/
+    val ydr = new DataRange1d()/*.bounds(None)*/
 
     def make_plot(xname: Symbol, yname: Symbol, xax: Boolean=false, yax: Boolean=false, text: Option[String]=None) = {
+        val mbl = if (yax) 40 else 0
+        val mbb = if (xax) 40 else 0
+
         val plot = new Plot()
             .x_range(xdr)
             .y_range(ydr)
             .background_fill_color("#efe8e2")
             .border_fill_color(Color.White)
             .title("")
-            .min_border(2)
             .h_symmetry(false)
             .v_symmetry(false)
-            .width(250)
-            .height(250)
+            .width(200 + mbl)
+            .height(200 + mbb)
+            .min_border_left(2 + mbl)
+            .min_border_right(2)
+            .min_border_top(2)
+            .min_border_bottom(2 + mbb)
 
         val xaxis = new LinearAxis().plot(plot)
         val yaxis = new LinearAxis().plot(plot)
@@ -69,12 +75,12 @@ object IrisSplom extends Example {
 
         text.foreach { text =>
             val text_glyph = new Text()
-                .x(0).x_offset( 125)
-                .y(0).y_offset(-125)
+                .x(0).x_offset( 100)
+                .y(0).y_offset(-100)
                 .text(text.replaceAll("_", " "))
                 .angle(pi/4)
                 .text_color("#ffaaaa").text_alpha(0.7)
-                .text_font_size(28 pt).text_font_style(FontStyle.Bold)
+                .text_font_size(24 pt).text_font_style(FontStyle.Bold)
                 .text_baseline(TextBaseline.Top).text_align(TextAlign.Center)
             val text_renderer = new GlyphRenderer()
                 .glyph(text_glyph)

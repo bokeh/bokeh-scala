@@ -57,12 +57,6 @@ object Maps extends Example {
         .map_options(map_options)
         .title("Austin")
 
-    val xaxis = new LinearAxis().plot(plot).axis_label("lat").major_tick_in(0).formatter(new NumeralTickFormatter().format("0.000"))
-    plot.addLayout(xaxis, Place.Below)
-
-    val yaxis = new LinearAxis().plot(plot).axis_label("lon").major_tick_in(0).formatter(new PrintfTickFormatter().format("%.3f"))
-    plot.addLayout(yaxis, Place.Left)
-
     val pan = new PanTool().plot(plot)
     val zoom = new WheelZoomTool().plot(plot)
     val select = new BoxSelectTool().plot(plot)
@@ -80,8 +74,8 @@ object Maps extends Example {
     val circle = new Circle()
         .x(lon)
         .y(lat)
-        .fill_color(fill)
         .size(15)
+        .fill_color(fill)
         .line_color(Color.Black)
 
     val renderer = new GlyphRenderer()
