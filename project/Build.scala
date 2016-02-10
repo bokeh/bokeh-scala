@@ -209,7 +209,8 @@ object BokehBuild extends Build {
         libraryDependencies ++= {
             import Dependencies._
             Seq(scalatags.value, jsdom.value, jquery.value)
-        }
+        },
+        jsDependencies += RuntimeDOM % Test
     )
 
     lazy val allSettings = Seq(
