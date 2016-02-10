@@ -29,6 +29,9 @@ class Document(objs: Component*) {
 
 class HTMLFragment(val html: Seq[Tag], val styles: Seq[Tag], val scripts: Seq[Tag]) {
     def head: Seq[Tag] = styles ++ scripts
+    def tag: Tag = div(head ++ html) // TODO: get rid of this div()
+
+    override def toString = tag.toString
 }
 
 object HTMLFragmentWriter {

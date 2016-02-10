@@ -24,6 +24,10 @@ object Dependencies {
 
     val scalatags = Def.setting { "com.lihaoyi" %%% "scalatags" % "0.5.4" }
 
+    val jsdom = Def.setting { "org.scala-js" %%% "scalajs-dom" % "0.8.2" }
+
+    val jquery = Def.setting { "be.doeraene" %%% "scalajs-jquery" % "0.8.1" }
+
     val specs2 = "org.specs2" %% "specs2" % "2.3.11" % Test
 
     val scopt = "com.github.scopt" %% "scopt" % "3.3.0"
@@ -201,6 +205,13 @@ object BokehBuild extends Build {
         }
     )
 
+    lazy val anscombeSettings = Defaults.coreDefaultSettings ++ Seq(
+        libraryDependencies ++= {
+            import Dependencies._
+            Seq(scalatags.value, jsdom.value, jquery.value)
+        }
+    )
+
     lazy val allSettings = Seq(
         publishLocal := {},
         publish := {}
@@ -234,8 +245,10 @@ object BokehBuild extends Build {
     lazy val sampledata = project in file("sampledata") settings(sampledataSettings: _*) dependsOn(bokehJVM)
     lazy val examples = project in file("examples") settings(examplesSettings: _*) dependsOn(bokehJVM, thirdparty, sampledata)
 
-    lazy val all = project.in(file(".")).disablePlugins(SbtPgp).settings(allSettings: _*)
-        .aggregate(bokehJVM, bokehSJS, coreJVM, coreSJS, bokehjs, thirdparty, sampledata, examples)
+    lazy val anscombe = project in file("anscombe") enablePlugins(ScalaJSPlugin) settings(anscombeSettings: _*) dependsOn(bokehSJS)
 
-    override def projects = Seq(bokehJVM, bokehSJS, coreJVM, coreSJS, bokehjs, thirdparty, sampledata, examples, all)
+    lazy val all = project.in(file(".")).disablePlugins(SbtPgp).settings(allSettings: _*)
+        .aggregate(bokehJVM, bokehSJS, coreJVM, coreSJS, bokehjs, thirdparty, sampledata, examples, anscombe)
+
+    override def projects = Seq(bokehJVM, bokehSJS, coreJVM, coreSJS, bokehjs, thirdparty, sampledata, examples, anscombe, all)
 }
