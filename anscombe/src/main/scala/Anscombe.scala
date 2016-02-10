@@ -78,7 +78,7 @@ object Anscombe extends js.JSApp {
         val children = List(List(I, II), List(III, IV))
         val grid = new GridPlot().children(children).width(800)
 
-        val frag = new Document(grid).fragment()
+        val frag = new Document(grid).autoload()
         jQuery("#anscombe").html(frag.toString)
     }
 }

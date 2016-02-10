@@ -21,6 +21,9 @@ class Document(objs: Component*) {
     def fragment(resources: Resources): HTMLFragment = HTMLFragmentWriter(objects.toList, resources).write()
     def fragment(): HTMLFragment = fragment(Res.default)
 
+    def autoload(resources: Resources): HTMLFragment = new AutoloadWriter(objects.toList, resources).write()
+    def autoload(): HTMLFragment = autoload(Res.default)
+
     def save(file: File, resources: Resources): HTMLFile = HTMLFileWriter(objects.toList, resources).write(file)
     def save(file: File): HTMLFile = save(file, Res.default)
 
@@ -30,9 +33,13 @@ class Document(objs: Component*) {
 
 class HTMLFragment(val html: Seq[Tag], val embed: Seq[Tag], val styles: Seq[Tag], val scripts: Seq[Tag]) {
     def head: Seq[Tag] = styles ++ scripts
-    def tag: Tag = div(head ++ html ++ embed) // TODO: get rid of this div()
+    def body: Seq[Tag] = html ++ embed
 
-    override def toString = tag.toString
+    override def toString = {
+        val h = head.map(_.pretty).mkString("\n")
+        val b = body.map(_.pretty).mkString("\n")
+        s"$h\n\n$b"
+    }
 }
 
 object HTMLFragmentWriter {
@@ -88,6 +95,21 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
             |Bokeh.embed.embed_items(docs_json, render_items);
             """
         code.stripMargin.trim
+    }
+}
+
+class AutoloadWriter(objs: List[Component], resources: Resources) extends HTMLFragmentWriter(objs, resources) {
+    override def write(): HTMLFragment = {
+        var bundle = resources.bundle(all_objs)
+
+        val jsUrls  = bundle.jsUrls.map(_.toString)
+        val jsRaw   = bundle.jsRaw ++ Seq(embed)
+        val cssUrls = bundle.cssUrls.map(_.toString)
+        val cssRaw  = bundle.cssRaw.map(css => Json.write(css))
+
+        val autoload = Autoload.template(jsUrls, jsRaw, cssUrls, cssRaw)
+
+        new HTMLFragment(divs, Seq(autoload.asScript), Nil, Nil)
     }
 }
 
