@@ -37,15 +37,6 @@ sealed trait Resources {
         s"Bokeh.set_log_level('$logLevel');".asScript
     }
 
-    protected def getResource(path: String): URL = {
-        val res = getClass.getClassLoader.getResource(path)
-        if (res != null) res else throw new IOException(s"resource '$path' not found")
-    }
-
-    protected def loadResource(path: String): String = {
-        new String(Files.readAllBytes(Paths.get(getResource(path).toURI)), UTF_8)
-    }
-
     def bundle(refs: List[Model]): Bundle = {
         val components = (Some(BokehCore) :: useWidgets(refs) :: useCompiler(refs) :: Nil).flatten
 
@@ -84,7 +75,18 @@ trait DevResources { self: Resources =>
     override val indent = 2
 }
 
-trait InlineResources extends Resources {
+trait ResolvableResources extends Resources {
+    protected def getResource(path: String): URL = {
+        val res = getClass.getClassLoader.getResource(path)
+        if (res != null) res else throw new IOException(s"resource '$path' not found")
+    }
+
+    protected def loadResource(path: String): String = {
+        new String(Files.readAllBytes(Paths.get(getResource(path).toURI)), UTF_8)
+    }
+}
+
+trait InlineResources extends ResolvableResources {
     def resolveScript(component: ResourceComponent): Tag = {
         loadResource("js/" + resourceName(component, "js")).asScript
     }
@@ -94,9 +96,7 @@ trait InlineResources extends Resources {
     }
 }
 
-trait ExternalResources extends Resources
-
-trait LocalResources extends ExternalResources {
+trait LocalResources extends ResolvableResources {
     protected def resolveFile(file: File): File
 
     protected def getFile(path: String): File = {
@@ -127,7 +127,7 @@ trait AbsoluteResources extends LocalResources {
     def resolveFile(file: File): File = file.getAbsoluteFile()
 }
 
-abstract class RemoteResources(url: URL) extends ExternalResources {
+abstract class RemoteResources(url: URL) extends Resources {
     def resolveScript(component: ResourceComponent) = {
         new URL(url, "./" + resourceName(component, "js", true)).asScript
     }
