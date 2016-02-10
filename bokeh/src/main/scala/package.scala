@@ -1,6 +1,6 @@
 package io.continuum
 
-package object bokeh extends NodeImplicits {
+package object bokeh extends PrettyTypedTag with NodeImplicits {
     final val Js = upickle.Js
 
     implicit class NumbericOps[T:Numeric](value: T) {

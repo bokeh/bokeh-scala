@@ -21,6 +21,8 @@ object Dependencies {
 
     val upickle = Def.setting { "com.lihaoyi" %%% "upickle" % "0.3.8" }
 
+    val scalatags = Def.setting { "com.lihaoyi" %%% "scalatags" % "0.5.4" }
+
     val specs2 = "org.specs2" %% "specs2" % "2.3.11" % Test
 
     val scopt = "com.github.scopt" %% "scopt" % "3.3.0"
@@ -125,7 +127,7 @@ object BokehBuild extends Build {
     lazy val bokehSettings = Seq(
         libraryDependencies ++= {
             import Dependencies._
-            Seq(upickle.value, xml, specs2)
+            Seq(xml, upickle.value, scalatags.value, specs2)
         },
         sourceGenerators in Compile += Def.task {
             val cmd = "python" :: "-c" :: "import bokeh; print(bokeh.__version__)" :: Nil
