@@ -137,7 +137,7 @@ object BokehBuild extends Build {
         sourceGenerators in Compile += Def.task {
             val cmd = "python" :: "-c" :: "import bokeh; print(bokeh.__version__)" :: Nil
             val proc = Process(cmd, None, "PYTHONPATH" -> "bokehjs/")
-            val version = Try { proc !! }.map(_.trim) getOrElse {
+            val version = Try { proc !! }.map(_.trim.split("-")(0)) getOrElse {
                 sys.error("could not run python to determine bokeh version")
             }
             val srcDir = (sourceManaged in Compile).value
