@@ -9,6 +9,7 @@ import java.awt.Desktop
 import scala.collection.mutable.ListBuffer
 
 import scalatags.Text.short._
+import scalatags.Text.tags2.title
 
 class Document(objs: Component*) {
     private val objects = ListBuffer[Component](objs: _*)
@@ -59,7 +60,7 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
 
     case class Spec(docs_json: Map[String, Doc], render_items: List[RenderItem])
 
-    protected def title: String = "Bokeh Application"
+    protected def docTitle: String = "Bokeh Application"
 
     protected def modelRepr(obj: Model): ModelRepr = {
         val Ref(id, tpe) = obj.getRef
@@ -68,7 +69,7 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
 
     protected lazy val spec: Spec = {
         val roots = Roots(objs.map(_.id), all_objs.map(modelRepr))
-        var doc = Doc(roots, title, Version.toString)
+        var doc = Doc(roots, docTitle, Version.toString)
         val docid = IdGenerator.next()
         val elementid = IdGenerator.next()
         val render_item = RenderItem(docid, elementid, None)
@@ -124,19 +125,21 @@ class HTMLFileWriter(objs: List[Component], resources: Resources) extends HTMLFr
         s"$doctype\n${html.pretty}"
     }
 
-    protected def figureoutTitle: String = {
-        spec.render_items
+    protected def renderTitle: Tag = {
+        val text = spec
+            .render_items
             .headOption
             .flatMap { item => spec.docs_json.get(item.docid) }
             .map(_.title)
-            .getOrElse("")
+            .getOrElse(docTitle)
+        title(text)
     }
 
     protected def renderFile(fragment: HTMLFragment): Tag = {
         html(
             head(
                 meta(*.charset:="utf-8"),
-                //title(figureoutTitle),
+                renderTitle,
                 fragment.head
             ),
             body(fragment.html, fragment.embed)
