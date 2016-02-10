@@ -18,10 +18,10 @@ class Document(objs: Component*) {
     }
 
     def fragment(resources: Resources): HTMLFragment = HTMLFragmentWriter(objects.toList, resources).write()
-    def fragment(): HTMLFragment = fragment(Resources.default)
+    def fragment(): HTMLFragment = fragment(Res.default)
 
     def save(file: File, resources: Resources): HTMLFile = HTMLFileWriter(objects.toList, resources).write(file)
-    def save(file: File): HTMLFile = save(file, Resources.default)
+    def save(file: File): HTMLFile = save(file, Res.default)
 
     def save(path: String, resources: Resources): HTMLFile = save(new File(path), resources)
     def save(path: String): HTMLFile = save(new File(path))
@@ -32,11 +32,11 @@ class HTMLFragment(val html: Seq[Tag], val styles: Seq[Tag], val scripts: Seq[Ta
 }
 
 object HTMLFragmentWriter {
-    def apply(obj: Component): HTMLFragmentWriter = apply(obj, Resources.default)
+    def apply(obj: Component): HTMLFragmentWriter = apply(obj, Res.default)
 
     def apply(obj: Component, resources: Resources): HTMLFragmentWriter = apply(obj :: Nil, resources)
 
-    def apply(objs: List[Component]): HTMLFragmentWriter = apply(objs, Resources.default)
+    def apply(objs: List[Component]): HTMLFragmentWriter = apply(objs, Res.default)
 
     def apply(objs: List[Component], resources: Resources): HTMLFragmentWriter = new HTMLFragmentWriter(objs, resources)
 }
@@ -100,11 +100,11 @@ class HTMLFile(val file: File) {
 }
 
 object HTMLFileWriter {
-    def apply(obj: Component): HTMLFileWriter = apply(obj, Resources.default)
+    def apply(obj: Component): HTMLFileWriter = apply(obj, Res.default)
 
     def apply(obj: Component, resources: Resources): HTMLFileWriter = apply(obj :: Nil, resources)
 
-    def apply(objs: List[Component]): HTMLFileWriter = apply(objs, Resources.default)
+    def apply(objs: List[Component]): HTMLFileWriter = apply(objs, Res.default)
 
     def apply(objs: List[Component], resources: Resources): HTMLFileWriter = new HTMLFileWriter(objs, resources)
 }

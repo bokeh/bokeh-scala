@@ -5,14 +5,14 @@ import scopt.{OptionParser,Read}
 
 private object CustomReads {
     implicit val resourcesReads: Read[Resources] = Read.reads { string =>
-        Resources.fromString(string) getOrElse {
+        Res.fromString(string) getOrElse {
             throw new IllegalArgumentException(s"'$string' is not a valid resource mode.")
         }
     }
 }
 
 trait Example extends App {
-    case class Config(resources: Resources = Resources.default, quiet: Boolean = false)
+    case class Config(resources: Resources = Res.default, quiet: Boolean = false)
 
     def config: Config = _config
     private var _config: Config = _
@@ -29,7 +29,7 @@ trait Example extends App {
             opt[Unit]('d', "dev")
                 .action { (_, config) =>
                     IdGenerator.setImplementation(CounterGenerator, silent=true)
-                    config.copy(resources=Resources.AbsoluteDev)
+                    config.copy(resources=Res.AbsoluteDev)
                 }
                 .text("enable development mode")
 
