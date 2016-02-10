@@ -8,6 +8,6 @@ package io.continuum.bokeh
     object low extends Field[Double]
     object high extends Field[Double]
 
-    object reserve_color extends Field[Color](Color.Transparent)
+    object reserve_color extends Field[Color](Transparent)
     object reserve_val extends Field[Double]
 }

@@ -4,6 +4,8 @@ sealed trait Color {
     def toCSS: String
 }
 
+case object Transparent extends Color { def toCSS = "transparent" }
+
 abstract class RGBAColor(red: Int, green: Int, blue: Int, alpha: Double) extends Color
 
 case class RGBA(red: Int, green: Int, blue: Int, alpha: Double) extends RGBAColor(red, green, blue, alpha) {
@@ -40,8 +42,6 @@ sealed abstract class NamedColor(red: Int, green: Int, blue: Int) extends RGBACo
             case RGBColor(r, g, b) => RGB(int(r), int(g), int(b))
         }
     }
-
-    case object Transparent          extends Color { def toCSS = "transparent" }
 
     case object AliceBlue            extends NamedColor(240, 248, 255)
     case object AntiqueWhite         extends NamedColor(250, 235, 215)
