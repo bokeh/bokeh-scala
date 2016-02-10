@@ -128,7 +128,7 @@ object BokehBuild extends Build {
     lazy val bokehSettings = Seq(
         libraryDependencies ++= {
             import Dependencies._
-            Seq(xml, upickle.value, scalatags.value, specs2)
+            Seq(upickle.value, scalatags.value, specs2)
         },
         sourceGenerators in Compile += Def.task {
             val cmd = "python" :: "-c" :: "import bokeh; print(bokeh.__version__)" :: Nil

@@ -6,6 +6,8 @@ import java.nio.charset.StandardCharsets.UTF_8
 import java.net.URL
 import java.util.Properties
 
+import scalatags.Text.short.Tag
+
 sealed abstract class ResourceComponent(val name: String) {
     val js = true
     val css = true
@@ -16,7 +18,7 @@ case object BokehCompiler extends ResourceComponent("bokeh-compiler") {
     override val css = false
 }
 
-case class Bundle(scripts: xml.NodeSeq, styles: xml.NodeSeq)
+case class Bundle(scripts: Seq[Tag], styles: Seq[Tag])
 
 sealed trait Resources {
     def minified: Boolean = true
@@ -31,7 +33,7 @@ sealed trait Resources {
 
     def wrap(code: String): String = s"Bokeh.$$(function() {\n$code\n});"
 
-    protected def logLevelScript: xml.Node = {
+    protected def logLevelScript: Tag = {
         s"Bokeh.set_log_level('$logLevel');".asScript
     }
 
@@ -50,11 +52,7 @@ sealed trait Resources {
         val scripts = components.filter(_.js == true).map(resolveScript) ++ List(logLevelScript)
         val styles = components.filter(_.css == true).map(resolveStyle)
 
-        def separate(nodes: List[xml.Node]): xml.NodeSeq = {
-            nodes.flatMap(_ ++ xml.Text("\n"))
-        }
-
-        Bundle(separate(scripts), separate(styles))
+        Bundle(scripts, styles)
     }
 
     def useWidgets(refs: List[Model]): Option[ResourceComponent] = {
@@ -68,8 +66,8 @@ sealed trait Resources {
             .map { _ => BokehCompiler }
     }
 
-    protected def resolveScript(component: ResourceComponent): xml.Node
-    protected def resolveStyle(component: ResourceComponent): xml.Node
+    protected def resolveScript(component: ResourceComponent): Tag
+    protected def resolveStyle(component: ResourceComponent): Tag
 
     protected def resourceName(component: ResourceComponent, ext: String, version: Boolean=false) = {
         val ver = if (version) s"-$Version" else ""
@@ -87,11 +85,11 @@ trait DevResources { self: Resources =>
 }
 
 trait InlineResources extends Resources {
-    def resolveScript(component: ResourceComponent): xml.Node = {
+    def resolveScript(component: ResourceComponent): Tag = {
         loadResource("js/" + resourceName(component, "js")).asScript
     }
 
-    def resolveStyle(component: ResourceComponent): xml.Node = {
+    def resolveStyle(component: ResourceComponent): Tag = {
         loadResource("css/" + resourceName(component, "css")).asStyle
     }
 }
@@ -109,11 +107,11 @@ trait LocalResources extends ExternalResources {
         }
     }
 
-    def resolveScript(component: ResourceComponent): xml.Node =  {
+    def resolveScript(component: ResourceComponent) = {
         new File(getFile("js"), resourceName(component, "js")).asScript
     }
 
-    def resolveStyle(component: ResourceComponent): xml.Node = {
+    def resolveStyle(component: ResourceComponent) = {
         new File(getFile("css"), resourceName(component, "css")).asStyle
     }
 }
@@ -130,11 +128,11 @@ trait AbsoluteResources extends LocalResources {
 }
 
 abstract class RemoteResources(url: URL) extends ExternalResources {
-    def resolveScript(component: ResourceComponent): xml.Node = {
+    def resolveScript(component: ResourceComponent) = {
         new URL(url, "./" + resourceName(component, "js", true)).asScript
     }
 
-    def resolveStyle(component: ResourceComponent): xml.Node = {
+    def resolveStyle(component: ResourceComponent) = {
         new URL(url, "./" + resourceName(component, "css", true)).asStyle
     }
 }

@@ -7,7 +7,8 @@ import java.nio.charset.StandardCharsets.UTF_8
 import java.awt.Desktop
 
 import scala.collection.mutable.ListBuffer
-import scala.xml.{Node,NodeSeq,XML}
+
+import scalatags.Text.short._
 
 class Document(objs: Component*) {
     private val objects = ListBuffer[Component](objs: _*)
@@ -26,8 +27,8 @@ class Document(objs: Component*) {
     def save(path: String): HTMLFile = save(new File(path))
 }
 
-class HTMLFragment(val html: NodeSeq, val styles: NodeSeq, val scripts: NodeSeq) {
-    def head: NodeSeq = styles ++ scripts
+class HTMLFragment(val html: Seq[Tag], val styles: Seq[Tag], val scripts: Seq[Tag]) {
+    def head: Seq[Tag] = styles ++ scripts
 }
 
 object HTMLFragmentWriter {
@@ -43,7 +44,7 @@ object HTMLFragmentWriter {
 class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
     def write(): HTMLFragment = {
         var bundle = resources.bundle(all_objs)
-        new HTMLFragment(divs ++ xml.Text("\n") ++ scripts, bundle.styles, bundle.scripts)
+        new HTMLFragment(divs ++ scripts, bundle.styles, bundle.scripts)
     }
 
     lazy val all_objs: List[Model] = Model.collect(objs)
@@ -71,18 +72,18 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
         Spec(Map(docid -> doc), render_item :: Nil)
     }
 
-    protected def divs: NodeSeq = {
-        spec.render_items.flatMap { item => <div class="plotdiv" id={ item.elementid }></div> }
+    protected def divs: Seq[Tag] = {
+        spec.render_items.map(item => div(*.`class`:="plotdiv", *.id:=item.elementid))
     }
 
-    protected def scripts: NodeSeq = {
+    protected def scripts: Seq[Tag] = {
         val code = s"""
             |var docs_json = ${resources.stringify(spec.docs_json)};
             |var render_items = ${resources.stringify(spec.render_items)};
             |
             |Bokeh.embed.embed_items(docs_json, render_items);
             """
-        code.stripMargin.trim.asScript
+        Seq(code.stripMargin.trim.asScript)
     }
 }
 
@@ -115,30 +116,27 @@ class HTMLFileWriter(objs: List[Component], resources: Resources) extends HTMLFr
         new HTMLFile(file)
     }
 
-    protected def stringify(html: Node) = {
-        val writer = new java.io.StringWriter()
+    protected def stringify(html: Tag) = {
         val doctype = "<!DOCTYPE html>"
-        XML.write(writer, html, "UTF-8", xmlDecl=false, doctype=null)
-        s"$doctype\n${writer.toString}"
+        s"$doctype\n${html.pretty}"
     }
 
-    protected def renderTitle: Option[Node] = {
+    protected def figureoutTitle: String = {
         spec.render_items
             .headOption
             .flatMap { item => spec.docs_json.get(item.docid) }
-            .map { doc => <title>{doc.title}</title> }
+            .map(_.title)
+            .getOrElse("")
     }
 
-    protected def renderFile(fragment: HTMLFragment): Node = {
-        <html lang="en">
-            <head>
-                <meta charset="utf-8" />
-                { renderTitle orNull }
-                { fragment.head }
-            </head>
-            <body>
-                { fragment.html }
-            </body>
-        </html>
+    protected def renderFile(fragment: HTMLFragment): Tag = {
+        html(
+            head(
+                meta(*.charset:="utf-8"),
+                //title(figureoutTitle),
+                fragment.head
+            ),
+            body(fragment.html)
+        )
     }
 }

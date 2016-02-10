@@ -3,38 +3,22 @@ package io.continuum.bokeh
 import java.io.File
 import java.net.URL
 
-trait NodeImplicits {
-    implicit class StringNode(script: String) {
-        def asScript: xml.Node = {
-            <script type="text/javascript">{xml.Unparsed(s"""
-            $script
-            """)}</script>
-        }
+trait TagImplicits {
+    import scalatags.Text.short._
+    import scalatags.Text.tags2.style
 
-        def asStyle: xml.Node = {
-            <style>{xml.Unparsed(s"""
-            $script
-            """)}</style>
-        }
+    implicit class StringToTag(str: String) {
+        def asScript: Tag = script(raw(str))
+        def asStyle: Tag = style(raw(str))
     }
 
-    implicit class FileNode(file: File) {
-        def asScript: xml.Node = {
-            <script type="text/javascript" src={file.getPath}></script>
-        }
-
-        def asStyle: xml.Node = {
-            <link rel="stylesheet" href={file.getPath}></link>
-        }
+    implicit class FileToTag(file: File) {
+        def asScript: Tag = script(*.src:=file.getPath)
+        def asStyle: Tag = link(*.rel:="stylesheet", *.href:=file.getPath)
     }
 
-    implicit class URLNode(url: URL) {
-        def asScript: xml.Node = {
-            <script type="text/javascript" src={url.toString}></script>
-        }
-
-        def asStyle: xml.Node = {
-            <link rel="stylesheet" href={url.toString}></link>
-        }
+    implicit class URLToTag(url: URL) {
+        def asScript: Tag = script(*.src:=url.toString)
+        def asStyle: Tag = link(*.rel:="stylesheet", *.href:=url.toString)
     }
 }
