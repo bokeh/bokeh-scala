@@ -70,9 +70,9 @@ object Maps extends Example {
     plot.tools <<= (pan :: zoom :: select :: _)
 
     object source extends ColumnDataSource {
-        val lat  = column(Array(30.2861, 30.2855, 30.2869))
-        val lon  = column(Array(-97.7394, -97.7390, -97.7405))
-        val fill = column(Array[Color](Color.Orange, Color.Blue, Color.Green))
+        val lat  = values(30.2861, 30.2855, 30.2869)
+        val lon  = values(-97.7394, -97.7390, -97.7405)
+        val fill = values[Color](Color.Orange, Color.Blue, Color.Green)
     }
 
     import source.{lat,lon,fill}

@@ -19,6 +19,7 @@ case class Selected(`0d`: Selected0d = Selected0d(),
 
     object data extends Field[Map[Symbol, Js.Value]]
 
+    // TODO: M should be covariant? See Color vs. NamedColor.
     class Column[M[_]: ArrayLike, T:Json.Writer]
             (val name: Symbol, private var _value: M[T])
             (implicit fmt: Json.Writer[M[T]]) {
@@ -29,6 +30,7 @@ case class Selected(`0d`: Selected0d = Selected0d(),
     }
 
     def column[M[_], T](value: M[T]): Column[M, T] = macro ColumnMacro.columnImpl[M, T]
+    def values[T](values: T*): Column[Seq, T] = macro ColumnMacro.valuesImpl[T]
 }
 
 private[bokeh] object ColumnMacro {
@@ -37,12 +39,19 @@ private[bokeh] object ColumnMacro {
     def columnImpl[M[_], T](c: Context { type PrefixType = ColumnDataSource })(value: c.Expr[M[T]])
             (implicit ev1: c.WeakTypeTag[M[_]], ev2: c.WeakTypeTag[T]): c.Expr[c.prefix.value.Column[M, T]] = {
         import c.universe._
+        c.Expr[c.prefix.value.Column[M, T]](q"new Column(Symbol(${columnName(c)}), $value)")
+    }
 
-        val name = Macros.definingValName(c) getOrElse {
+    def valuesImpl[T: c.WeakTypeTag](c: Context { type PrefixType = ColumnDataSource })
+            (values: c.Expr[T]*): c.Expr[c.prefix.value.Column[Seq, T]] = {
+        import c.universe._
+        c.Expr[c.prefix.value.Column[Seq, T]](q"new Column(Symbol(${columnName(c)}), Seq(..$values))")
+    }
+
+    private def columnName(c: Context): String = {
+        Macros.definingValName(c) getOrElse {
             c.abort(c.enclosingPosition, "column must be directly assigned to a val, such as `val x1 = column(List(1.0, 2.0, 3.0))`")
         }
-
-        c.Expr[c.prefix.value.Column[M, T]](q"new Column(Symbol($name), $value)")
     }
 }
 
