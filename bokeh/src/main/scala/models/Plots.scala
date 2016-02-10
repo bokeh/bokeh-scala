@@ -34,8 +34,8 @@ package io.continuum.bokeh
     def width = plot_width
     def height = plot_height
 
-    object background_fill extends Field[Color](Color.White)
-    object border_fill extends Field[Color](Color.White)
+    object background_fill_color extends Field[Color](Color.White)
+    object border_fill_color extends Field[Color](Color.White)
 
     object min_border_top extends Field[Int]
     object min_border_bottom extends Field[Int]

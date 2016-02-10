@@ -70,7 +70,7 @@ object Choropleth extends Example {
     val plot = new Plot()
         .x_range(xdr)
         .y_range(ydr)
-        .border_fill(Color.White)
+        .border_fill_color(Color.White)
         .title("2009 Unemployment Data")
         .width(1300)
         .height(800)
