@@ -27,15 +27,25 @@ trait PrettyTypedTag {
         } else {
             strb ++= ">"
 
-            for (c <- children) {
-                c match {
-                    case t: Text.TypedTag[String] =>
-                        strb ++= "\n"
-                        prettyWriteTo(t, strb, depth + 1, step)
-                    case any =>
-                        strb ++= "\n" ++= " " * (depth + 1) * step
-                        any.writeTo(strb)
-                }
+            for (child <- children) child match {
+                case tag: Text.TypedTag[String] =>
+                    strb ++= "\n"
+                    prettyWriteTo(tag, strb, depth + 1, step)
+                case _ =>
+                    val indent = " " * (depth + 1) * step
+
+                    val sb = new StringBuilder
+                    child.writeTo(sb)
+
+                    for (line <- sb.toString.split("\n")) {
+                        strb += '\n'
+
+                        if (!line.trim.isEmpty) {
+                            strb ++= indent
+                        }
+
+                        strb ++= line
+                    }
             }
 
             if (!children.isEmpty) {
