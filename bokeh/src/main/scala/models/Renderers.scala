@@ -5,7 +5,7 @@ package io.continuum.bokeh
 @model abstract class DataRenderer extends Renderer
 
 @model class TileRenderer extends DataRenderer {
-    object tile_source extends Field[TileSource] // XXX: lazy (new WMTSTileSource())
+    object tile_source extends Field[TileSource](() => new WMTSTileSource())
 
     object alpha extends Field[Percent](1.0)
 
@@ -28,7 +28,7 @@ package io.continuum.bokeh
 
 @model class GlyphRenderer extends Renderer {
     // TODO: object server_data_source extends Field[ServerDataSource]
-    object data_source extends Field[DataSource](new ColumnDataSource())
+    object data_source extends Field[DataSource](() => new ColumnDataSource())
 
     object glyph extends Field[Glyph]
     object hover_glyph extends Field[Glyph]

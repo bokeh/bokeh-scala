@@ -23,6 +23,11 @@ trait HasFields { self =>
             setValue(Some(default))
         }
 
+        def this(default: () => FieldType) = {
+            this()
+            set(Some(default()))
+        }
+
         def defaultValue: Option[FieldType] = {
             Option(implicitly[Default[FieldType]].default)
         }

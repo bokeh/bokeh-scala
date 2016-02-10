@@ -11,7 +11,7 @@ package io.continuum.bokeh
 
 @model class AdaptiveTicker extends Ticker {
     object base extends Field[Double](10.0)
-    object mantissas extends Field[List[Double]](List(2, 5, 10))
+    object mantissas extends Field[List[Double]](List(2.0, 5.0, 10.0))
     object min_interval extends Field[Double](0.0)
     object max_interval extends Field[Double](100.0)
 }

@@ -7,8 +7,8 @@ package io.continuum.bokeh
     def defaultTicker: Ticker
     def defaultFormatter: TickFormatter
 
-    object ticker extends Field[Ticker](defaultTicker)
-    object formatter extends Field[TickFormatter](defaultFormatter)
+    object ticker extends Field[Ticker](() => defaultTicker)
+    object formatter extends Field[TickFormatter](() => defaultFormatter)
 
     object axis_label extends Field[String]
     object axis_label_standoff extends Field[Int]
