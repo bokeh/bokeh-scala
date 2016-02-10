@@ -19,11 +19,11 @@ trait ResolvableResources extends Resources {
 
 trait InlineResources extends ResolvableResources {
     def resolveScript(component: ResourceComponent) = {
-        loadResource("js/" + resourceName(component, "js")).asScript
+        RawJS(loadResource("js/" + resourceName(component, "js")))
     }
 
     def resolveStyle(component: ResourceComponent) = {
-        loadResource("css/" + resourceName(component, "css")).asStyle
+        RawCSS(loadResource("css/" + resourceName(component, "css")))
     }
 }
 
@@ -39,11 +39,11 @@ trait LocalResources extends ResolvableResources {
     }
 
     def resolveScript(component: ResourceComponent) = {
-        new File(getFile("js"), resourceName(component, "js")).asScript
+        RefJS(new File(getFile("js"), resourceName(component, "js")).toURI)
     }
 
     def resolveStyle(component: ResourceComponent) = {
-        new File(getFile("css"), resourceName(component, "css")).asStyle
+        RefCSS(new File(getFile("css"), resourceName(component, "css")).toURI)
     }
 }
 

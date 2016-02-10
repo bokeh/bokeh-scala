@@ -27,9 +27,9 @@ class Document(objs: Component*) {
     def save(path: String): HTMLFile = save(new File(path))
 }
 
-class HTMLFragment(val html: Seq[Tag], val styles: Seq[Tag], val scripts: Seq[Tag]) {
+class HTMLFragment(val html: Seq[Tag], val embed: Seq[Tag], val styles: Seq[Tag], val scripts: Seq[Tag]) {
     def head: Seq[Tag] = styles ++ scripts
-    def tag: Tag = div(head ++ html) // TODO: get rid of this div()
+    def tag: Tag = div(head ++ html ++ embed) // TODO: get rid of this div()
 
     override def toString = tag.toString
 }
@@ -47,7 +47,7 @@ object HTMLFragmentWriter {
 class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
     def write(): HTMLFragment = {
         var bundle = resources.bundle(all_objs)
-        new HTMLFragment(divs ++ scripts, bundle.styles, bundle.scripts)
+        new HTMLFragment(divs, Seq(embed.asScript), bundle.styles, bundle.scripts)
     }
 
     lazy val all_objs: List[Model] = Model.collect(objs)
@@ -79,14 +79,14 @@ class HTMLFragmentWriter(objs: List[Component], resources: Resources) {
         spec.render_items.map(item => div(*.`class`:="plotdiv", *.id:=item.elementid))
     }
 
-    protected def scripts: Seq[Tag] = {
+    protected def embed: String = {
         val code = s"""
             |var docs_json = ${resources.stringify(spec.docs_json)};
             |var render_items = ${resources.stringify(spec.render_items)};
             |
             |Bokeh.embed.embed_items(docs_json, render_items);
             """
-        Seq(code.stripMargin.trim.asScript)
+        code.stripMargin.trim
     }
 }
 
@@ -139,7 +139,7 @@ class HTMLFileWriter(objs: List[Component], resources: Resources) extends HTMLFr
                 //title(figureoutTitle),
                 fragment.head
             ),
-            body(fragment.html)
+            body(fragment.html, fragment.embed)
         )
     }
 }
