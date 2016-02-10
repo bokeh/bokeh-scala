@@ -5,6 +5,7 @@ import scala.util.Try
 
 import org.scalajs.sbtplugin.ScalaJSPlugin
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
+import org.scalajs.sbtplugin.cross.CrossType
 
 import com.typesafe.sbt.SbtPgp
 import com.typesafe.sbt.JavaVersionCheckPlugin.autoImport._
@@ -205,11 +206,21 @@ object BokehBuild extends Build {
         publish := {}
     )
 
-    lazy val bokeh = crossProject.crossType(CrossType.Pure).in(file("bokeh"))
-        .jvmSettings(bokehSettings: _*).jsSettings(bokehSJSSettings: _*).dependsOn(core)
+    object FullPureMix extends CrossType {
+        def projectDir(crossBase: File, projectType: String): File = {
+            crossBase / projectType
+        }
 
-    lazy val core = crossProject.crossType(CrossType.Pure).in(file("core"))
-        .jvmSettings(coreSettings: _*).jsSettings(coreSJSSettings: _*)
+        def sharedSrcDir(projectBase: File, conf: String): Option[File] = {
+          Some(projectBase.getParentFile / "src" / conf / "scala")
+        }
+    }
+
+    lazy val bokeh = crossProject.crossType(FullPureMix).in(file("bokeh"))
+        .jvmSettings(bokehJVMSettings: _*).jsSettings(bokehSJSSettings: _*).dependsOn(core)
+
+    lazy val core = crossProject.crossType(FullPureMix).in(file("core"))
+        .jvmSettings(coreJVMSettings: _*).jsSettings(coreSJSSettings: _*)
 
     lazy val bokehJVM = bokeh.jvm.dependsOn(bokehjs)
     lazy val bokehSJS = bokeh.js
