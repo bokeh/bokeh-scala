@@ -1,7 +1,7 @@
 package io.continuum.bokeh
 
 import java.io.File
-import java.net.URL
+import java.net.URI
 
 trait TagImplicits {
     import scalatags.Text.short._
@@ -17,7 +17,7 @@ trait TagImplicits {
         def asStyle: Tag = link(*.rel:="stylesheet", *.href:=file.getPath)
     }
 
-    implicit class URLToTag(url: URL) {
+    implicit class URIToTag(url: URI) {
         def asScript: Tag = script(*.src:=url.toString)
         def asStyle: Tag = link(*.rel:="stylesheet", *.href:=url.toString)
     }

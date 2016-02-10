@@ -3,7 +3,7 @@ package io.continuum.bokeh
 import java.io.{File,IOException}
 import java.nio.file.{Paths,Files}
 import java.nio.charset.StandardCharsets.UTF_8
-import java.net.URL
+import java.net.{URL,URI}
 import java.util.Properties
 
 import scalatags.Text.short.Tag
@@ -127,17 +127,17 @@ trait AbsoluteResources extends LocalResources {
     def resolveFile(file: File): File = file.getAbsoluteFile()
 }
 
-abstract class RemoteResources(url: URL) extends Resources {
+abstract class RemoteResources(url: URI) extends Resources {
     def resolveScript(component: ResourceComponent) = {
-        new URL(url, "./" + resourceName(component, "js", true)).asScript
+        new URI(url + "/" + resourceName(component, "js", true)).asScript
     }
 
     def resolveStyle(component: ResourceComponent) = {
-        new URL(url, "./" + resourceName(component, "css", true)).asStyle
+        new URI(url + "/" + resourceName(component, "css", true)).asStyle
     }
 }
 
-abstract class CDNResources extends RemoteResources(new URL("http://cdn.pydata.org/bokeh/release/"))
+abstract class CDNResources extends RemoteResources(new URI("http://cdn.pydata.org/bokeh/release"))
 
 object Resources {
     case object CDN    extends CDNResources
