@@ -3,7 +3,7 @@ package sampledata
 
 object WorldCities extends CSVSampleData {
     def load(): List[WorldCity] = {
-        loadRows("world_cities.csv").map {
+        loadRows(Zip("world_cities.csv")).map {
             case List(name, lat, lng) => WorldCity(name, lat.toDouble, lng.toDouble)
         }
     }

@@ -2,7 +2,7 @@ package io.continuum.bokeh
 package sampledata
 
 import java.io.{File,InputStream,FileInputStream,InputStreamReader,FileNotFoundException}
-import java.util.zip.GZIPInputStream
+import java.util.zip.{ZipInputStream,GZIPInputStream}
 import java.net.URL
 
 import scala.collection.JavaConverters._
@@ -16,6 +16,21 @@ import net.fortuna.ical4j.model.{Calendar,Component}
 import net.fortuna.ical4j.model.component.VEvent
 import net.fortuna.ical4j.data.CalendarBuilder
 
+object FileName {
+    implicit def stringToFileName(fileName: String): FileName = Simple(fileName)
+}
+sealed trait FileName {
+    val name: String
+    def realName: String = name
+}
+case class Simple(name: String) extends FileName
+case class GZip(name: String) extends FileName {
+    override def realName = name + ".gz"
+}
+case class Zip(name: String) extends FileName {
+    override def realName = name.substring(0, name.lastIndexOf(".")) + ".zip"
+}
+
 object SampleData {
     lazy val dataPath: Path = {
         val home = Path.fromString(System.getProperty("user.home"))
@@ -24,37 +39,65 @@ object SampleData {
         path
     }
 
-    def getStreamFromResources(fileName: String): Option[InputStream] = {
-        Option(getClass.getClassLoader.getResourceAsStream(fileName))
+    def getStreamFromResources(fileName: FileName): Option[InputStream] = {
+        Option(getClass.getClassLoader.getResourceAsStream(fileName.realName))
     }
 
-    def getStreamFromFile(fileName: String): Option[InputStream] = {
-        val filePath = dataPath / fileName
+    def getStreamFromFile(fileName: FileName): Option[InputStream] = {
+        val filePath = dataPath / fileName.realName
         val fileOption = if (filePath.exists) filePath.fileOption else download(fileName)
         fileOption.map(new FileInputStream(_))
     }
 
-    def getFileStream(fileName: String): Option[InputStream] = {
+    def getFileStream(fileName: FileName): Option[InputStream] = {
         getStreamFromResources(fileName) orElse getStreamFromFile(fileName)
     }
 
-    def getGZipStream(fileName: String): Option[InputStream] = {
-        getFileStream(fileName + ".gz").map(new GZIPInputStream(_))
+    def getGZipStream(fileName: FileName): Option[InputStream] = {
+        getFileStream(fileName).map(new GZIPInputStream(_))
     }
 
-    def getStream(fileName: String): InputStream = {
-        getFileStream(fileName) orElse getGZipStream(fileName) getOrElse {
-            throw new FileNotFoundException(s"can't locate $fileName(.gz) in resources, .bokeh/data or S3")
+    def getZipStream(fileName: FileName): Option[InputStream] = {
+        getFileStream(fileName).flatMap { stream =>
+            val zip = new ZipInputStream(stream)
+            var entry = zip.getNextEntry()
+            var found = false
+            while (entry != null) {
+                found = !entry.isDirectory && entry.getName == fileName.name
+                if (found) {
+                    entry = null
+                } else {
+                    zip.closeEntry()
+                    entry = zip.getNextEntry()
+                }
+            }
+            if (found) {
+                Some(zip)
+            } else {
+                zip.close()
+                None
+            }
+        }
+    }
+
+    def getStream(fileName: FileName): InputStream = {
+        val streamOpt = fileName match {
+            case Simple(_) => getFileStream(fileName)
+            case GZip(_) => getGZipStream(fileName)
+            case Zip(_) => getZipStream(fileName)
+        }
+        streamOpt getOrElse {
+            throw new FileNotFoundException(s"can't locate ${fileName.name} in resources, .bokeh/data or S3")
         }
     }
 
     val dataUrl = new URL("https://s3.amazonaws.com/bokeh_data/")
 
-    def download(fileName: String): Option[File] = {
-        val url = new URL(dataUrl, fileName)
+    def download(fileName: FileName): Option[File] = {
+        val url = new URL(dataUrl, fileName.realName)
 
         val input = url.asInput
-        val output = dataPath / fileName
+        val output = dataPath / fileName.realName
 
         input.size match {
             case Some(size) =>
@@ -70,7 +113,7 @@ object SampleData {
 trait SampleData
 
 trait CSVSampleData extends SampleData {
-    protected def loadRows(fileName: String): List[List[String]] = {
+    protected def loadRows(fileName: FileName): List[List[String]] = {
         val input = new InputStreamReader(SampleData.getStream(fileName))
         val reader = new CSVReader(input, ',', '"', '\\', 1)
         reader.readAll().asScala.map(_.map(_.trim).toList).toList
@@ -78,7 +121,7 @@ trait CSVSampleData extends SampleData {
 }
 
 trait ICalSampleData {
-    protected def loadEvents(fileName: String): List[VEvent] = {
+    protected def loadEvents(fileName: FileName): List[VEvent] = {
         val input = SampleData.getStream(fileName)
         val builder = new CalendarBuilder()
         val calendar = builder.build(input)
