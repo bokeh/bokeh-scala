@@ -32,7 +32,7 @@ object Anscombe extends js.JSApp {
 
         def linspace(a: Double, b: Double, length: Int = 100): Seq[Double] = {
             val increment = (b - a) / (length - 1)
-            (0 until 100).map(i => a + increment*i)
+            (0 until length).map(i => a + increment*i)
         }
 
         object lines_source extends ColumnDataSource {
