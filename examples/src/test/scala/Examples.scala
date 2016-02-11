@@ -1,117 +1,58 @@
 package io.continuum.bokeh
 package examples
 
-import org.specs2.mutable._
-import org.specs2.matcher.TerminationMatchers
+import scala.util.{Try,Success,Failure}
 
-class ExamplesSpec extends Specification with TerminationMatchers {
+import org.specs2.mutable._
+import org.specs2.matcher.{Matcher,Expectable}
+
+class ExamplesSpec extends Specification with RunMatchers {
     sequential
 
-    val argv = Array[String]("--quiet", "--dev")
+    val run = new Run("--quiet", "--dev")
 
     "examples.models" should {
-        "run Anscombe" in {
-            models.Anscombe.main(argv) must not(throwA[Throwable])
-        }
+        "run Anscombe"   in { models.Anscombe   must run }
+        "run Calendars"  in { models.Calendars  must run }
+        "run Choropleth" in { models.Choropleth must run }
+        "run ColorSpec"  in { models.ColorSpec  must run }
+        "run Colors"     in { models.Colors     must run }
+        "run DataTables" in { models.DataTables must run }
+        "run DateAxis"   in { models.DateAxis   must run }
+        "run Daylight"   in { models.Daylight   must run }
+        "run Donut"      in { models.Donut      must run }
+        "run Gauges"     in { models.Gauges     must run }
+        "run Gears"      in { models.Gears      must run }
+        "run Glyph1"     in { models.Glyph1     must run }
+        "run Glyph2"     in { models.Glyph2     must run }
+        "run Grid"       in { models.Grid       must run }
+        "run Hover"      in { models.Hover      must run }
+        "run Image"      in { models.Image      must run }
+        "run ImageURL"   in { models.ImageURL   must run }
+        "run Iris"       in { models.Iris       must run }
+        "run IrisSplom"  in { models.IrisSplom  must run }
+        "run Line"       in { models.Line       must run }
+        "run Maps"       in { models.Maps       must run }
+        "run MapsCities" in { models.MapsCities must run }
+        "run Prim"       in { models.Prim       must run }
+        "run Sprint"     in { models.Sprint     must run }
+        "run Trail"      in { models.Trail      must run }
+        "run TwinAxis"   in { models.TwinAxis   must run }
+    }
+}
 
-        "run Calendars" in {
-            models.Calendars.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Choropleth" in {
-            models.Choropleth.main(argv) must not(throwA[Throwable])
-        }
-
-        "run ColorSpec" in {
-            models.ColorSpec.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Colors" in {
-            models.Colors.main(argv) must not(throwA[Throwable])
-        }
-
-        "run DataTables" in {
-            models.DataTables.main(argv) must not(throwA[Throwable])
-        }
-
-        "run DateAxis" in {
-            models.DateAxis.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Daylight" in {
-            models.Daylight.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Donut" in {
-            models.Donut.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Gauges" in {
-            models.Gauges.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Gears" in {
-            models.Gears.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Glyph1" in {
-            models.Glyph1.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Glyph2" in {
-            models.Glyph2.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Grid" in {
-            models.Grid.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Hover" in {
-            models.Hover.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Image" in {
-            models.Image.main(argv) must not(throwA[Throwable])
-        }
-
-        "run ImageURL" in {
-            models.ImageURL.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Iris" in {
-            models.Iris.main(argv) must not(throwA[Throwable])
-        }
-
-        "run IrisSplom" in {
-            models.IrisSplom.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Line" in {
-            models.Line.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Maps" in {
-            models.Maps.main(argv) must not(throwA[Throwable])
-        }
-
-        "run MapsCities" in {
-            models.MapsCities.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Prim" in {
-            models.Prim.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Sprint" in {
-            models.Sprint.main(argv) must not(throwA[Throwable])
-        }
-
-        "run Trail" in {
-            models.Trail.main(argv) must not(throwA[Throwable])
-        }
-
-        "run TwinAxis" in {
-            models.TwinAxis.main(argv) must not(throwA[Throwable])
+trait RunMatchers {
+    class Run(argv: String*) extends Matcher[App] {
+        def apply[T <: App](app: Expectable[T]) = {
+            val ret = Try(app.value.main(argv.toArray))
+            val msg = ret match {
+                case Success(_)   => ""
+                case Failure(exc) => exc.toString
+            }
+            result(ret.isSuccess,
+                s"${app.description} did run",
+                s"${app.description} failed to run and failed with $msg",
+                app)
         }
     }
 }
