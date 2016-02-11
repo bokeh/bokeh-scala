@@ -3,12 +3,10 @@ package examples
 package models
 
 object ColorSpec extends Example {
-    val colors: List[Color] = List(RGB(0, 100, 120), Color.Green, Color.Blue, "#2c7fb8", RGBA(120, 230, 150, 0.5))
-
     object source extends ColumnDataSource {
-        val x     = column(Array[Double](1, 2, 3, 4, 5))
-        val y     = column(Array[Double](5, 4, 3, 2, 1))
-        val color = column(colors)
+        val x     = values(1, 2, 3, 4, 5)
+        val y     = values(5, 4, 3, 2, 1)
+        val color = values(RGB(0, 100, 120), Color.Green, "#2c7fb8": Color, RGBA(120, 230, 150, 0.5))
     }
 
     import source.{x,y,color}

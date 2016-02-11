@@ -94,7 +94,12 @@ trait Vectorization { self: HasFields =>
             owner
         }
 
-        def apply[M[_]](column: ColumnDataSource#Column[M, FieldType]): SelfType = {
+        def apply[M[_], T <: FieldType](column: ColumnDataSource#Column[M, T]): SelfType = {
+            setField(Some(column.name))
+            owner
+        }
+
+        def apply[M[_], T <% FieldType](column: ColumnDataSource#Column[M, T]): SelfType = {
             setField(Some(column.name))
             owner
         }
@@ -136,7 +141,12 @@ trait Vectorization { self: HasFields =>
             owner
         }
 
-        def apply[M[_]](column: ColumnDataSource#Column[M, FieldType], units: UnitsType): SelfType = {
+        def apply[M[_], T <: FieldType](column: ColumnDataSource#Column[M, T], units: UnitsType): SelfType = {
+            setUnits(units)
+            apply(column)
+        }
+
+        def apply[M[_], T <% FieldType](column: ColumnDataSource#Column[M, T], units: UnitsType): SelfType = {
             setUnits(units)
             apply(column)
         }

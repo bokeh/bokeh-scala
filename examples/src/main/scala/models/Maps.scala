@@ -66,7 +66,7 @@ object Maps extends Example {
     object source extends ColumnDataSource {
         val lat  = values(30.2861, 30.2855, 30.2869)
         val lon  = values(-97.7394, -97.7390, -97.7405)
-        val fill = values[Color](Color.Orange, Color.Blue, Color.Green)
+        val fill = values(Color.Orange, Color.Blue, Color.Green)
     }
 
     import source.{lat,lon,fill}
