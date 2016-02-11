@@ -18,12 +18,13 @@ package io.continuum.bokeh {
     }
 
     package object sampledata {
-        val sprint = Sprint.load()
-        val autompg = AutoMPG.load()
-        val us_states = USStates.load()
-        val us_counties = USCounties.load()
-        val us_holidays = USHolidays.load()
-        val unemployment = Unemployment.load()
+        val autompg        = AutoMPG.load()
         val periodic_table = PeriodicTable.load()
+        val sprint         = Sprint.load()
+        val unemployment   = Unemployment.load()
+        val us_counties    = USCounties.load()
+        val us_holidays    = USHolidays.load()
+        val us_states      = USStates.load()
+        val world_cities   = WorldCities.load()
     }
 }

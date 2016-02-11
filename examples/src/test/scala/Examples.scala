@@ -94,6 +94,10 @@ class ExamplesSpec extends Specification with TerminationMatchers {
             models.Maps.main(argv) must not(throwA[Throwable])
         }
 
+        "run MapsCities" in {
+            models.MapsCities.main(argv) must not(throwA[Throwable])
+        }
+
         "run Prim" in {
             models.Prim.main(argv) must not(throwA[Throwable])
         }
