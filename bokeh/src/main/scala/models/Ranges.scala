@@ -4,6 +4,10 @@ package io.continuum.bokeh
     object callback extends Field[Callback]
 }
 
+object Range1d {
+    def apply(): Range1d = new Range1d()
+    def apply(start: Double, end: Double): Range1d = new Range1d().start(start).end(end)
+}
 @model class Range1d extends Range {
     object start extends Field[Double]
     object end extends Field[Double]
