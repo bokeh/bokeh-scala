@@ -28,7 +28,7 @@ object Dependencies {
 
     val jquery = Def.setting { "be.doeraene" %%% "scalajs-jquery" % "0.8.1" }
 
-    val specs2 = "org.specs2" %% "specs2" % "2.3.11" % Test
+    val specs2 = "org.specs2" %% "specs2" % "3.7" % Test
 
     val scopt = "com.github.scopt" %% "scopt" % "3.3.0"
 
