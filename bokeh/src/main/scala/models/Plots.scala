@@ -78,6 +78,16 @@ package io.continuum.bokeh
     }
 }
 
+object GridPlot {
+    def apply[R](rows: R*)(implicit r: Row[R, Plot]): GridPlot = {
+        new GridPlot().children(rows.toList.map(r.toList(_)))
+    }
+
+    def apply(row: Plot*): GridPlot = {
+        new GridPlot().children(List(row.toList))
+    }
+}
+
 @model class GridPlot extends Plot {
     object children extends Field[List[List[Plot]]]
     object border_space extends Field[Int](0)
