@@ -6,7 +6,7 @@ import breeze.linalg.DenseVector
 
 import thirdparty._
 
-object Hover extends Example with Tools {
+object HoverExample extends Example with Tools {
     val (xx, yy) = meshgrid(0.0 to 100.0 by 4.0,
                             0.0 to 100.0 by 4.0)
 

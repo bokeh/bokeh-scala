@@ -8,7 +8,7 @@ import math.{Pi=>pi}
 
 import thirdparty._
 
-object Grid extends Example {
+object GridExample extends Example {
     object source extends ColumnDataSource {
         val x  = column(linspace(-2*pi, 2*pi, 1000))
         val y1 = column(sin(x.value))

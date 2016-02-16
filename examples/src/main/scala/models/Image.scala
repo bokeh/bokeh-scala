@@ -7,7 +7,7 @@ import breeze.numerics.{sin,cos}
 
 import thirdparty._
 
-object Image extends Example {
+object ImageExample extends Example {
     val N = 500
 
     val x = linspace(0, 10, N)

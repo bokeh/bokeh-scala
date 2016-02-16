@@ -6,7 +6,7 @@ import breeze.linalg.linspace
 
 import thirdparty._
 
-object ImageURL extends Example {
+object ImageURLExample extends Example {
     val url = "http://bokeh.pydata.org/en/latest/_static/images/logo.png"
     val N = 5
 

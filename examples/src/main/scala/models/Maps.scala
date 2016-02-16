@@ -4,7 +4,7 @@ package models
 
 import Json.{arr,obj}
 
-object Maps extends Example {
+object MapsExample extends Example {
     val x_range = new Range1d()
     val y_range = new Range1d()
 

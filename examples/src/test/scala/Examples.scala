@@ -12,32 +12,32 @@ class ExamplesSpec extends Specification with RunMatchers {
     val run = new Run("--quiet", "--dev")
 
     "examples.models" should {
-        "run Anscombe"   in { models.Anscombe   must run }
-        "run Calendars"  in { models.Calendars  must run }
-        "run Choropleth" in { models.Choropleth must run }
-        "run ColorSpec"  in { models.ColorSpec  must run }
-        "run Colors"     in { models.Colors     must run }
-        "run DataTables" in { models.DataTables must run }
-        "run DateAxis"   in { models.DateAxis   must run }
-        "run Daylight"   in { models.Daylight   must run }
-        "run Donut"      in { models.Donut      must run }
-        "run Gauges"     in { models.Gauges     must run }
-        "run Gears"      in { models.Gears      must run }
-        "run Glyph1"     in { models.Glyph1     must run }
-        "run Glyph2"     in { models.Glyph2     must run }
-        "run Grid"       in { models.Grid       must run }
-        "run Hover"      in { models.Hover      must run }
-        "run Image"      in { models.Image      must run }
-        "run ImageURL"   in { models.ImageURL   must run }
-        "run Iris"       in { models.Iris       must run }
-        "run IrisSplom"  in { models.IrisSplom  must run }
-        "run Line"       in { models.Line       must run }
-        "run Maps"       in { models.Maps       must run }
-        "run MapsCities" in { models.MapsCities must run }
-        "run Prim"       in { models.Prim       must run }
-        "run Sprint"     in { models.Sprint     must run }
-        "run Trail"      in { models.Trail      must run }
-        "run TwinAxis"   in { models.TwinAxis   must run }
+        "run Anscombe"        in { models.Anscombe        must run }
+        "run Calendars"       in { models.Calendars       must run }
+        "run Choropleth"      in { models.Choropleth      must run }
+        "run ColorSpec"       in { models.ColorSpec       must run }
+        "run Colors"          in { models.Colors          must run }
+        "run DataTables"      in { models.DataTables      must run }
+        "run DateAxis"        in { models.DateAxis        must run }
+        "run Daylight"        in { models.Daylight        must run }
+        "run Donut"           in { models.Donut           must run }
+        "run Gauges"          in { models.Gauges          must run }
+        "run Gears"           in { models.Gears           must run }
+        "run Glyph1"          in { models.Glyph1          must run }
+        "run Glyph2"          in { models.Glyph2          must run }
+        "run GridExample"     in { models.GridExample     must run }
+        "run HoverExample"    in { models.HoverExample    must run }
+        "run ImageExample"    in { models.ImageExample    must run }
+        "run ImageURLExample" in { models.ImageURLExample must run }
+        "run Iris"            in { models.Iris            must run }
+        "run IrisSplom"       in { models.IrisSplom       must run }
+        "run LineExample"     in { models.LineExample     must run }
+        "run MapsExample"     in { models.MapsExample     must run }
+        "run MapsCities"      in { models.MapsCities      must run }
+        "run Prim"            in { models.Prim            must run }
+        "run Sprint"          in { models.Sprint          must run }
+        "run Trail"           in { models.Trail           must run }
+        "run TwinAxis"        in { models.TwinAxis        must run }
     }
 }
 
