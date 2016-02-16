@@ -1,6 +1,6 @@
 package io.continuum.bokeh
 
-case class Selected0d(indices: List[Int] = Nil, glyph: Option[Glyph] = None)
+case class Selected0d(indices: List[Int] = Nil, glyph: Option[Glyph[_, _]] = None)
 case class Selected1d(indices: List[Int] = Nil)
 case class Selected2d(indices: List[List[Int]] = Nil)
 

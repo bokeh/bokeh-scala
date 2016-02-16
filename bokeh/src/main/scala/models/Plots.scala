@@ -55,11 +55,11 @@ package io.continuum.bokeh
 
     object responsive extends Field[Boolean](false)
 
-    def addGlyph(glyph: Glyph): GlyphRenderer = {
+    def addGlyph(glyph: Glyph[_, _]): GlyphRenderer = {
         addGlyph(new ColumnDataSource(), glyph)
     }
 
-    def addGlyph(source: DataSource, glyph: Glyph): GlyphRenderer = {
+    def addGlyph(source: DataSource, glyph: Glyph[_, _]): GlyphRenderer = {
         val renderer = new GlyphRenderer().data_source(source).glyph(glyph)
         renderers <<= (_ :+ renderer)
         renderer

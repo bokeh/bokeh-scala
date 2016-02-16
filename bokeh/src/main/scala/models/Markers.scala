@@ -1,39 +1,42 @@
 package io.continuum.bokeh
 
-@model sealed abstract class Marker /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+import Json.Writer
+
+@model sealed abstract class Marker[X:Scalar:Default:Writer, Y:Scalar:Default:Writer]
+        extends Glyph[X, Y] with FillProps with LineProps {
     object x extends Spatial[X]
     object y extends Spatial[Y]
     object size extends Spatial[Double](SpatialUnits.Screen) with NonNegative
     object angle extends Angular[Double]
 }
 
-@model class Asterisk extends Marker
+@model class Asterisk[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y]
 
-@model class Circle extends Marker {
+@model class Circle[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y] {
     object radius extends Spatial[Double] with NonNegative
     object radius_dimension extends Field[Dimension]
 }
 
-@model class CircleCross extends Marker
+@model class CircleCross[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y]
 
-@model class CircleX extends Marker
+@model class CircleX[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y]
 
-@model class Cross extends Marker
+@model class Cross[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y]
 
-@model class Diamond extends Marker
+@model class Diamond[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y]
 
-@model class DiamondCross extends Marker
+@model class DiamondCross[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y]
 
-@model class InvertedTriangle extends Marker
+@model class InvertedTriangle[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y]
 
-@model class Square extends Marker
+@model class Square[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y]
 
-@model class SquareCross extends Marker
+@model class SquareCross[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y]
 
-@model class SquareX extends Marker
+@model class SquareX[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y]
 
-@model class Triangle extends Marker
+@model class Triangle[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y]
 
-@model class PlainX extends Marker {
+@model class PlainX[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Marker[X, Y] {
     override val typeName = "X"
 }

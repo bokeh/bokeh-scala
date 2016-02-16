@@ -1,13 +1,12 @@
 package io.continuum.bokeh
 
-@model abstract class Glyph /*[X:Numeric, Y:Numeric]*/ extends Model with Vectorization {
-    type X = Double
-    type Y = Double
+import Json.Writer
 
+@model abstract class Glyph[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Model with Vectorization {
     object visible extends Field[Boolean](true)
 }
 
-@model class AnnularWedge /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+@model class AnnularWedge[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with FillProps with LineProps {
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
     object inner_radius extends Spatial[Double] with NonNegative
@@ -17,14 +16,14 @@ package io.continuum.bokeh
     object direction extends Field[Direction]
 }
 
-@model class Annulus /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+@model class Annulus[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with FillProps with LineProps {
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
     object inner_radius extends Spatial[Double] with NonNegative
     object outer_radius extends Spatial[Double] with NonNegative
 }
 
-@model class Arc /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+@model class Arc[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with LineProps {
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
     object radius extends Spatial[Double] with NonNegative
@@ -33,7 +32,7 @@ package io.continuum.bokeh
     object direction extends Field[Direction]
 }
 
-@model class Bezier /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+@model class Bezier[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with LineProps {
     object x0 extends Vectorized[X]
     object y0 extends Vectorized[Y]
     object x1 extends Vectorized[X]
@@ -44,7 +43,7 @@ package io.continuum.bokeh
     object cy1 extends Vectorized[Y]
 }
 
-@model class ImageRGBA /*[X:Numeric, Y:Numeric]*/ extends Glyph {
+@model class ImageRGBA[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] {
     object image extends Vectorized[Array[Double]]
     object rows extends Vectorized[Int]
     object cols extends Vectorized[Int]
@@ -65,11 +64,11 @@ package io.continuum.bokeh
     }
 }
 
-@model class Image /*[X:Numeric, Y:Numeric]*/ extends ImageRGBA {
+@model class Image[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends ImageRGBA[X, Y] {
     object color_mapper extends Field[ColorMapper]
 }
 
-@model class ImageURL /*[X:Numeric, Y:Numeric]*/ extends Glyph {
+@model class ImageURL[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] {
     object url extends Vectorized[String]
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
@@ -83,17 +82,17 @@ package io.continuum.bokeh
     object retry_timeout extends Field[Int](0)
 }
 
-@model class Line /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+@model class Line[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with LineProps {
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
 }
 
-@model class MultiLine /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+@model class MultiLine[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with LineProps {
     object xs extends Vectorized[List[X]]
     object ys extends Vectorized[List[Y]]
 }
 
-@model class Oval /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+@model class Oval[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with FillProps with LineProps {
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
     object width extends Spatial[Double] with NonNegative
@@ -101,24 +100,24 @@ package io.continuum.bokeh
     object angle extends Angular[Double]
 }
 
-@model class Patch /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+@model class Patch[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with FillProps with LineProps {
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
 }
 
-@model class Patches /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps with FillProps {
+@model class Patches[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with LineProps with FillProps {
     object xs extends Vectorized[List[X]]
     object ys extends Vectorized[List[Y]]
 }
 
-@model class Quad /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+@model class Quad[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with FillProps with LineProps {
     object left extends Vectorized[X]
     object right extends Vectorized[X]
     object bottom extends Vectorized[Y]
     object top extends Vectorized[Y]
 }
 
-@model class Quadratic /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+@model class Quadratic[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with LineProps {
     object x0 extends Vectorized[X]
     object y0 extends Vectorized[Y]
     object x1 extends Vectorized[X]
@@ -127,14 +126,14 @@ package io.continuum.bokeh
     object cy extends Vectorized[Y]
 }
 
-@model class Ray /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+@model class Ray[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with LineProps {
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
     object length extends Spatial[Double] with NonNegative
     object angle extends Angular[Double]
 }
 
-@model class Rect /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+@model class Rect[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with FillProps with LineProps {
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
     object width extends Spatial[Double] with NonNegative
@@ -143,14 +142,14 @@ package io.continuum.bokeh
     object dilate extends Field[Boolean]
 }
 
-@model class Segment /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps {
+@model class Segment[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with LineProps {
     object x0 extends Vectorized[X]
     object y0 extends Vectorized[Y]
     object x1 extends Vectorized[X]
     object y1 extends Vectorized[Y]
 }
 
-@model class Text /*[X: Numeric, Y: Numeric]*/ extends Glyph with TextProps {
+@model class Text[X: Scalar:Default:Writer, Y: Scalar:Default:Writer] extends Glyph[X, Y] with TextProps {
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
     object text extends Vectorized[String]
@@ -159,7 +158,7 @@ package io.continuum.bokeh
     object y_offset extends Spatial[Double]
 }
 
-@model class Wedge /*[X:Numeric, Y:Numeric]*/ extends Glyph with FillProps with LineProps {
+@model class Wedge[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with FillProps with LineProps {
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
     object radius extends Spatial[Double] with NonNegative
@@ -168,7 +167,7 @@ package io.continuum.bokeh
     object direction extends Field[Direction]
 }
 
-@model class Gear /*[X:Numeric, Y:Numeric]*/ extends Glyph with LineProps with FillProps {
+@model class Gear[X:Scalar:Default:Writer, Y:Scalar:Default:Writer] extends Glyph[X, Y] with LineProps with FillProps {
     object x extends Vectorized[X]
     object y extends Vectorized[Y]
     object angle extends Angular[Double]

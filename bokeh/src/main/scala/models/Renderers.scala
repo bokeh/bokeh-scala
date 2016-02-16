@@ -30,10 +30,10 @@ package io.continuum.bokeh
     // TODO: object server_data_source extends Field[ServerDataSource]
     object data_source extends Field[DataSource](() => new ColumnDataSource())
 
-    object glyph extends Field[Glyph]
-    object hover_glyph extends Field[Glyph]
-    object selection_glyph extends Field[Glyph]
-    object nonselection_glyph extends Field[Glyph]
+    object glyph extends Field[Glyph[_, _]]
+    object hover_glyph extends Field[Glyph[_, _]]
+    object selection_glyph extends Field[Glyph[_, _]]
+    object nonselection_glyph extends Field[Glyph[_, _]]
 
     object x_range_name extends Field[String]("default")
     object y_range_name extends Field[String]("default")
