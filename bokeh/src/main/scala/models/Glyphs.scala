@@ -177,3 +177,64 @@ import Json.Writer
     object shaft_size extends Vectorized[Double](0.3) with NonNegative
     object internal extends Vectorized[Boolean](false)
 }
+
+object AnnularWedge {
+    def apply() = new AnnularWedge[Double, Double]
+}
+object Annulus {
+    def apply() = new Annulus[Double, Double]
+}
+object Arc {
+    def apply() = new Arc[Double, Double]
+}
+object Bezier {
+    def apply() = new Bezier[Double, Double]
+}
+object ImageRGBA {
+    def apply() = new ImageRGBA[Double, Double]
+}
+object Image {
+    def apply() = new Image[Double, Double]
+}
+object ImageURL {
+    def apply() = new ImageURL[Double, Double]
+}
+object Line {
+    def apply() = new Line[Double, Double]
+}
+object MultiLine {
+    def apply() = new MultiLine[Double, Double]
+}
+object Oval {
+    def apply() = new Oval[Double, Double]
+}
+object Patch {
+    def apply() = new Patch[Double, Double]
+}
+object Patches {
+    def apply() = new Patches[Double, Double]
+}
+object Quad {
+    def apply() = new Quad[Double, Double]
+}
+object Quadratic {
+    def apply() = new Quadratic[Double, Double]
+}
+object Ray {
+    def apply() = new Ray[Double, Double]
+}
+object Rect {
+    def apply() = new Rect[Double, Double]
+}
+object Segment {
+    def apply() = new Segment[Double, Double]
+}
+object Text {
+    def apply() = new Text[Double, Double]
+}
+object Wedge {
+    def apply() = new Wedge[Double, Double]
+}
+object Gear {
+    def apply() = new Gear[Double, Double]
+}
