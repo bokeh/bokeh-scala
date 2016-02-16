@@ -2,7 +2,7 @@ package io.continuum.bokeh
 package examples
 package models
 
-import breeze.linalg.{DenseMatrix,linspace}
+import breeze.linalg.{DenseMatrix,DenseVector,linspace}
 
 import thirdparty._
 
@@ -20,7 +20,7 @@ object Anscombe extends Example {
         ( 7.0,  4.82,  7.0, 7.26,  7.0,  6.42,  8.0,  7.91),
         ( 5.0,  5.68,  5.0, 4.74,  5.0,  5.73,  8.0,  6.89))
 
-    object circles_source extends ColumnDataSource {
+    object circles extends ColumnDataSource {
         val xi   = column(anscombe_quartet(::, 0))
         val yi   = column(anscombe_quartet(::, 1))
         val xii  = column(anscombe_quartet(::, 2))
@@ -31,17 +31,17 @@ object Anscombe extends Example {
         val yiv  = column(anscombe_quartet(::, 7))
     }
 
-    object lines_source extends ColumnDataSource {
+    object lines extends ColumnDataSource {
         val x = column(linspace(-0.5, 20.5, 10))
         val y = column(x.value*0.5 + 3.0)
     }
 
-    import lines_source.{x,y}
-
     val xdr = new Range1d().start(-0.5).end(20.5)
     val ydr = new Range1d().start(-0.5).end(20.5)
 
-    def make_plot(title: String, xname: Symbol, yname: Symbol) = {
+    type Col = circles.Column[DenseVector, Double]
+
+    def make_plot(title: String, x_col: Col, y_col: Col) = {
         val plot = new Plot()
             .x_range(xdr)
             .y_range(ydr)
@@ -57,19 +57,19 @@ object Anscombe extends Example {
         val xgrid = new Grid().plot(plot).axis(xaxis).dimension(0)
         val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
         val line_renderer = new GlyphRenderer()
-            .data_source(lines_source)
-            .glyph(new Line().x(x).y(y).line_color("#666699").line_width(2))
+            .data_source(lines)
+            .glyph(new Line().x(lines.x).y(lines.y).line_color("#666699").line_width(2))
         val circle_renderer = new GlyphRenderer()
-            .data_source(circles_source)
-            .glyph(new Circle().x(xname).y(yname).size(12).fill_color("#cc6633").line_color("#cc6633").fill_alpha(50%%))
+            .data_source(circles)
+            .glyph(new Circle().x(x_col).y(y_col).size(12).fill_color("#cc6633").line_color("#cc6633").fill_alpha(50%%))
         plot.renderers := List(xaxis, yaxis, xgrid, ygrid, line_renderer, circle_renderer)
         plot
     }
 
-    val I   = make_plot("I",   'xi,   'yi)
-    val II  = make_plot("II",  'xii,  'yii)
-    val III = make_plot("III", 'xiii, 'yiii)
-    val IV  = make_plot("IV",  'xiv,  'yiv)
+    val I   = make_plot("I",   circles.xi,   circles.yi)
+    val II  = make_plot("II",  circles.xii,  circles.yii)
+    val III = make_plot("III", circles.xiii, circles.yiii)
+    val IV  = make_plot("IV",  circles.xiv,  circles.yiv)
 
     val children = List(List(I, II), List(III, IV))
     val grid = new GridPlot().children(children).width(800)
