@@ -28,17 +28,17 @@ object TwinAxis extends Example with Tools {
         .tools(Pan|WheelZoom)
         .extra_y_ranges(Map("foo" -> new Range1d().start(0).end(100)))
 
-    val xaxis = new LinearAxis().plot(plot)
+    val xaxis  = new LinearAxis().plot(plot)
     val y1axis = new LinearAxis().plot(plot)
     val y2axis = new LinearAxis().plot(plot).y_range_name("foo")
 
     plot.below := xaxis :: Nil
     plot.left  := y1axis :: y2axis :: Nil
 
-    val circle1_glyph = new Circle().x(x).y(y1).fill_color(Color.Red).size(5).line_color(Color.Black)
+    val circle1_glyph = Circle().x(x).y(y1).fill_color(Color.Red).size(5).line_color(Color.Black)
     val circle1 = new GlyphRenderer().data_source(source).glyph(circle1_glyph)
 
-    val circle2_glyph = new Circle().x(x).y(y2).fill_color(Color.Blue).size(5).line_color(Color.Black)
+    val circle2_glyph = Circle().x(x).y(y2).fill_color(Color.Blue).size(5).line_color(Color.Black)
     val circle2 = new GlyphRenderer().data_source(source).glyph(circle2_glyph).y_range_name("foo")
 
     plot.renderers := xaxis :: y1axis :: y2axis :: circle1 :: circle2 :: Nil

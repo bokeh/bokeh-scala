@@ -101,102 +101,102 @@ class BokehSpec extends Specification {
 
     "glyphs" should {
         "support AnnularWedge" in {
-            val obj = new AnnularWedge()
+            val obj = AnnularWedge()
             obj.fields.length shouldEqual 18
         }
 
         "support Annulus" in {
-            val obj = new Annulus()
+            val obj = Annulus()
             obj.fields.length shouldEqual 15
         }
 
         "support Arc" in {
-            val obj = new Arc()
+            val obj = Arc()
             obj.fields.length shouldEqual 15
         }
 
         "support Bezier" in {
-            val obj = new Bezier()
+            val obj = Bezier()
             obj.fields.length shouldEqual 17
         }
 
         "support ImageRGBA" in {
-            val obj = new ImageRGBA()
+            val obj = ImageRGBA()
             obj.fields.length shouldEqual 10
         }
 
         "support Image" in {
-            val obj = new Image()
+            val obj = Image()
             obj.fields.length shouldEqual 11
         }
 
         "support ImageURL" in {
-            val obj = new ImageURL()
+            val obj = ImageURL()
             obj.fields.length shouldEqual 13
         }
 
         "support Line" in {
-            val obj = new Line()
+            val obj = Line()
             obj.fields.length shouldEqual 11
         }
 
         "support MultiLine" in {
-            val obj = new MultiLine()
+            val obj = MultiLine()
             obj.fields.length shouldEqual 11
         }
 
         "support Oval" in {
-            val obj = new Oval()
+            val obj = Oval()
             obj.fields.length shouldEqual 16
         }
 
         "support Patch" in {
-            val obj = new Patch()
+            val obj = Patch()
             obj.fields.length shouldEqual 13
         }
 
         "support Patches" in {
-            val obj = new Patches()
+            val obj = Patches()
             obj.fields.length shouldEqual 13
         }
 
         "support Quad" in {
-            val obj = new Quad()
+            val obj = Quad()
             obj.fields.length shouldEqual 15
         }
 
         "support Quadratic" in {
-            val obj = new Quadratic()
+            val obj = Quadratic()
             obj.fields.length shouldEqual 15
         }
 
         "support Ray" in {
-            val obj = new Ray()
+            val obj = Ray()
             obj.fields.length shouldEqual 13
         }
 
         "support Rect" in {
-            val obj = new Rect()
+            val obj = Rect()
             obj.fields.length shouldEqual 17
         }
 
         "support Segment" in {
-            val obj = new Segment()
+            val obj = Segment()
             obj.fields.length shouldEqual 13
         }
 
         "support Text" in {
-            val obj = new Text()
+            val obj = Text()
             obj.fields.length shouldEqual 15
         }
 
         "support Wedge" in {
-            val obj = new Wedge()
+            val obj = Wedge()
             obj.fields.length shouldEqual 17
         }
 
         "support Gear" in {
-            val obj = new Gear()
+            val obj = Gear()
             obj.fields.length shouldEqual 19
         }
     }
@@ -248,67 +248,67 @@ class BokehSpec extends Specification {
 
     "markers" should {
         "support Asterisk" in {
-            val obj = new Asterisk()
+            val obj = Asterisk()
             obj.fields.length shouldEqual 15
         }
 
         "support Circle" in {
-            val obj = new Circle()
+            val obj = Circle()
             obj.fields.length shouldEqual 17
         }
 
         "support CircleCross" in {
-            val obj = new CircleCross()
+            val obj = CircleCross()
             obj.fields.length shouldEqual 15
         }
 
         "support CircleX" in {
-            val obj = new CircleX()
+            val obj = CircleX()
             obj.fields.length shouldEqual 15
         }
 
         "support Cross" in {
-            val obj = new Cross()
+            val obj = Cross()
             obj.fields.length shouldEqual 15
         }
 
         "support Diamond" in {
-            val obj = new Diamond()
+            val obj = Diamond()
             obj.fields.length shouldEqual 15
         }
 
         "support DiamondCross" in {
-            val obj = new DiamondCross()
+            val obj = DiamondCross()
             obj.fields.length shouldEqual 15
         }
 
         "support InvertedTriangle" in {
-            val obj = new InvertedTriangle()
+            val obj = InvertedTriangle()
             obj.fields.length shouldEqual 15
         }
 
         "support Square" in {
-            val obj = new Square()
+            val obj = Square()
             obj.fields.length shouldEqual 15
         }
 
         "support SquareCross" in {
-            val obj = new SquareCross()
+            val obj = SquareCross()
             obj.fields.length shouldEqual 15
         }
 
         "support SquareX" in {
-            val obj = new SquareX()
+            val obj = SquareX()
             obj.fields.length shouldEqual 15
         }
 
         "support Triangle" in {
-            val obj = new Triangle()
+            val obj = Triangle()
             obj.fields.length shouldEqual 15
         }
 
         "support PlainX" in {
-            val obj = new PlainX()
+            val obj = PlainX()
             obj.fields.length shouldEqual 15
         }
     }

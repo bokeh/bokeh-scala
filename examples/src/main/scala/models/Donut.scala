@@ -52,7 +52,7 @@ object Donut extends Example {
         val colors = column(browsers.map(browser_colors))
     }
 
-    val glyph = new Wedge().x(0).y(0).radius(1).line_color(Color.White).line_width(2).start_angle('start).end_angle('end).fill_color('colors)
+    val glyph = Wedge().x(0).y(0).radius(1).line_color(Color.White).line_width(2).start_angle('start).end_angle('end).fill_color('colors)
     plot.addGlyph(browsers_source, glyph)
 
     def polar_to_cartesian(r: Double, start_angles: Seq[Double], end_angles: Seq[Double]): (Seq[Double], Seq[Double]) = {
@@ -79,7 +79,7 @@ object Donut extends Example {
 
         {
             val source = new ColumnDataSource().data(Map('start -> start, 'end -> end, 'fill -> fill))
-            val glyph = new AnnularWedge().x(0).y(0).inner_radius(1).outer_radius(1.5).start_angle('start).end_angle('end).line_color(Color.White).line_width(2).fill_color('fill)
+            val glyph = AnnularWedge().x(0).y(0).inner_radius(1).outer_radius(1.5).start_angle('start).end_angle('end).line_color(Color.White).line_width(2).fill_color('fill)
             plot.addGlyph(source, glyph)
         }
 
@@ -88,7 +88,7 @@ object Donut extends Example {
 
         {
             val source = new ColumnDataSource().data(Map('text -> text, 'x -> x, 'y -> y, 'angle -> text_angle))
-            val glyph = new Text().x('x).y('y).text('text).angle('angle).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
+            val glyph = Text().x('x).y('y).text('text).angle('angle).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
             plot.addGlyph(source, glyph)
         }
         */
@@ -101,7 +101,7 @@ object Donut extends Example {
             val y    = column(_y)
             val urls = column(browsers.map(browser_icons))
         }
-        val glyph = new ImageURL().url('urls).x('x).y('y).angle(0.0).anchor(Anchor.Center)
+        val glyph = ImageURL().url('urls).x('x).y('y).angle(0.0).anchor(Anchor.Center)
         plot.addGlyph(source, glyph)
     }
 
@@ -112,7 +112,7 @@ object Donut extends Example {
             val y    = column(_y)
             val text = column(chosen.values.map(share => f"$share%.02f%%"))
         }
-        val glyph = new Text().x('x).y('y).text('text).angle(0).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
+        val glyph = Text().x('x).y('y).text('text).angle(0).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
         plot.addGlyph(source, glyph)
     }
 

@@ -18,7 +18,7 @@ object DateAxis extends Example {
     val xdr = new DataRange1d()
     val ydr = new DataRange1d()
 
-    val circle = new Circle().x(times).y(y).fill_color(Color.Red).size(5).line_color(Color.Black)
+    val circle = Circle().x(times).y(y).fill_color(Color.Red).size(5).line_color(Color.Black)
 
     val renderer = new GlyphRenderer()
         .data_source(source)

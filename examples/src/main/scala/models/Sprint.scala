@@ -91,14 +91,14 @@ object Sprint extends Example {
     val yaxis = new LinearAxis().plot(plot).ticker(yticker).major_tick_in(-5).major_tick_out(10)
     plot.right := yaxis :: Nil
 
-    val medal_glyph = new Circle().x(MetersBack).y('Year).radius(5, SpatialUnits.Screen).fill_color(MedalFill).line_color(MedalLine).fill_alpha(0.5)
+    val medal_glyph = Circle().x(MetersBack).y('Year).radius(5, SpatialUnits.Screen).fill_color(MedalFill).line_color(MedalLine).fill_alpha(0.5)
     val medal = new GlyphRenderer().data_source(source).glyph(medal_glyph)
 
-    val athlete_glyph = new Text().x(MetersBack).y('Year).x_offset(10).text('SelectedName)
+    val athlete_glyph = Text().x(MetersBack).y('Year).x_offset(10).text('SelectedName)
         .text_align(TextAlign.Left).text_baseline(TextBaseline.Middle).text_font_size(9 pt)
     val athlete = new GlyphRenderer().data_source(source).glyph(athlete_glyph)
 
-    val no_olympics_glyph = new Text().x(7.5).y(1942).text("No Olympics in 1940 or 1944")
+    val no_olympics_glyph = Text().x(7.5).y(1942).text("No Olympics in 1940 or 1944")
         .text_align(TextAlign.Center).text_baseline(TextBaseline.Middle).text_font_size(9 pt).text_font_style(FontStyle.Italic).text_color(Color.Silver)
     val no_olympics = new GlyphRenderer().glyph(no_olympics_glyph)
 

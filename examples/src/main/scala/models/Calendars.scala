@@ -96,13 +96,13 @@ object Calendars extends Example {
             .height(300)
             .outline_line_color()
 
-        val days_glyph = new Rect().x('days).y('weeks).width(0.9).height(0.9).fill_color('day_backgrounds).line_color(Color.Silver)
+        val days_glyph = Rect().x('days).y('weeks).width(0.9).height(0.9).fill_color('day_backgrounds).line_color(Color.Silver)
         val days_renderer = new GlyphRenderer().data_source(source).glyph(days_glyph)
 
-        val holidays_glyph = new Rect().x('holidays_days).y('holidays_weeks).width(0.9).height(0.9).fill_color(Color.Pink).line_color(Color.IndianRed)
+        val holidays_glyph = Rect().x('holidays_days).y('holidays_weeks).width(0.9).height(0.9).fill_color(Color.Pink).line_color(Color.IndianRed)
         val holidays_renderer = new GlyphRenderer().data_source(holidays_source).glyph(holidays_glyph)
 
-        val text_glyph = new Text().x('days).y('weeks).text('day_labels).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
+        val text_glyph = Text().x('days).y('weeks).text('day_labels).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
         val text_renderer = new GlyphRenderer().data_source(source).glyph(text_glyph)
 
         val xaxis = new CategoricalAxis()

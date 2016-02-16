@@ -71,7 +71,7 @@ object MapsExample extends Example {
 
     import source.{lat,lon,fill}
 
-    val circle = new Circle()
+    val circle = Circle()
         .x(lon)
         .y(lat)
         .size(15)

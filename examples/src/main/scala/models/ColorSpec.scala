@@ -14,7 +14,7 @@ object ColorSpec extends Example {
     val xdr = new DataRange1d()
     val ydr = new DataRange1d()
 
-    val circle = new Circle().x(x).y(y).size(15).fill_color(color).line_color(Color.Black)
+    val circle = Circle().x(x).y(y).size(15).fill_color(color).line_color(Color.Black)
 
     val renderer = new GlyphRenderer()
         .data_source(source)

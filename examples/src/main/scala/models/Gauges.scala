@@ -19,12 +19,12 @@ object Gauges extends Example {
 
     val plot = new Plot().title("Speedometer").x_range(xdr).y_range(ydr).width(600).height(600)
 
-    plot.addGlyph(new Circle().x(0).y(0).radius(1.00).fill_color(Color.White).line_color(Color.Black))
-    plot.addGlyph(new Circle().x(0).y(0).radius(0.05).fill_color(Color.Gray).line_color(Color.Black))
+    plot.addGlyph(Circle().x(0).y(0).radius(1.00).fill_color(Color.White).line_color(Color.Black))
+    plot.addGlyph(Circle().x(0).y(0).radius(0.05).fill_color(Color.Gray).line_color(Color.Black))
 
-    plot.addGlyph(new Text().x(0).y(+0.15).angle(0).text("km/h").text_color(Color.Red)
+    plot.addGlyph(Text().x(0).y(+0.15).angle(0).text("km/h").text_color(Color.Red)
         .text_align(TextAlign.Center).text_baseline(TextBaseline.Bottom).text_font_style(FontStyle.Bold))
-    plot.addGlyph(new Text().x(0).y(-0.15).angle(0).text("mph").text_color(Color.Blue)
+    plot.addGlyph(Text().x(0).y(-0.15).angle(0).text("mph").text_color(Color.Blue)
         .text_align(TextAlign.Center).text_baseline(TextBaseline.Top).text_font_style(FontStyle.Bold))
 
     def speed_to_angle(speed: Double, kmh_units: Boolean): Double = {
@@ -37,8 +37,8 @@ object Gauges extends Example {
 
     def add_needle(speed: Double, kmh_units: Boolean) {
         val angle = speed_to_angle(speed, kmh_units)
-        plot.addGlyph(new Ray().x(0).y(0).length(0.75, SpatialUnits.Data).angle(angle)   .line_color(Color.Black).line_width(3))
-        plot.addGlyph(new Ray().x(0).y(0).length(0.10, SpatialUnits.Data).angle(angle-pi).line_color(Color.Black).line_width(3))
+        plot.addGlyph(Ray().x(0).y(0).length(0.75, SpatialUnits.Data).angle(angle)   .line_color(Color.Black).line_width(3))
+        plot.addGlyph(Ray().x(0).y(0).length(0.10, SpatialUnits.Data).angle(angle-pi).line_color(Color.Black).line_width(3))
     }
 
     def polar_to_cartesian(r: Double, alpha: Double) = (r*cos(alpha), r*sin(alpha))
@@ -74,7 +74,7 @@ object Gauges extends Example {
         minor_angles = minor_angles.zipWithIndex.collect { case (x, i) if i % n != 0 => x }
         minor_labels = minor_labels.zipWithIndex.collect { case (x, i) if i % n != 0 => x }
 
-        plot.addGlyph(new Arc().x(0).y(0).radius(radius).start_angle(start_angle).end_angle(end_angle).direction(Direction.Clock).line_color(color).line_width(2))
+        plot.addGlyph(Arc().x(0).y(0).radius(radius).start_angle(start_angle).end_angle(end_angle).direction(Direction.Clock).line_color(color).line_width(2))
 
         val rotation = if (direction == 1) 0 else -pi
 
@@ -85,7 +85,7 @@ object Gauges extends Example {
                 val y     = column(_y)
                 val angle = column(major_angles.map(_ + rotation))
             }
-            val glyph = new Ray().x('x).y('y).length(length, SpatialUnits.Data).angle('angle).line_color(color).line_width(2)
+            val glyph = Ray().x('x).y('y).length(length, SpatialUnits.Data).angle('angle).line_color(color).line_width(2)
             plot.addGlyph(source, glyph)
         }
 
@@ -96,7 +96,7 @@ object Gauges extends Example {
                 val y     = column(_y)
                 val angle = column(minor_angles.map(_ + rotation))
             }
-            val glyph = new Ray().x('x).y('y).length(length/2, SpatialUnits.Data).angle('angle).line_color(color).line_width(1)
+            val glyph = Ray().x('x).y('y).length(length/2, SpatialUnits.Data).angle('angle).line_color(color).line_width(1)
             plot.addGlyph(source, glyph)
         }
 
@@ -108,7 +108,7 @@ object Gauges extends Example {
                 val angle = column(major_angles.map(_ - pi/2))
                 val text  = column(major_labels)
             }
-            val glyph = new Text().x('x).y('y).angle('angle).text('text).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
+            val glyph = Text().x('x).y('y).angle('angle).text('text).text_align(TextAlign.Center).text_baseline(TextBaseline.Middle)
             plot.addGlyph(source, glyph)
         }
     }

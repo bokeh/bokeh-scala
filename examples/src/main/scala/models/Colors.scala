@@ -161,7 +161,7 @@ object Colors extends Example {
     val plot = new Plot().title("CSS3 Color Names").x_range(xdr).y_range(ydr).width(600).height(2000)
 
     // TODO: categorical dimensions; using Column would cause type error
-    val rect_glyph = new Rect().x('groups).y('names).width(1).height(1).fill_color(colors).line_color()
+    val rect_glyph = Rect().x('groups).y('names).width(1).height(1).fill_color(colors).line_color()
     val rect = new GlyphRenderer().data_source(source).glyph(rect_glyph)
 
     val x1axis = new CategoricalAxis().plot(plot).major_label_orientation(pi/4)

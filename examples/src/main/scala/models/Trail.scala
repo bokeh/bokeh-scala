@@ -74,7 +74,7 @@ object Trail extends Example with Tools {
 
         import line_source.{x,y}
 
-        val line = new Line().x(x).y(y).line_color(Color.Blue).line_width(2)
+        val line = Line().x(x).y(y).line_color(Color.Blue).line_width(2)
         plot.addGlyph(line_source, line)
 
         plot.x_range := new DataRange1d()
@@ -109,7 +109,7 @@ object Trail extends Example with Tools {
 
         import patches_source.{xs,ys,color}
 
-        val patches = new Patches().xs(xs).ys(ys).fill_color(color).line_color(color)
+        val patches = Patches().xs(xs).ys(ys).fill_color(color).line_color(color)
         plot.addGlyph(patches_source, patches)
 
         object line_source extends ColumnDataSource {
@@ -119,7 +119,7 @@ object Trail extends Example with Tools {
 
         import line_source.{x,y}
 
-        val line = new Line().x(x).y(y).line_color(Color.Black).line_width(1)
+        val line = Line().x(x).y(y).line_color(Color.Black).line_width(1)
         plot.addGlyph(line_source, line)
 
         plot.x_range := new DataRange1d()

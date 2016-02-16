@@ -20,7 +20,7 @@ object Glyph2 extends Example {
     val xdr = new DataRange1d()
     val ydr = new DataRange1d()
 
-    val circle = new Circle()
+    val circle = Circle()
         .x(x)
         .y(y)
         .radius(r, SpatialUnits.Screen)

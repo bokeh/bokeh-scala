@@ -19,7 +19,7 @@ object Gears extends Example with Tools {
         val plot = new Plot().x_range(xdr).y_range(ydr)
             .width(800).height(800).tools(Pan|WheelZoom|Reset)
 
-        val glyph = new Gear().x(0).y(0).module(5).teeth(8).angle(0).shaft_size(0.2).fill_color(fill_color._3).line_color(line_color)
+        val glyph = Gear().x(0).y(0).module(5).teeth(8).angle(0).shaft_size(0.2).fill_color(fill_color._3).line_color(line_color)
         val renderer = new GlyphRenderer().glyph(glyph)
         plot.renderers <<= (renderer :: _)
 
@@ -36,14 +36,14 @@ object Gears extends Example with Tools {
         def large_gear() = {
             val radius = pitch_radius(module, large_teeth)
             val angle = 0
-            val glyph = new Gear().x(-radius).y(0).module(module).teeth(large_teeth).angle(angle).fill_color(fill_color._1).line_color(line_color)
+            val glyph = Gear().x(-radius).y(0).module(module).teeth(large_teeth).angle(angle).fill_color(fill_color._1).line_color(line_color)
             new GlyphRenderer().glyph(glyph)
         }
 
         def small_gear() = {
             val radius = pitch_radius(module, small_teeth)
             val angle = half_tooth(small_teeth)
-            val glyph = new Gear().x(radius).y(0).module(module).teeth(small_teeth).angle(angle).fill_color(fill_color._2).line_color(line_color)
+            val glyph = Gear().x(radius).y(0).module(module).teeth(small_teeth).angle(angle).fill_color(fill_color._2).line_color(line_color)
             new GlyphRenderer().glyph(glyph)
         }
 
@@ -61,12 +61,12 @@ object Gears extends Example with Tools {
         val annulus_teeth = sun_teeth + 2*planet_teeth
 
         def annular_gear() = {
-            val glyph = new Gear().x(0).y(0).module(module).teeth(annulus_teeth).angle(0).fill_color(fill_color._1).line_color(line_color).internal(true)
+            val glyph = Gear().x(0).y(0).module(module).teeth(annulus_teeth).angle(0).fill_color(fill_color._1).line_color(line_color).internal(true)
             new GlyphRenderer().glyph(glyph)
         }
 
         def sun_gear() = {
-            val glyph = new Gear().x(0).y(0).module(module).teeth(sun_teeth).angle(0).fill_color(fill_color._3).line_color(line_color)
+            val glyph = Gear().x(0).y(0).module(module).teeth(sun_teeth).angle(0).fill_color(fill_color._3).line_color(line_color)
             new GlyphRenderer().glyph(glyph)
         }
 
@@ -77,7 +77,7 @@ object Gears extends Example with Tools {
         val angle = half_tooth(planet_teeth)
 
         val planets = for ((i, j) <- List((+1, 0), (0, +1), (-1, 0), (0, -1))) yield {
-            val glyph = new Gear().x(radius*i).y(radius*j).module(module).teeth(planet_teeth).angle(angle).fill_color(fill_color._2).line_color(line_color);
+            val glyph = Gear().x(radius*i).y(radius*j).module(module).teeth(planet_teeth).angle(angle).fill_color(fill_color._2).line_color(line_color);
             new GlyphRenderer().glyph(glyph)
         }
 

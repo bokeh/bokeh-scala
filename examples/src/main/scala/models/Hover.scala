@@ -33,7 +33,7 @@ object HoverExample extends Example with Tools {
         .y_range(ydr)
         .tools(Pan|WheelZoom|BoxZoom|Reset|PreviewSave)
 
-    val circle = new Circle()
+    val circle = Circle()
         .x(x)
         .y(y)
         .radius(radii)
@@ -45,7 +45,7 @@ object HoverExample extends Example with Tools {
         .data_source(source)
         .glyph(circle)
 
-    val text = new Text()
+    val text = Text()
         .x(x)
         .y(y)
         .text(inds)

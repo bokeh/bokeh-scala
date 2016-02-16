@@ -19,7 +19,7 @@ object LineExample extends Example {
     val xdr = new DataRange1d()
     val ydr = new DataRange1d()
 
-    val line = new Line().x(x).y(y).line_color(Color.Blue)
+    val line = Line().x(x).y(y).line_color(Color.Blue)
 
     val renderer = new GlyphRenderer()
         .data_source(source)

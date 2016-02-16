@@ -62,10 +62,10 @@ object Anscombe extends js.JSApp {
             val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
             val line_renderer = new GlyphRenderer()
                 .data_source(lines_source)
-                .glyph(new Line().x(x).y(y).line_color("#666699").line_width(2))
+                .glyph(Line().x(x).y(y).line_color("#666699").line_width(2))
             val circle_renderer = new GlyphRenderer()
                 .data_source(circles_source)
-                .glyph(new Circle().x(xname).y(yname).size(12).fill_color("#cc6633").line_color("#cc6633").fill_alpha(50%%))
+                .glyph(Circle().x(xname).y(yname).size(12).fill_color("#cc6633").line_color("#cc6633").fill_alpha(50%%))
             plot.renderers := List(xaxis, yaxis, xgrid, ygrid, line_renderer, circle_renderer)
             plot
         }

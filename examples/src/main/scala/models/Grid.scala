@@ -37,7 +37,7 @@ object GridExample extends Example {
 
         val renderer = new GlyphRenderer()
             .data_source(source)
-            .glyph(new Line().x(x).y(y).line_color(line_color))
+            .glyph(Line().x(x).y(y).line_color(line_color))
 
         plot.renderers := List(xaxis, yaxis, renderer)
         plot.tools := List(pantool, wheelzoomtool)

@@ -44,7 +44,7 @@ object Choropleth extends Example {
     val xdr = new DataRange1d()
     val ydr = new DataRange1d()
 
-    val county_patches = new Patches()
+    val county_patches = Patches()
         .xs(county_xs)
         .ys(county_ys)
         .fill_color(county_colors)
@@ -52,7 +52,7 @@ object Choropleth extends Example {
         .line_color(Color.White)
         .line_width(0.5)
 
-    val state_patches = new Patches()
+    val state_patches = Patches()
         .xs(state_xs)
         .ys(state_ys)
         .fill_alpha(0.0)

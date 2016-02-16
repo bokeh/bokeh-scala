@@ -21,7 +21,7 @@ object ImageExample extends Example {
     val plot = new Plot().x_range(xdr).y_range(ydr).title("Image plot with Spectral11 palette")
 
     val mapper = new LinearColorMapper().palette(Palette.Spectral11)
-    val image = new Image().image(data).x(0).y(0).dw(10).dh(10).color_mapper(mapper)
+    val image = Image().image(data).x(0).y(0).dw(10).dh(10).color_mapper(mapper)
     plot.addGlyph(image)
 
     val document = new Document(plot)

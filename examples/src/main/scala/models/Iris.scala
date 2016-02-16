@@ -20,7 +20,7 @@ object Iris extends Example {
     val xdr = new DataRange1d()
     val ydr = new DataRange1d()
 
-    val circle = new Circle()
+    val circle = Circle()
         .x(petal_length)
         .y(petal_width)
         .fill_color(color)

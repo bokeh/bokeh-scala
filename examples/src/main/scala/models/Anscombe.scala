@@ -58,10 +58,10 @@ object Anscombe extends Example {
         val ygrid = new Grid().plot(plot).axis(yaxis).dimension(1)
         val line_renderer = new GlyphRenderer()
             .data_source(lines)
-            .glyph(new Line().x(lines.x).y(lines.y).line_color("#666699").line_width(2))
+            .glyph(Line().x(lines.x).y(lines.y).line_color("#666699").line_width(2))
         val circle_renderer = new GlyphRenderer()
             .data_source(circles)
-            .glyph(new Circle().x(x_col).y(y_col).size(12).fill_color("#cc6633").line_color("#cc6633").fill_alpha(50%%))
+            .glyph(Circle().x(x_col).y(y_col).size(12).fill_color("#cc6633").line_color("#cc6633").fill_alpha(50%%))
         plot.renderers := List(xaxis, yaxis, xgrid, ygrid, line_renderer, circle_renderer)
         plot
     }

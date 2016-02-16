@@ -27,13 +27,13 @@ object ImageURLExample extends Example {
 
     val plot = new Plot().title("ImageURL").x_range(xdr).y_range(ydr)
 
-    val image1 = new ImageURL().url(urls).x(x1).y(y1).w(w1).h(h1).anchor(Anchor.Center)
+    val image1 = ImageURL().url(urls).x(x1).y(y1).w(w1).h(h1).anchor(Anchor.Center)
     plot.addGlyph(source, image1)
 
-    val image2 = new ImageURL().url(urls).x(x2).y(y2).w(20).h(20).anchor(Anchor.TopLeft)
+    val image2 = ImageURL().url(urls).x(x2).y(y2).w(20).h(20).anchor(Anchor.TopLeft)
     plot.addGlyph(source, image2)
 
-    val image3 = new ImageURL().url(url).x(200).y(-100).anchor(Anchor.BottomRight)
+    val image3 = ImageURL().url(url).x(200).y(-100).anchor(Anchor.BottomRight)
     plot.addGlyph(source, image3)
 
     val xaxis = new LinearAxis().plot(plot)

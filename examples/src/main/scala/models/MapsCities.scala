@@ -27,7 +27,7 @@ object MapsCities extends Example with Tools {
 
     import source.{lng,lat}
 
-    val circle = new Circle().x(lng).y(lat).size(5)
+    val circle = Circle().x(lng).y(lat).size(5)
         .line_color().fill_color(Color.FireBrick).fill_alpha(0.2)
     plot.addGlyph(source, circle)
 

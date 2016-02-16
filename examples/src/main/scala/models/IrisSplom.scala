@@ -52,7 +52,7 @@ object IrisSplom extends Example {
         val axes = List(xax.option(xaxis), yax.option(yaxis)).flatten
         val grids = List(xgrid, ygrid)
 
-        val circle = new Circle()
+        val circle = Circle()
             .x(xname)
             .y(yname)
             .fill_color('color)
@@ -74,7 +74,7 @@ object IrisSplom extends Example {
         plot.tools := List(pantool, wheelzoomtool)
 
         text.foreach { text =>
-            val text_glyph = new Text()
+            val text_glyph = Text()
                 .x(0).x_offset( 100)
                 .y(0).y_offset(-100)
                 .text(text.replaceAll("_", " "))

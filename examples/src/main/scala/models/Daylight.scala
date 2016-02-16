@@ -57,19 +57,19 @@ object Daylight extends Example {
     val sources = List(source, patch1_source, patch2_source, text_source)
     val plot = new Plot().title(title).x_range(xdr).y_range(ydr).width(800).height(400)
 
-    val patch1 = new Patch().x('dates).y('times).fill_color(Color.SkyBlue).fill_alpha(0.8)
+    val patch1 = Patch().x('dates).y('times).fill_color(Color.SkyBlue).fill_alpha(0.8)
     val patch1_glyph = new GlyphRenderer().data_source(patch1_source).glyph(patch1)
 
-    val patch2 = new Patch().x('dates).y('times).fill_color(Color.Orange).fill_alpha(0.8)
+    val patch2 = Patch().x('dates).y('times).fill_color(Color.Orange).fill_alpha(0.8)
     val patch2_glyph = new GlyphRenderer().data_source(patch2_source).glyph(patch2)
 
-    val line1 = new Line().x('dates).y('sunrises).line_color(Color.Yellow).line_width(2)
+    val line1 = Line().x('dates).y('sunrises).line_color(Color.Yellow).line_width(2)
     val line1_glyph = new GlyphRenderer().data_source(source).glyph(line1)
 
-    val line2 = new Line().x('dates).y('sunsets).line_color(Color.Red).line_width(2)
+    val line2 = Line().x('dates).y('sunsets).line_color(Color.Red).line_width(2)
     val line2_glyph = new GlyphRenderer().data_source(source).glyph(line2)
 
-    val text = new Text().x('dates).y('times).text('texts).angle(0).text_align(TextAlign.Center)
+    val text = Text().x('dates).y('times).text('texts).angle(0).text_align(TextAlign.Center)
     val text_glyph = new GlyphRenderer().data_source(text_source).glyph(text)
 
     val glyphs = List(patch1_glyph, patch2_glyph, line1_glyph, line2_glyph, text_glyph)
