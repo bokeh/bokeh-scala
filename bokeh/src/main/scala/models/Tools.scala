@@ -4,9 +4,7 @@ package io.continuum.bokeh
     object geometries extends Field[List[Js.Obj]]
 }
 
-@model sealed abstract class Tool extends Model {
-    object plot extends Field[Plot]
-}
+@model sealed abstract class Tool extends Model with BackRef
 
 @model class PanTool extends Tool {
     object dimensions extends Field[List[Dimension]](List(Dimension.Width, Dimension.Height))

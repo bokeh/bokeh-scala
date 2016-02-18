@@ -78,6 +78,10 @@ package io.continuum.bokeh
     }
 }
 
+trait BackRef { self: Model =>
+    object plot extends Field[Plot]
+}
+
 object GridPlot {
     def apply[R](rows: R*)(implicit r: Row[R, Plot]): GridPlot = {
         new GridPlot().children(rows.toList.map(r.toList(_)))

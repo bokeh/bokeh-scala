@@ -41,8 +41,7 @@ package io.continuum.bokeh
     object level extends Field[RenderLevel](RenderLevel.Glyph)
 }
 
-@model abstract class GuideRenderer extends Renderer {
-    object plot extends Field[Plot]
+@model abstract class GuideRenderer extends Renderer with BackRef {
     object bounds extends Field[(Double, Double)] // TODO: Either[Auto, (Float, Float)]]
 
     object x_range_name extends Field[String]("default")

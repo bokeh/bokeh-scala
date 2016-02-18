@@ -1,7 +1,6 @@
 package io.continuum.bokeh
 
-@model abstract class Annotation extends Renderer {
-    object plot extends Field[Plot]
+@model abstract class Annotation extends Renderer with BackRef {
     object level extends Field[RenderLevel](RenderLevel.Annotation)
 }
 
