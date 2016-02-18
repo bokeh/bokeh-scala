@@ -66,6 +66,10 @@ package io.continuum.bokeh
     }
 
     def addLayout(renderer: Renderer, place: Place): Renderer = {
+        renderer match {
+            case (ref: BackRef) => ref.plot := this
+        }
+
         place match {
             case Place.Left   => left  <<= (renderer +: _)
             case Place.Right  => right <<= (renderer +: _)
@@ -73,6 +77,7 @@ package io.continuum.bokeh
             case Place.Below  => below <<= (renderer +: _)
             case Place.Center =>
         }
+
         renderers <<= (_ :+ renderer)
         renderer
     }
