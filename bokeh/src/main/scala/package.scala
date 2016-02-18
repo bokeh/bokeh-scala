@@ -30,4 +30,10 @@ package object bokeh extends PrettyTypedTag with TagImplicits {
     implicit class ListOps[T](list: List[T]) {
         def *(n: Int): List[T] = (0 until n).flatMap(_ => list).toList
     }
+
+    implicit class ComponentOps[T <: Component](component: T) {
+        def save(path: String, resources: Resources = Res.default): HTMLFile = {
+            new Document(component).save(path, resources)
+        }
+    }
 }
