@@ -8,4 +8,5 @@ class Scalar[T]
 object Scalar {
     implicit val IntScalar = new Scalar[Int]
     implicit val DoubleScalar = new Scalar[Double]
+    implicit val StringScalar = new Scalar[String] // categorical axis
 }
