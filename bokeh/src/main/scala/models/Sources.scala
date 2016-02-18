@@ -27,6 +27,8 @@ case class Selected(`0d`: Selected0d = Selected0d(),
 
         def value: M[T] = _value // TODO: fmt.reads(source.data.value(name))
         def :=(value: M[T]): Unit = data <<= (_ + (name -> fmt.write(_value)))
+
+        val parent: source.type = source
     }
 
     def column[M[_], T](value: M[T]): Column[M, T] = macro ColumnMacro.columnImpl[M, T]
