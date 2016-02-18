@@ -88,11 +88,11 @@ trait BackRef { self: Model =>
 }
 
 object GridPlot {
-    def apply[R](rows: R*)(implicit r: Row[R, Plot]): GridPlot = {
+    def apply[R, V <: Plot](rows: R*)(implicit r: Row[R, V]): GridPlot = {
         new GridPlot().children(rows.toList.map(r.toList(_)))
     }
 
-    def apply(row: Plot*): GridPlot = {
+    def apply[V <: Plot](row: V*): GridPlot = {
         new GridPlot().children(List(row.toList))
     }
 }
