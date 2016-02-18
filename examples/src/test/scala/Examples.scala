@@ -39,6 +39,10 @@ class ExamplesSpec extends Specification with RunMatchers {
         "run Trail"           in { models.Trail           must run }
         "run TwinAxis"        in { models.TwinAxis        must run }
     }
+
+    "examples.plotting" should {
+        "run Anscombe"        in { plotting.Anscombe      must run }
+    }
 }
 
 trait RunMatchers {
