@@ -7,6 +7,7 @@ Scala bindings for [Bokeh][bokeh] plotting library.
 ## Requirements
 
 * [Java](http://wwww.java.com) JRE 1.7+
+* [Scala](http://www.scala-lang.org) 2.10.* or 2.11.*
 
 ## Usage
 
@@ -15,7 +16,7 @@ Central][central]. To include latest stable version of bokeh in your project,
 use:
 
 ```scala
-libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.6"
+libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.7"
 ```
 
 Development snapshots are available as well. To use this you have to add
@@ -23,7 +24,7 @@ Sonatype's snapshots repository to your build:
 
 ```scala
 resolvers += Opts.resolver.sonatypeSnapshots
-libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.7-SNAPSHOT"
+libraryDependencies += "io.continuum.bokeh" %% "bokeh" % "0.8-SNAPSHOT"
 ```
 
 See [this][sample] sample project for detailed integration example.
@@ -63,8 +64,8 @@ Published under [The MIT License][license], see LICENSE.
 [bokeh]: http://bokeh.pydata.org
 [central]: http://search.maven.org/#search%7Cga%7C1%7Cbokeh
 [sample]: https://github.com/bokeh/bokeh-scala-sample
-[api-stable]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.6/index.html
-[api-devel]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.7-SNAPSHOT/index.html
+[api-stable]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.7/index.html
+[api-devel]: https://s3.amazonaws.com/bokeh-scala/docs/2.11/0.8-SNAPSHOT/index.html
 [nodejs]: https://nodejs.org/download/
 [group]: https://groups.google.com/a/continuum.io/forum/#!forum/bokeh
 [issues]: https://github.com/bokeh/bokeh-scala/issues
