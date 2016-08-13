@@ -53,7 +53,7 @@ object BokehBuild extends Build {
         description := "Scala bindings for Bokeh plotting library",
         homepage := Some(url("http://bokeh.pydata.org")),
         licenses := Seq("MIT-style" -> url("http://www.opensource.org/licenses/mit-license.php")),
-        scalaVersion := "2.11.7",
+        scalaVersion := "2.11.8",
         scalacOptions ++= Seq("-Xlint", "-deprecation", "-unchecked", "-feature"),
         scalacOptions += "-language:postfixOps,implicitConversions,higherKinds,experimental.macros",
         scalacOptions in (Compile, doc) := Seq("-groups", "-implicits"),
