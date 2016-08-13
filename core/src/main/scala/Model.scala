@@ -11,23 +11,32 @@ private object ModelImpl {
             case ClassDef(mods, name, tparams, tpl @ Template(parents, sf, body)) :: companion =>
                 val bokeh = q"io.continuum.bokeh"
 
-                val expandedBody = body.flatMap {
-                    case q"$prefix = include[$mixin]" =>
-                        val fields =
-                           c.typecheck(tq"$mixin", c.TYPEmode)
-                            .tpe
-                            .members
-                            .filter(_.isModule)
-                            .map(_.asModule)
-                            .filter(_.typeSignature <:< typeOf[AbstractField])
+                def expandInclude(prefix: Option[Tree], mixin: Tree) = {
+                    val fields =
+                       c.typecheck(tq"$mixin", c.TYPEmode)
+                        .tpe
+                        .members
+                        .filter(_.isModule)
+                        .map(_.asModule)
+                        .filter(_.typeSignature <:< typeOf[AbstractField])
 
-                        fields.map { field =>
-                            val name = TermName(s"${prefix}_${field.name}")
-                            val sig = field.typeSignature
-                            val tpe = sig.member(TypeName("ValueType")).typeSignatureIn(sig)
-                            // TODO: add support for precise field type (Vectorized, NonNegative, etc.)
-                            q"object $name extends this.Field[$tpe]"
+                    fields.map { field =>
+                        val name = prefix match {
+                            case Some(prefix) => TermName(s"${prefix}_${field.name}")
+                            case None         => field.name
                         }
+                        val sig = field.typeSignature
+                        val tpe = sig.member(TypeName("ValueType")).typeSignatureIn(sig)
+                        // TODO: add support for precise field type (Vectorized, NonNegative, etc.)
+                        q"object $name extends this.Field[$tpe]"
+                    }
+                }
+
+                val expandedBody = body.flatMap {
+                    case q"include[$mixin]" =>
+                        expandInclude(None, mixin)
+                    case q"$prefix = include[$mixin]" =>
+                        expandInclude(Some(prefix), mixin)
                     case field => field :: Nil
                 }
 
